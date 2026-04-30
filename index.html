@@ -1797,7 +1797,11 @@ function drawPileArray(pier) {
   const canvas = document.getElementById('pile-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
   const W = 900, H = 450;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, W, H);
 
   if (!pts.length) {
