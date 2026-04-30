@@ -309,11 +309,10 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   margin-bottom: 14px;
-  overflow: hidden;
 }
 .sig-grid { display: grid; grid-template-columns: repeat(3, 1fr) 1.2fr; }
 .sig-col { padding: 14px 18px; border-right: 1px solid var(--border); }
-.sig-col:last-child { border-right: none; }
+.sig-col:last-child { border-right: 1px solid var(--border); }
 .sig-role { font-size: 10px; font-weight: 600; color: #c0392b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 18px; }
 .sig-line { border-bottom: 1.5px solid var(--navy); margin-bottom: 5px; height: 24px; }
 .sig-name-line { font-size: 10px; color: var(--text-muted); line-height: 2.2; }
@@ -748,7 +747,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   .sig-card { margin-bottom: 0px !important; }
   .sig-grid { display: grid !important; grid-template-columns: repeat(3,1fr) 1.2fr !important; }
   .sig-col { padding: 2px 5px !important; border-right: 0.5px solid #ccc; }
-  .sig-col:last-child { border-right: none; }
+  .sig-col:last-child { border-right: 0.5px solid #ccc; }
   .sig-role { font-size: 6.5pt !important; font-weight: bold; margin-bottom: 2px !important; color: #c0392b !important; }
   .sig-line { border-bottom: 0.5px solid #000 !important; margin-bottom: 3px !important; height: 14px !important; }
   .sig-name-line { font-size: 6.5pt !important; line-height: 1.5 !important; margin: 0 !important; }
@@ -1265,7 +1264,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
       <div class="sig-name-line">Name: <span style="display:inline-block; width:82%; border-bottom:0.5px solid #555;"></span></div>
       <div class="sig-name-line">Date: <span style="display:inline-block; width:75%; border-bottom:0.5px solid #555;"></span></div>
     </div>
-    <div class="sig-col" style="border-right:none;">
+    <div class="sig-col">
       <div class="sig-role">Note</div>
       <div class="sig-name-line" style="margin-bottom:6px;"><span style="display:block; width:100%; border-bottom:0.5px solid #555; height:16px;"></span></div>
       <div class="sig-name-line" style="margin-bottom:6px;"><span style="display:block; width:100%; border-bottom:0.5px solid #555; height:16px;"></span></div>
