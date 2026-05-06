@@ -971,20 +971,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   <!-- Right: Canvas -->
   <div id="pile-array-section" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:6px; border-left:1px solid var(--border); border-right:1px solid var(--border); width:310px; flex-shrink:0; background:var(--surface); overflow:visible;">
     <canvas id="pile-canvas" width="900" height="450"></canvas>
-
-    <!-- Column Formwork Tolerance Panel (1st/2nd Lift only) -->
-    <div id="col-tol-panel" style="display:none; width:100%; font-size:9px; color:#222; margin-top:4px; padding:4px 6px; border-top:1px solid var(--border); line-height:1.7;">
-      <div style="margin-bottom:2px;">Allowable tolerance = (HD:VD)=(1:600)</div>
-      <div>T = Top of formwork &nbsp;|&nbsp; B = Bottom of formwork</div>
-      <div>h = Column height</div>
-      <div style="margin-bottom:4px;">h = <span style="display:inline-block; width:70px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-      <div style="display:flex; gap:4px; align-items:flex-start;">
-        <!-- Left: formula -->
-        <div style="flex:1; min-width:0;">
-          <div>Tolerance = <span style="font-size:9px;">(1×h) / 600</span></div>
-          <div>Tolerance = <span style="display:inline-block; width:50px; border-bottom:1px solid #555; vertical-align:bottom; font-size:8px;">1×</span> / 600</div>
-          <div style="padding-left:16px;">= <span style="display:inline-block; width:50px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-        </div>
+  </div>
         <!-- Right: T1/B1 -->
         <div style="text-align:left; white-space:nowrap;">
           <div>T1/T1'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
@@ -2353,6 +2340,99 @@ function drawPileArray(pier) {
     ctx.fillRect(W/2 - bw2/2 - 2, botY + 1, bw2 + 4, 8);
     ctx.fillStyle = '#000';
     ctx.fillText(badgeText, W/2, botY + 9);
+  }
+
+  // ── Column Formwork Tolerance Overlay (1st-Lift / 2nd Lift only) ──
+  if (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)') {
+    const fs  = 14;   // font size px (canvas coords, displayed at 300px CSS)
+    const lh  = 18;   // line height
+    const lx  = 6;    // left margin
+    const rx  = W - 6; // right edge
+
+    ctx.textBaseline = 'top';
+    ctx.lineWidth = 1.0;
+
+    // ─── helper: draw "Label=___mm." with underline ───
+    const field = (label, x, y, lineW) => {
+      ctx.fillStyle = '#222';
+      ctx.textAlign = 'left';
+      ctx.fillText(label, x, y);
+      const lw2 = ctx.measureText(label).width;
+      ctx.strokeStyle = '#777';
+      ctx.beginPath();
+      ctx.moveTo(x + lw2 + 3, y + fs + 1);
+      ctx.lineTo(x + lw2 + 3 + lineW, y + fs + 1);
+      ctx.stroke();
+      ctx.fillText('mm.', x + lw2 + 3 + lineW + 4, y);
+    };
+
+    // ─── LEFT BLOCK (legend + formula) ───
+    let ly = 26;
+    ctx.font = `bold ${fs}px sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#222';
+    ctx.fillText('Allowable tolerance = (HD:VD)=(1:600)', lx, ly); ly += lh;
+    ctx.font = `${fs}px sans-serif`;
+    ctx.fillText('T = Top of formwork', lx, ly);    ly += lh;
+    ctx.fillText('B = Bottom of formwork', lx, ly); ly += lh;
+    ctx.fillText('h = Column height', lx, ly);      ly += lh;
+
+    // h = ___ mm.
+    ctx.fillText('h =', lx, ly);
+    ctx.strokeStyle = '#777'; ctx.lineWidth = 1.0;
+    ctx.beginPath(); ctx.moveTo(lx + 30, ly + fs + 1); ctx.lineTo(lx + 130, ly + fs + 1); ctx.stroke();
+    ctx.fillText('mm.', lx + 134, ly);
+    ly += lh + 10;
+
+    // Tolerance = (1xh)/600
+    ctx.fillText('Tolerance = (1×h) / 600', lx, ly); ly += lh;
+
+    // Tolerance = (1x ___) / 600
+    ctx.fillText('Tolerance = (1×', lx, ly);
+    const tw1 = ctx.measureText('Tolerance = (1×').width;
+    ctx.beginPath(); ctx.moveTo(lx + tw1, ly + fs + 1); ctx.lineTo(lx + tw1 + 80, ly + fs + 1); ctx.stroke();
+    ctx.fillText(') / 600', lx + tw1 + 84, ly); ly += lh;
+
+    // = ___ mm.
+    ctx.fillText('  =', lx, ly);
+    const tw2 = ctx.measureText('  =').width;
+    ctx.beginPath(); ctx.moveTo(lx + tw2 + 4, ly + fs + 1); ctx.lineTo(lx + tw2 + 84, ly + fs + 1); ctx.stroke();
+    ctx.fillText('mm.', lx + tw2 + 88, ly);
+
+    // ─── RIGHT BLOCK (T1/B1, T2/B2/Δ2) ───
+    // position: right side, starting ~same height as legend
+    const rLineW = 110;
+    const rx2 = rx - ctx.measureText('mm.').width - 6; // align mm. to right edge
+    let ry = 120; // start below title area
+
+    // T1/T1'= ___ mm.
+    field("T1/T1'′=", rx2 - rLineW - ctx.measureText("T1/T1'′=").width, ry, rLineW); ry += lh + 4;
+    // B1/B1'= ___ mm.
+    field("B1/B1'′=", rx2 - rLineW - ctx.measureText("B1/B1'′=").width, ry, rLineW); ry += lh + 14;
+
+    // T2/T2'= ___ mm.
+    field("T2/T2'′=", rx2 - rLineW - ctx.measureText("T2/T2'′=").width, ry, rLineW); ry += lh + 2;
+    // B2/B2'= ___ mm.
+    field("B2/B2'′=", rx2 - rLineW - ctx.measureText("B2/B2'′=").width, ry, rLineW); ry += lh + 2;
+    // Δ2/Δ2'= ___ mm.
+    field("Δ2/Δ2'′=", rx2 - rLineW - ctx.measureText("Δ2/Δ2'′=").width, ry, rLineW);
+
+    // ─── BOTTOM BLOCK: T4/B4/Δ4 (left-center) and T3/B3/Δ3 (right-center) ───
+    const bLineW = 100;
+    const byStart = H - lh * 3 - 10;
+    const midX = W / 2;
+
+    // Left-center: T4/B4/Δ4
+    let b4x = midX - 270;
+    field("T4/T4'′=", b4x, byStart,          bLineW);
+    field("B4/B4'′=", b4x, byStart + lh + 2, bLineW);
+    field("Δ4/Δ4'′=", b4x, byStart + (lh+2)*2, bLineW);
+
+    // Right-center: T3/B3/Δ3
+    let b3x = midX + 30;
+    field("T3/T3'′=", b3x, byStart,          bLineW);
+    field("B3/B3'′=", b3x, byStart + lh + 2, bLineW);
+    field("Δ3/Δ3'′=", b3x, byStart + (lh+2)*2, bLineW);
   }
 }
 
