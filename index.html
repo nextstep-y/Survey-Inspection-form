@@ -201,7 +201,7 @@ select:focus, input[type="text"]:focus {
   border-left: 1px solid var(--border-dark);
 }
 .pile-panel-title { font-size: 9px; font-weight: 600; color: var(--navy-mid); text-transform: uppercase; letter-spacing: 0.05em; }
-#pile-canvas { width: 300px; height: 150px; display:block; image-rendering: crisp-edges; }
+#pile-canvas { width: 100%; max-width: 600px; height: auto; display:block; image-rendering: crisp-edges; }
 .pile-type-badge {
   display: none;
 }
@@ -969,8 +969,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 </div>
   </div>
   <!-- Right: Canvas -->
-  <div id="pile-array-section" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:6px; border-left:1px solid var(--border); border-right:1px solid var(--border); width:310px; flex-shrink:0; background:var(--surface); overflow:visible;">
-    <canvas id="pile-canvas" width="900" height="450"></canvas>
+  <div id="pile-array-section" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:6px; border-left:1px solid var(--border); border-right:1px solid var(--border); width:auto; min-width:310px; max-width:620px; flex-shrink:0; background:var(--surface); overflow:visible;">
+    <canvas id="pile-canvas" width="1800" height="600"></canvas>
   </div>
 </div>
 
@@ -1796,7 +1796,10 @@ function drawPileArray(pier) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
-  const W = 900, H = 450;
+  const _isColLift = (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
+  // Canvas logical size: wider for Column lift to accommodate side text
+  const W = _isColLift ? 1800 : 900;
+  const H = _isColLift ? 600  : 450;
   canvas.width  = W * dpr;
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1826,20 +1829,21 @@ function drawPileArray(pier) {
   const midCH = (minCH + maxCH) / 2;
   const midOS = (minOS + maxOS) / 2;
 
-  // Padding: leave room for labels and pile radius
+  // For Column lift: reserve left/right zones for text, array draws in center zone
+  const LEFT_ZONE  = _isColLift ? 560 : 0;
+  const RIGHT_ZONE = _isColLift ? 560 : 0;
+  const BOT_ZONE   = _isColLift ? 110 : 0;
   const PAD = 30;
-  const drawW = W - PAD * 2;
-  const drawH = H - PAD * 2;
-  // CH = up/down (Y axis), OS = left/right (X axis)
-  // CH+ = top, OS+ = right → clockwise T1(top)→T2(right)→T3(bottom)→T4(left)
+  const drawW = W - LEFT_ZONE - RIGHT_ZONE - PAD * 2;
+  const drawH = H - BOT_ZONE - PAD * 2;
+  const centerX = LEFT_ZONE + PAD + drawW / 2;
+  const centerY = PAD + drawH / 2;
+
   const scale = Math.min(drawW / rangeOS, drawH / rangeCH) * 0.82;
   const r = Math.min(9, Math.max(4, scale * 0.55));
 
-  // Normal: OS=X(right), CH=Y(up)
-  // Print landscape: rotate -90° → CH=X(right), OS=Y(down)
-  // Fixed mapping: same for screen and print (OS=X right, CH=Y up)
-  const toX = os => W/2 + (os - midOS) * scale;
-  const toY = ch => H/2 - (ch - midCH) * scale;
+  const toX = os => centerX + (os - midOS) * scale;
+  const toY = ch => centerY - (ch - midCH) * scale;
 
   // Draw pile cap outline with padding
   const bx = toX(minOS) - r - 4;
@@ -2280,20 +2284,20 @@ function drawPileArray(pier) {
   const allY = pts.map(p => toY(p.ch));
   const topY = allY.length ? Math.min(...allY) : PAD;
   const botY = allY.length ? Math.max(...allY) : H - PAD;
-  // Title centered at top, CH↑ on left side vertical
+  // Title centered over array zone (not full canvas)
   ctx.font = 'bold 20px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
   ctx.fillStyle = '#555';
-  ctx.fillText('PILE/ELEMENT ARRAY', W/2, 22);
-  // CH↑ at top-left corner
+  ctx.fillText('PILE/ELEMENT ARRAY', centerX, 22);
+  // CH↑ at top of array zone
   ctx.font = 'bold 22px sans-serif';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
   ctx.fillStyle = '#000';
-  ctx.fillText('CH↑', 6, topY - 55);
+  ctx.fillText('CH↑', LEFT_ZONE + PAD, topY - 55);
 
-  // Draw array type badge at bottom-center
+  // Draw array type badge at bottom of array zone
   const badgeText = document.getElementById('pile-badge')?.textContent || '';
   if (badgeText && badgeText !== '—') {
     ctx.font = 'bold 7px sans-serif';
@@ -2301,103 +2305,117 @@ function drawPileArray(pier) {
     ctx.textBaseline = 'bottom';
     const bw2 = ctx.measureText(badgeText).width;
     ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.fillRect(W/2 - bw2/2 - 2, botY + 1, bw2 + 4, 8);
+    ctx.fillRect(centerX - bw2/2 - 2, botY + 1, bw2 + 4, 8);
     ctx.fillStyle = '#000';
-    ctx.fillText(badgeText, W/2, botY + 9);
+    ctx.fillText(badgeText, centerX, botY + 9);
   }
 
   // ── Column Formwork Tolerance Overlay (1st-Lift / 2nd Lift only) ──
-  if (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)') {
-    const fs  = 14;   // font size px (canvas coords, displayed at 300px CSS)
-    const lh  = 18;   // line height
-    const lx  = 6;    // left margin
-    const rx  = W - 6; // right edge
-
+  if (_isColLift) {
+    const fs = 18;
+    const lh = 24;
     ctx.textBaseline = 'top';
-    ctx.lineWidth = 1.0;
+    ctx.lineWidth = 1.2;
+    const lnW = 120; // underline width
 
-    // ─── helper: draw "Label=___mm." with underline ───
+    // helper: draw "Label ___mm." with underline
     const field = (label, x, y, lineW) => {
       ctx.fillStyle = '#222';
       ctx.textAlign = 'left';
+      ctx.font = `${fs}px sans-serif`;
       ctx.fillText(label, x, y);
-      const lw2 = ctx.measureText(label).width;
-      ctx.strokeStyle = '#777';
+      const lw = ctx.measureText(label).width;
+      ctx.strokeStyle = '#666';
       ctx.beginPath();
-      ctx.moveTo(x + lw2 + 3, y + fs + 1);
-      ctx.lineTo(x + lw2 + 3 + lineW, y + fs + 1);
+      ctx.moveTo(x + lw + 3, y + fs + 2);
+      ctx.lineTo(x + lw + 3 + lineW, y + fs + 2);
       ctx.stroke();
-      ctx.fillText('mm.', x + lw2 + 3 + lineW + 4, y);
+      ctx.fillText('mm.', x + lw + 3 + lineW + 5, y);
     };
 
-    // ─── LEFT BLOCK (legend + formula) ───
-    let ly = 26;
+    // ── LEFT ZONE ──
+    const lx = 10;
+    let ly = 20;
     ctx.font = `bold ${fs}px sans-serif`;
     ctx.textAlign = 'left';
     ctx.fillStyle = '#222';
     ctx.fillText('Allowable tolerance = (HD:VD)=(1:600)', lx, ly); ly += lh;
     ctx.font = `${fs}px sans-serif`;
-    ctx.fillText('T = Top of formwork', lx, ly);    ly += lh;
+    ctx.fillText('T = Top of formwork',    lx, ly); ly += lh;
     ctx.fillText('B = Bottom of formwork', lx, ly); ly += lh;
-    ctx.fillText('h = Column height', lx, ly);      ly += lh;
+    ctx.fillText('h = Column height',      lx, ly); ly += lh;
 
     // h = ___ mm.
     ctx.fillText('h =', lx, ly);
-    ctx.strokeStyle = '#777'; ctx.lineWidth = 1.0;
-    ctx.beginPath(); ctx.moveTo(lx + 30, ly + fs + 1); ctx.lineTo(lx + 130, ly + fs + 1); ctx.stroke();
-    ctx.fillText('mm.', lx + 134, ly);
-    ly += lh + 10;
+    const hw = ctx.measureText('h =').width;
+    ctx.strokeStyle = '#666'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(lx+hw+4, ly+fs+2); ctx.lineTo(lx+hw+4+150, ly+fs+2); ctx.stroke();
+    ctx.fillText('mm.', lx+hw+4+154, ly);
+    ly += lh + 14;
 
-    // Tolerance = (1xh)/600
-    ctx.fillText('Tolerance = (1×h) / 600', lx, ly); ly += lh;
-
-    // Tolerance = (1x ___) / 600
-    ctx.fillText('Tolerance = (1×', lx, ly);
-    const tw1 = ctx.measureText('Tolerance = (1×').width;
-    ctx.beginPath(); ctx.moveTo(lx + tw1, ly + fs + 1); ctx.lineTo(lx + tw1 + 80, ly + fs + 1); ctx.stroke();
-    ctx.fillText(') / 600', lx + tw1 + 84, ly); ly += lh;
-
-    // = ___ mm.
+    // Tolerance formula
+    ctx.fillText('Tolerance = (1\u00d7h) / 600', lx, ly); ly += lh;
+    ctx.fillText('Tolerance = (1\u00d7', lx, ly);
+    const tw = ctx.measureText('Tolerance = (1\u00d7').width;
+    ctx.beginPath(); ctx.moveTo(lx+tw, ly+fs+2); ctx.lineTo(lx+tw+110, ly+fs+2); ctx.stroke();
+    ctx.fillText(') / 600', lx+tw+114, ly); ly += lh;
     ctx.fillText('  =', lx, ly);
-    const tw2 = ctx.measureText('  =').width;
-    ctx.beginPath(); ctx.moveTo(lx + tw2 + 4, ly + fs + 1); ctx.lineTo(lx + tw2 + 84, ly + fs + 1); ctx.stroke();
-    ctx.fillText('mm.', lx + tw2 + 88, ly);
+    const ew = ctx.measureText('  =').width;
+    ctx.beginPath(); ctx.moveTo(lx+ew+4, ly+fs+2); ctx.lineTo(lx+ew+4+110, ly+fs+2); ctx.stroke();
+    ctx.fillText('mm.', lx+ew+4+114, ly);
 
-    // ─── RIGHT BLOCK (T1/B1, T2/B2/Δ2) ───
-    // position: right side, starting ~same height as legend
-    const rLineW = 110;
-    const rx2 = rx - ctx.measureText('mm.').width - 6; // align mm. to right edge
-    let ry = 120; // start below title area
+    // ── RIGHT ZONE ──
+    const rx2 = W - 10;
+    let ry = 100;
 
-    // T1/T1'= ___ mm.
-    field("T1/T1'′=", rx2 - rLineW - ctx.measureText("T1/T1'′=").width, ry, rLineW); ry += lh + 4;
-    // B1/B1'= ___ mm.
-    field("B1/B1'′=", rx2 - rLineW - ctx.measureText("B1/B1'′=").width, ry, rLineW); ry += lh + 14;
+    const fieldR = (label, y) => {
+      ctx.font = `${fs}px sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#222';
+      const lw = ctx.measureText(label).width;
+      const x = rx2 - lnW - lw - ctx.measureText('mm.').width - 10;
+      ctx.fillText(label, x, y);
+      ctx.strokeStyle = '#666'; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x+lw+3, y+fs+2); ctx.lineTo(x+lw+3+lnW, y+fs+2); ctx.stroke();
+      ctx.fillText('mm.', x+lw+3+lnW+5, y);
+    };
 
-    // T2/T2'= ___ mm.
-    field("T2/T2'′=", rx2 - rLineW - ctx.measureText("T2/T2'′=").width, ry, rLineW); ry += lh + 2;
-    // B2/B2'= ___ mm.
-    field("B2/B2'′=", rx2 - rLineW - ctx.measureText("B2/B2'′=").width, ry, rLineW); ry += lh + 2;
-    // Δ2/Δ2'= ___ mm.
-    field("Δ2/Δ2'′=", rx2 - rLineW - ctx.measureText("Δ2/Δ2'′=").width, ry, rLineW);
+    fieldR("T1/T1\u2032=", ry); ry += lh + 6;
+    fieldR("B1/B1\u2032=", ry); ry += lh + 20;
+    fieldR("T2/T2\u2032=", ry); ry += lh + 4;
+    fieldR("B2/B2\u2032=", ry); ry += lh + 4;
+    fieldR("\u03942/\u03942\u2032=", ry);
 
-    // ─── BOTTOM BLOCK: T4/B4/Δ4 (left-center) and T3/B3/Δ3 (right-center) ───
-    const bLineW = 100;
-    const byStart = H - lh * 3 - 10;
-    const midX = W / 2;
+    // ── BOTTOM ZONE: T4/B4/Δ4 (left) and T3/B3/Δ3 (right) ──
+    const byBase = H - BOT_ZONE + 14;
+    const b4x = LEFT_ZONE - 10;   // right-align to left of array zone
+    const b3x = LEFT_ZONE + PAD*2 + drawW + 10; // left-align to right of array zone
 
-    // Left-center: T4/B4/Δ4
-    let b4x = midX - 270;
-    field("T4/T4'′=", b4x, byStart,          bLineW);
-    field("B4/B4'′=", b4x, byStart + lh + 2, bLineW);
-    field("Δ4/Δ4'′=", b4x, byStart + (lh+2)*2, bLineW);
+    // T4/B4/Δ4 — right-aligned before array
+    const fieldB4 = (label, y) => {
+      ctx.font = `${fs}px sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#222';
+      const lw2 = ctx.measureText(label).width;
+      const bx2 = b4x - lnW - lw2 - ctx.measureText('mm.').width - 8;
+      ctx.fillText(label, bx2, y);
+      ctx.strokeStyle = '#666'; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(bx2+lw2+3, y+fs+2); ctx.lineTo(bx2+lw2+3+lnW, y+fs+2); ctx.stroke();
+      ctx.fillText('mm.', bx2+lw2+3+lnW+5, y);
+    };
+    fieldB4("T4/T4\u2032=", byBase);
+    fieldB4("B4/B4\u2032=", byBase + lh + 4);
+    fieldB4("\u03944/\u03944\u2032=", byBase + (lh+4)*2);
 
-    // Right-center: T3/B3/Δ3
-    let b3x = midX + 30;
-    field("T3/T3'′=", b3x, byStart,          bLineW);
-    field("B3/B3'′=", b3x, byStart + lh + 2, bLineW);
-    field("Δ3/Δ3'′=", b3x, byStart + (lh+2)*2, bLineW);
+    // T3/B3/Δ3 — left-aligned after array
+    const fieldB3 = (label, y) => {
+      field(label, b3x, y, lnW);
+    };
+    fieldB3("T3/T3\u2032=", byBase);
+    fieldB3("B3/B3\u2032=", byBase + lh + 4);
+    fieldB3("\u03943/\u03943\u2032=", byBase + (lh+4)*2);
   }
+
 }
 
 
