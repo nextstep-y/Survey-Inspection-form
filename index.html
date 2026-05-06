@@ -972,36 +972,6 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   <div id="pile-array-section" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:6px; border-left:1px solid var(--border); border-right:1px solid var(--border); width:310px; flex-shrink:0; background:var(--surface); overflow:visible;">
     <canvas id="pile-canvas" width="900" height="450"></canvas>
   </div>
-        <!-- Right: T1/B1 -->
-        <div style="text-align:left; white-space:nowrap;">
-          <div>T1/T1'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-          <div>B1/B1'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-        </div>
-      </div>
-      <!-- T2/B2/Δ2 -->
-      <div style="display:flex; justify-content:flex-end; margin-top:2px;">
-        <div style="text-align:left; white-space:nowrap;">
-          <div>T2/T2'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-          <div>B2/B2'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-          <div>Δ2/Δ2'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-        </div>
-      </div>
-      <!-- T4/B4/Δ4  and  T3/B3/Δ3 -->
-      <div style="display:flex; justify-content:space-between; margin-top:2px;">
-        <div style="text-align:left; white-space:nowrap;">
-          <div>T4/T4'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-          <div>B4/B4'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-          <div>Δ4/Δ4'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-        </div>
-        <div style="text-align:left; white-space:nowrap;">
-          <div>T3/T3'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-          <div>B3/B3'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-          <div>Δ3/Δ3'= <span style="display:inline-block; width:55px; border-bottom:1px solid #555; vertical-align:bottom;"></span> mm.</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>
 
 <!-- ─────────── WORK / DRAWING INFO ROW ─────────── -->
@@ -1685,12 +1655,6 @@ function onWorkChange() {
   document.body.classList.toggle('pile-deviate', work === 'Pile Deviate');
   document.body.classList.toggle('bored-pile', _useBPLayout);
   document.body.classList.toggle('no-elev', ['Pile cap','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pier Head','Bearing Plinths','Elastomeric'].includes(work));
-  // Show/hide column formwork tolerance panel
-  const _colTolPanel = document.getElementById('col-tol-panel');
-  if (_colTolPanel) {
-    const _isColLift = (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
-    _colTolPanel.style.display = _isColLift ? 'block' : 'none';
-  }
   // Switch table-layout immediately on work change
   const tbl = document.getElementById('survey-table');
   if (tbl) { tbl.style.tableLayout = 'fixed'; tbl.style.width = '100%'; }
