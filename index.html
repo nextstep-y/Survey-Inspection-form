@@ -1782,6 +1782,179 @@ function renderPierInfo(pier) {
 // ═══════════════════════════════════════════
 let _isPrintingCanvas = false;
 let _splitTablesAdded = false;
+
+function drawColumnLiftFormworkDiagram(ctx, W, H, pier, pts) {
+  const grey = '#555';
+  const black = '#111';
+  const blue = '#001fff';
+  const red = '#f00';
+
+  const line = (x1, y1, x2, y2) => { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); };
+  const arrow = (x1, y1, x2, y2, color = black, size = 10) => {
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 1.2;
+    line(x1, y1, x2, y2);
+    const a = Math.atan2(y2 - y1, x2 - x1);
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - size * Math.cos(a - Math.PI / 7), y2 - size * Math.sin(a - Math.PI / 7));
+    ctx.lineTo(x2 - size * Math.cos(a + Math.PI / 7), y2 - size * Math.sin(a + Math.PI / 7));
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  };
+  const text = (value, x, y, opts = {}) => {
+    ctx.save();
+    ctx.fillStyle = opts.color || grey;
+    ctx.font = `${opts.weight || 'normal'} ${opts.size || 22}px ${opts.family || 'Arial, sans-serif'}`;
+    ctx.textAlign = opts.align || 'left';
+    ctx.textBaseline = opts.baseline || 'alphabetic';
+    if (opts.rotate) {
+      ctx.translate(x, y);
+      ctx.rotate(opts.rotate);
+      ctx.fillText(value, 0, 0);
+    } else {
+      ctx.fillText(value, x, y);
+    }
+    ctx.restore();
+  };
+  const field = (label, x, y, width = 120, size = 28) => {
+    ctx.save();
+    ctx.font = `normal ${size}px Arial, sans-serif`;
+    ctx.fillStyle = grey;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(label, x, y);
+    const lw = ctx.measureText(label).width;
+    ctx.strokeStyle = grey;
+    ctx.lineWidth = 1.4;
+    line(x + lw + 2, y + 3, x + lw + 2 + width, y + 3);
+    ctx.fillText('mm.', x + lw + width + 8, y);
+    ctx.restore();
+  };
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, W, H);
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+
+  const numPts = pts.filter(p => /^\d+$/.test(p.label)).sort((a, b) => parseInt(a.label) - parseInt(b.label));
+  const aPts = ['A1', 'A2', 'A3', 'A4'].map(l => pts.find(p => p.label === l)).filter(Boolean);
+  const drawPts = (numPts.length >= 3 ? numPts : pts).filter(p => Number.isFinite(p.ch) && Number.isFinite(p.os));
+  const refPts = [...drawPts, ...aPts, { label: 'O', ch: 0, os: 0 }];
+  const minCH = Math.min(...refPts.map(p => p.ch));
+  const maxCH = Math.max(...refPts.map(p => p.ch));
+  const minOS = Math.min(...refPts.map(p => p.os));
+  const maxOS = Math.max(...refPts.map(p => p.os));
+  const rangeCH = Math.max(maxCH - minCH, 0.1);
+  const rangeOS = Math.max(maxOS - minOS, 0.1);
+  const diagram = { x: 325, y: 90, w: 520, h: 390 };
+  const scale = Math.min(diagram.w / rangeOS, diagram.h / rangeCH) * 0.62;
+  const cx = diagram.x + diagram.w / 2;
+  const cy = diagram.y + diagram.h / 2 + 8;
+  const midCH = (minCH + maxCH) / 2;
+  const midOS = (minOS + maxOS) / 2;
+  const toX = os => cx + (os - midOS) * scale;
+  const toY = ch => cy - (ch - midCH) * scale;
+  const ox = toX(0);
+  const oy = toY(0);
+  const shapeXs = drawPts.map(p => toX(p.os));
+  const shapeYs = drawPts.map(p => toY(p.ch));
+  const left = Math.min(...shapeXs);
+  const right = Math.max(...shapeXs);
+  const top = Math.min(...shapeYs);
+  const bottom = Math.max(...shapeYs);
+
+  ctx.strokeStyle = black;
+  ctx.lineWidth = 1.5;
+  if (numPts.length >= 3) {
+    ctx.beginPath();
+    numPts.forEach((p, i) => i ? ctx.lineTo(toX(p.os), toY(p.ch)) : ctx.moveTo(toX(p.os), toY(p.ch)));
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  ctx.setLineDash([9, 8]);
+  ctx.strokeStyle = red;
+  ctx.lineWidth = 1;
+  line(ox, top - 78, ox, bottom + 20);
+  line(left - 16, oy, right + 118, oy);
+  ctx.setLineDash([]);
+  arrow(ox, top - 42, ox, top - 83, red, 12);
+  arrow(left - 16, oy, right + 120, oy, red, 12);
+  text('PIER AXIS', ox, top - 98, { color: grey, size: 30, weight: 'bold', align: 'center' });
+  text('CH', ox, top - 68, { color: red, size: 23, align: 'center' });
+  text('OS', right + 136, oy + 8, { color: red, size: 23 });
+  text('(0,0)', ox + 8, oy - 8, { color: grey, size: 16 });
+
+  const aOffsets = {
+    A1: [0, -14, 'center', 'bottom'],
+    A2: [12, -3, 'left', 'middle'],
+    A3: [0, 30, 'center', 'top'],
+    A4: [-12, -3, 'right', 'middle']
+  };
+  aPts.forEach(p => {
+    const [dx, dy, align, baseline] = aOffsets[p.label] || [0, 0, 'center', 'middle'];
+    text(p.label, toX(p.os) + dx, toY(p.ch) + dy, { color: blue, size: 28, align, baseline });
+  });
+
+  const redMap = { '1': "1'", '2': "4'", '3': "3'", '4': "1'", '5': '2', '6': '3', '7': '4', '8': "2'" };
+  numPts.forEach(p => {
+    const px = toX(p.os);
+    const py = toY(p.ch);
+    const dx = px - ox;
+    const dy = py - oy;
+    const dist = Math.hypot(dx, dy) || 1;
+    const nx = dx / dist;
+    const ny = dy / dist;
+    const blueX = px + nx * 12;
+    const blueY = py + ny * 12;
+    const redX = px + nx * 36 + (p.ch > 0 ? 6 : -6);
+    const redY = py + ny * 18;
+    text(p.label, blueX, blueY, { color: blue, size: 27, align: nx < -0.2 ? 'right' : 'left', baseline: ny < -0.2 ? 'bottom' : 'top' });
+    text(redMap[p.label] || p.label, redX, redY, { color: red, size: 27, align: nx < -0.2 ? 'right' : 'left', baseline: ny < -0.2 ? 'bottom' : 'top' });
+  });
+
+  // Notes and formula on the left.
+  text('Allowable tolerance = (HD:VD)=(1:600)', 8, 38, { color: grey, size: 28 });
+  text('T=Top of formwork', 8, 73, { color: grey, size: 28 });
+  text('B=Bottom of formwork', 8, 108, { color: grey, size: 28 });
+  text('h=Column height', 8, 143, { color: grey, size: 28 });
+  field('h=', 8, 178, 146, 28);
+
+  text('Tolerance=', 8, 262, { color: grey, size: 28 });
+  text('(1xh)', 160, 246, { color: grey, size: 22, align: 'center' });
+  line(132, 253, 187, 253);
+  text('600', 160, 278, { color: grey, size: 22, align: 'center' });
+  text('Tolerance=', 8, 315, { color: grey, size: 28 });
+  text('(1x', 151, 299, { color: grey, size: 22, align: 'center' });
+  line(132, 306, 268, 306);
+  text('600', 200, 331, { color: grey, size: 22, align: 'center' });
+  line(181, 302, 260, 302);
+  text(')', 274, 315, { color: grey, size: 28 });
+  text('=', 132, 365, { color: grey, size: 28 });
+  line(162, 368, 275, 368);
+  text('mm.', 283, 365, { color: grey, size: 28 });
+
+  // Measurement blanks around the diagram.
+  const rightFieldX = 830;
+  field("T1/T1'=", rightFieldX, top + 42, 105, 28);
+  field("B1/B1'=", rightFieldX, top + 78, 105, 28);
+  field("T2/T2'=", rightFieldX, oy + 46, 105, 28);
+  field("B2/B2'=", rightFieldX, oy + 84, 105, 28);
+  field("Δ2/Δ2'=", rightFieldX, oy + 122, 105, 28);
+
+  field("T4/T4'=", 220, H - 120, 190, 28);
+  field("B4/B4'=", 220, H - 82, 190, 28);
+  field("Δ4/Δ4'=", 220, H - 44, 190, 28);
+  field("T3/T3'=", 660, H - 120, 170, 28);
+  field("B3/B3'=", 660, H - 82, 170, 28);
+  field("Δ3/Δ3'=", 660, H - 44, 170, 28);
+}
+
 function drawPileArray(pier) {
   const work = document.getElementById('element').value;
   const element = document.getElementById('element').value;
@@ -1798,8 +1971,8 @@ function drawPileArray(pier) {
   const dpr = window.devicePixelRatio || 1;
   const _isColLift = (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
   // Canvas logical size: wider for Column lift to accommodate side text
-  const W = _isColLift ? 1800 : 900;
-  const H = _isColLift ? 600  : 450;
+  const W = _isColLift ? 1120 : 900;
+  const H = _isColLift ? 680  : 450;
   canvas.width  = W * dpr;
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1810,6 +1983,11 @@ function drawPileArray(pier) {
     ctx.font = '11px monospace';
     ctx.textAlign = 'center';
     ctx.fillText('No array data', W/2, H/2);
+    return;
+  }
+
+  if (_isColLift) {
+    drawColumnLiftFormworkDiagram(ctx, W, H, pier, pts);
     return;
   }
 
@@ -1830,16 +2008,18 @@ function drawPileArray(pier) {
   const midOS = (minOS + maxOS) / 2;
 
   // For Column lift: reserve left/right zones for text, array draws in center zone
-  const LEFT_ZONE  = _isColLift ? 560 : 0;
-  const RIGHT_ZONE = _isColLift ? 560 : 0;
-  const BOT_ZONE   = _isColLift ? 110 : 0;
-  const PAD = 30;
+  const LEFT_ZONE  = _isColLift ? 480 : 0;
+  const RIGHT_ZONE = _isColLift ? 480 : 0;
+  const BOT_ZONE   = _isColLift ? 130 : 0;
+  const PAD = _isColLift ? 20 : 30;
   const drawW = W - LEFT_ZONE - RIGHT_ZONE - PAD * 2;
   const drawH = H - BOT_ZONE - PAD * 2;
   const centerX = LEFT_ZONE + PAD + drawW / 2;
   const centerY = PAD + drawH / 2;
 
-  const scale = Math.min(drawW / rangeOS, drawH / rangeCH) * 0.82;
+  // Lock to square drawing zone to preserve aspect ratio
+  const squareSide = Math.min(drawW, drawH);
+  const scale = Math.min(squareSide / rangeOS, squareSide / rangeCH) * 0.78;
   const r = Math.min(9, Math.max(4, scale * 0.55));
 
   const toX = os => centerX + (os - midOS) * scale;
@@ -2312,8 +2492,8 @@ function drawPileArray(pier) {
 
   // ── Column Formwork Tolerance Overlay (1st-Lift / 2nd Lift only) ──
   if (_isColLift) {
-    const fs = 18;
-    const lh = 24;
+    const fs = 22;
+    const lh = 30;
     ctx.textBaseline = 'top';
     ctx.lineWidth = 1.2;
     const lnW = 120; // underline width
