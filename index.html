@@ -607,6 +607,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   .pile-panel-title { font-size: 4.5pt !important; padding: 0 !important; margin: 0 0 1px 0 !important; line-height: 1.2 !important; text-align: center !important; width: 100% !important; }
   .pile-type-badge { font-size: 4.5pt !important; padding: 1px 4px !important; margin-top: 1px !important; }
   #pile-canvas { width: 200pt !important; height: 100pt !important; display: block !important; margin: auto !important; image-rendering: crisp-edges !important; }
+  body.col-lift #pile-array-section { width: 230pt !important; min-width: 230pt !important; justify-content: center !important; overflow: visible !important; padding: 1pt 1pt !important; }
+  body.col-lift #pile-canvas { width: 220pt !important; height: auto !important; aspect-ratio: 1120 / 680 !important; max-width: 220pt !important; }
   .pile-type-badge { font-size: 5pt !important; padding: 0px 2px !important; margin-top: 0px !important; }
   .pile-panel-title { font-size: 4.5pt !important; }
   /* ── MAIN SURVEY TABLE ── */
@@ -1654,6 +1656,7 @@ function onWorkChange() {
   updateTolerance();
   document.body.classList.toggle('pile-deviate', work === 'Pile Deviate');
   document.body.classList.toggle('bored-pile', _useBPLayout);
+  document.body.classList.toggle('col-lift', work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
   document.body.classList.toggle('no-elev', ['Pile cap','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pier Head','Bearing Plinths','Elastomeric'].includes(work));
   // Switch table-layout immediately on work change
   const tbl = document.getElementById('survey-table');
@@ -3133,6 +3136,7 @@ function printDoc() {
   const pier = currentPier?.id || 'NSCR';
   const work = document.getElementById('element').value;
   const _elVal = document.getElementById('element')?.value || '';
+  document.body.classList.toggle('col-lift', work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
   document.title = `${pier}_${_elVal.replace(/\s+/g,'_')}`;
   applyColWidths();
   // Force sig-card-bp visibility for Bored Pile print
@@ -3460,4 +3464,3 @@ fetchDwgFromSheet();
 </script>
 </body>
 </html>
-
