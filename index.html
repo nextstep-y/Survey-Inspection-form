@@ -101,7 +101,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
 .card-header-icon { width: 16px; height: 16px; opacity: 0.75; }
 .select-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1.5fr 1fr 2fr;
+  grid-template-columns: 1.15fr 1.35fr 1.85fr 1.65fr;
   gap: 0;
 }
 .sel-col {
@@ -161,7 +161,14 @@ select:focus, input[type="text"]:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(26,111,181,0.15);
 }
-#pier-input { font-family: var(--mono); font-size: 13px; font-weight: 500; }
+#pier-no-col { min-width: 170px; }
+#pier-input {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 600;
+  height: 38px;
+  padding: 8px 12px;
+}
 
 /* ── PIER INFO CARD ── */
 .pier-card {
