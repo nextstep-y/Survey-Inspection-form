@@ -2396,40 +2396,81 @@ function buildSS19Selection(value) {
 }
 
 
+const CLARK_STATION_GRID_WORKS = [
+  'Column Type C',
+  'Stiffener Column',
+  'Beam',
+  'Concourse Floor & Block Out',
+];
+
 function isClarkStationGridWork(work = document.getElementById('element')?.value) {
-  return isClarkStationMode() && work === 'Concourse Floor & Block Out';
+  return isClarkStationMode() && CLARK_STATION_GRID_WORKS.includes(work);
 }
 
-function clarkStationXLabels() {
-  return ['X01', 'X02', 'X03', 'X04', 'X05', 'X06'];
+function clarkStationUsesConcourseGrid(work = currentClarkWorkGroup()) {
+  return work === 'Concourse Floor & Block Out';
 }
 
-function clarkStationYLabels() {
-  return ['Y01', 'Y02'];
+function clarkStationGridAxes(work = currentClarkWorkGroup()) {
+  return clarkStationUsesConcourseGrid(work)
+    ? { x: 'X', y: 'Y' }
+    : { x: 'T', y: 'A' };
 }
 
-function clarkStationAxisOffset(label, axis) {
-  const normalized = sigcomNormalizeGridLabel(label, axis);
+function clarkStationXLabels(work = currentClarkWorkGroup()) {
+  return clarkStationUsesConcourseGrid(work)
+    ? ['X01', 'X02', 'X03', 'X04', 'X05', 'X06']
+    : ['T01', 'T02', 'T03', 'T04'];
+}
+
+function clarkStationYLabels(work = currentClarkWorkGroup()) {
+  return clarkStationUsesConcourseGrid(work)
+    ? ['Y01', 'Y02']
+    : ['A01', 'A02'];
+}
+
+function clarkStationDefaultGridRange(work = currentClarkWorkGroup()) {
+  return clarkStationUsesConcourseGrid(work) ? 'X01-X06 / Y01-Y02' : 'T01-T04 / A01-A02';
+}
+
+function clarkStationGridPlaceholder(work = currentClarkWorkGroup()) {
+  return clarkStationDefaultGridRange(work);
+}
+
+function clarkStationNormalizeGridLabel(value, axisPrefix) {
+  const raw = String(value || '').toUpperCase().replace(/[’`]/g, "'").replace(/\s+/g, '');
+  const m = raw.match(new RegExp(`${axisPrefix}(\d{1,2})(['"])?`));
+  if (!m) return '';
+  return `${axisPrefix}${String(parseInt(m[1], 10)).padStart(2, '0')}${m[2] || ''}`;
+}
+
+function clarkStationAxisOffset(label, axis, work = currentClarkWorkGroup()) {
+  const axes = clarkStationGridAxes(work);
+  const axisPrefix = axis === 'X' ? axes.x : axes.y;
+  const normalized = clarkStationNormalizeGridLabel(label, axisPrefix);
   if (axis === 'X') {
-    const idx = clarkStationXLabels().indexOf(normalized);
+    const idx = clarkStationXLabels(work).indexOf(normalized);
     return idx >= 0 ? idx * 10 : 0;
   }
-  const idx = clarkStationYLabels().indexOf(normalized);
+  const idx = clarkStationYLabels(work).indexOf(normalized);
   return idx >= 0 ? idx * 20.635 : 0;
 }
 
-function clarkStationParseGridRange(value) {
+function clarkStationParseGridRange(value, work = currentClarkWorkGroup()) {
   const raw = String(value || '').toUpperCase().replace(/[’`]/g, "'").replace(/\s+/g, '');
-  const xLabels = clarkStationXLabels();
-  const yLabels = clarkStationYLabels();
-  const xs = [...raw.matchAll(/X\d{1,2}(?:['"])?/g)]
-    .map(m => sigcomNormalizeGridLabel(m[0], 'X'))
+  const axes = clarkStationGridAxes(work);
+  const xLabels = clarkStationXLabels(work);
+  const yLabels = clarkStationYLabels(work);
+  const xRe = new RegExp(`${axes.x}\\d{1,2}(?:['"])?`, 'g');
+  const yRe = new RegExp(`${axes.y}\\d{1,2}(?:['"])?`, 'g');
+  const xs = [...raw.matchAll(xRe)]
+    .map(m => clarkStationNormalizeGridLabel(m[0], axes.x))
     .filter(label => xLabels.includes(label));
-  const ys = [...raw.matchAll(/Y\d{1,2}(?:['"])?/g)]
-    .map(m => sigcomNormalizeGridLabel(m[0], 'Y'))
+  const ys = [...raw.matchAll(yRe)]
+    .map(m => clarkStationNormalizeGridLabel(m[0], axes.y))
     .filter(label => yLabels.includes(label));
   let startIdx = xs.length ? Math.min(...xs.map(label => xLabels.indexOf(label))) : 0;
-  let endIdx = xs.length ? Math.max(...xs.map(label => xLabels.indexOf(label))) : startIdx;
+  let endIdx = xs.length ? Math.max(...xs.map(label => xLabels.indexOf(label))) : xLabels.length - 1;
   let yStartIdx = ys.length ? Math.min(...ys.map(label => yLabels.indexOf(label))) : 0;
   let yEndIdx = ys.length ? Math.max(...ys.map(label => yLabels.indexOf(label))) : yLabels.length - 1;
   startIdx = Math.max(0, Math.min(xLabels.length - 1, startIdx));
@@ -2458,11 +2499,51 @@ function clarkStationParseGridRange(value) {
   };
 }
 
-function clarkStationElementBounds(elementId) {
+function clarkStationColumnGridCenters() {
+  const centers = {};
+  clarkPointMaster().forEach(p => {
+    const m = String(p.element || '').match(/^C_T(\d{2})_A(\d{2})$/i);
+    if (!m) return;
+    const key = `T${m[1]}-A${m[2]}`;
+    if (!centers[key]) centers[key] = { e: 0, n: 0, count: 0 };
+    centers[key].e += Number(p.e);
+    centers[key].n += Number(p.n);
+    centers[key].count += 1;
+  });
+  Object.values(centers).forEach(c => {
+    c.e /= c.count || 1;
+    c.n /= c.count || 1;
+  });
+  return centers;
+}
+
+function clarkStationCoordinateGridProjection(point) {
+  const centers = clarkStationColumnGridCenters();
+  const origin = centers['T01-A01'];
+  const tRef = centers['T02-A01'];
+  const aRef = centers['T01-A02'];
+  if (!origin || !tRef || !aRef) return null;
+  const vT = { e: tRef.e - origin.e, n: tRef.n - origin.n };
+  const vA = { e: aRef.e - origin.e, n: aRef.n - origin.n };
+  const det = vT.e * vA.n - vT.n * vA.e;
+  if (Math.abs(det) < 1e-9) return null;
+  const d = { e: Number(point.e) - origin.e, n: Number(point.n) - origin.n };
+  const t = (d.e * vA.n - d.n * vA.e) / det;
+  const a = (vT.e * d.n - vT.n * d.e) / det;
+  if (!Number.isFinite(t) || !Number.isFinite(a)) return null;
+  return { ch: t * 10, os: a * 20.635 };
+}
+
+function clarkStationElementBounds(elementId, work = currentClarkWorkGroup()) {
   const pts = clarkPointMaster().filter(p => p.element === elementId);
-  const chValues = pts.map(p => Number(p.ch)).filter(Number.isFinite);
-  const osValues = pts.map(p => Number(p.os)).filter(Number.isFinite);
-  if (!chValues.length || !osValues.length) return null;
+  let projected = pts.map(p => ({ ch: Number(p.ch), os: Number(p.os) }))
+    .filter(p => Number.isFinite(p.ch) && Number.isFinite(p.os));
+  if (!projected.length && !clarkStationUsesConcourseGrid(work)) {
+    projected = pts.map(clarkStationCoordinateGridProjection).filter(Boolean);
+  }
+  if (!projected.length) return null;
+  const chValues = projected.map(p => p.ch);
+  const osValues = projected.map(p => p.os);
   return {
     minCh: Math.min(...chValues),
     maxCh: Math.max(...chValues),
@@ -2473,20 +2554,20 @@ function clarkStationElementBounds(elementId) {
 }
 
 function clarkStationSelectedGridElements(parsed, work = currentClarkWorkGroup()) {
-  const range = parsed || clarkStationParseGridRange(document.getElementById('pier-input')?.value || 'X01-X06 / Y01-Y02');
-  const xLabels = clarkStationXLabels();
-  const yLabels = clarkStationYLabels();
-  let xMin = Math.min(clarkStationAxisOffset(range.xStart, 'X'), clarkStationAxisOffset(range.xEnd, 'X'));
-  let xMax = Math.max(clarkStationAxisOffset(range.xStart, 'X'), clarkStationAxisOffset(range.xEnd, 'X'));
-  let yMin = Math.min(clarkStationAxisOffset(range.yStart, 'Y'), clarkStationAxisOffset(range.yEnd, 'Y'));
-  let yMax = Math.max(clarkStationAxisOffset(range.yStart, 'Y'), clarkStationAxisOffset(range.yEnd, 'Y'));
+  const range = parsed || clarkStationParseGridRange(document.getElementById('pier-input')?.value || clarkStationDefaultGridRange(work), work);
+  const xLabels = clarkStationXLabels(work);
+  const yLabels = clarkStationYLabels(work);
+  let xMin = Math.min(clarkStationAxisOffset(range.xStart, 'X', work), clarkStationAxisOffset(range.xEnd, 'X', work));
+  let xMax = Math.max(clarkStationAxisOffset(range.xStart, 'X', work), clarkStationAxisOffset(range.xEnd, 'X', work));
+  let yMin = Math.min(clarkStationAxisOffset(range.yStart, 'Y', work), clarkStationAxisOffset(range.yEnd, 'Y', work));
+  let yMax = Math.max(clarkStationAxisOffset(range.yStart, 'Y', work), clarkStationAxisOffset(range.yEnd, 'Y', work));
   if (range.startIdx === 0) xMin = -Infinity;
   if (range.endIdx === xLabels.length - 1) xMax = Infinity;
   if (range.yStartIdx === 0) yMin = -Infinity;
   if (range.yEndIdx === yLabels.length - 1) yMax = Infinity;
   const tolerance = 0.001;
   return clarkElementsForWork(work)
-    .map(item => ({ ...item, bounds: clarkStationElementBounds(item.id) }))
+    .map(item => ({ ...item, bounds: clarkStationElementBounds(item.id, work) }))
     .filter(item => item.bounds)
     .filter(item => item.bounds.maxCh >= xMin - tolerance && item.bounds.minCh <= xMax + tolerance && item.bounds.maxOs >= yMin - tolerance && item.bounds.minOs <= yMax + tolerance)
     .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
@@ -3702,14 +3783,26 @@ function onStructureTypeChange() {
   } else if (isClarkStationMode()) {
     setElementOptions(CLARK_ELEMENT_OPTIONS, 'Column Type C');
     if (elementLabel) elementLabel.textContent = 'Work Group';
-    if (label) label.textContent = 'Element Name';
-    if (input) {
-      input.value = '';
-      input.placeholder = 'e.g. C_T01_A02 or STF01';
+    if (isClarkStationGridWork('Column Type C')) {
+      if (label) label.textContent = 'Grid Line';
+      if (input) {
+        input.value = '';
+        input.placeholder = clarkStationGridPlaceholder(work);
+      }
+      if (combo) combo.style.display = 'none';
+      if (ss19Controls) ss19Controls.style.display = 'grid';
+      if (btn) btn.setAttribute('aria-label', 'Show Clark Station grid line list');
+      populateClarkStationGridLists();
+    } else {
+      if (label) label.textContent = 'Element Name';
+      if (input) {
+        input.value = '';
+        input.placeholder = 'e.g. C_T01_A02 or STF01';
+      }
+      if (combo) combo.style.display = '';
+      if (ss19Controls) ss19Controls.style.display = 'none';
+      if (btn) btn.setAttribute('aria-label', 'Show Clark Station element list');
     }
-    if (combo) combo.style.display = '';
-    if (ss19Controls) ss19Controls.style.display = 'none';
-    if (btn) btn.setAttribute('aria-label', 'Show Clark Station element list');
   } else if (isClarkSigcomMode()) {
     setElementOptions(SIGCOM_ELEMENT_OPTIONS, 'Bored Pile');
     if (elementLabel) elementLabel.textContent = 'Work Group';
@@ -3739,7 +3832,7 @@ function onStructureTypeChange() {
   clearForm();
   if (isSubstationMode()) setSS19GridInputsFromRange('X01 / Y01');
   if (isClarkSigcomGridWork()) setSigcomGridInputsFromRange('X01 / Y01');
-  if (isClarkStationGridWork()) setClarkStationGridInputsFromRange('X01-X06 / Y01-Y02');
+  if (isClarkStationGridWork()) setClarkStationGridInputsFromRange(clarkStationDefaultGridRange());
   populatePierSelect('');
 }
 
@@ -3868,12 +3961,12 @@ function onWorkChange() {
     const ss19Controls = document.getElementById('ss19-grid-controls');
     if (isClarkStationGridWork(work)) {
       if (label) label.textContent = 'Grid Line';
-      if (input) input.placeholder = 'X01-X06 / Y01-Y02';
+      if (input) input.placeholder = clarkStationGridPlaceholder(work);
       if (combo) combo.style.display = 'none';
       if (ss19Controls) ss19Controls.style.display = 'grid';
       if (btn) btn.setAttribute('aria-label', 'Show Clark Station grid line list');
       populateClarkStationGridLists();
-      const gridRange = currentPier?.gridRange || input?.value || 'X01-X06 / Y01-Y02';
+      const gridRange = currentPier?.gridRange || input?.value || clarkStationDefaultGridRange(work);
       const nextPier = buildClarkStationGridSelection(gridRange);
       if (nextPier) {
         currentPier = nextPier;
