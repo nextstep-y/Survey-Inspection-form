@@ -1901,6 +1901,12 @@ const WORK_ARRAY_KEY = {
 // Elevation design field per work type
 const BEARING_PLINTH_ELEV = {"TYPE1": 140, "TYPE2": 150, "TYPE3_CIS40": 97, "TYPE3_CIS50": 112, "TYPE3_CIS60": 49, "TYPE3_RAMP": 142};
 const ELASTOMERIC_ELEV = {"TYPE1": 30, "TYPE2": 25, "TYPE3_CIS40": 67, "TYPE3_CIS50": 67, "TYPE3_CIS60": 67, "TYPE3_RAMP": 67};
+const POT_BEARING_ELEMENT_ELEV_OFFSET = {
+  'P-889': 0.122,
+  'P-890': 0.122,
+  'P-1092': 0.120,
+  'P-1093': 0.120,
+};
 
 function getBearingType() {
   return document.getElementById('bearing-type')?.value || 'TYPE1';
@@ -1918,9 +1924,23 @@ const WORK_ELEV = {
   'Pier Column (1st-Lift)': p => p.topPier,
   'Pier Column (2nd Lift)': p => p.topPier,
   'Pier Head': p => p.topPier,
-  'Bearing Plinths': p => p.id === 'P-1093' ? p.topPier + 0.120 : p.topPier + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000,
-  'Elastomeric': p => p.topPier + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000,
+  'Bearing Plinths': p => p.id === 'P-1093' ? p.topPier + 0.120 : (p.id === 'P-891' ? p.topPier + 0.200 + 0.150 : p.topPier + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
+  'Elastomeric': p => Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
+    ? p.topPier + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id]
+    : (p.id === 'P-891' ? p.topPier + 0.200 + 0.150 + 0.030 : p.topPier + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
 };
+
+function getWorkPointElev(pier, work, label) {
+  if (!pier || !work) return null;
+  if (pier.id === 'P-891' && work === 'Bearing Plinths' && /^D/.test(String(label || ''))) {
+    return pier.topPier + 0.119;
+  }
+  if (pier.id === 'P-891' && work === 'Elastomeric' && /^ED/.test(String(label || ''))) {
+    return pier.topPier + 0.119 + 0.030;
+  }
+  const fn = WORK_ELEV[work];
+  return fn ? fn(pier) : null;
+}
 
 const TOL = 0.075; // 75mm tolerance
 </script>
@@ -1957,7 +1977,115 @@ Object.assign(ARRAYS_RAW, {
     {label:'BR1', ch: 0.850, os: 1.150}, {label:'BR2', ch: 0.850, os: 2.850},
     {label:'BR3', ch:-0.850, os: 2.850}, {label:'BR4', ch:-0.850, os: 1.150},
   ],
+  'EL_BR115MAIN - BR 115 MAIN': [
+    {label:'CL1', ch: 0.800, os:-2.800}, {label:'CL2', ch: 0.800, os:-1.200},
+    {label:'CL3', ch:-0.800, os:-1.200}, {label:'CL4', ch:-0.800, os:-2.800},
+    {label:'CR1', ch: 0.850, os: 1.150}, {label:'CR2', ch: 0.850, os: 2.850},
+    {label:'CR3', ch:-0.850, os: 2.850}, {label:'CR4', ch:-0.850, os: 1.150},
+  ],
+  'EL_BR115MAIN - BR115 MAIN': [
+    {label:'CL1', ch: 0.800, os:-2.800}, {label:'CL2', ch: 0.800, os:-1.200},
+    {label:'CL3', ch:-0.800, os:-1.200}, {label:'CL4', ch:-0.800, os:-2.800},
+    {label:'CR1', ch: 0.850, os: 1.150}, {label:'CR2', ch: 0.850, os: 2.850},
+    {label:'CR3', ch:-0.850, os: 2.850}, {label:'CR4', ch:-0.850, os: 1.150},
+  ],
+  'EL_BR114MAIN - BR114 MAIN': [
+    {label:'CL1', ch: 0.745, os:-2.745}, {label:'CL2', ch: 0.745, os:-1.255},
+    {label:'CL3', ch:-0.745, os:-1.255}, {label:'CL4', ch:-0.745, os:-2.745},
+    {label:'CR1', ch: 0.785, os: 1.215}, {label:'CR2', ch: 0.785, os: 2.785},
+    {label:'CR3', ch:-0.785, os: 2.785}, {label:'CR4', ch:-0.785, os: 1.215},
+  ],
 });
+
+// P-891 BR114 transition pier head, bearing plinth, and elastomeric geometry from
+// NSCR-ITD-N03-ZWD-DWG-ST-023158-B / NSCR-GCR-N03-ZWD-DRC-ST-002009 Rev D.
+// CH follows the 3.500 m B.C bridge direction; OS follows the 6.480 m bridge direction.
+Object.assign(ARRAYS_RAW, {
+  'BR114TRANS - BR114 TRANS': [
+    {label:'T1', ch: 1.750, os: 0.000}, {label:'T2', ch: 0.000, os: 3.240},
+    {label:'T3', ch:-1.750, os: 0.000}, {label:'T4', ch: 0.000, os:-3.240},
+    {label:'T5', ch:-1.750, os: 0.600}, {label:'T6', ch: 1.750, os: 0.600},
+    {label:'T7', ch: 1.750, os:-0.600}, {label:'T8', ch:-1.750, os:-0.600},
+    {label:'S1', ch: 0.925, os: 0.000}, {label:'S2', ch:-0.925, os: 0.000},
+  ],
+  'BR115TRANS - BR115 TRANS': [
+    {label:'T1', ch: 1.750, os: 0.000}, {label:'T2', ch: 0.000, os: 3.300},
+    {label:'T3', ch:-1.750, os: 0.000}, {label:'T4', ch: 0.000, os:-3.300},
+    {label:'T5', ch:-1.750, os: 0.600}, {label:'T6', ch: 1.750, os: 0.600},
+    {label:'T7', ch: 1.750, os:-0.600}, {label:'T8', ch:-1.750, os:-0.600},
+    {label:'S1', ch:-0.925, os: 0.000}, {label:'S2', ch: 0.925, os: 0.000},
+  ],
+  'BP_BR114TRANS - BR114 TRANS': [
+    {label:'UL1', ch: 1.150, os:-1.975}, {label:'UL2', ch: 1.150, os:-1.425},
+    {label:'UL3', ch: 0.700, os:-1.425}, {label:'UL4', ch: 0.700, os:-1.975},
+    {label:'UR1', ch: 1.150, os: 1.425}, {label:'UR2', ch: 1.150, os: 1.975},
+    {label:'UR3', ch: 0.700, os: 1.975}, {label:'UR4', ch: 0.700, os: 1.425},
+    {label:'DL1', ch:-0.485, os:-2.840}, {label:'DL2', ch:-0.485, os:-1.960},
+    {label:'DL3', ch:-1.365, os:-1.960}, {label:'DL4', ch:-1.365, os:-2.840},
+    {label:'DR1', ch:-0.450, os: 1.925}, {label:'DR2', ch:-0.450, os: 2.875},
+    {label:'DR3', ch:-1.400, os: 2.875}, {label:'DR4', ch:-1.400, os: 1.925},
+  ],
+  'EL_BR114TRANS - BR114 TRANS': [
+    {label:'EUL1', ch: 1.150, os:-1.975}, {label:'EUL2', ch: 1.150, os:-1.425},
+    {label:'EUL3', ch: 0.700, os:-1.425}, {label:'EUL4', ch: 0.700, os:-1.975},
+    {label:'EUR1', ch: 1.150, os: 1.425}, {label:'EUR2', ch: 1.150, os: 1.975},
+    {label:'EUR3', ch: 0.700, os: 1.975}, {label:'EUR4', ch: 0.700, os: 1.425},
+    {label:'EDL1', ch:-0.485, os:-2.840}, {label:'EDL2', ch:-0.485, os:-1.960},
+    {label:'EDL3', ch:-1.365, os:-1.960}, {label:'EDL4', ch:-1.365, os:-2.840},
+    {label:'EDR1', ch:-0.450, os: 1.925}, {label:'EDR2', ch:-0.450, os: 2.875},
+    {label:'EDR3', ch:-1.400, os: 2.875}, {label:'EDR4', ch:-1.400, os: 1.925},
+  ],
+});
+
+function expandBearingPlinthArrays(expand = 0.030) {
+  Object.entries(ARRAYS_RAW).forEach(([key, pts]) => {
+    if (!key.startsWith('BP_') || !Array.isArray(pts) || pts._expandedBearingPlinth) return;
+    const groups = new Map();
+    pts.forEach(point => {
+      const label = String(point.label || '');
+      const groupKey = label.replace(/\d+$/, '') || label;
+      if (!groups.has(groupKey)) groups.set(groupKey, []);
+      groups.get(groupKey).push(point);
+    });
+
+    const phPts = ARRAYS_RAW[key.slice(3)] || [];
+    const phT14 = ['T1', 'T2', 'T3', 'T4'].map(label => phPts.find(p => p.label === label)).filter(Boolean);
+    const phBounds = phT14.length === 4 ? {
+      minCh: Math.min(...phT14.map(p => Number(p.ch))),
+      maxCh: Math.max(...phT14.map(p => Number(p.ch))),
+      minOs: Math.min(...phT14.map(p => Number(p.os))),
+      maxOs: Math.max(...phT14.map(p => Number(p.os))),
+    } : null;
+
+    groups.forEach(groupPts => {
+      const finite = groupPts.filter(p => Number.isFinite(Number(p.ch)) && Number.isFinite(Number(p.os)));
+      if (finite.length < 4) return;
+      const chValues = finite.map(p => Number(p.ch));
+      const osValues = finite.map(p => Number(p.os));
+      const minCh = Math.min(...chValues);
+      const maxCh = Math.max(...chValues);
+      const minOs = Math.min(...osValues);
+      const maxOs = Math.max(...osValues);
+      const centerCh = (minCh + maxCh) / 2;
+      const centerOs = (minOs + maxOs) / 2;
+      finite.forEach(point => {
+        const chDir = Number(point.ch) >= centerCh ? 1 : -1;
+        const osDir = Number(point.os) >= centerOs ? 1 : -1;
+        let nextCh = Number(point.ch) + chDir * expand;
+        let nextOs = Number(point.os) + osDir * expand;
+        if (phBounds) {
+          nextCh = Math.min(phBounds.maxCh, Math.max(phBounds.minCh, nextCh));
+          nextOs = Math.min(phBounds.maxOs, Math.max(phBounds.minOs, nextOs));
+        }
+        point.ch = Number(nextCh.toFixed(3));
+        point.os = Number(nextOs.toFixed(3));
+      });
+    });
+    Object.defineProperty(pts, '_expandedBearingPlinth', { value: true, enumerable: false });
+  });
+}
+
+expandBearingPlinthArrays();
 
 // ═══════════════════════════════════════════
 // STATE
@@ -2439,7 +2567,7 @@ function clarkStationGridPlaceholder(work = currentClarkWorkGroup()) {
 
 function clarkStationNormalizeGridLabel(value, axisPrefix) {
   const raw = String(value || '').toUpperCase().replace(/[’`]/g, "'").replace(/\s+/g, '');
-  const m = raw.match(new RegExp(`${axisPrefix}(\d{1,2})(['"])?`));
+  const m = raw.match(new RegExp(`${axisPrefix}(\\d{1,2})(['"])?`));
   if (!m) return '';
   return `${axisPrefix}${String(parseInt(m[1], 10)).padStart(2, '0')}${m[2] || ''}`;
 }
@@ -2534,6 +2662,16 @@ function clarkStationCoordinateGridProjection(point) {
   return { ch: t * 10, os: a * 20.635 };
 }
 
+function clarkStationCanvasGridProjection(point, work = currentClarkWorkGroup()) {
+  const explicitCh = Number(point.gridCh ?? point.localY ?? point.ch);
+  const explicitOs = Number(point.gridOs ?? point.localX ?? point.os);
+  if (Number.isFinite(explicitCh) && Number.isFinite(explicitOs)) {
+    return { ch: explicitCh, os: explicitOs };
+  }
+  if (!clarkStationUsesConcourseGrid(work)) return clarkStationCoordinateGridProjection(point);
+  return null;
+}
+
 function clarkStationElementBounds(elementId, work = currentClarkWorkGroup()) {
   const pts = clarkPointMaster().filter(p => p.element === elementId);
   let projected = pts.map(p => ({ ch: Number(p.ch), os: Number(p.os) }))
@@ -2576,25 +2714,31 @@ function clarkStationSelectedGridElements(parsed, work = currentClarkWorkGroup()
 function clarkStationGridPointsForElements(elements, base) {
   const baseE = Number(base?.e) || 0;
   const baseN = Number(base?.n) || 0;
+  const work = currentClarkWorkGroup();
   return (elements || []).flatMap(element => (element.bounds?.points || [])
     .slice()
     .sort((a, b) => String(a.pt).localeCompare(String(b.pt), undefined, { numeric: true }))
-    .map(p => ({
-      label: p.label,
-      pointName: p.pt,
-      element: p.element,
-      group: p.group,
-      type: p.type,
-      grid: p.grid,
-      edge: p.edge,
-      e: Number(p.e),
-      n: Number(p.n),
-      z: Number(p.z),
-      dwg: p.dwg,
-      rev: p.rev,
-      ch: Number((Number(p.n) - baseN).toFixed(3)),
-      os: Number((Number(p.e) - baseE).toFixed(3)),
-    })));
+    .map(p => {
+      const gridProjection = clarkStationCanvasGridProjection(p, work);
+      return {
+        label: p.label,
+        pointName: p.pt,
+        element: p.element,
+        group: p.group,
+        type: p.type,
+        grid: p.grid,
+        edge: p.edge,
+        e: Number(p.e),
+        n: Number(p.n),
+        z: Number(p.z),
+        dwg: p.dwg,
+        rev: p.rev,
+        gridCh: Number.isFinite(Number(gridProjection?.ch)) ? Number(gridProjection.ch.toFixed(4)) : null,
+        gridOs: Number.isFinite(Number(gridProjection?.os)) ? Number(gridProjection.os.toFixed(4)) : null,
+        ch: Number((Number(p.n) - baseN).toFixed(3)),
+        os: Number((Number(p.e) - baseE).toFixed(3)),
+      };
+    }));
 }
 
 function getClarkStationGridRangeMatches(filter, limit = 1000) {
@@ -3323,6 +3467,9 @@ function _workSpecificDwgOverride(pier) {
   const work = document.getElementById('element')?.value || '';
   if (pier?.id === 'P-1093' && (work === 'Pier Head' || work === 'Bearing Plinths')) {
     return { dwg: 'NSCR-ITD-N03-ZWD-DWG-ST-023162 / 023163', rev: 'B' };
+  }
+  if (pier?.id === 'P-891' && (work === 'Pier Head' || work === 'Bearing Plinths' || work === 'Elastomeric')) {
+    return { dwg: 'NSCR-ITD-N03-ZWD-DWG-ST-023158', rev: 'B' };
   }
   return {};
 }
@@ -5315,8 +5462,18 @@ function drawClarkStationArray(ctx, W, H, pier, pts) {
     return;
   }
 
-  const mapper = createCanvasAutoOrienter(valid, { targetAxis: 'horizontal' });
-  const mapped = valid.map(p => ({ ...p, ...mapper.mapPoint(p) }));
+  const work = currentClarkWorkGroup();
+  let mapped = valid
+    .map(p => {
+      const projected = clarkStationCanvasGridProjection(p, work);
+      if (!projected) return null;
+      return { ...p, x: Number(projected.os), y: -Number(projected.ch) };
+    })
+    .filter(Boolean);
+  if (!mapped.length) {
+    const mapper = createCanvasAutoOrienter(valid, { targetAxis: 'horizontal' });
+    mapped = valid.map(p => ({ ...p, ...mapper.mapPoint(p) }));
+  }
   const xs = mapped.map(p => p.x);
   const ys = mapped.map(p => p.y);
   const minX = Math.min(...xs), maxX = Math.max(...xs);
@@ -5332,21 +5489,29 @@ function drawClarkStationArray(ctx, W, H, pier, pts) {
   const sx = p => W / 2 + (p.x - cx) * scale;
   const sy = p => (padTop + (H - padBot)) / 2 + (p.y - cy) * scale;
 
-  const byElement = mapped.length >= 3 ? mapped : [];
-  if (byElement.length >= 3) {
+  const isConcourseCanvas = work === 'Concourse Floor & Block Out';
+  const pathsByElement = new Map();
+  mapped.forEach((p, idx) => {
+    const key = p.element || p.group || `__path_${idx}`;
+    if (!pathsByElement.has(key)) pathsByElement.set(key, []);
+    pathsByElement.get(key).push(p);
+  });
+
+  pathsByElement.forEach(pathPts => {
+    if (pathPts.length < 3) return;
     ctx.beginPath();
-    byElement.forEach((p, idx) => {
+    pathPts.forEach((p, idx) => {
       const x = sx(p), y = sy(p);
       if (idx === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
     ctx.closePath();
-    ctx.fillStyle = 'rgba(73, 132, 180, 0.10)';
-    ctx.strokeStyle = '#315f86';
-    ctx.lineWidth = 2;
-    ctx.fill();
+    ctx.fillStyle = isConcourseCanvas ? 'transparent' : 'rgba(73, 132, 180, 0.10)';
+    ctx.strokeStyle = isConcourseCanvas ? '#1f5f8f' : '#315f86';
+    ctx.lineWidth = isConcourseCanvas ? 1.6 : 2;
+    if (!isConcourseCanvas) ctx.fill();
     ctx.stroke();
-  }
+  });
 
   mapped.forEach((p, idx) => {
     const x = sx(p), y = sy(p);
@@ -5439,8 +5604,14 @@ function drawPileArray(pier) {
     const capArray = ARRAYS_RAW[pier.capReinf] || [];
     overlayCapPts = capArray.filter(p => /^[A-E]$/.test(p.label));
   }
-  const allPtsForRange = ((work === 'Pile Deviate' || work === 'Bored Pile') && overlayCapPts.length) 
-    ? [...pts, ...overlayCapPts] : pts;
+  let pierHeadOverlayPts = [];
+  if ((work === 'Elastomeric' || work === 'Bearing Plinths') && pier) {
+    const phKey = pier.pierType + ' - ' + pier.pierReinf;
+    pierHeadOverlayPts = (ARRAYS_RAW[phKey] || []).filter(p => /^T[1-8]$/.test(p.label) || /^S\d+$/.test(p.label));
+  }
+  const allPtsForRange = ((work === 'Pile Deviate' || work === 'Bored Pile') && overlayCapPts.length)
+    ? [...pts, ...overlayCapPts]
+    : (pierHeadOverlayPts.length ? [...pts, ...pierHeadOverlayPts] : pts);
   const chs = allPtsForRange.map(p => p.ch), oss = allPtsForRange.map(p => p.os);
   const minCH = Math.min(...chs), maxCH = Math.max(...chs);
   const minOS = Math.min(...oss), maxOS = Math.max(...oss);
@@ -5462,7 +5633,8 @@ function drawPileArray(pier) {
   // Pier Head is usually a wide, shallow layout. Let it use the full drawing width
   // while keeping one uniform scale, otherwise it becomes tiny in the header canvas.
   const squareSide = Math.min(drawW, drawH);
-  const scale = work === 'Pier Head'
+  const useWidePierHeadScale = work === 'Pier Head' || work === 'Bearing Plinths' || work === 'Elastomeric';
+  const scale = useWidePierHeadScale
     ? Math.min(drawW / rangeOS, drawH / rangeCH) * 0.86
     : Math.min(squareSide / rangeOS, squareSide / rangeCH) * 0.78;
   const r = Math.min(9, Math.max(4, scale * 0.55));
@@ -6199,7 +6371,8 @@ function renderSurveyTable(pier) {
       const v = _tElevMap[label];
       return (v != null) ? v : null;
     }
-    return elevDesign;
+    const pointElev = getWorkPointElev(pier, work, label);
+    return pointElev != null ? pointElev : elevDesign;
   };
 
   // Elev column header
@@ -6622,7 +6795,8 @@ function exportDesign(fmt) {
     const dE = exactClark ? 0 : -ch * Math.cos(wcbRad) + os * Math.sin(wcbRad);
     const N = (exactClark ? p.n : pier.n + dN).toFixed(3);
     const E = (exactClark ? p.e : pier.e + dE).toFixed(3);
-    const ptElevExp = isClarkStationElement(pier) && Number.isFinite(p.z) ? p.z : (_isPierHeadExp ? (_tElevMapExp[p.label] ?? null) : elevDesignGlobal);
+    const pointWorkElev = getWorkPointElev(pier, work, p.label);
+    const ptElevExp = isClarkStationElement(pier) && Number.isFinite(p.z) ? p.z : (_isPierHeadExp ? (_tElevMapExp[p.label] ?? null) : (pointWorkElev != null ? pointWorkElev : elevDesignGlobal));
     const Z = ptElevExp != null ? parseFloat(ptElevExp).toFixed(3) : '';
     const label = p.label || ('P' + (i + 1));
     rows.push([label, E, N, Z]);
