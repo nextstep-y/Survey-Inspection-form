@@ -3244,7 +3244,7 @@ function buildSigcomGridSelection(value) {
     topCap: work === 'Beam FG1' ? 106.900 : (work === 'C1' ? c1Top : (work === 'SCA' ? scaTop : (work === 'W25' ? w25Top : 105.900))),
     topPier: work === 'Beam FG1' ? 106.900 : (work === 'C1' ? c1Top : (work === 'SCA' ? scaTop : (work === 'W25' ? w25Top : 105.900))),
     piles: work === 'Beam FG1' ? `${selectedFG1Beams.length} FG1 segments` : (work === 'C1' ? `${selectedC1Columns.length} C1 columns` : (work === 'SCA' ? `${selectedSCAItems.length} SCA refs` : (work === 'W25' ? `${selectedW25Segments.length} W25 segments` : `${selectedPiles.length} P1 / L=23.000m`))),
-    bcPiles: work === 'Beam FG1' ? `FG1 W=0.500m / Bottom EL 105.900` : (work === 'C1' ? 'C1 0.600 x 0.600m' : (work === 'SCA' ? 'SCA reference centers / footprint pending' : (work === 'W25' ? 'W25 wall T=0.250m / preliminary PDF boundary' : `${selectedPiles.length} - P1 DIA`))),
+    bcPiles: work === 'Beam FG1' ? `FG1 W=0.500m / Bottom EL 105.900` : (work === 'C1' ? 'C1 0.600 x 0.600m' : (work === 'SCA' ? 'SCA reference centers / footprint pending' : (work === 'W25' ? 'W25 wall T=0.250m / DXF verified' : `${selectedPiles.length} - P1 DIA`))),
     capReinf: work,
     colDim: work === 'Beam FG1' ? 'FG1 W=0.500m' : (work === 'C1' ? 'C1 0.600 x 0.600m' : (work === 'SCA' ? 'SCA width 0.335m shown in elevation' : (work === 'W25' ? 'W25 T=0.250m' : (work === 'Pile cap' ? 'Pile cap F1' : 'P1 DIA')))),
     pierType: work,
