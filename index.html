@@ -1917,6 +1917,14 @@ function updateBearingElev() {
   // Re-render table to update elevation when bearing type changes
   if (currentPier) renderSurveyTable(currentPier);
 }
+
+// Single source of truth for every activity whose design elevation starts at
+// Top of Column. PIER_COLUMN_DRAWING_OVERRIDES is applied to topPier at load time.
+function getTopOfColumnElevation(pier) {
+  const value = Number(pier?.topPier);
+  return Number.isFinite(value) ? value : null;
+}
+
 const WORK_ELEV = {
   'Bored Pile': p => p.cutoff,
   'Pile Deviate': p => p.cutoff,
@@ -1925,19 +1933,19 @@ const WORK_ELEV = {
   'Pier Column (1st-Lift)': p => p.topPier,
   'Pier Column (2nd Lift)': p => p.topPier,
   'Pier Head': p => p.topPier,
-  'Bearing Plinths': p => p.id === 'P-1093' ? p.topPier + 0.120 : (p.id === 'P-891' ? p.topPier + 0.200 + 0.150 : p.topPier + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
+  'Bearing Plinths': p => p.id === 'P-1093' ? getTopOfColumnElevation(p) + 0.120 : (p.id === 'P-891' ? getTopOfColumnElevation(p) + 0.200 + 0.150 : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
   'Elastomeric': p => Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
-    ? p.topPier + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id]
-    : (p.id === 'P-891' ? p.topPier + 0.200 + 0.150 + 0.030 : p.topPier + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
+    ? getTopOfColumnElevation(p) + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id]
+    : (p.id === 'P-891' ? getTopOfColumnElevation(p) + 0.200 + 0.150 + 0.030 : getTopOfColumnElevation(p) + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
 };
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
   if (pier.id === 'P-891' && work === 'Bearing Plinths' && /^D/.test(String(label || ''))) {
-    return pier.topPier + 0.119;
+    return getTopOfColumnElevation(pier) + 0.119;
   }
   if (pier.id === 'P-891' && work === 'Elastomeric' && /^ED/.test(String(label || ''))) {
-    return pier.topPier + 0.119 + 0.030;
+    return getTopOfColumnElevation(pier) + 0.119 + 0.030;
   }
   const fn = WORK_ELEV[work];
   return fn ? fn(pier) : null;
