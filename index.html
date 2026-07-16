@@ -1000,6 +1000,20 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     min-width: 300px !important;
     max-width: 420px !important;
   }
+  body.elastomeric-work #pile-array-section {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    border-left: 0 !important;
+    border-top: 1px solid var(--border);
+  }
+  body.elastomeric-work #main-content-wrapper {
+    flex-direction: column !important;
+  }
+  body.elastomeric-work #pile-canvas {
+    width: min(100%, 900px) !important;
+    max-width: 900px !important;
+  }
   .work-select-card .select-grid {
     grid-template-columns:
       minmax(110px, 0.95fr)
@@ -1903,6 +1917,8 @@ const WORK_ARRAY_KEY = {
 // Elevation design field per work type
 const BEARING_PLINTH_ELEV = {"TYPE1": 140, "TYPE2": 150, "TYPE3_CIS40": 97, "TYPE3_CIS50": 112, "TYPE3_CIS60": 49, "TYPE3_RAMP": 142};
 const ELASTOMERIC_ELEV = {"TYPE1": 30, "TYPE2": 25, "TYPE3_CIS40": 67, "TYPE3_CIS50": 67, "TYPE3_CIS60": 67, "TYPE3_RAMP": 67};
+const P989_BEARING_PLINTH_ELEV = { TYPE1: 112, TYPE2: 140 };
+const P989_ELASTOMERIC_ELEV = 67;
 const POT_BEARING_ELEMENT_ELEV_OFFSET = {
   'P-889': 0.122,
   'P-890': 0.122,
@@ -1942,6 +1958,17 @@ const WORK_ELEV = {
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  if (pier.id === 'P-989' && (work === 'Bearing Plinths' || work === 'Elastomeric')) {
+    const point = String(label || '').replace(/^E/, '');
+    // P-989 arrangement: all U bearings and the two centre D bearings are
+    // Type 1; the four outer D bearings are Type 2 (6-Type 1, 4-Type 2).
+    const bearingType = /^U/.test(point) || /^DL(?:9|10|11|12)$/.test(point) || /^DR(?:1|2|3|4)$/.test(point)
+      ? 'TYPE1'
+      : 'TYPE2';
+    const plinth = P989_BEARING_PLINTH_ELEV[bearingType] / 1000;
+    const elastomeric = work === 'Elastomeric' ? P989_ELASTOMERIC_ELEV / 1000 : 0;
+    return getTopOfColumnElevation(pier) + plinth + elastomeric;
+  }
   if (pier.id === 'P-891' && work === 'Bearing Plinths' && /^D/.test(String(label || ''))) {
     return getTopOfColumnElevation(pier) + 0.119;
   }
@@ -4387,6 +4414,7 @@ function onWorkChange() {
   document.body.classList.toggle('pile-deviate', work === 'Pile Deviate');
   document.body.classList.toggle('bored-pile', _useBPLayout);
   document.body.classList.toggle('col-lift', work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
+  document.body.classList.toggle('elastomeric-work', work === 'Elastomeric');
   document.body.classList.toggle('no-elev', ['Pile cap','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pier Head','Bearing Plinths','Elastomeric'].includes(work));
   // Switch table-layout immediately on work change
   const tbl = document.getElementById('survey-table');
@@ -6231,6 +6259,7 @@ function drawPileArray(pier) {
   // Draw each pile
   // Pre-compute label positions for collision detection
   const _labelPos = {};
+  const _denseElastomericLabels = work === 'Elastomeric' && pts.length >= 32;
   pts.forEach(p => {
     const cx = toX(p.os), cy = toY(p.ch);
     const isCapCornerLabel = capLabelCenter && capCornerLabels.test(p.label);
@@ -6244,7 +6273,24 @@ function drawPileArray(pier) {
     const is58Group = suffixMatch58 && !(suffixMatch58[1].length === 1 || /\d$/.test(suffixMatch58[1])) &&
       pts.filter(q => { const pm = q.label.match(/^(.+?)([5-8])$/); return pm && pm[1] === suffixMatch58[1]; }).length === 4;
     let lx, ly;
-    if (isCapCornerLabel) {
+    if (_denseElastomericLabels) {
+      const denseMatch = String(p.label).match(/^(.+?)(\d+)$/);
+      const prefix = denseMatch?.[1] || p.label;
+      const pointNo = Number(denseMatch?.[2]) || 1;
+      const groupStart = Math.floor((pointNo - 1) / 4) * 4 + 1;
+      const groupPts = pts.filter(q => {
+        const match = String(q.label).match(/^(.+?)(\d+)$/);
+        const no = Number(match?.[2]);
+        return match?.[1] === prefix && no >= groupStart && no < groupStart + 4;
+      });
+      const gcx = groupPts.reduce((sum, q) => sum + toX(q.os), 0) / Math.max(groupPts.length, 1);
+      const gcy = groupPts.reduce((sum, q) => sum + toY(q.ch), 0) / Math.max(groupPts.length, 1);
+      let dx = cx - gcx, dy = cy - gcy;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const offset = 20;
+      lx = cx + dx / dist * offset;
+      ly = cy + dy / dist * offset;
+    } else if (isCapCornerLabel) {
       const dx = cx - capLabelCenter.x;
       const dy = cy - capLabelCenter.y;
       const dist = Math.sqrt(dx*dx + dy*dy) || 1;
@@ -6275,22 +6321,25 @@ function drawPileArray(pier) {
       const offset = r-3;
       lx = cx+(dx/dist)*offset; ly = cy+(dy/dist)*offset;
     }
-    _labelPos[p.label] = {lx, ly, cx, cy};
+    const estimatedWidth = _denseElastomericLabels ? Math.max(34, String(p.label).length * 8) : 36;
+    _labelPos[p.label] = {lx, ly, cx, cy, w: estimatedWidth, h: _denseElastomericLabels ? 15 : 12};
   });
   // Collision resolution: push overlapping labels apart
-  const LABEL_W = 18, LABEL_H = 10, MIN_GAP = 2;
+  const LABEL_W = 18, LABEL_H = 10, MIN_GAP = _denseElastomericLabels ? 4 : 2;
   const _labels = Object.entries(_labelPos);
-  for (let iter = 0; iter < 10; iter++) {
+  for (let iter = 0; iter < (_denseElastomericLabels ? 40 : 10); iter++) {
     let moved = false;
     for (let i = 0; i < _labels.length; i++) {
       for (let j = i+1; j < _labels.length; j++) {
         const [, a] = _labels[i], [, b] = _labels[j];
-        const overlapX = Math.abs(a.lx - b.lx) < LABEL_W + MIN_GAP;
-        const overlapY = Math.abs(a.ly - b.ly) < LABEL_H + MIN_GAP;
+        const minXDistance = ((a.w || LABEL_W * 2) + (b.w || LABEL_W * 2)) / 2 + MIN_GAP;
+        const minYDistance = ((a.h || LABEL_H * 2) + (b.h || LABEL_H * 2)) / 2 + MIN_GAP;
+        const overlapX = Math.abs(a.lx - b.lx) < minXDistance;
+        const overlapY = Math.abs(a.ly - b.ly) < minYDistance;
         if (overlapX && overlapY) {
           const dx = a.lx - b.lx || 0.1, dy = a.ly - b.ly || 0.1;
-          const pushX = (LABEL_W + MIN_GAP - Math.abs(dx)) / 2 * Math.sign(dx);
-          const pushY = (LABEL_H + MIN_GAP - Math.abs(dy)) / 2 * Math.sign(dy);
+          const pushX = (minXDistance - Math.abs(dx)) / 2 * Math.sign(dx);
+          const pushY = (minYDistance - Math.abs(dy)) / 2 * Math.sign(dy);
           // Push in dominant direction only
           if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 3) {
             a.lx += pushX; b.lx -= pushX;
@@ -6303,6 +6352,12 @@ function drawPileArray(pier) {
     }
     if (!moved) break;
   }
+  if (_denseElastomericLabels) {
+    Object.values(_labelPos).forEach(label => {
+      label.lx = Math.max((label.w || 34) / 2 + 6, Math.min(W - (label.w || 34) / 2 - 6, label.lx));
+      label.ly = Math.max((label.h || 15) / 2 + 30, Math.min(H - (label.h || 15) / 2 - 18, label.ly));
+    });
+  }
 
   pts.forEach(p => {
     const cx = toX(p.os);
@@ -6312,7 +6367,7 @@ function drawPileArray(pier) {
     ctx.fillStyle = 'rgba(255,255,255,0.0)';
     ctx.fill();
     ctx.fillStyle = '#000';
-    const fs = (['Bearing Plinths','Elastomeric'].includes(work)) ? Math.max(15, Math.min(18, r * 0.65)) : Math.max(20, Math.min(24, r * 0.85));
+    const fs = _denseElastomericLabels ? 13 : ((['Bearing Plinths','Elastomeric'].includes(work)) ? Math.max(15, Math.min(18, r * 0.65)) : Math.max(20, Math.min(24, r * 0.85)));
     ctx.font = `bold ${fs}px monospace`;
     const isCapCornerLabel = capLabelCenter && capCornerLabels.test(p.label);
     // Universal label placement:
@@ -6331,7 +6386,24 @@ function drawPileArray(pier) {
       return pm && pm[1] === suffixMatch[1];
     }).length === 4;
 
-    if (isCapCornerLabel) {
+    if (_denseElastomericLabels) {
+      const pos = _labelPos[p.label] || {lx: cx, ly: cy};
+      ctx.save();
+      ctx.strokeStyle = '#718096';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(pos.lx, pos.ly);
+      ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const tw = ctx.measureText(p.label).width;
+      ctx.fillStyle = 'rgba(255,255,255,0.96)';
+      ctx.fillRect(pos.lx - tw / 2 - 2, pos.ly - fs / 2 - 2, tw + 4, fs + 4);
+      ctx.fillStyle = '#000';
+      ctx.fillText(p.label, pos.lx, pos.ly);
+      ctx.restore();
+    } else if (isCapCornerLabel) {
       const dx = cx - capLabelCenter.x;
       const dy = cy - capLabelCenter.y;
       const dist = Math.sqrt(dx*dx + dy*dy) || 1;
