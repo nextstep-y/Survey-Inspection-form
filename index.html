@@ -1958,6 +1958,13 @@ const WORK_ELEV = {
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  if (pier.id === 'P-990' && work === 'Bearing Plinths' && /^UR[1-4]$/.test(String(label || ''))) {
+    return getTopOfColumnElevation(pier) + 0.097;
+  }
+  if (pier.id === 'P-990' && work === 'Elastomeric') {
+    const plinthHeight = /^EUR[1-4]$/.test(String(label || '')) ? 0.097 : 0.140;
+    return getTopOfColumnElevation(pier) + plinthHeight + 0.067;
+  }
   if (pier.id === 'P-989' && (work === 'Bearing Plinths' || work === 'Elastomeric')) {
     const point = String(label || '').replace(/^E/, '');
     // P-989 arrangement: all U bearings and the two centre D bearings are
