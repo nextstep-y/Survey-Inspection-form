@@ -1321,7 +1321,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     <div style="font-size:10px; font-family:var(--mono); color:#c0392b;" id="wi-drawing">—</div>
     <span id="dwg-display" style="display:none;">—</span>
     <div id="dwg-sync-badge" style="font-size:9px; color:#5a7080; margin-top:2px;">🔄 กำลังโหลด DWG...</div>
-    <button id="reference-sync-badge" type="button" onclick="fetchReferenceFromSheet()" title="Click to sync reference data now" style="font-size:9px; color:#5a7080; background:transparent; border:0; padding:0; cursor:pointer;">⏳ Reference: loading...</button>
+    <button id="reference-sync-badge" type="button" onclick="fetchReferenceFromSheet();fetchBearingElevationFromSheet()" title="Click to sync reference and bearing elevation data now" style="font-size:9px; color:#5a7080; background:transparent; border:0; padding:0; cursor:pointer;">⏳ Reference: loading...</button>
   </div>
 </div>
 
@@ -1919,6 +1919,7 @@ const BEARING_PLINTH_ELEV = {"TYPE1": 140, "TYPE2": 150, "TYPE3_CIS40": 97, "TYP
 const ELASTOMERIC_ELEV = {"TYPE1": 30, "TYPE2": 25, "TYPE3_CIS40": 67, "TYPE3_CIS50": 67, "TYPE3_CIS60": 67, "TYPE3_RAMP": 67};
 const P989_BEARING_PLINTH_ELEV = { TYPE1: 112, TYPE2: 140 };
 const P989_ELASTOMERIC_ELEV = 67;
+let liveBearingElevationRules = [];
 const POT_BEARING_ELEMENT_ELEV_OFFSET = {
   'P-889': 0.122,
   'P-890': 0.122,
@@ -1933,6 +1934,42 @@ function getBearingType() {
 function updateBearingElev() {
   // Re-render table to update elevation when bearing type changes
   if (currentPier) renderSurveyTable(currentPier);
+}
+
+function bearingRuleMatchesPoint(pointGroup, label, bearingType = '') {
+  const group = String(pointGroup || '').trim().toUpperCase();
+  const point = String(label || '').trim().toUpperCase().replace(/^E/, '');
+  if (!group) return false;
+  if (group === '*') return true;
+  if (group === 'OTHER') return true;
+  if (/^TYPE\d/.test(group)) return group === String(bearingType || '').toUpperCase();
+  if (group.includes(',')) return group.split(',').some(part => bearingRuleMatchesPoint(part, point, bearingType));
+  const range = group.match(/^([A-Z]+)(\d+)-(?:([A-Z]+))?(\d+)$/);
+  if (range) {
+    const pointMatch = point.match(/^([A-Z]+)(\d+)$/);
+    if (!pointMatch) return false;
+    const startPrefix = range[1];
+    const endPrefix = range[3] || startPrefix;
+    const pointNo = Number(pointMatch[2]);
+    return pointMatch[1] === startPrefix && endPrefix === startPrefix && pointNo >= Number(range[2]) && pointNo <= Number(range[4]);
+  }
+  return point === group;
+}
+
+function getBearingRuleHeight(pierId, work, label, bearingType = '') {
+  const candidates = liveBearingElevationRules.filter(rule => rule.pier === pierId && rule.work === work);
+  const specific = candidates.find(rule => !['*', 'OTHER'].includes(rule.pointGroup) && bearingRuleMatchesPoint(rule.pointGroup, label, bearingType));
+  const fallback = candidates.find(rule => rule.pointGroup === 'OTHER') || candidates.find(rule => rule.pointGroup === '*');
+  const height = Number((specific || fallback)?.height);
+  return Number.isFinite(height) ? height : null;
+}
+
+function getBearingRule(pierId, work, label, bearingType = '') {
+  const candidates = liveBearingElevationRules.filter(rule => rule.pier === pierId && rule.work === work);
+  return candidates.find(rule => !['*', 'OTHER'].includes(rule.pointGroup) && bearingRuleMatchesPoint(rule.pointGroup, label, bearingType))
+    || candidates.find(rule => rule.pointGroup === 'OTHER')
+    || candidates.find(rule => rule.pointGroup === '*')
+    || null;
 }
 
 // Single source of truth for every activity whose design elevation starts at
@@ -1959,11 +1996,13 @@ const WORK_ELEV = {
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
   if (pier.id === 'P-990' && work === 'Bearing Plinths' && /^UR[1-4]$/.test(String(label || ''))) {
-    return getTopOfColumnElevation(pier) + 0.097;
+    const plinthHeight = getBearingRuleHeight(pier.id, work, label, 'TYPE1') ?? 0.097;
+    return getTopOfColumnElevation(pier) + plinthHeight;
   }
   if (pier.id === 'P-990' && work === 'Elastomeric') {
-    const plinthHeight = /^EUR[1-4]$/.test(String(label || '')) ? 0.097 : 0.140;
-    return getTopOfColumnElevation(pier) + plinthHeight + 0.067;
+    const plinthHeight = getBearingRuleHeight(pier.id, 'Bearing Plinths', label, 'TYPE1') ?? (/^EUR[1-4]$/.test(String(label || '')) ? 0.097 : 0.140);
+    const elastomericHeight = getBearingRuleHeight(pier.id, work, label, 'TYPE1') ?? 0.067;
+    return getTopOfColumnElevation(pier) + plinthHeight + elastomericHeight;
   }
   if (pier.id === 'P-989' && (work === 'Bearing Plinths' || work === 'Elastomeric')) {
     const point = String(label || '').replace(/^E/, '');
@@ -1972,8 +2011,8 @@ function getWorkPointElev(pier, work, label) {
     const bearingType = /^U/.test(point) || /^DL(?:9|10|11|12)$/.test(point) || /^DR(?:1|2|3|4)$/.test(point)
       ? 'TYPE1'
       : 'TYPE2';
-    const plinth = P989_BEARING_PLINTH_ELEV[bearingType] / 1000;
-    const elastomeric = work === 'Elastomeric' ? P989_ELASTOMERIC_ELEV / 1000 : 0;
+    const plinth = getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? P989_BEARING_PLINTH_ELEV[bearingType] / 1000;
+    const elastomeric = work === 'Elastomeric' ? (getBearingRuleHeight(pier.id, work, label, bearingType) ?? P989_ELASTOMERIC_ELEV / 1000) : 0;
     return getTopOfColumnElevation(pier) + plinth + elastomeric;
   }
   if (pier.id === 'P-891' && work === 'Bearing Plinths' && /^D/.test(String(label || ''))) {
@@ -1981,6 +2020,21 @@ function getWorkPointElev(pier, work, label) {
   }
   if (pier.id === 'P-891' && work === 'Elastomeric' && /^ED/.test(String(label || ''))) {
     return getTopOfColumnElevation(pier) + 0.119 + 0.030;
+  }
+  if (work === 'Bearing Plinths' || work === 'Elastomeric') {
+    const bearingType = getBearingType();
+    const plinthHeight = getBearingRuleHeight(pier.id, 'Bearing Plinths', label, bearingType);
+    if (work === 'Bearing Plinths' && plinthHeight != null) return getTopOfColumnElevation(pier) + plinthHeight;
+    const elastomericRule = getBearingRule(pier.id, 'Elastomeric', label, bearingType);
+    const elastomericHeight = Number.isFinite(Number(elastomericRule?.height)) ? Number(elastomericRule.height) : null;
+    if (work === 'Elastomeric' && elastomericHeight != null && /^TOP OF (PIER|COLUMN)$/i.test(elastomericRule.reference)) {
+      return getTopOfColumnElevation(pier) + elastomericHeight;
+    }
+    if (work === 'Elastomeric' && (plinthHeight != null || elastomericHeight != null)) {
+      const fallbackPlinth = (BEARING_PLINTH_ELEV[bearingType] || 0) / 1000;
+      const fallbackElastomeric = (ELASTOMERIC_ELEV[bearingType] || 0) / 1000;
+      return getTopOfColumnElevation(pier) + (plinthHeight ?? fallbackPlinth) + (elastomericHeight ?? fallbackElastomeric);
+    }
   }
   const fn = WORK_ELEV[work];
   return fn ? fn(pier) : null;
@@ -3591,6 +3645,8 @@ const SHEET_ID = '1w249BF8K01X4gW0-tbsU4mknSzPQyRbychlAs2sVI58';
 const SHEET_NAME = 'PILE SCHEDULE';
 const REFERENCE_SHEET_NAME = 'T-ELEVATION SUMMARY';
 const REFERENCE_CACHE_KEY = 'pier_reference_cache_v1';
+const BEARING_REFERENCE_SHEET_NAME = 'BEARING ELEVATION';
+const BEARING_REFERENCE_CACHE_KEY = 'bearing_elevation_cache_v1';
 let dwgOverrides = {};   // { 'P-826': { dwg: '...', rev: '...' }, ... }
 let dwgFetchStatus = 'idle'; // idle | loading | ok | error
 let referenceFetchStatus = 'idle'; // idle | loading | ok | cache | error
@@ -3710,6 +3766,70 @@ async function fetchReferenceFromSheet() {
     console.warn(`[REF] Could not fetch Google Sheet; using ${hasCache ? 'last synced cache' : 'embedded fallback'}:`, e.message);
   }
   updateReferenceBadge();
+}
+
+function applyBearingElevationRules(rules) {
+  const validRules = (rules || []).filter(rule =>
+    PIERS_RAW[rule.pier] &&
+    ['Bearing Plinths', 'Elastomeric'].includes(rule.work) &&
+    rule.pointGroup && Number.isFinite(Number(rule.height))
+  ).map(rule => ({
+    pier: String(rule.pier).trim(),
+    work: String(rule.work).trim(),
+    pointGroup: String(rule.pointGroup).trim().toUpperCase(),
+    height: Number(rule.height),
+    reference: String(rule.reference || '').trim(),
+    note: String(rule.note || '').trim(),
+  }));
+  if (!validRules.length) return 0;
+  liveBearingElevationRules = validRules;
+  if (currentPier) {
+    renderSurveyTable(currentPier);
+    drawPileArray(currentPier);
+  }
+  return validRules.length;
+}
+
+function loadBearingElevationCache() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(BEARING_REFERENCE_CACHE_KEY) || 'null');
+    const count = applyBearingElevationRules(cached?.rules);
+    if (count) console.log(`[BEARING REF] Loaded ${count} rules from local cache (${cached.syncedAt || 'time unknown'})`);
+    return count > 0;
+  } catch (e) {
+    console.warn('[BEARING REF] Invalid local cache:', e.message);
+    return false;
+  }
+}
+
+async function fetchBearingElevationFromSheet() {
+  const hasCache = liveBearingElevationRules.length > 0 || loadBearingElevationCache();
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(BEARING_REFERENCE_SHEET_NAME)}`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const rows = parseCsvText(await res.text());
+    const rules = [];
+    for (let i = 1; i < rows.length; i++) {
+      const height = Number(String(rows[i][3] ?? '').trim());
+      if (!Number.isFinite(height)) continue;
+      rules.push({
+        pier: rows[i][0],
+        work: rows[i][1],
+        pointGroup: rows[i][2],
+        height,
+        reference: rows[i][4],
+        note: rows[i][5],
+      });
+    }
+    const count = applyBearingElevationRules(rules);
+    if (!count) throw new Error('No valid bearing elevation rules found');
+    const syncedAt = new Date().toISOString();
+    localStorage.setItem(BEARING_REFERENCE_CACHE_KEY, JSON.stringify({ syncedAt, rules }));
+    console.log(`[BEARING REF] Loaded and cached ${count} rules from Google Sheet`);
+  } catch (e) {
+    console.warn(`[BEARING REF] Could not fetch Google Sheet; using ${hasCache ? 'last synced cache' : 'embedded fallback'}:`, e.message);
+  }
 }
 
 function refreshDwgDisplay() {
@@ -7839,6 +7959,7 @@ function showToast(msg) {
 init();
 fetchDwgFromSheet();
 fetchReferenceFromSheet();
+fetchBearingElevationFromSheet();
 </script>
 </body>
 </html>
