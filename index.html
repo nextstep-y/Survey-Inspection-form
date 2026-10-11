@@ -2085,6 +2085,7 @@ const PIER_COLUMN_DRAWING_OVERRIDES = {
   "P-1090":{"topPier":115.09,"topCap":102.923,"columnHeightMm":10017,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022017-A"},
   "P-1092":{"topPier":112.626,"topCap":102.874,"columnHeightMm":6852,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022031-A"},
   "P-1093":{"topPier":113.346,"topCap":103.248,"columnHeightMm":7198,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022038-A"},
+  "P-1094":{"topPier":116.233,"topCap":104.099,"columnHeightMm":9234,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022045-A"},
   "P-1097":{"topPier":116.85,"topCap":104.616,"columnHeightMm":10084,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022066-A"},
   "P-1100":{"topPier":116.85,"topCap":104.573,"columnHeightMm":8977,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022087-B"},
   "P-1101L":{"topPier":116.85,"topCap":104.332,"columnHeightMm":10320,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022095-B"},
@@ -2110,6 +2111,9 @@ for (const [pierId, correction] of Object.entries(PIER_COLUMN_DRAWING_OVERRIDES)
 const PIER_HEAD_T_RISE_OVERRIDES = {
   // NSCR-ITD-N03-ZWD-DWG-ST-023168-B, Pier Head BR115 P-1092 elevation.
   'P-1092': {T1: 0.439, T3: 0.439},
+  // NSCR-ITD-N03-ZWD-DWG-ST-023170-B, Pier Head BR115 P-1094 elevation.
+  // The 1.200 x 3.500 m central island is 600 mm above RL'A' Top of Pier.
+  'P-1094': {T1: 0.600, T3: 0.600, T5: 0.600, T6: 0.600, T7: 0.600, T8: 0.600},
 };
 let livePierHeadElevations = {};
 
