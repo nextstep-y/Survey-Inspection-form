@@ -2236,6 +2236,35 @@ Object.assign(ARRAYS_RAW, {
     {label:'EDR1', ch:-0.450, os: 1.925}, {label:'EDR2', ch:-0.450, os: 2.875},
     {label:'EDR3', ch:-1.400, os: 2.875}, {label:'EDR4', ch:-1.400, os: 1.925},
   ],
+  'BP_BR115TRANS - BR115 TRANS': [
+    // NSCR-ITD-N03-ZWD-DWG-ST-023170-B. U = increasing chainage,
+    // L/R = negative/positive offset. Dimensions are final plinth faces.
+    {label:'UL1', ch: 1.275, os:-2.0125}, {label:'UL2', ch: 1.275, os:-1.3875},
+    {label:'UL3', ch: 0.575, os:-1.3875}, {label:'UL4', ch: 0.575, os:-2.0125},
+    {label:'UR1', ch: 1.275, os: 1.3875}, {label:'UR2', ch: 1.275, os: 2.0125},
+    {label:'UR3', ch: 0.575, os: 2.0125}, {label:'UR4', ch: 0.575, os: 1.3875},
+    {label:'DL1', ch:-0.435, os:-2.8900}, {label:'DL2', ch:-0.435, os:-1.9100},
+    {label:'DL3', ch:-1.415, os:-1.9100}, {label:'DL4', ch:-1.415, os:-2.8900},
+    {label:'DR1', ch:-0.400, os: 1.8750}, {label:'DR2', ch:-0.400, os: 2.9250},
+    {label:'DR3', ch:-1.450, os: 2.9250}, {label:'DR4', ch:-1.450, os: 1.8750},
+  ],
+  'EL_BR115TRANS - BR115 TRANS': [
+    {label:'EUL1', ch: 1.150, os:-1.975}, {label:'EUL2', ch: 1.150, os:-1.425},
+    {label:'EUL3', ch: 0.700, os:-1.425}, {label:'EUL4', ch: 0.700, os:-1.975},
+    {label:'EUR1', ch: 1.150, os: 1.425}, {label:'EUR2', ch: 1.150, os: 1.975},
+    {label:'EUR3', ch: 0.700, os: 1.975}, {label:'EUR4', ch: 0.700, os: 1.425},
+    {label:'EDL1', ch:-0.485, os:-2.840}, {label:'EDL2', ch:-0.485, os:-1.960},
+    {label:'EDL3', ch:-1.365, os:-1.960}, {label:'EDL4', ch:-1.365, os:-2.840},
+    {label:'EDR1', ch:-0.450, os: 1.925}, {label:'EDR2', ch:-0.450, os: 2.875},
+    {label:'EDR3', ch:-1.400, os: 2.875}, {label:'EDR4', ch:-1.400, os: 1.925},
+  ],
+});
+
+// BR115TRANS plinth coordinates above already use the final drawing dimensions;
+// do not apply the generic 30 mm enlargement used by ordinary bearing arrays.
+Object.defineProperty(ARRAYS_RAW['BP_BR115TRANS - BR115 TRANS'], '_expandedBearingPlinth', {
+  value: true,
+  enumerable: false,
 });
 
 function expandBearingPlinthArrays(expand = 0.030) {
