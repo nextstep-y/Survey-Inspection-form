@@ -34,10 +34,16 @@ window.CLARK_GRADE_X01_X02_POINTS = [
     ['FG11-X01','FG11','X01 / Y01-Y02',[[454919.5433,1678145.4616],[454939.9710,1678148.3775]]],
     ['FG13-X02','FG13','X02 / Y01-Y02',[[454918.1301,1678155.3612],[454938.5578,1678158.2772]]],
   ].flatMap(([element,type,grid,points]) => points.map(([e,n],index) => ({
-    element, group:'Foundation Girder (Reference)', type, grid, pt:`${element}-AXIS-${index + 1}`,
-    label:`AXIS-${index + 1}`, e, n, z:null, edge:'GRID_AXIS_REFERENCE_ONLY',
+    element, group:'Foundation Girder', type, grid, pt:`${element}-AXIS-${index + 1}`,
+    label:`AXIS-${index + 1}`, e, n, z:type === 'FG11' ? 106.30 : null, edge:'GRID_AXIS_REFERENCE_ONLY',
+    allowSelection:type === 'FG11', scheduleAmm:type === 'FG11' ? 2200 : null,
+    scheduleBmm:type === 'FG11' ? 1400 : null, scheduleDmm:type === 'FG11' ? 3000 : null,
     sourceStatus:'PDF_LABEL_DXF_GRID_MARKER_PARTIAL', source:'PDF 004095 Rev.A + DXF grid axes',
     dwg:'NSCR-ITD-N03-CRKSTN-DWG-ST-004095', rev:'A',
     reviewIssue:'Girder type/location matched; real faces must be confirmed before setting-out coordinates',
   }))),
 ];
+
+if (Array.isArray(window.CLARK_WORK_GROUPS) && !window.CLARK_WORK_GROUPS.includes('Foundation Girder')) {
+  window.CLARK_WORK_GROUPS.push('Foundation Girder');
+}

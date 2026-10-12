@@ -2522,6 +2522,7 @@ function clarkPointMaster() {
   return [
     ...(Array.isArray(window.CLARK_STATION_POINTS) ? window.CLARK_STATION_POINTS : []),
     ...(Array.isArray(window.CLARK_BEAM_POINTS) ? window.CLARK_BEAM_POINTS : []),
+    ...(Array.isArray(window.CLARK_GRADE_X01_X02_POINTS) ? window.CLARK_GRADE_X01_X02_POINTS.filter(p => p.allowSelection) : []),
   ];
 }
 
@@ -2647,6 +2648,11 @@ function clarkPointsForElement(elementId) {
       bottomZ: Number(p.bottomZ),
       dwg: p.dwg,
       rev: p.rev,
+      sourceStatus: p.sourceStatus,
+      reviewIssue: p.reviewIssue,
+      scheduleAmm: p.scheduleAmm,
+      scheduleBmm: p.scheduleBmm,
+      scheduleDmm: p.scheduleDmm,
       ch: 0,
       os: 0,
     }));
@@ -2692,6 +2698,11 @@ function buildClarkStationSelection(elementId) {
     bearing: '',
     dwg: base.dwg || 'NSCR-ITD-N03-CRKSTN-DWG-ST-007214-A',
     rev: base.rev || 'A',
+    sourceStatus: base.sourceStatus,
+    reviewIssue: base.reviewIssue,
+    scheduleAmm: base.scheduleAmm,
+    scheduleBmm: base.scheduleBmm,
+    scheduleDmm: base.scheduleDmm,
     points,
   };
 }
@@ -4812,7 +4823,7 @@ function onWorkChange() {
     } else {
       if (label) label.textContent = 'Element Name';
       if (input) {
-        input.placeholder = 'e.g. C_T01_A02 or STF01';
+        input.placeholder = work === 'Foundation Girder' ? 'e.g. FG11-X01' : 'e.g. C_T01_A02 or STF01';
         if (isClarkStationElement(currentPier)) input.value = '';
       }
       if (combo) combo.style.display = '';
@@ -4886,6 +4897,9 @@ function renderPierInfo(pier) {
     const minZ = zVals.length ? Math.min(...zVals) : null;
     const maxZ = zVals.length ? Math.max(...zVals) : null;
     const zText = minZ == null ? '—' : (Math.abs(maxZ - minZ) < 0.0005 ? minZ.toFixed(3) : `${minZ.toFixed(3)} - ${maxZ.toFixed(3)}`);
+    const isReferenceAxis = renderPts.some(p => String(p.edge || '').includes('REFERENCE_ONLY'));
+    const scheduleText = [pier.scheduleAmm, pier.scheduleBmm, pier.scheduleDmm].every(Number.isFinite)
+      ? `A ${pier.scheduleAmm} / B ${pier.scheduleBmm} / D ${pier.scheduleDmm} mm` : '—';
     const _dwgVal = `${pier.dwg} / Rev.${pier.rev}`;
     const _dwgEl = document.getElementById('dwg-display');
     if (_dwgEl) _dwgEl.textContent = _dwgVal;
@@ -4931,6 +4945,13 @@ function renderPierInfo(pier) {
         <div class="info-label">Elevation Design (m)</div>
         <div class="info-value highlight">${zText}</div>
       </div>
+      ${work === 'Foundation Girder' ? `<div class="info-cell">
+        <div class="info-label">Schedule Dimensions</div>
+        <div class="info-value highlight">${scheduleText}</div>
+      </div><div class="info-cell">
+        <div class="info-label">Geometry Status</div>
+        <div class="info-value" style="color:${isReferenceAxis ? '#b56b00' : '#16835b'};">${isReferenceAxis ? 'PARTIAL - REFERENCE AXIS' : 'BOUNDARY'}</div>
+      </div>` : ''}
       <div class="pile-panel-placeholder" style="border:0.3px solid #bbb;background:transparent;"></div>
     `;
 
@@ -6264,20 +6285,29 @@ function drawClarkStationArray(ctx, W, H, pier, pts) {
   });
 
   pathsByElement.forEach(pathPts => {
-    if (pathPts.length < 3) return;
+    if (pathPts.length < 2) return;
     ctx.beginPath();
     pathPts.forEach((p, idx) => {
       const x = sx(p), y = sy(p);
       if (idx === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
-    ctx.closePath();
+    if (pathPts.length >= 3) ctx.closePath();
     ctx.fillStyle = isConcourseCanvas ? 'transparent' : 'rgba(73, 132, 180, 0.10)';
     ctx.strokeStyle = isConcourseCanvas ? '#1f5f8f' : '#315f86';
     ctx.lineWidth = isConcourseCanvas ? 1.6 : 2;
-    if (!isConcourseCanvas) ctx.fill();
+    if (pathPts.some(p => String(p.edge || '').includes('REFERENCE_ONLY'))) ctx.setLineDash([8, 5]);
+    if (!isConcourseCanvas && pathPts.length >= 3) ctx.fill();
     ctx.stroke();
+    ctx.setLineDash([]);
   });
+
+  if (mapped.some(p => String(p.edge || '').includes('REFERENCE_ONLY'))) {
+    ctx.fillStyle = '#b56b00';
+    ctx.font = 'bold 11px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('REFERENCE AXIS - PARTIAL (NOT CONCRETE BOUNDARY)', W / 2, 92);
+  }
 
   mapped.forEach((p, idx) => {
     const x = sx(p), y = sy(p);
