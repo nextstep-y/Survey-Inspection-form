@@ -1,0 +1,19 @@
+.DS_Store
+**/.DS_Store
+.playwright-cli/
+node_modules/
+build/
+dist/
+output/
+tmp/
+
+# Local backups generated before structural-data updates
+*.bak-*
+index.before-*.html
+
+# Generated desktop application icons (canonical web icons remain at repo root)
+assets/icon-*.png
+assets/icon.icns
+assets/icon.ico
+assets/icon.png
+assets/icon.iconset/
