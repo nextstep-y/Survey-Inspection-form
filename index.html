@@ -1696,6 +1696,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/clark-station-data.js"></script>
 <script src="assets/clark-station-beam-data.js"></script>
 <script src="assets/clark-concourse-floor-data.js"></script>
+<script src="assets/clark-grade-x01-x02-data.js"></script>
 <script src="assets/clark-station-quality.js"></script>
 <script src="assets/sigcom-clark-data.js"></script>
 <script src="assets/sigcom-pile-data.js"></script>
@@ -2531,6 +2532,7 @@ function clarkQaPointMaster() {
     ...(Array.isArray(window.CLARK_STATION_POINTS) ? window.CLARK_STATION_POINTS : []),
     ...(Array.isArray(window.CLARK_BEAM_POINTS) ? window.CLARK_BEAM_POINTS : []),
     ...(Array.isArray(window.CLARK_CONCOURSE_FLOOR_POINTS) ? window.CLARK_CONCOURSE_FLOOR_POINTS : []),
+    ...(Array.isArray(window.CLARK_GRADE_X01_X02_POINTS) ? window.CLARK_GRADE_X01_X02_POINTS : []),
   ];
   const unique = new Map();
   combined.forEach((point, index) => unique.set(String(point.pt || `unnamed-${index}`), point));

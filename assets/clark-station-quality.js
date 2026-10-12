@@ -1,7 +1,7 @@
 (function (root) {
   'use strict';
   const STATUS_ORDER = { VERIFIED: 0, PARTIAL: 1, PENDING: 2, MISSING: 3 };
-  const finite = (value) => Number.isFinite(Number(value));
+  const finite = (value) => value !== null && value !== '' && value !== undefined && Number.isFinite(Number(value));
 
   function sourceStatus(point) {
     const explicit = String(point.sourceStatus || '').toUpperCase();
@@ -48,13 +48,14 @@
         else issues.add('Missing elevation');
         if (!id) issues.add('Missing point ID');
         if (id && pointIdCounts.get(id) > 1) duplicatePointIds += 1;
-        if (finite(point.e) && finite(point.n)) {
+        if (finite(point.e) && finite(point.n) && !String(point.edge || '').includes('REFERENCE_ONLY')) {
           const key = `${Number(point.e).toFixed(4)}|${Number(point.n).toFixed(4)}|${finite(point.z) ? Number(point.z).toFixed(4) : 'NO_Z'}`;
           if ((coordinateOwners.get(key)?.size || 0) > 1) sharedCoordinateCount += 1;
         }
       });
       if (duplicatePointIds) issues.add(`Duplicate point ID (${duplicatePointIds})`);
       if (sharedCoordinateCount) issues.add(`Shared coordinates (${sharedCoordinateCount})`);
+      elementPoints.forEach((point) => { if (point.reviewIssue) issues.add(point.reviewIssue); });
       if (!elementPoints.some((point) => point.dwg)) issues.add('Drawing reference not recorded');
       if (!elementPoints.some((point) => point.rev)) issues.add('Revision not recorded');
 
