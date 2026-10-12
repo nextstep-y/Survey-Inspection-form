@@ -1321,7 +1321,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     <div style="font-size:10px; font-family:var(--mono); color:#c0392b;" id="wi-drawing">—</div>
     <span id="dwg-display" style="display:none;">—</span>
     <div id="dwg-sync-badge" style="font-size:9px; color:#5a7080; margin-top:2px;">🔄 กำลังโหลด DWG...</div>
-    <button id="reference-sync-badge" type="button" onclick="fetchReferenceFromSheet();fetchBearingElevationFromSheet()" title="Click to sync reference and bearing elevation data now" style="font-size:9px; color:#5a7080; background:transparent; border:0; padding:0; cursor:pointer;">⏳ Reference: loading...</button>
+    <button id="reference-sync-badge" type="button" onclick="fetchReferenceFromSheet();fetchBearingElevationFromSheet();fetchDrawingRegisterFromSheet()" title="Click to sync reference, bearing elevation, and drawing register data now" style="font-size:9px; color:#5a7080; background:transparent; border:0; padding:0; cursor:pointer;">⏳ Reference: loading...</button>
   </div>
 </div>
 
@@ -3682,7 +3682,10 @@ const REFERENCE_SHEET_NAME = 'T-ELEVATION SUMMARY';
 const REFERENCE_CACHE_KEY = 'pier_reference_cache_v1';
 const BEARING_REFERENCE_SHEET_NAME = 'BEARING ELEVATION';
 const BEARING_REFERENCE_CACHE_KEY = 'bearing_elevation_cache_v1';
+const DRAWING_REGISTER_SHEET_NAME = 'DRAWING REGISTER';
+const DRAWING_REGISTER_CACHE_KEY = 'drawing_register_cache_v1';
 let dwgOverrides = {};   // { 'P-826': { dwg: '...', rev: '...' }, ... }
+let liveDrawingRegister = {}; // { 'P-1094': { column: {...}, head: {...} } }
 let dwgFetchStatus = 'idle'; // idle | loading | ok | error
 let referenceFetchStatus = 'idle'; // idle | loading | ok | cache | error
 let referenceCacheTime = '';
@@ -3867,6 +3870,70 @@ async function fetchBearingElevationFromSheet() {
   }
 }
 
+function applyDrawingRegisterRows(rows) {
+  const register = {};
+  for (const row of rows || []) {
+    if (String(row.status || '').trim().toUpperCase() !== 'VISUALLY REVIEWED') continue;
+    const type = String(row.type || '').trim().toLowerCase();
+    const key = type === 'pier column' ? 'column' : (type === 'pier head' ? 'head' : '');
+    if (!key || !row.drawingNo) continue;
+    const drawing = {
+      dwg: `NSCR-ITD-N03-ZWD-DWG-ST-${String(row.drawingNo).trim()}`,
+      rev: String(row.revision || '0').trim(),
+      filename: String(row.filename || '').trim(),
+      status: 'VISUALLY REVIEWED',
+    };
+    for (const pierId of String(row.piers || '').split(',').map(value => value.trim()).filter(Boolean)) {
+      if (!PIERS_RAW[pierId]) continue;
+      register[pierId] = register[pierId] || {};
+      register[pierId][key] = drawing;
+    }
+  }
+  liveDrawingRegister = register;
+  refreshDwgDisplay();
+  return Object.keys(register).length;
+}
+
+function loadDrawingRegisterCache() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(DRAWING_REGISTER_CACHE_KEY) || 'null');
+    const count = applyDrawingRegisterRows(cached?.rows);
+    if (count) console.log(`[DRAWING REGISTER] Loaded ${count} visually reviewed piers from local cache (${cached.syncedAt || 'time unknown'})`);
+    return count > 0;
+  } catch (e) {
+    console.warn('[DRAWING REGISTER] Invalid local cache:', e.message);
+    return false;
+  }
+}
+
+async function fetchDrawingRegisterFromSheet() {
+  const hasCache = Object.keys(liveDrawingRegister).length > 0 || loadDrawingRegisterCache();
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(DRAWING_REGISTER_SHEET_NAME)}`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const csvRows = parseCsvText(await res.text());
+    const rows = [];
+    for (let i = 1; i < csvRows.length; i++) {
+      rows.push({
+        type: csvRows[i][0],
+        piers: csvRows[i][1],
+        drawingNo: csvRows[i][2],
+        revision: csvRows[i][3],
+        filename: csvRows[i][4],
+        status: csvRows[i][8],
+      });
+    }
+    const count = applyDrawingRegisterRows(rows);
+    if (!count) throw new Error('No visually reviewed drawing rows found');
+    const syncedAt = new Date().toISOString();
+    localStorage.setItem(DRAWING_REGISTER_CACHE_KEY, JSON.stringify({ syncedAt, rows }));
+    console.log(`[DRAWING REGISTER] Loaded and cached ${count} visually reviewed piers from Google Sheet`);
+  } catch (e) {
+    console.warn(`[DRAWING REGISTER] Could not fetch Google Sheet; using ${hasCache ? 'last synced cache' : 'embedded drawing references'}:`, e.message);
+  }
+}
+
 function refreshDwgDisplay() {
   if (!currentPier) return;
   const merged = _getMergedPier(currentPier);
@@ -3913,6 +3980,13 @@ async function fetchDwgFromSheet() {
 
 function _workSpecificDwgOverride(pier) {
   const work = document.getElementById('element')?.value || '';
+  const registered = liveDrawingRegister[pier?.id] || {};
+  if ((work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)') && registered.column) {
+    return registered.column;
+  }
+  if ((work === 'Pier Head' || work === 'Bearing Plinths' || work === 'Elastomeric') && registered.head) {
+    return registered.head;
+  }
   if (pier?.id === 'P-1093' && (work === 'Pier Head' || work === 'Bearing Plinths')) {
     return { dwg: 'NSCR-ITD-N03-ZWD-DWG-ST-023162 / 023163', rev: 'B' };
   }
@@ -7995,6 +8069,7 @@ init();
 fetchDwgFromSheet();
 fetchReferenceFromSheet();
 fetchBearingElevationFromSheet();
+fetchDrawingRegisterFromSheet();
 </script>
 </body>
 </html>
