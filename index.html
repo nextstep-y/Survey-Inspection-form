@@ -1916,7 +1916,11 @@ const WORK_ARRAY_KEY = {
 
 // Elevation design field per work type
 const BEARING_PLINTH_ELEV = {"TYPE1": 140, "TYPE2": 150, "TYPE3_CIS40": 97, "TYPE3_CIS50": 112, "TYPE3_CIS60": 49, "TYPE3_RAMP": 142};
-const ELASTOMERIC_ELEV = {"TYPE1": 30, "TYPE2": 25, "TYPE3_CIS40": 67, "TYPE3_CIS50": 67, "TYPE3_CIS60": 67, "TYPE3_RAMP": 67};
+// Project rule confirmed 2026-10-12: top of elastomeric is 67 mm above
+// its concrete plinth for every bearing family. This embedded value is the
+// offline/first-run fallback; Google Sheet rules may still select plinth
+// heights and point groups.
+const ELASTOMERIC_ELEV = {"TYPE1": 67, "TYPE2": 67, "TYPE3_CIS40": 67, "TYPE3_CIS50": 67, "TYPE3_CIS60": 67, "TYPE3_RAMP": 67};
 const P989_BEARING_PLINTH_ELEV = { TYPE1: 112, TYPE2: 140 };
 const P989_ELASTOMERIC_ELEV = 67;
 let liveBearingElevationRules = [];
@@ -1989,8 +1993,8 @@ const WORK_ELEV = {
   'Pier Head': p => p.topPier,
   'Bearing Plinths': p => p.id === 'P-1093' ? getTopOfColumnElevation(p) + 0.120 : (p.id === 'P-891' ? getTopOfColumnElevation(p) + 0.200 + 0.150 : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
   'Elastomeric': p => Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
-    ? getTopOfColumnElevation(p) + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id]
-    : (p.id === 'P-891' ? getTopOfColumnElevation(p) + 0.200 + 0.150 + 0.030 : getTopOfColumnElevation(p) + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
+    ? getTopOfColumnElevation(p) + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id] + 0.067
+    : (p.id === 'P-891' ? getTopOfColumnElevation(p) + 0.200 + 0.150 + 0.067 : getTopOfColumnElevation(p) + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
 };
 
 function getWorkPointElev(pier, work, label) {
@@ -2019,7 +2023,7 @@ function getWorkPointElev(pier, work, label) {
     return getTopOfColumnElevation(pier) + 0.119;
   }
   if (pier.id === 'P-891' && work === 'Elastomeric' && /^ED/.test(String(label || ''))) {
-    return getTopOfColumnElevation(pier) + 0.119 + 0.030;
+    return getTopOfColumnElevation(pier) + 0.119 + 0.067;
   }
   if (work === 'Bearing Plinths' || work === 'Elastomeric') {
     const bearingType = getBearingType();
@@ -2100,6 +2104,17 @@ const PIER_COLUMN_DRAWING_OVERRIDES = {
   "P-1131":{"topPier":115.56,"topCap":104.471,"columnHeightMm":8189,"sourceDrawing":"NSCR-ITD-N03-ZWD-DWG-ST-022458-C"}
 };
 for (const [pierId, correction] of Object.entries(PIER_COLUMN_DRAWING_OVERRIDES)) {
+  if (PIERS_RAW[pierId]) Object.assign(PIERS_RAW[pierId], correction);
+}
+
+// Latest Pier Head Schedule levels from SURVEY CP-N03 SHARE DRIVE/Pier head type.
+// Keep these separate from column-height overrides so the controlling drawing
+// purpose and review trail remain explicit.
+// NSCR-ITD-N03-ZWD-DWG-ST-023240-C, Pier Head Type P6 Schedule.
+const PIER_HEAD_SCHEDULE_LEVEL_OVERRIDES = {
+  "P-992": {"topPier": 90.905, "sourcePierHeadSchedule": "NSCR-ITD-N03-ZWD-DWG-ST-023240-C"}
+};
+for (const [pierId, correction] of Object.entries(PIER_HEAD_SCHEDULE_LEVEL_OVERRIDES)) {
   if (PIERS_RAW[pierId]) Object.assign(PIERS_RAW[pierId], correction);
 }
 
@@ -3685,7 +3700,7 @@ const BEARING_REFERENCE_CACHE_KEY = 'bearing_elevation_cache_v1';
 const DRAWING_REGISTER_SHEET_NAME = 'DRAWING REGISTER';
 const DRAWING_REGISTER_CACHE_KEY = 'drawing_register_cache_v1';
 let dwgOverrides = {};   // { 'P-826': { dwg: '...', rev: '...' }, ... }
-let liveDrawingRegister = {}; // { 'P-1094': { column: {...}, head: {...} } }
+let liveDrawingRegister = {}; // { 'P-1094': { column: {...}, head: {...}, schedule: {...} } }
 let dwgFetchStatus = 'idle'; // idle | loading | ok | error
 let referenceFetchStatus = 'idle'; // idle | loading | ok | cache | error
 let referenceCacheTime = '';
@@ -3875,7 +3890,9 @@ function applyDrawingRegisterRows(rows) {
   for (const row of rows || []) {
     if (String(row.status || '').trim().toUpperCase() !== 'VISUALLY REVIEWED') continue;
     const type = String(row.type || '').trim().toLowerCase();
-    const key = type === 'pier column' ? 'column' : (type === 'pier head' ? 'head' : '');
+    const key = type === 'pier column'
+      ? 'column'
+      : (type === 'pier head' ? 'head' : (type === 'pier head schedule' ? 'schedule' : ''));
     if (!key || !row.drawingNo) continue;
     const drawing = {
       dwg: `NSCR-ITD-N03-ZWD-DWG-ST-${String(row.drawingNo).trim()}`,
@@ -3983,6 +4000,9 @@ function _workSpecificDwgOverride(pier) {
   const registered = liveDrawingRegister[pier?.id] || {};
   if ((work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)') && registered.column) {
     return registered.column;
+  }
+  if ((work === 'Bearing Plinths' || work === 'Elastomeric') && registered.schedule) {
+    return registered.schedule;
   }
   if ((work === 'Pier Head' || work === 'Bearing Plinths' || work === 'Elastomeric') && registered.head) {
     return registered.head;

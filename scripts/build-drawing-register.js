@@ -7,8 +7,24 @@ const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const driveRoot = '/Users/weerayutpooncharoen/Library/CloudStorage/GoogleDrive-survey@itdp-cpn03.ph/Shared drives/SURVEY CP-N03 SHARE DRIVE';
 const sources = [
-  { type: 'Pier Column', folder: path.join(driveRoot, 'Pier Column'), textFolder: path.join(root, 'tmp', 'pdfs', 'pier-column-text'), folderUrl: '' },
-  { type: 'Pier Head', folder: path.join(driveRoot, 'PIER HEAD CONCRETE DETAILS'), textFolder: path.join(root, 'tmp', 'pdfs'), folderUrl: 'https://drive.google.com/drive/folders/18eHxPrMB3LNbEgwqOo1dRRkWbwd86DcP' },
+  {
+    type: 'Pier Column',
+    folder: path.join(driveRoot, 'Pier Column'),
+    textFolder: path.join(root, 'tmp', 'pdfs', 'pier-column-text'),
+    folderUrl: '',
+  },
+  {
+    type: 'Pier Head',
+    folder: path.join(driveRoot, 'PIER HEAD CONCRETE DETAILS'),
+    textFolder: path.join(root, 'tmp', 'pdfs'),
+    folderUrl: 'https://drive.google.com/drive/folders/18eHxPrMB3LNbEgwqOo1dRRkWbwd86DcP',
+  },
+  {
+    type: 'Pier Head Schedule',
+    folder: path.join(driveRoot, 'Pier head type'),
+    textFolder: path.join(root, 'tmp', 'pdfs', 'pier-head-type-text'),
+    folderUrl: 'https://drive.google.com/drive/folders/1nA83W8NGDXXQnRjzoec6HCE4k2DyqJlU',
+  },
 ];
 
 function readJsonConst(name) {
@@ -21,16 +37,28 @@ function readJsonConst(name) {
 }
 
 const piers = readJsonConst('PIERS_RAW');
-const pierIds = Object.keys(piers).filter(id => /^P-\d{3,4}(?:NB|SB|L|R)?$/.test(id)).sort((a, b) => b.length - a.length);
+const pierIds = Object.keys(piers)
+  .filter(id => /^P-\d{3,4}(?:NB|SB|L|R)?$/.test(id))
+  .sort((a, b) => b.length - a.length);
 
-function parseFilename(filename) {
-  return {
-    drawingNo: filename.match(/ST-(\d{6})/)?.[1] || '',
-    revision: filename.match(/(?:-|\sRev)([A-Z])\.pdf$/i)?.[1]?.toUpperCase() || '0',
-  };
+function parseFilename(filename, text = '') {
+  const drawingNo = filename.match(/ST-(\d{6})/)?.[1] || '';
+  const filenameRevision = filename.match(/(?:-|\sRev)([A-Z])\.pdf$/i)?.[1]?.toUpperCase();
+  const titleBlockRevision = drawingNo
+    ? text.match(new RegExp(`ST-${drawingNo}-([A-Z])\\b`, 'i'))?.[1]?.toUpperCase()
+    : '';
+  const revision = filenameRevision || titleBlockRevision || '0';
+  return { drawingNo, revision };
 }
 
-function mappedPiers(text) {
+function mappedPiers(text, sourceType) {
+  if (sourceType === 'Pier Head Schedule' && /PIER HEAD[^\n]*SCHEDULE|PIER HEAD SCHEDULE/i.test(text)) {
+    return [...new Set(
+      [...text.matchAll(/\bP-\d{3,4}(?:NB|SB|L|R)?\b/g)]
+        .map(match => match[0].toUpperCase())
+        .filter(id => piers[id])
+    )];
+  }
   const titleMatches = [...text.matchAll(/(?:FOR|HEAD)\s*\(?\s*(P-\d{3,4}(?:NB|SB|L|R)?)(?:\s*[,/&-]\s*(?:P-)?(\d{3,4}(?:NB|SB|L|R)?))?/gi)];
   const explicit = new Set();
   for (const match of titleMatches) {
@@ -42,6 +70,7 @@ function mappedPiers(text) {
     }
   }
   if (explicit.size) return [...explicit];
+
   const counts = [];
   for (const id of pierIds) {
     const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -55,8 +84,8 @@ function mappedPiers(text) {
 }
 
 function titleFromText(text) {
-  return text.split(/\r?\n/).map(line => line.trim()).filter(Boolean)
-    .find(line => /PIER HEAD (?:CONCRETE DETAILS|TYPE|BR\d+)/i.test(line)) || '';
+  const lines = text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  return lines.find(line => /PIER HEAD (?:CONCRETE DETAILS|TYPE|BR\d+)/i.test(line)) || '';
 }
 
 const rows = [];
@@ -66,17 +95,21 @@ for (const source of sources) {
     const pdfPath = path.join(source.folder, filename);
     const textPath = path.join(source.textFolder, filename.replace(/\.pdf$/i, '.txt'));
     const text = fs.existsSync(textPath) ? fs.readFileSync(textPath, 'utf8') : '';
-    const { drawingNo, revision } = parseFilename(filename);
-    const reviewed = drawingNo === '023170' || drawingNo === '022045';
+    const stat = fs.statSync(pdfPath);
+    const { drawingNo, revision } = parseFilename(filename, text);
+    const mapped = mappedPiers(text, source.type);
+    const reviewed = ['023170', '022045', '022998', '023030', '023076', '023216', '023240'].includes(drawingNo);
     rows.push([
       source.type,
-      mappedPiers(text).join(', '),
+      mapped.join(', '),
       drawingNo,
       revision,
       filename,
-      source.type === 'Pier Column' ? 'Pier Column' : 'PIER HEAD CONCRETE DETAILS',
+      source.type === 'Pier Column'
+        ? 'Pier Column'
+        : (source.type === 'Pier Head Schedule' ? 'Pier head type' : 'PIER HEAD CONCRETE DETAILS'),
       source.folderUrl,
-      fs.statSync(pdfPath).mtime.toISOString(),
+      stat.mtime.toISOString(),
       reviewed ? 'VISUALLY REVIEWED' : (text ? 'TEXT EXTRACTED - VISUAL REVIEW PENDING' : 'TEXT EXTRACTION REQUIRED'),
       reviewed ? 'Reviewed against application on 2026-10-12' : titleFromText(text),
     ]);
@@ -88,6 +121,7 @@ const summary = {
   generatedAt: new Date().toISOString(),
   columnDrawings: rows.filter(row => row[0] === 'Pier Column').length,
   pierHeadDrawings: rows.filter(row => row[0] === 'Pier Head').length,
+  pierHeadScheduleDrawings: rows.filter(row => row[0] === 'Pier Head Schedule').length,
   mapped: rows.filter(row => row[1]).length,
   pendingVisualReview: rows.filter(row => row[8].includes('PENDING')).length,
 };
