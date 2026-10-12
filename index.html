@@ -1931,6 +1931,16 @@ const POT_BEARING_ELEMENT_ELEV_OFFSET = {
   'P-1093': 0.120,
 };
 
+// Drawing-controlled transition-pier offsets measured from Top of Pier.
+// Up is the increasing-chainage side. The Up values include the raised
+// island plus the concrete plinth; Elastomeric adds 0.067 m above the plinth.
+const TRANSITION_BEARING_ELEVATION_OFFSETS = {
+  'P-888':  { up: 0.350, down: 0.119, drawing: '023177-A' },
+  'P-891':  { up: 0.350, down: 0.119, drawing: '023158-B' },
+  'P-1091': { up: 0.750, down: 0.124, drawing: '023165-C' },
+  'P-1094': { up: 0.750, down: 0.124, drawing: '023170-B' },
+};
+
 function getBearingType() {
   return document.getElementById('bearing-type')?.value || 'TYPE1';
 }
@@ -1991,14 +2001,27 @@ const WORK_ELEV = {
   'Pier Column (1st-Lift)': p => p.topPier,
   'Pier Column (2nd Lift)': p => p.topPier,
   'Pier Head': p => p.topPier,
-  'Bearing Plinths': p => p.id === 'P-1093' ? getTopOfColumnElevation(p) + 0.120 : (p.id === 'P-891' ? getTopOfColumnElevation(p) + 0.200 + 0.150 : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
+  'Bearing Plinths': p => p.id === 'P-1093' ? getTopOfColumnElevation(p) + 0.120 : (TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
   'Elastomeric': p => Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
     ? getTopOfColumnElevation(p) + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id] + 0.067
-    : (p.id === 'P-891' ? getTopOfColumnElevation(p) + 0.200 + 0.150 + 0.067 : getTopOfColumnElevation(p) + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
+    : (TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up + 0.067 : getTopOfColumnElevation(p) + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
 };
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  const transitionOffsets = TRANSITION_BEARING_ELEVATION_OFFSETS[pier.id];
+  if (transitionOffsets && (work === 'Bearing Plinths' || work === 'Elastomeric')) {
+    const point = String(label || '').toUpperCase().replace(/^E/, '');
+    const side = /^U(?:L|R)\d+$/.test(point) ? 'up' : (/^D(?:L|R)\d+$/.test(point) ? 'down' : null);
+    if (side) {
+      const bearingType = getBearingType();
+      const plinthHeight = getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? transitionOffsets[side];
+      const elastomericHeight = work === 'Elastomeric'
+        ? (getBearingRuleHeight(pier.id, 'Elastomeric', label, bearingType) ?? 0.067)
+        : 0;
+      return getTopOfColumnElevation(pier) + plinthHeight + elastomericHeight;
+    }
+  }
   if (pier.id === 'P-990' && work === 'Bearing Plinths' && /^UR[1-4]$/.test(String(label || ''))) {
     const plinthHeight = getBearingRuleHeight(pier.id, work, label, 'TYPE1') ?? 0.097;
     return getTopOfColumnElevation(pier) + plinthHeight;
@@ -2018,12 +2041,6 @@ function getWorkPointElev(pier, work, label) {
     const plinth = getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? P989_BEARING_PLINTH_ELEV[bearingType] / 1000;
     const elastomeric = work === 'Elastomeric' ? (getBearingRuleHeight(pier.id, work, label, bearingType) ?? P989_ELASTOMERIC_ELEV / 1000) : 0;
     return getTopOfColumnElevation(pier) + plinth + elastomeric;
-  }
-  if (pier.id === 'P-891' && work === 'Bearing Plinths' && /^D/.test(String(label || ''))) {
-    return getTopOfColumnElevation(pier) + 0.119;
-  }
-  if (pier.id === 'P-891' && work === 'Elastomeric' && /^ED/.test(String(label || ''))) {
-    return getTopOfColumnElevation(pier) + 0.119 + 0.067;
   }
   if (work === 'Bearing Plinths' || work === 'Elastomeric') {
     const bearingType = getBearingType();
