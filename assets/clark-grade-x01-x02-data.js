@@ -38,6 +38,7 @@ window.CLARK_GRADE_X01_X02_POINTS = [
     label:`AXIS-${index + 1}`, e, n, z:type === 'FG11' ? 106.30 : null, edge:'GRID_AXIS_REFERENCE_ONLY',
     allowSelection:type === 'FG11', scheduleAmm:type === 'FG11' ? 2200 : null,
     scheduleBmm:type === 'FG11' ? 1400 : null, scheduleDmm:type === 'FG11' ? 3000 : null,
+    scheduleSource:type === 'FG11' ? 'NSCR-ITD-N03-CRKSTN-DWG-ST-004098 Rev.A' : null,
     sourceStatus:'PDF_LABEL_DXF_GRID_MARKER_PARTIAL', source:'PDF 004095 Rev.A + DXF grid axes',
     dwg:'NSCR-ITD-N03-CRKSTN-DWG-ST-004095', rev:'A',
     reviewIssue:'Girder type/location matched; real faces must be confirmed before setting-out coordinates',

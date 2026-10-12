@@ -2653,6 +2653,7 @@ function clarkPointsForElement(elementId) {
       scheduleAmm: p.scheduleAmm,
       scheduleBmm: p.scheduleBmm,
       scheduleDmm: p.scheduleDmm,
+      scheduleSource: p.scheduleSource,
       ch: 0,
       os: 0,
     }));
@@ -2703,6 +2704,7 @@ function buildClarkStationSelection(elementId) {
     scheduleAmm: base.scheduleAmm,
     scheduleBmm: base.scheduleBmm,
     scheduleDmm: base.scheduleDmm,
+    scheduleSource: base.scheduleSource,
     points,
   };
 }
@@ -4946,7 +4948,7 @@ function renderPierInfo(pier) {
         <div class="info-value highlight">${zText}</div>
       </div>
       ${work === 'Foundation Girder' ? `<div class="info-cell">
-        <div class="info-label">Schedule Dimensions</div>
+        <div class="info-label">Schedule Dimensions (${pier.scheduleSource || 'source pending'})</div>
         <div class="info-value highlight">${scheduleText}</div>
       </div><div class="info-cell">
         <div class="info-label">Geometry Status</div>
