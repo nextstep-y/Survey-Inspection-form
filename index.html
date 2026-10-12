@@ -1097,6 +1097,30 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 .dwg-current { padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: #f8fbfe; font-family: var(--mono); font-size: 11px; color: var(--navy); word-break: break-word; }
 .dwg-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .dwg-file input { font-size: 11px; width: 100%; }
+.clark-qa-launch { margin-top:4px; padding:4px 7px; border:1px solid #2e668e; border-radius:4px; background:#edf6fc; color:#173d59; font-size:10px; font-weight:700; cursor:pointer; }
+.clark-qa-panel { position:fixed; inset:0; z-index:1200; display:none; align-items:center; justify-content:center; padding:24px; background:rgba(11,28,42,.58); backdrop-filter:blur(2px); }
+.clark-qa-panel.open { display:flex; }
+.clark-qa-dialog { width:min(1180px,96vw); max-height:90vh; overflow:hidden; display:flex; flex-direction:column; background:#f8fbfd; border:1px solid #8aa6b8; border-radius:10px; box-shadow:0 18px 52px rgba(0,0,0,.28); }
+.clark-qa-head { display:flex; justify-content:space-between; align-items:flex-start; padding:14px 16px; background:#173d59; color:white; }
+.clark-qa-head h2 { margin:0; font-size:17px; } .clark-qa-head p { margin:3px 0 0; color:#cfe2ef; font-size:11px; }
+.clark-qa-close { border:0; background:transparent; color:white; font-size:24px; cursor:pointer; line-height:1; }
+.clark-qa-body { padding:12px 16px 16px; overflow:auto; }
+.clark-qa-kpis { display:grid; grid-template-columns:repeat(6,minmax(105px,1fr)); gap:8px; margin-bottom:10px; }
+.clark-qa-kpi { background:white; border:1px solid #d2dee6; border-radius:6px; padding:8px 10px; }
+.clark-qa-kpi span { display:block; color:#587080; font-size:9px; text-transform:uppercase; letter-spacing:.05em; }
+.clark-qa-kpi strong { display:block; margin-top:2px; color:#173d59; font-size:19px; }
+.clark-qa-tools { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+.clark-qa-tools select,.clark-qa-tools input { border:1px solid #b6c7d2; border-radius:4px; background:white; padding:6px 8px; font-size:11px; }
+.clark-qa-tools input { flex:1; min-width:180px; }
+.clark-qa-tools .btn { color:#173d59; border-color:#8aa6b8; background:white; white-space:nowrap; }
+.clark-qa-table { width:100%; border-collapse:collapse; background:white; font-size:10px; }
+.clark-qa-table th { position:sticky; top:0; z-index:1; padding:7px 6px; text-align:left; color:white; background:#294f68; }
+.clark-qa-table td { padding:6px; border-bottom:1px solid #e2e9ee; vertical-align:top; } .clark-qa-table tr:hover td { background:#f2f8fb; }
+.qa-status { display:inline-block; min-width:62px; padding:2px 5px; border-radius:9px; color:white; font-size:8px; font-weight:800; text-align:center; }
+.qa-VERIFIED { background:#16835b; } .qa-PARTIAL { background:#b87708; } .qa-PENDING { background:#6c7780; } .qa-MISSING { background:#c33c3c; }
+.qa-issues { color:#9c3c2c; max-width:260px; }
+@media (max-width:800px) { .clark-qa-kpis { grid-template-columns:repeat(2,1fr); } .clark-qa-panel { padding:8px; } }
+@media print { .clark-qa-panel,.clark-qa-launch { display:none !important; } }
 </style>
 <style media="print">
   @page { size: A4 landscape; margin: 1mm 4mm 2mm 4mm; }
@@ -1171,6 +1195,25 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   </div>
 </div>
 
+<div class="clark-qa-panel no-print" id="clark-qa-panel" role="dialog" aria-modal="true" aria-labelledby="clark-qa-title" onclick="closeClarkQaOnBackdrop(event)">
+  <div class="clark-qa-dialog">
+    <div class="clark-qa-head">
+      <div><h2 id="clark-qa-title">Clark Station — Data Quality</h2><p>พิกัดครบ ไม่ได้หมายความว่าแหล่งอ้างอิงได้รับการยืนยันแล้ว</p></div>
+      <button class="clark-qa-close" type="button" onclick="closeClarkQaPanel()" aria-label="Close">×</button>
+    </div>
+    <div class="clark-qa-body">
+      <div class="clark-qa-kpis" id="clark-qa-kpis"></div>
+      <div class="clark-qa-tools">
+        <select id="clark-qa-status" onchange="renderClarkQaTable()"><option value="ALL">All status</option><option>VERIFIED</option><option>PARTIAL</option><option>PENDING</option><option>MISSING</option></select>
+        <select id="clark-qa-group" onchange="renderClarkQaTable()"><option value="ALL">All work groups</option></select>
+        <input id="clark-qa-search" type="search" placeholder="Search element, grid, drawing..." oninput="renderClarkQaTable()">
+        <button class="btn btn-outline" type="button" onclick="exportClarkQaCsv()">Export CSV</button>
+      </div>
+      <div style="overflow:auto;max-height:56vh;"><table class="clark-qa-table"><thead><tr><th>Element</th><th>Group / Type</th><th>Grid</th><th>Points</th><th>Elevation</th><th>Source</th><th>Status</th><th>Issues</th></tr></thead><tbody id="clark-qa-rows"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
 
 <!-- ─────────── COMPANY HEADER ─────────── -->
@@ -1223,6 +1266,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
         <option value="clark-station">Clark Station</option>
         <option value="clark-sigcom">Clark Sigcom</option>
       </select>
+      <button id="clark-qa-launch" class="clark-qa-launch" type="button" onclick="openClarkQaPanel()" style="display:none;">Data QA</button>
     </div>
     <div class="sel-col" id="work-desc-col">
       <div class="sel-label">Work Description</div>
@@ -1652,6 +1696,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/clark-station-data.js"></script>
 <script src="assets/clark-station-beam-data.js"></script>
 <script src="assets/clark-concourse-floor-data.js"></script>
+<script src="assets/clark-station-quality.js"></script>
 <script src="assets/sigcom-clark-data.js"></script>
 <script src="assets/sigcom-pile-data.js"></script>
 <script src="assets/sigcom-fg1-data.js"></script>
@@ -2477,6 +2522,86 @@ function clarkPointMaster() {
     ...(Array.isArray(window.CLARK_STATION_POINTS) ? window.CLARK_STATION_POINTS : []),
     ...(Array.isArray(window.CLARK_BEAM_POINTS) ? window.CLARK_BEAM_POINTS : []),
   ];
+}
+
+let clarkQaReport = null;
+
+function clarkQaPointMaster() {
+  const combined = [
+    ...(Array.isArray(window.CLARK_STATION_POINTS) ? window.CLARK_STATION_POINTS : []),
+    ...(Array.isArray(window.CLARK_BEAM_POINTS) ? window.CLARK_BEAM_POINTS : []),
+    ...(Array.isArray(window.CLARK_CONCOURSE_FLOOR_POINTS) ? window.CLARK_CONCOURSE_FLOOR_POINTS : []),
+  ];
+  const unique = new Map();
+  combined.forEach((point, index) => unique.set(String(point.pt || `unnamed-${index}`), point));
+  return [...unique.values()];
+}
+
+function clarkQaEscape(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
+}
+
+function refreshClarkQa() {
+  if (!window.ClarkDataQuality) return null;
+  clarkQaReport = window.ClarkDataQuality.evaluate(clarkQaPointMaster());
+  const counts = clarkQaReport.statusCounts;
+  const cards = [
+    ['Elements', clarkQaReport.elementCount], ['Survey Points', clarkQaReport.pointCount],
+    ['Verified', counts.VERIFIED], ['Partial', counts.PARTIAL], ['Pending', counts.PENDING], ['Missing', counts.MISSING],
+  ];
+  const kpis = document.getElementById('clark-qa-kpis');
+  if (kpis) kpis.innerHTML = cards.map(([label, value]) => `<div class="clark-qa-kpi"><span>${label}</span><strong>${value}</strong></div>`).join('');
+  const groupSelect = document.getElementById('clark-qa-group');
+  if (groupSelect) {
+    const selected = groupSelect.value;
+    const groups = [...new Set(clarkQaReport.elements.map((row) => row.group))].sort();
+    groupSelect.innerHTML = '<option value="ALL">All work groups</option>' + groups.map((group) => `<option value="${clarkQaEscape(group)}">${clarkQaEscape(group)}</option>`).join('');
+    if (groups.includes(selected)) groupSelect.value = selected;
+  }
+  renderClarkQaTable();
+  return clarkQaReport;
+}
+
+function filteredClarkQaRows() {
+  if (!clarkQaReport) return [];
+  const status = document.getElementById('clark-qa-status')?.value || 'ALL';
+  const group = document.getElementById('clark-qa-group')?.value || 'ALL';
+  const search = (document.getElementById('clark-qa-search')?.value || '').trim().toLowerCase();
+  return clarkQaReport.elements.filter((row) => {
+    if (status !== 'ALL' && row.status !== status) return false;
+    if (group !== 'ALL' && row.group !== group) return false;
+    if (search && !`${row.element} ${row.group} ${row.type} ${row.grid} ${row.drawing} ${row.source}`.toLowerCase().includes(search)) return false;
+    return true;
+  });
+}
+
+function renderClarkQaTable() {
+  const body = document.getElementById('clark-qa-rows');
+  if (!body || !clarkQaReport) return;
+  const rows = filteredClarkQaRows();
+  body.innerHTML = rows.length ? rows.map((row) => `<tr>
+    <td><strong>${clarkQaEscape(row.element)}</strong></td><td>${clarkQaEscape(row.group)}<br><small>${clarkQaEscape(row.type)}</small></td>
+    <td>${clarkQaEscape(row.grid)}</td><td>${row.coordinateCount}/${row.pointCount}</td><td>${row.elevationCount}/${row.pointCount}</td>
+    <td title="${clarkQaEscape(row.drawing)} Rev.${clarkQaEscape(row.revision)}">${clarkQaEscape(row.source)}</td>
+    <td><span class="qa-status qa-${row.status}">${row.status}</span></td><td class="qa-issues">${clarkQaEscape(row.issues.join('; ') || '—')}</td>
+  </tr>`).join('') : '<tr><td colspan="8" style="text-align:center;padding:20px;color:#6c7780;">No matching records</td></tr>';
+}
+
+function openClarkQaPanel() {
+  refreshClarkQa();
+  document.getElementById('clark-qa-panel')?.classList.add('open');
+}
+function closeClarkQaPanel() { document.getElementById('clark-qa-panel')?.classList.remove('open'); }
+function closeClarkQaOnBackdrop(event) { if (event.target?.id === 'clark-qa-panel') closeClarkQaPanel(); }
+
+function exportClarkQaCsv() {
+  if (!clarkQaReport) refreshClarkQa();
+  const quote = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+  const header = ['Element','Group','Type','Grid','Points','Coordinate Complete','Elevation Complete','Drawing','Revision','Source','Status','Issues'];
+  const lines = [header, ...filteredClarkQaRows().map((row) => [row.element,row.group,row.type,row.grid,row.pointCount,row.coordinateCount,row.elevationCount,row.drawing,row.revision,row.source,row.status,row.issues.join('; ')])];
+  const blob = new Blob(['\uFEFF' + lines.map((row) => row.map(quote).join(',')).join('\r\n')], { type:'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob), link = document.createElement('a');
+  link.href = url; link.download = `clark-station-data-quality-${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(url);
 }
 
 function clarkElementGroups() {
@@ -4474,6 +4599,8 @@ function onStructureTypeChange() {
   const btn = document.querySelector('.pier-combo-btn');
   const combo = document.querySelector('#pier-no-col .pier-combo');
   const ss19Controls = document.getElementById('ss19-grid-controls');
+  const clarkQaLaunch = document.getElementById('clark-qa-launch');
+  if (clarkQaLaunch) clarkQaLaunch.style.display = isClarkStationMode() ? '' : 'none';
   if (isSubstationMode()) {
     setElementOptions(DEFAULT_ELEMENT_OPTIONS, 'Bored Pile');
     if (elementLabel) elementLabel.textContent = 'Element';
