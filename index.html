@@ -6419,8 +6419,35 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
     ctx.fillStyle=fill; ctx.fill(); ctx.strokeStyle=stroke; ctx.lineWidth=1.4; ctx.stroke();
   };
 
-  // Neutral reference plane at Top of Pier makes positive height immediately visible.
-  drawPolygon(rendered, topPier, 'rgba(215,225,233,0.52)', '#9aaeba');
+  const drawExtrudedPlan = (points, elevation, depth, topFill, sideFill, stroke='#58728a') => {
+    if (points.length < 3) return;
+    const boundary = hull(points);
+    const top = boundary.map(point => project(point, elevation));
+    const bottom = top.map(point => ({x:point.x, y:point.y + depth}));
+    // Draw the vertical faces first so the top plane stays crisp and readable.
+    for (let i=0; i<top.length; i++) {
+      const next=(i+1)%top.length;
+      ctx.beginPath(); ctx.moveTo(top[i].x,top[i].y); ctx.lineTo(top[next].x,top[next].y);
+      ctx.lineTo(bottom[next].x,bottom[next].y); ctx.lineTo(bottom[i].x,bottom[i].y); ctx.closePath();
+      ctx.fillStyle=sideFill; ctx.fill(); ctx.strokeStyle=stroke; ctx.lineWidth=1.25; ctx.stroke();
+    }
+    drawPolygon(points, elevation, topFill, stroke);
+  };
+
+  const overallHull = hull(rendered);
+  const center = project({ch:midCH,os:midOS,elevation:topPier}, topPier);
+  // A compact pier stem and solid cap make the isometric view read as a real
+  // structure rather than a floating survey grid. They are schematic only.
+  ctx.beginPath();
+  ctx.moveTo(center.x-43, center.y+48); ctx.lineTo(center.x+43, center.y+48);
+  ctx.lineTo(center.x+31, center.y+137); ctx.lineTo(center.x-31, center.y+137); ctx.closePath();
+  ctx.fillStyle='#c4d0d8'; ctx.fill(); ctx.strokeStyle='#58728a'; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(center.x-31, center.y+137); ctx.lineTo(center.x+31, center.y+137);
+  ctx.lineTo(center.x+50, center.y+151); ctx.lineTo(center.x-50, center.y+151); ctx.closePath();
+  ctx.fillStyle='#aebec9'; ctx.fill(); ctx.stroke();
+
+  drawExtrudedPlan(overallHull, topPier, 48, '#e6ecef', '#bac8d1', '#516b7c');
 
   if (work === 'Pier Head') {
     const groups = new Map();
@@ -6431,7 +6458,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
     });
     const palette = ['rgba(137,196,225,0.62)','rgba(245,184,85,0.66)','rgba(102,176,135,0.67)','rgba(190,148,219,0.60)'];
     [...groups.entries()].sort((a,b) => Number(a[0])-Number(b[0])).forEach(([level,points],index) => {
-      if (points.length >= 3) drawPolygon(points, Number(level), palette[index % palette.length], '#315d78');
+      if (points.length >= 3) drawExtrudedPlan(points, Number(level), 13, palette[index % palette.length], 'rgba(82,121,145,0.58)', '#315d78');
     });
   } else {
     const groups = new Map();
@@ -6444,7 +6471,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
       groups.get(key).push(point);
     });
     for (const points of groups.values()) {
-      if (points.length === 4) drawPolygon(points, points[0].elevation, 'rgba(245,184,85,0.72)', '#8a5d13');
+      if (points.length === 4) drawExtrudedPlan(points, points[0].elevation, 12, 'rgba(245,184,85,0.88)', 'rgba(166,105,20,0.72)', '#794d0c');
     }
   }
 
@@ -6466,7 +6493,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   const layoutRail = (items, side) => {
     const x = side === 'left' ? 18 : W-18;
     const align = side === 'left' ? 'left' : 'right';
-    const top = 58, bottom = H-48;
+    const top = 62, bottom = H-52;
     const step = items.length > 1 ? Math.min(24, (bottom-top)/(items.length-1)) : 0;
     items.forEach((label,index) => {
       const y = items.length === 1 ? (top+bottom)/2 : top+index*step;
@@ -6474,7 +6501,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
       ctx.beginPath(); ctx.moveTo(label.x,label.y); ctx.lineTo(elbowX,y); ctx.lineTo(side==='left'?x+5:x-5,y);
       ctx.strokeStyle='rgba(67,88,105,0.46)'; ctx.lineWidth=1; ctx.stroke();
       const text = `${label.point.label}  ${label.point.elevation.toFixed(3)}`;
-      ctx.font='bold 24px monospace'; ctx.textAlign=align; ctx.textBaseline='middle';
+      ctx.font='bold 22px monospace'; ctx.textAlign=align; ctx.textBaseline='middle';
       const width=ctx.measureText(text).width;
       ctx.fillStyle='rgba(255,255,255,0.96)';
       ctx.fillRect(side==='left'?x-4:x-width-4,y-14,width+8,28);
@@ -6484,7 +6511,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   layoutRail(left,'left'); layoutRail(right,'right');
 
   ctx.fillStyle='#173d5a'; ctx.font='bold 28px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top';
-  ctx.fillText(`${work.toUpperCase()} - 3D ELEVATION`, W/2, 10);
+  ctx.fillText(`${work.toUpperCase()} - STRUCTURAL 3D`, W/2, 10);
   ctx.font='18px monospace'; ctx.fillStyle='#52677c';
   ctx.fillText(`EL in metres | datum: Top of Pier ${topPier.toFixed(3)} | Z exaggerated`, W/2, H-28);
   return true;
