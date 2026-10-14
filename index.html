@@ -6385,6 +6385,32 @@ function setCanvasViewMode(mode) {
   if (currentPier) drawPileArray(currentPier);
 }
 
+// The side-elevation arrow in the approved drawing controls orientation. Keep
+// that direction visible on every pier canvas instead of inferring it from U/D
+// labels or from a shared pier-head template.
+function drawIncreasingChainageArrow(ctx, from, to, labelX, labelY, detail = '') {
+  const angle = Math.atan2(to.y - from.y, to.x - from.x);
+  const head = 12;
+  ctx.save();
+  ctx.strokeStyle = '#b42318'; ctx.fillStyle = '#b42318'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(to.x, to.y);
+  ctx.lineTo(to.x - head * Math.cos(angle - Math.PI / 6), to.y - head * Math.sin(angle - Math.PI / 6));
+  ctx.lineTo(to.x - head * Math.cos(angle + Math.PI / 6), to.y - head * Math.sin(angle + Math.PI / 6));
+  ctx.closePath(); ctx.fill();
+  ctx.font = 'bold 17px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const text = `INCREASING CHAINAGE${detail ? ` — ${detail}` : ''}`;
+  const width = ctx.measureText(text).width;
+  ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.fillRect(labelX-width/2-6,labelY-12,width+12,24);
+  ctx.fillStyle = '#b42318'; ctx.fillText(text,labelX,labelY);
+  ctx.restore();
+}
+
+const SPECIAL_PIER_CHAINAGE_LEVEL_SIDE = {
+  'P-1091': 'LOW SIDE',
+  'P-1094': 'HIGH SIDE',
+};
+
 function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   const topPier = Number(getTopOfColumnElevation(pier));
   const pierHeadElevations = work === 'Pier Head' ? getPierHeadTElevations(pier) : {};
@@ -6524,6 +6550,18 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
     });
   };
   layoutRail(left,'left'); layoutRail(right,'right');
+
+  // Project the drawing-defined +CH axis into the isometric view. Special
+  // transition piers also state which level must be on that side.
+  const arrowOS = minOS - Math.max(rangeOS * 0.13, 0.35);
+  const arrowFrom = project({ch:minCH,os:arrowOS,elevation:maxElevation}, maxElevation);
+  const arrowTo = project({ch:maxCH,os:arrowOS,elevation:maxElevation}, maxElevation);
+  drawIncreasingChainageArrow(
+    ctx, arrowFrom, arrowTo,
+    W / 2,
+    54,
+    SPECIAL_PIER_CHAINAGE_LEVEL_SIDE[pier.id] || ''
+  );
 
   ctx.fillStyle='#173d5a'; ctx.font='bold 28px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top';
   ctx.fillText(`${work.toUpperCase()} - STRUCTURAL 3D`, W/2, 10);
@@ -7235,12 +7273,20 @@ function drawPileArray(pier) {
   ctx.textBaseline = 'bottom';
   ctx.fillStyle = '#555';
   ctx.fillText('PILE/ELEMENT ARRAY', centerX, 22);
-  // CH↑ at top of array zone
-  ctx.font = 'bold 22px sans-serif';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = '#000';
-  ctx.fillText('CH↑', LEFT_ZONE + PAD, topY - 55);
+  // Use the same explicit wording as the source side elevation so the drawing
+  // direction is checked before interpreting any special-pier level break.
+  if (['Pier Head','Bearing Plinths','Elastomeric'].includes(work)) {
+    const arrowX = LEFT_ZONE + PAD + 20;
+    drawIncreasingChainageArrow(
+      ctx,
+      {x:arrowX,y:topY-2}, {x:arrowX,y:topY-50},
+      arrowX + 145, topY - 50,
+      SPECIAL_PIER_CHAINAGE_LEVEL_SIDE[pier.id] || ''
+    );
+  } else {
+    ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillStyle = '#000';
+    ctx.fillText('CH↑', LEFT_ZONE + PAD, topY - 55);
+  }
 
   // Draw array type badge at bottom of array zone
   const badgeText = document.getElementById('pile-badge')?.textContent || '';
