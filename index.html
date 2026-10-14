@@ -287,6 +287,9 @@ select:focus, input[type="text"]:focus {
 }
 .pile-panel-title { font-size: 9px; font-weight: 600; color: var(--navy-mid); text-transform: uppercase; letter-spacing: 0.05em; }
 #pile-canvas { width: 100%; max-width: 720px; height: auto; display:block; image-rendering: crisp-edges; }
+.canvas-view-controls { display:none; align-self:flex-end; gap:3px; margin:0 4px -2px 0; }
+.canvas-view-btn { border:1px solid var(--border-dark); background:var(--surface); color:var(--navy-mid); padding:3px 9px; border-radius:4px; font:600 10px var(--sans); }
+.canvas-view-btn.active { background:var(--navy-mid); color:#fff; border-color:var(--navy-mid); }
 .pile-type-badge {
   display: none;
 }
@@ -727,6 +730,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   .pier-info-grid  #pier-array-wrapper { display: block !important; }
   #main-content-wrapper { display: flex !important; flex-direction: row !important; align-items: stretch !important; width: 100% !important; }
   #pile-canvas { width: 228pt !important; height: 114pt !important; display: block !important; margin: auto !important; image-rendering: crisp-edges !important; }
+  #pile-canvas.canvas-3d { height: 152pt !important; }
+  .canvas-view-controls { display:none !important; }
   #pile-array-section { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; border-left: 0.5pt solid #888 !important; padding: 3pt 2px !important; width: 238pt !important; flex-shrink: 0 !important; align-self: stretch !important; overflow: hidden !important; }
   .pier-info-grid { flex: 1 !important; }
   .pier-info-grid .info-cell { max-height: none !important; overflow: hidden !important; }
@@ -1351,6 +1356,10 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   </div>
   <!-- Right: Canvas -->
   <div id="pile-array-section" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:6px; border-left:1px solid var(--border); border-right:1px solid var(--border); width:auto; min-width:310px; max-width:720px; flex-shrink:0; background:var(--surface); overflow:visible;">
+    <div id="canvas-view-controls" class="canvas-view-controls" aria-label="Canvas view">
+      <button type="button" id="canvas-view-2d" class="canvas-view-btn" aria-pressed="false" onclick="setCanvasViewMode('2d')">2D</button>
+      <button type="button" id="canvas-view-3d" class="canvas-view-btn active" aria-pressed="true" onclick="setCanvasViewMode('3d')">3D</button>
+    </div>
     <canvas id="pile-canvas" width="1800" height="600"></canvas>
   </div>
 </div>
@@ -6348,6 +6357,139 @@ function drawClarkStationArray(ctx, W, H, pier, pts) {
   ctx.restore();
 }
 
+let canvasViewMode = '3d';
+
+function setCanvasViewMode(mode) {
+  canvasViewMode = mode === '2d' ? '2d' : '3d';
+  ['2d','3d'].forEach(view => {
+    const button = document.getElementById(`canvas-view-${view}`);
+    const selected = canvasViewMode === view;
+    button?.classList.toggle('active', selected);
+    button?.setAttribute('aria-pressed', String(selected));
+  });
+  if (currentPier) drawPileArray(currentPier);
+}
+
+function drawWorkArray3D(ctx, W, H, pier, work, pts) {
+  const topPier = Number(getTopOfColumnElevation(pier));
+  const pierHeadElevations = work === 'Pier Head' ? getPierHeadTElevations(pier) : {};
+  const rendered = pts.map(point => {
+    let elevation = work === 'Pier Head'
+      ? Number(pierHeadElevations[point.label])
+      : Number(getWorkPointElev(pier, work, point.label));
+    if (!Number.isFinite(elevation)) elevation = topPier;
+    return {...point, elevation};
+  }).filter(point => Number.isFinite(point.ch) && Number.isFinite(point.os) && Number.isFinite(point.elevation));
+  if (!rendered.length) return false;
+
+  const minCH = Math.min(...rendered.map(point => point.ch));
+  const maxCH = Math.max(...rendered.map(point => point.ch));
+  const minOS = Math.min(...rendered.map(point => point.os));
+  const maxOS = Math.max(...rendered.map(point => point.os));
+  const midCH = (minCH + maxCH) / 2;
+  const midOS = (minOS + maxOS) / 2;
+  const rangeCH = Math.max(maxCH - minCH, 0.1);
+  const rangeOS = Math.max(maxOS - minOS, 0.1);
+  const planScale = Math.min(460 / (rangeOS + rangeCH * 0.55), 300 / (rangeCH * 0.45 + rangeOS * 0.16)) * 0.9;
+  const elevations = rendered.map(point => point.elevation);
+  const minElevation = Math.min(topPier, ...elevations);
+  const maxElevation = Math.max(...elevations);
+  const verticalRange = Math.max(maxElevation - minElevation, 0.15);
+  // Exaggerate only the display Z scale so 28-140 mm plinth differences remain
+  // visible in the compact header canvas; printed elevation labels stay exact.
+  const zScale = Math.min(190 / verticalRange, 900);
+  const originX = W / 2;
+  const originY = H * 0.69;
+  const project = (point, elevation = point.elevation) => ({
+    x: originX + (point.os - midOS) * planScale - (point.ch - midCH) * planScale * 0.55,
+    y: originY + (point.ch - midCH) * planScale * 0.30 + (point.os - midOS) * planScale * 0.12 - (elevation - minElevation) * zScale,
+  });
+  const hull = points => {
+    if (points.length < 3) return [...points];
+    const sorted = [...points].sort((a,b) => a.os - b.os || a.ch - b.ch);
+    const cross = (o,a,b) => (a.os-o.os)*(b.ch-o.ch) - (a.ch-o.ch)*(b.os-o.os);
+    const lower=[]; for (const point of sorted) { while (lower.length > 1 && cross(lower.at(-2), lower.at(-1), point) <= 0) lower.pop(); lower.push(point); }
+    const upper=[]; for (let i=sorted.length-1;i>=0;i--) { const point=sorted[i]; while (upper.length > 1 && cross(upper.at(-2), upper.at(-1), point) <= 0) upper.pop(); upper.push(point); }
+    lower.pop(); upper.pop(); return lower.concat(upper);
+  };
+  const drawPolygon = (points, elevation, fill, stroke='#58728a') => {
+    if (points.length < 3) return;
+    const polygon = hull(points).map(point => project(point, elevation));
+    ctx.beginPath(); polygon.forEach((point,index) => index ? ctx.lineTo(point.x,point.y) : ctx.moveTo(point.x,point.y)); ctx.closePath();
+    ctx.fillStyle=fill; ctx.fill(); ctx.strokeStyle=stroke; ctx.lineWidth=1.4; ctx.stroke();
+  };
+
+  // Neutral reference plane at Top of Pier makes positive height immediately visible.
+  drawPolygon(rendered, topPier, 'rgba(215,225,233,0.52)', '#9aaeba');
+
+  if (work === 'Pier Head') {
+    const groups = new Map();
+    rendered.filter(point => /^T\d+$/.test(point.label)).forEach(point => {
+      const key = point.elevation.toFixed(3);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(point);
+    });
+    const palette = ['rgba(137,196,225,0.62)','rgba(245,184,85,0.66)','rgba(102,176,135,0.67)','rgba(190,148,219,0.60)'];
+    [...groups.entries()].sort((a,b) => Number(a[0])-Number(b[0])).forEach(([level,points],index) => {
+      if (points.length >= 3) drawPolygon(points, Number(level), palette[index % palette.length], '#315d78');
+    });
+  } else {
+    const groups = new Map();
+    rendered.forEach(point => {
+      const match = String(point.label).match(/^(.+?)(\d+)$/);
+      if (!match) return;
+      const number = Number(match[2]);
+      const key = `${match[1]}:${Math.floor((number-1)/4)}`;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(point);
+    });
+    for (const points of groups.values()) {
+      if (points.length === 4) drawPolygon(points, points[0].elevation, 'rgba(245,184,85,0.72)', '#8a5d13');
+    }
+  }
+
+  // Vertical risers and point markers communicate the actual Z difference.
+  rendered.forEach(point => {
+    const base = project(point, topPier), top = project(point);
+    if (Math.abs(point.elevation-topPier) > 0.0005) {
+      ctx.beginPath(); ctx.moveTo(base.x,base.y); ctx.lineTo(top.x,top.y);
+      ctx.strokeStyle='rgba(63,91,112,0.48)'; ctx.lineWidth=1.2; ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(top.x,top.y,5.5,0,Math.PI*2); ctx.fillStyle='#0b4f71'; ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=1.8; ctx.stroke();
+  });
+
+  // Two label rails with leaders keep every point name readable, even on dense plinth arrays.
+  const labels = rendered.map(point => ({point, ...project(point)}));
+  const left = labels.filter(label => label.x < originX).sort((a,b)=>a.y-b.y);
+  const right = labels.filter(label => label.x >= originX).sort((a,b)=>a.y-b.y);
+  const layoutRail = (items, side) => {
+    const x = side === 'left' ? 18 : W-18;
+    const align = side === 'left' ? 'left' : 'right';
+    const top = 58, bottom = H-48;
+    const step = items.length > 1 ? Math.min(24, (bottom-top)/(items.length-1)) : 0;
+    items.forEach((label,index) => {
+      const y = items.length === 1 ? (top+bottom)/2 : top+index*step;
+      const elbowX = side === 'left' ? 126 : W-126;
+      ctx.beginPath(); ctx.moveTo(label.x,label.y); ctx.lineTo(elbowX,y); ctx.lineTo(side==='left'?x+5:x-5,y);
+      ctx.strokeStyle='rgba(67,88,105,0.46)'; ctx.lineWidth=1; ctx.stroke();
+      const text = `${label.point.label}  ${label.point.elevation.toFixed(3)}`;
+      ctx.font='bold 24px monospace'; ctx.textAlign=align; ctx.textBaseline='middle';
+      const width=ctx.measureText(text).width;
+      ctx.fillStyle='rgba(255,255,255,0.96)';
+      ctx.fillRect(side==='left'?x-4:x-width-4,y-14,width+8,28);
+      ctx.fillStyle='#102f46'; ctx.fillText(text,x,y);
+    });
+  };
+  layoutRail(left,'left'); layoutRail(right,'right');
+
+  ctx.fillStyle='#173d5a'; ctx.font='bold 28px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top';
+  ctx.fillText(`${work.toUpperCase()} - 3D ELEVATION`, W/2, 10);
+  ctx.font='18px monospace'; ctx.fillStyle='#52677c';
+  ctx.fillText(`EL in metres | datum: Top of Pier ${topPier.toFixed(3)} | Z exaggerated`, W/2, H-28);
+  return true;
+}
+
 function drawPileArray(pier) {
   const work = document.getElementById('element').value;
   const element = document.getElementById('element').value;
@@ -6370,9 +6512,14 @@ function drawPileArray(pier) {
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const _isColLift = (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
+  const supports3D = work === 'Pier Head' || work === 'Bearing Plinths';
+  const controls = document.getElementById('canvas-view-controls');
+  if (controls) controls.style.display = supports3D ? 'flex' : 'none';
+  const use3D = supports3D && canvasViewMode === '3d';
+  canvas.classList.toggle('canvas-3d', use3D);
   // Canvas logical size: wider for Column lift to accommodate side text
   const W = _isColLift ? 1120 : 900;
-  const H = _isColLift ? 680  : 450;
+  const H = _isColLift ? 680 : (use3D ? 600 : 450);
   canvas.width  = W * dpr;
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -6385,6 +6532,8 @@ function drawPileArray(pier) {
     ctx.fillText('No array data', W/2, H/2);
     return;
   }
+
+  if (use3D && drawWorkArray3D(ctx, W, H, pier, work, pts)) return;
 
   if (isSubstationPier(pier)) {
     if (_isColLift) drawSubstationColumnArray(ctx, W, H, pier, pts);
