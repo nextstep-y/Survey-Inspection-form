@@ -290,6 +290,10 @@ select:focus, input[type="text"]:focus {
 .canvas-view-controls { display:none; align-self:flex-end; gap:3px; margin:0 4px -2px 0; }
 .canvas-view-btn { border:1px solid var(--border-dark); background:var(--surface); color:var(--navy-mid); padding:3px 9px; border-radius:4px; font:600 10px var(--sans); }
 .canvas-view-btn.active { background:var(--navy-mid); color:#fff; border-color:var(--navy-mid); }
+#canvas-preview { width:min(1120px,94vw); max-height:94vh; margin:auto; border:1px solid var(--border-dark); border-radius:8px; padding:12px; background:#fff; }
+#canvas-preview::backdrop { background:rgba(10,30,45,.55); }
+#canvas-preview img { display:block; width:100%; height:auto; max-height:82vh; object-fit:contain; }
+#canvas-preview .canvas-preview-close { float:right; }
 .pile-type-badge {
   display: none;
 }
@@ -1359,8 +1363,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     <div id="canvas-view-controls" class="canvas-view-controls" aria-label="Canvas view">
       <button type="button" id="canvas-view-2d" class="canvas-view-btn" aria-pressed="false" onclick="setCanvasViewMode('2d')">2D</button>
       <button type="button" id="canvas-view-3d" class="canvas-view-btn active" aria-pressed="true" onclick="setCanvasViewMode('3d')">3D</button>
+      <button type="button" class="canvas-view-btn" onclick="openCanvasPreview()" aria-label="Expand canvas">⛶</button>
     </div>
     <canvas id="pile-canvas" width="1800" height="600"></canvas>
+    <dialog id="canvas-preview" class="no-print" aria-label="Enlarged structural canvas">
+      <button type="button" class="canvas-view-btn canvas-preview-close" onclick="document.getElementById('canvas-preview').close()">Close ×</button>
+      <img id="canvas-preview-image" alt="Enlarged pier canvas with survey point names and elevations">
+    </dialog>
   </div>
 </div>
 
@@ -1889,73 +1898,42 @@ function _formatPileCapTablePoints(pier, arrayKey, pts) {
   });
 }
 
-// P-1091's transition head is oriented with the low surface toward increasing
-// chainage. Reverse the shared BR115TRANS chainage axis for this pier so the
-// pier-head outline, control points, table, export and canvas agree.
-const P1091_BEARING_PLAN_CENTERS = Object.freeze({
-  UL:{ch: 0.925,os:-1.700}, UR:{ch: 0.925,os: 1.700},
-  DL:{ch:-0.925,os:-2.400}, DR:{ch:-0.925,os: 2.400},
-  EUL:{ch: 0.925,os:-1.700}, EUR:{ch: 0.925,os: 1.700},
-  EDL:{ch:-0.925,os:-2.400}, EDR:{ch:-0.925,os: 2.400},
+// 023165-C: the PLAN B.C. bridge arrow points down, while the SIDE ELEVATION
+// increasing-chainage arrow points left. Rotate the plan 180 degrees to place
+// increasing chainage at +CH. Do not apply one view's screen axes to another.
+// U = +CH (large low pair), D = -CH (small high pair), L/R = signed OS.
+const P1091_BEARING_LAYOUT = Object.freeze({
+  UL: {ch:0.925, os:-2.400, sizeCH:0.980, sizeOS:0.980, rise:0.124, bearing:'S3'},
+  UR: {ch:0.925, os: 2.400, sizeCH:1.050, sizeOS:1.050, rise:0.124, bearing:'S1'},
+  DL: {ch:-0.925,os:-1.700, sizeCH:0.450, sizeOS:0.550, rise:0.750, bearing:'VIADUCT'},
+  DR: {ch:-0.925,os: 1.700, sizeCH:0.450, sizeOS:0.550, rise:0.750, bearing:'VIADUCT'},
 });
+// Retain the existing bearing footprints; their centres follow the same plan.
+const P1091_BEARING_ELEMENT_SIZES = {UL:[0.880,0.880],UR:[0.950,0.950],DL:[0.450,0.550],DR:[0.450,0.550]};
 function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
   if (pier?.id !== 'P-1091') return points;
   if (work === 'Pier Head') {
     if (hasExcelOverride) return points;
-    return (points || []).map(point => Number.isFinite(Number(point.ch))
-      ? {...point, ch: -Number(point.ch)}
-      : point);
+    const chainages = {T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,T6:-1.750,T7:-1.750,T8:1.750,S1:0.925,S2:-0.925};
+    return (points || []).map(point => Object.hasOwn(chainages, point.label)
+      ? {...point, ch:chainages[point.label]} : point);
   }
   if (!['Bearing Plinths','Elastomeric'].includes(work)) return points;
-
-  // Drawing-controlled P-1091 bearing geometry remains authoritative even
-  // when a stale imported override exists; otherwise the centre error returns.
-
-  // Drawing 023165-C plan controls both axes. In this legacy array U/D denotes
-  // the upper/lower transverse row, while L/R denotes increasing/down chainage.
-  // The small row is 1.700 m from CL Pier, the pot-bearing row is 2.400 m, and
-  // both rows are 0.925 m from the transverse centre line.
-  const source = (points || []).map(point => ({...point}));
-  const prefixes = work === 'Bearing Plinths'
-    ? ['UL','UR','DL','DR']
-    : ['EUL','EUR','EDL','EDR'];
-  const bounds = prefix => {
-    const group = source.filter(point => String(point.label || '').startsWith(prefix));
-    if (!group.length) return null;
-    const ch = group.map(point => Number(point.ch));
-    const os = group.map(point => Number(point.os));
-    return {
-      centerCH:(Math.min(...ch)+Math.max(...ch))/2,
-      centerOS:(Math.min(...os)+Math.max(...os))/2,
-      height:Math.max(...ch)-Math.min(...ch),
-      width:Math.max(...os)-Math.min(...os),
-    };
-  };
-  const targetSize = new Map();
-  // The increasing-chainage pot plinth (S1) is larger than the down-chainage
-  // pot plinth (S3); the shared P-1094 geometry stores those two sizes reversed.
-  const largeLeft=work === 'Bearing Plinths' ? 'DL' : 'EDL';
-  const largeRight=work === 'Bearing Plinths' ? 'DR' : 'EDR';
-  const leftBounds=bounds(largeLeft), rightBounds=bounds(largeRight);
-  if (leftBounds && rightBounds) {
-    targetSize.set(largeLeft,{height:rightBounds.height,width:rightBounds.width});
-    targetSize.set(largeRight,{height:leftBounds.height,width:leftBounds.width});
-  }
-  return source.map(point => {
-    const prefix=prefixes.find(value => String(point.label || '').startsWith(value));
-    const own=bounds(prefix), target=targetSize.get(prefix);
-    if (!own) return point;
-    const control=P1091_BEARING_PLAN_CENTERS[prefix];
-    if (!control) return point;
-    const height=target?.height ?? own.height;
-    const width=target?.width ?? own.width;
-    if (own.height === 0 || own.width === 0) return point;
-    return {
-      ...point,
-      ch:control.ch+(Number(point.ch)-own.centerCH)*height/own.height,
-      os:control.os+(Number(point.os)-own.centerOS)*width/own.width,
-    };
+  const isElement = work === 'Elastomeric';
+  return Object.entries(P1091_BEARING_LAYOUT).flatMap(([group, control]) => {
+    const [sizeCH,sizeOS] = isElement ? P1091_BEARING_ELEMENT_SIZES[group] : [control.sizeCH,control.sizeOS];
+    return [[1,-1],[1,1],[-1,1],[-1,-1]].map(([chSign,osSign], index) => ({
+      label:`${isElement ? 'E' : ''}${group}${index+1}`,
+      ch:Number((control.ch+chSign*sizeCH/2).toFixed(4)),
+      os:Number((control.os+osSign*sizeOS/2).toFixed(4)),
+    }));
   });
+}
+
+// Metres: keep sub-mm source precision while hiding binary floating-point noise.
+function formatSurveyOffset(value) {
+  if (value == null || value === '' || !Number.isFinite(Number(value))) return '—';
+  return String(Number(Number(value).toFixed(4)));
 }
 
 function _buildPileCapPoints(pier, arrayKey, pts, includePiles = true) {
@@ -2134,21 +2112,17 @@ const WORK_ELEV = {
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  if (pier.id === 'P-1091' && ['Bearing Plinths','Elastomeric'].includes(work)) {
+    const group = String(label || '').toUpperCase().match(/^E?(UL|UR|DL|DR)[1-4]$/)?.[1];
+    if (group) return getTopOfColumnElevation(pier) + P1091_BEARING_LAYOUT[group].rise + (work === 'Elastomeric' ? 0.067 : 0);
+  }
   const transitionOffsets = TRANSITION_BEARING_ELEVATION_OFFSETS[pier.id];
   if (transitionOffsets && (work === 'Bearing Plinths' || work === 'Elastomeric')) {
     const point = String(label || '').toUpperCase().replace(/^E/, '');
-    // P-1091's source array names the transverse rows U/D; its L/R suffix is
-    // what actually separates increasing and down chainage in drawing 023165-C.
-    const side = pier.id === 'P-1091'
-      ? (/^(?:U|D)L\d+$/.test(point) ? 'up' : (/^(?:U|D)R\d+$/.test(point) ? 'down' : null))
-      : (/^U(?:L|R)\d+$/.test(point) ? 'up' : (/^D(?:L|R)\d+$/.test(point) ? 'down' : null));
+    const side = /^U(?:L|R)\d+$/.test(point) ? 'up' : (/^D(?:L|R)\d+$/.test(point) ? 'down' : null);
     if (side) {
       const bearingType = getBearingType();
-      // Keep P-1091's drawing-controlled L/R chainage offsets authoritative
-      // over a stale live Sheet rule.
-      const plinthHeight = pier.id === 'P-1091'
-        ? transitionOffsets[side]
-        : (getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? transitionOffsets[side]);
+      const plinthHeight = getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? transitionOffsets[side];
       const elastomericHeight = work === 'Elastomeric'
         ? (getBearingRuleHeight(pier.id, 'Elastomeric', label, bearingType) ?? 0.067)
         : 0;
@@ -6437,6 +6411,14 @@ function drawClarkStationArray(ctx, W, H, pier, pts) {
 
 let canvasViewMode = '3d';
 
+function openCanvasPreview() {
+  const canvas = document.getElementById('pile-canvas');
+  const dialog = document.getElementById('canvas-preview');
+  if (!canvas || !dialog) return;
+  document.getElementById('canvas-preview-image').src = canvas.toDataURL('image/png');
+  dialog.showModal();
+}
+
 function setCanvasViewMode(mode) {
   canvasViewMode = mode === '2d' ? '2d' : '3d';
   ['2d','3d'].forEach(view => {
@@ -6448,9 +6430,8 @@ function setCanvasViewMode(mode) {
   if (currentPier) drawPileArray(currentPier);
 }
 
-// The side-elevation arrow in the approved drawing controls orientation. Keep
-// that direction visible on every pier canvas instead of inferring it from U/D
-// labels or from a shared pier-head template.
+// Each drawing view has its own screen axes. Resolve the plan against the
+// increasing-chainage direction first; the canvas always displays +CH upward.
 function drawIncreasingChainageArrow(ctx, from, to, labelX, labelY, detail = '') {
   const angle = Math.atan2(to.y - from.y, to.x - from.x);
   const head = 12;
@@ -6474,40 +6455,60 @@ const SPECIAL_PIER_CHAINAGE_LEVEL_SIDE = {
   'P-1094': 'HIGH SIDE',
 };
 
-function drawWorkArray3D(ctx, W, H, pier, work, pts) {
+function getStructuralCanvasGeometry(pier) {
+  const source = ARRAYS_RAW[WORK_ARRAY_KEY['Pier Head'](pier)] || [];
+  const points = _orientPierSpecificPoints(pier, 'Pier Head', source);
+  const outer = points.filter(p => /^T\d+$/.test(p.label));
+  if (outer.length < 4) return null;
+  const extent = values => [Math.min(...values), Math.max(...values)];
+  const [minCH,maxCH] = extent(outer.map(p => p.ch));
+  const [minOS,maxOS] = extent(outer.map(p => p.os));
+  if (!(maxCH>minCH && maxOS>minOS)) return null;
+  const column = _columnArrayPoints(pier).filter(p => /^\d+$/.test(p.label));
   const topPier = Number(getTopOfColumnElevation(pier));
-  const pierHeadElevations = work === 'Pier Head' ? getPierHeadTElevations(pier) : {};
+  const derivedDepth = topPier - (Number(pier.topCap) + Number(pier.columnHeightMm) / 1000);
+  const knownDepth = Number.isFinite(derivedDepth) && derivedDepth > 0 && derivedDepth < 6;
+  return {points, column, minCH,maxCH,minOS,maxOS, topPier,
+    depth: knownDepth ? derivedDepth : 1.5, knownDepth,
+    // Only P-1091's 0.400 m rim is checked against the side elevation here.
+    rim: pier.id === 'P-1091' ? 0.400 : 0.300,
+    step: ['P-1091','P-1094'].includes(pier.id) ? 0.600 : 0,
+    highCHSign: pier.id === 'P-1091' ? -1 : 1,
+  };
+}
+
+// Axial oblique view: CH has no horizontal component, and OS has no vertical
+// component. Equal-CH / equal-EL pairs therefore stay horizontally aligned.
+function projectStructuralPoint(point, elevation, view) {
+  return {
+    x: view.x + point.os * view.scale,
+    y: view.y - point.ch * view.scale * 0.65 - (elevation-view.datum) * view.scale * 0.76,
+  };
+}
+
+function drawWorkArray3D(ctx, W, H, pier, work, pts) {
+  const geometry = getStructuralCanvasGeometry(pier);
+  if (!geometry) return false;
+  const topPier = Number(getTopOfColumnElevation(pier));
+  const pierHeadElevations = getPierHeadTElevations(pier);
   const rendered = pts.map(point => {
     let elevation = work === 'Pier Head'
       ? Number(pierHeadElevations[point.label])
       : Number(getWorkPointElev(pier, work, point.label));
+    const hasDesignElevation = Number.isFinite(elevation);
     if (!Number.isFinite(elevation)) elevation = topPier;
-    return {...point, elevation};
+    return {...point, elevation, hasDesignElevation};
   }).filter(point => Number.isFinite(point.ch) && Number.isFinite(point.os) && Number.isFinite(point.elevation));
   if (!rendered.length) return false;
 
-  const minCH = Math.min(...rendered.map(point => point.ch));
-  const maxCH = Math.max(...rendered.map(point => point.ch));
-  const minOS = Math.min(...rendered.map(point => point.os));
-  const maxOS = Math.max(...rendered.map(point => point.os));
-  const midCH = (minCH + maxCH) / 2;
-  const midOS = (minOS + maxOS) / 2;
-  const rangeCH = Math.max(maxCH - minCH, 0.1);
-  const rangeOS = Math.max(maxOS - minOS, 0.1);
-  const planScale = Math.min(460 / (rangeOS + rangeCH * 0.55), 300 / (rangeCH * 0.45 + rangeOS * 0.16)) * 0.9;
-  const elevations = rendered.map(point => point.elevation);
-  const minElevation = Math.min(topPier, ...elevations);
-  const maxElevation = Math.max(...elevations);
-  const verticalRange = Math.max(maxElevation - minElevation, 0.15);
-  // Exaggerate only the display Z scale so 28-140 mm plinth differences remain
-  // visible in the compact header canvas; printed elevation labels stay exact.
-  const zScale = Math.min(190 / verticalRange, 900);
+  const {minCH,maxCH,minOS,maxOS,depth,column} = geometry;
+  const rangeCH = maxCH-minCH, rangeOS = maxOS-minOS;
+  const stemShown = column.length ? 1.0 : 0;
+  const maxRise = Math.max(0.4, ...rendered.map(p => p.elevation-topPier));
+  const planScale = Math.min((W-330)/rangeOS, (H-200)/(rangeCH*0.65+(depth+stemShown+maxRise)*0.76));
   const originX = W / 2;
-  const originY = H * 0.69;
-  const project = (point, elevation = point.elevation) => ({
-    x: originX + (point.os - midOS) * planScale - (point.ch - midCH) * planScale * 0.55,
-    y: originY + (point.ch - midCH) * planScale * 0.30 + (point.os - midOS) * planScale * 0.12 - (elevation - minElevation) * zScale,
-  });
+  const view = {x:originX, y:120+maxCH*planScale*0.65+maxRise*planScale*0.76, scale:planScale, datum:topPier};
+  const project = (point, elevation = point.elevation) => projectStructuralPoint(point, elevation, view);
   const hull = points => {
     if (points.length < 3) return [...points];
     const sorted = [...points].sort((a,b) => a.os - b.os || a.ch - b.ch);
@@ -6516,120 +6517,123 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
     const upper=[]; for (let i=sorted.length-1;i>=0;i--) { const point=sorted[i]; while (upper.length > 1 && cross(upper.at(-2), upper.at(-1), point) <= 0) upper.pop(); upper.push(point); }
     lower.pop(); upper.pop(); return lower.concat(upper);
   };
-  const drawPolygon = (points, elevation, fill, stroke='#58728a') => {
+  const polygon = (points, fill, stroke='#58728a') => {
     if (points.length < 3) return;
-    const polygon = hull(points).map(point => project(point, elevation));
-    ctx.beginPath(); polygon.forEach((point,index) => index ? ctx.lineTo(point.x,point.y) : ctx.moveTo(point.x,point.y)); ctx.closePath();
+    ctx.beginPath(); points.forEach((point,index) => index ? ctx.lineTo(point.x,point.y) : ctx.moveTo(point.x,point.y)); ctx.closePath();
     ctx.fillStyle=fill; ctx.fill(); ctx.strokeStyle=stroke; ctx.lineWidth=1.4; ctx.stroke();
   };
+  const drawPolygon = (points, elevation, fill, stroke='#58728a') => {
+    polygon(hull(points).map(point => project(point, elevation)), fill, stroke);
+  };
+  const rect = (a,b,c,d) => [{ch:a,os:c},{ch:a,os:d},{ch:b,os:d},{ch:b,os:c}];
+  const head = rect(minCH,maxCH,minOS,maxOS);
+  const surfaceAt = ch => topPier + (geometry.step && ch*geometry.highCHSign > 0 ? geometry.step : 0);
 
-  const drawExtrudedPlan = (points, elevation, depth, topFill, sideFill, stroke='#58728a') => {
+  const drawExtrudedPlan = (points, elevation, bottomElevation, topFill, sideFill, stroke='#58728a') => {
     if (points.length < 3) return;
     const boundary = hull(points);
     const top = boundary.map(point => project(point, elevation));
-    const bottom = top.map(point => ({x:point.x, y:point.y + depth}));
-    // Draw the vertical faces first so the top plane stays crisp and readable.
+    const bottom = boundary.map(point => project(point, bottomElevation));
     for (let i=0; i<top.length; i++) {
       const next=(i+1)%top.length;
-      ctx.beginPath(); ctx.moveTo(top[i].x,top[i].y); ctx.lineTo(top[next].x,top[next].y);
-      ctx.lineTo(bottom[next].x,bottom[next].y); ctx.lineTo(bottom[i].x,bottom[i].y); ctx.closePath();
-      ctx.fillStyle=sideFill; ctx.fill(); ctx.strokeStyle=stroke; ctx.lineWidth=1.25; ctx.stroke();
+      polygon([top[i],top[next],bottom[next],bottom[i]], sideFill, stroke);
     }
     drawPolygon(points, elevation, topFill, stroke);
   };
 
-  const overallHull = hull(rendered);
-  const center = project({ch:midCH,os:midOS,elevation:topPier}, topPier);
-  // A compact pier stem and solid cap make the isometric view read as a real
-  // structure rather than a floating survey grid. They are schematic only.
-  ctx.beginPath();
-  ctx.moveTo(center.x-43, center.y+48); ctx.lineTo(center.x+43, center.y+48);
-  ctx.lineTo(center.x+31, center.y+137); ctx.lineTo(center.x-31, center.y+137); ctx.closePath();
-  ctx.fillStyle='#c4d0d8'; ctx.fill(); ctx.strokeStyle='#58728a'; ctx.lineWidth=1.5; ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(center.x-31, center.y+137); ctx.lineTo(center.x+31, center.y+137);
-  ctx.lineTo(center.x+50, center.y+151); ctx.lineTo(center.x-50, center.y+151); ctx.closePath();
-  ctx.fillStyle='#aebec9'; ctx.fill(); ctx.stroke();
+  // Real column plan dimensions, with only the visible shaft length shortened.
+  // A lack of source column geometry is not replaced with an invented width.
+  if (column.length) {
+    drawExtrudedPlan(column,topPier-depth,topPier-depth-stemShown,'#c9d5de','#adbecb');
+    const columnOS = [Math.min(...column.map(p=>p.os)),Math.max(...column.map(p=>p.os))];
+    const columnCH = [Math.min(...column.map(p=>p.ch)),Math.max(...column.map(p=>p.ch))];
+    const bottom = rect(...columnCH,...columnOS);
+    for (let i=0;i<4;i++) {
+      const next=(i+1)%4;
+      polygon([project(head[i],topPier-geometry.rim),project(head[next],topPier-geometry.rim),
+        project(bottom[next],topPier-depth),project(bottom[i],topPier-depth)], i===0?'#aebfca':'#c1cfd8');
+    }
+  }
+  drawExtrudedPlan(head,topPier,topPier-geometry.rim,'#edf2f5','#c0ced8');
+  if (geometry.step) {
+    const high = geometry.highCHSign > 0 ? rect(0,maxCH,minOS,maxOS) : rect(minCH,0,minOS,maxOS);
+    drawExtrudedPlan(high,topPier+geometry.step,topPier,'#e1eaf0','#a5bdcd');
+  }
 
-  drawExtrudedPlan(overallHull, topPier, 48, '#e6ecef', '#bac8d1', '#516b7c');
+  // Raised islands use the actual T-point rectangle, split at the T2-T4 joint
+  // for transition heads. Do not create a hull from unrelated elevated points.
+  const islandPoints = geometry.points.filter(p=>/^T\d+$/.test(p.label) && Number(p.label.slice(1))>=5);
+  for (let i=0;i<islandPoints.length;i+=4) {
+    const island = islandPoints.slice(i,i+4);
+    if (island.length!==4) continue;
+    const a=Math.min(...island.map(p=>p.ch)), b=Math.max(...island.map(p=>p.ch));
+    const c=Math.min(...island.map(p=>p.os)), d=Math.max(...island.map(p=>p.os));
+    const pieces = geometry.step && a<0 && b>0 ? [[a,0],[0,b]] : [[a,b]];
+    for (const [lo,hi] of pieces) {
+      const levels = island.filter(p=>p.ch>=lo-1e-6&&p.ch<=hi+1e-6).map(p=>Number(pierHeadElevations[p.label])).filter(Number.isFinite);
+      if (!levels.length) continue;
+      const level=Math.max(...levels), base=surfaceAt((lo+hi)/2);
+      if (level>base+0.0005) drawExtrudedPlan(rect(lo,hi,c,d),level,base,'#c7dde8','#8fb1c6');
+    }
+  }
 
-  if (work === 'Pier Head') {
-    const groups = new Map();
-    rendered.filter(point => /^T\d+$/.test(point.label)).forEach(point => {
-      const key = point.elevation.toFixed(3);
-      if (!groups.has(key)) groups.set(key, []);
-      groups.get(key).push(point);
-    });
-    const palette = ['rgba(137,196,225,0.62)','rgba(245,184,85,0.66)','rgba(102,176,135,0.67)','rgba(190,148,219,0.60)'];
-    [...groups.entries()].sort((a,b) => Number(a[0])-Number(b[0])).forEach(([level,points],index) => {
-      if (points.length >= 3) drawExtrudedPlan(points, Number(level), 13, palette[index % palette.length], 'rgba(82,121,145,0.58)', '#315d78');
-    });
-  } else {
+  if (work !== 'Pier Head') {
     const groups = new Map();
     rendered.forEach(point => {
       const match = String(point.label).match(/^(.+?)(\d+)$/);
       if (!match) return;
-      const number = Number(match[2]);
-      const key = `${match[1]}:${Math.floor((number-1)/4)}`;
+      const key = `${match[1]}:${Math.floor((Number(match[2])-1)/4)}`;
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(point);
     });
-    for (const points of groups.values()) {
-      if (points.length === 4) drawExtrudedPlan(points, points[0].elevation, 12, 'rgba(245,184,85,0.88)', 'rgba(166,105,20,0.72)', '#794d0c');
-    }
+    // Far (+CH) groups first. The plinth sides connect to their own surface.
+    [...groups.values()].sort((a,b)=>b[0].ch-a[0].ch).forEach(points=>{
+      if (points.length!==4) return;
+      const centerCH=points.reduce((sum,p)=>sum+p.ch,0)/4;
+      drawExtrudedPlan(points,points[0].elevation,surfaceAt(centerCH),'#f5c56c','#ca9137','#8a5b13');
+    });
   }
 
-  // Vertical risers and point markers communicate the actual Z difference.
   rendered.forEach(point => {
-    const base = project(point, topPier), top = project(point);
-    if (Math.abs(point.elevation-topPier) > 0.0005) {
-      ctx.beginPath(); ctx.moveTo(base.x,base.y); ctx.lineTo(top.x,top.y);
-      ctx.strokeStyle='rgba(63,91,112,0.48)'; ctx.lineWidth=1.2; ctx.stroke();
-    }
-    ctx.beginPath(); ctx.arc(top.x,top.y,5.5,0,Math.PI*2); ctx.fillStyle='#0b4f71'; ctx.fill();
-    ctx.strokeStyle='#fff'; ctx.lineWidth=1.8; ctx.stroke();
+    const top = project(point);
+    ctx.beginPath(); ctx.arc(top.x,top.y,4,0,Math.PI*2); ctx.fillStyle=point.hasDesignElevation?'#0b4f71':'#fff'; ctx.fill();
+    ctx.strokeStyle=point.hasDesignElevation?'#fff':'#718390'; ctx.lineWidth=1.4; ctx.stroke();
   });
 
-  // Two label rails with leaders keep every point name readable, even on dense plinth arrays.
+  // Two label rails, placed outside the real structure envelope.
   const labels = rendered.map(point => ({point, ...project(point)}));
-  const left = labels.filter(label => label.x < originX).sort((a,b)=>a.y-b.y);
-  const right = labels.filter(label => label.x >= originX).sort((a,b)=>a.y-b.y);
+  const left = labels.filter(label => label.point.os < 0).sort((a,b)=>b.point.ch-a.point.ch||a.point.os-b.point.os);
+  const right = labels.filter(label => label.point.os >= 0).sort((a,b)=>b.point.ch-a.point.ch||a.point.os-b.point.os);
   const layoutRail = (items, side) => {
     const x = side === 'left' ? 18 : W-18;
     const align = side === 'left' ? 'left' : 'right';
-    const top = 62, bottom = H-52;
-    const step = items.length > 1 ? Math.min(24, (bottom-top)/(items.length-1)) : 0;
+    const top = 136, bottom = H-110;
+    const step = items.length > 1 ? Math.min(32, (bottom-top)/(items.length-1)) : 0;
     items.forEach((label,index) => {
       const y = items.length === 1 ? (top+bottom)/2 : top+index*step;
-      const elbowX = side === 'left' ? 126 : W-126;
+      const elbowX = side === 'left' ? 166 : W-166;
       ctx.beginPath(); ctx.moveTo(label.x,label.y); ctx.lineTo(elbowX,y); ctx.lineTo(side==='left'?x+5:x-5,y);
-      ctx.strokeStyle='rgba(67,88,105,0.46)'; ctx.lineWidth=1; ctx.stroke();
-      const text = `${label.point.label}  ${label.point.elevation.toFixed(3)}`;
-      ctx.font='bold 22px monospace'; ctx.textAlign=align; ctx.textBaseline='middle';
+      ctx.strokeStyle='rgba(67,88,105,0.42)'; ctx.lineWidth=1; ctx.stroke();
+      const text = `${label.point.label} ${label.point.hasDesignElevation ? label.point.elevation.toFixed(3) : 'REF'}`;
+      const fontSize=items.length>1 ? Math.min(21,step-4) : 21;
+      ctx.font=`bold ${fontSize}px monospace`; ctx.textAlign=align; ctx.textBaseline='middle';
       const width=ctx.measureText(text).width;
-      ctx.fillStyle='rgba(255,255,255,0.96)';
-      ctx.fillRect(side==='left'?x-4:x-width-4,y-14,width+8,28);
-      ctx.fillStyle='#102f46'; ctx.fillText(text,x,y);
+      ctx.fillStyle='rgba(255,255,255,0.97)';
+      ctx.fillRect(side==='left'?x-4:x-width-4,y-fontSize/2-2,width+8,fontSize+4);
+      ctx.fillStyle=label.point.ch>=0?'#0b5877':'#714510'; ctx.fillText(text,x,y);
     });
   };
   layoutRail(left,'left'); layoutRail(right,'right');
 
-  // Project the drawing-defined +CH axis into the isometric view. Special
-  // transition piers also state which level must be on that side.
-  const arrowOS = minOS - Math.max(rangeOS * 0.13, 0.35);
-  const arrowFrom = project({ch:minCH,os:arrowOS,elevation:maxElevation}, maxElevation);
-  const arrowTo = project({ch:maxCH,os:arrowOS,elevation:maxElevation}, maxElevation);
-  drawIncreasingChainageArrow(
-    ctx, arrowFrom, arrowTo,
-    W / 2,
-    54,
-    SPECIAL_PIER_CHAINAGE_LEVEL_SIDE[pier.id] || ''
-  );
-
-  ctx.fillStyle='#173d5a'; ctx.font='bold 28px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top';
-  ctx.fillText(`${work.toUpperCase()} - STRUCTURAL 3D`, W/2, 10);
-  ctx.font='18px monospace'; ctx.fillStyle='#52677c';
-  ctx.fillText(`EL in metres | datum: Top of Pier ${topPier.toFixed(3)} | Z exaggerated`, W/2, H-28);
+  drawIncreasingChainageArrow(ctx,{x:W/2,y:104},{x:W/2,y:72},W/2,54,SPECIAL_PIER_CHAINAGE_LEVEL_SIDE[pier.id] || '');
+  ctx.fillStyle='#173d5a'; ctx.font='bold 27px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top';
+  ctx.fillText(`${work.toUpperCase()} - ${pier.id} - 3D`, W/2, 10);
+  ctx.font='17px monospace'; ctx.fillStyle='#52677c';
+  ctx.fillText(`EL (m) | Top of Pier ${topPier.toFixed(3)} | +CH UP / +OS RIGHT`,W/2,H-65);
+  const columnText = column.length ? `Column ${pier.colDim} m` : 'Column dimensions unavailable';
+  ctx.fillText(`${columnText} | Head ${formatSurveyOffset(rangeOS)} x ${formatSurveyOffset(rangeCH)} m`,W/2,H-43);
+  ctx.font='15px sans-serif';
+  ctx.fillText(`${geometry.knownDepth ? 'Proportional axes' : 'Head depth schematic'}; surfaces simplified; column length shortened`,W/2,H-21);
   return true;
 }
 
@@ -6714,7 +6718,8 @@ function drawPileArray(pier) {
   let pierHeadOverlayPts = [];
   if ((work === 'Elastomeric' || work === 'Bearing Plinths') && pier) {
     const phKey = pier.pierType + ' - ' + pier.pierReinf;
-    pierHeadOverlayPts = (ARRAYS_RAW[phKey] || []).filter(p => /^T[1-8]$/.test(p.label) || /^S\d+$/.test(p.label));
+    pierHeadOverlayPts = _orientPierSpecificPoints(pier, 'Pier Head', ARRAYS_RAW[phKey] || [])
+      .filter(p => /^T[1-8]$/.test(p.label) || /^S\d+$/.test(p.label));
   }
   const allPtsForRange = ((work === 'Pile Deviate' || work === 'Bored Pile') && overlayCapPts.length)
     ? [...pts, ...overlayCapPts]
@@ -6731,11 +6736,12 @@ function drawPileArray(pier) {
   const LEFT_ZONE  = _isColLift ? 480 : 0;
   const RIGHT_ZONE = _isColLift ? 480 : 0;
   const BOT_ZONE   = _isColLift ? 130 : 0;
+  const TOP_ZONE = ['Pier Head','Bearing Plinths','Elastomeric'].includes(work) ? 75 : 0;
   const PAD = _isColLift ? 20 : 30;
   const drawW = W - LEFT_ZONE - RIGHT_ZONE - PAD * 2;
-  const drawH = H - BOT_ZONE - PAD * 2;
+  const drawH = H - BOT_ZONE - TOP_ZONE - PAD * 2;
   const centerX = LEFT_ZONE + PAD + drawW / 2;
-  const centerY = PAD + drawH / 2;
+  const centerY = TOP_ZONE + PAD + drawH / 2;
 
   // Pier Head is usually a wide, shallow layout. Let it use the full drawing width
   // while keeping one uniform scale, otherwise it becomes tiny in the header canvas.
@@ -7339,11 +7345,11 @@ function drawPileArray(pier) {
   // Use the same explicit wording as the source side elevation so the drawing
   // direction is checked before interpreting any special-pier level break.
   if (['Pier Head','Bearing Plinths','Elastomeric'].includes(work)) {
-    const arrowX = LEFT_ZONE + PAD + 20;
+    const arrowX = W / 2;
     drawIncreasingChainageArrow(
       ctx,
-      {x:arrowX,y:topY-2}, {x:arrowX,y:topY-50},
-      arrowX + 145, topY - 50,
+      {x:arrowX,y:90}, {x:arrowX,y:62},
+      arrowX, 43,
       SPECIAL_PIER_CHAINAGE_LEVEL_SIDE[pier.id] || ''
     );
   } else {
@@ -7642,8 +7648,8 @@ function renderSurveyTable(pier) {
       // PD: set widths inline via DOM after innerHTML for guaranteed override
       tr.innerHTML = `
         <td class="label-cell">${p.label || (i+1)}</td>
-        <td class="auto-cell">${p.ch}</td>
-        <td class="auto-cell">${p.os}</td>
+        <td class="auto-cell">${formatSurveyOffset(p.ch)}</td>
+        <td class="auto-cell">${formatSurveyOffset(p.os)}</td>
         <td class="auto-cell">${dN.toFixed(3)}</td>
         <td class="auto-cell">${dE.toFixed(3)}</td>
         <td class="auto-cell">${ptElev != null ? ptElev.toFixed(3) : '—'}</td>
@@ -7662,8 +7668,8 @@ function renderSurveyTable(pier) {
       // ── Standard row (Bored Pile etc) ────────────────────────────────────
       tr.innerHTML = `
         <td class="label-cell">${p.label || (i+1)}</td>
-        <td class="auto-cell">${p.ch}</td>
-        <td class="auto-cell">${p.os}</td>
+        <td class="auto-cell">${formatSurveyOffset(p.ch)}</td>
+        <td class="auto-cell">${formatSurveyOffset(p.os)}</td>
         <td class="auto-cell">${dN.toFixed(3)}</td>
         <td class="auto-cell">${dE.toFixed(3)}</td>
         <td class="auto-cell">${ptElev != null ? ptElev.toFixed(3) : '—'}</td>
