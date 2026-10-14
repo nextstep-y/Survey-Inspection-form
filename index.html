@@ -1889,6 +1889,16 @@ function _formatPileCapTablePoints(pier, arrayKey, pts) {
   });
 }
 
+// P-1091's transition head is oriented with the low surface toward increasing
+// chainage. Reverse the shared BR115TRANS chainage axis for this pier so the
+// pier-head outline, control points, table, export and canvas agree.
+function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
+  if (hasExcelOverride || pier?.id !== 'P-1091' || work !== 'Pier Head') return points;
+  return (points || []).map(point => Number.isFinite(Number(point.ch))
+    ? {...point, ch: -Number(point.ch)}
+    : point);
+}
+
 function _buildPileCapPoints(pier, arrayKey, pts, includePiles = true) {
   const capPts = _normalizePileCapPoints(pier, arrayKey, pts || []);
   const corners = (capPts || []).filter(p => /^[A-H]$/.test(p.label));
@@ -1992,7 +2002,8 @@ const POT_BEARING_ELEMENT_ELEV_OFFSET = {
 const TRANSITION_BEARING_ELEVATION_OFFSETS = {
   'P-888':  { up: 0.350, down: 0.119, drawing: '023177-A' },
   'P-891':  { up: 0.350, down: 0.119, drawing: '023158-B' },
-  'P-1091': { up: 0.750, down: 0.124, drawing: '023165-C' },
+  // P-1091 is opposite to P-1094: increasing chainage is the low side.
+  'P-1091': { up: 0.124, down: 0.750, drawing: '023165-C' },
   'P-1094': { up: 0.750, down: 0.124, drawing: '023170-B' },
 };
 
@@ -2070,7 +2081,11 @@ function getWorkPointElev(pier, work, label) {
     const side = /^U(?:L|R)\d+$/.test(point) ? 'up' : (/^D(?:L|R)\d+$/.test(point) ? 'down' : null);
     if (side) {
       const bearingType = getBearingType();
-      const plinthHeight = getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? transitionOffsets[side];
+      // P-1091's latest drawing reverses the former U/D orientation. Keep the
+      // drawing-controlled offsets authoritative over a stale live Sheet rule.
+      const plinthHeight = pier.id === 'P-1091'
+        ? transitionOffsets[side]
+        : (getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? transitionOffsets[side]);
       const elastomericHeight = work === 'Elastomeric'
         ? (getBearingRuleHeight(pier.id, 'Elastomeric', label, bearingType) ?? 0.067)
         : 0;
@@ -6528,6 +6543,7 @@ function drawPileArray(pier) {
     : isSubstationPier(pier)
     ? ss19PointsForWork(pier, work)
     : (excelPts || (_isColumnWork(work) ? _columnArrayPoints(pier) : (ARRAYS_RAW[arrayKey] || ARRAYS_RAW[pier.piles] || [])));
+  pts = _orientPierSpecificPoints(pier, work, pts, Boolean(excelPts));
   if (!isSubstationPier(pier) && !excelPts && work === 'Blinding Concrete') pts = _buildBlindingCanvasPoints(pier);
   if (!isSubstationPier(pier) && !isClarkStationElement(pier) && !excelPts && work === 'Pile cap') pts = _buildPileCapCanvasPoints(pier, arrayKey, pts);
 
@@ -7426,6 +7442,7 @@ function renderSurveyTable(pier) {
     : isSubstationPier(pier)
     ? ss19PointsForWork(pier, work)
     : (excelPts || (_isColumnWork(work) ? _columnArrayPoints(pier) : (ARRAYS_RAW[arrayKey] || ARRAYS_RAW[pier.piles] || [])));
+  pts = _orientPierSpecificPoints(pier, work, pts, Boolean(excelPts));
   if (!isSubstationPier(pier) && !isClarkStationElement(pier) && work === 'Pile cap') pts = _formatPileCapTablePoints(pier, arrayKey, pts);
 
   // Blinding Concrete: only show A-D corner points in measurement table
