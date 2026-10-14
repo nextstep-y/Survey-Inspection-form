@@ -6565,6 +6565,12 @@ function drawPileArray(pier) {
   if (tPts.length >= 4) {
     const tMap = {};
     tPts.forEach(p => tMap[p.label] = p);
+    const pierHeadLevelMap = work === 'Pier Head' ? getPierHeadTElevations(pier) : {};
+    const pierHeadLevels = [...new Set(tPts
+      .map(p => Number(pierHeadLevelMap[p.label]))
+      .filter(Number.isFinite)
+      .map(value => value.toFixed(3)))].map(Number).sort((a, b) => a - b);
+    const hasPierHeadLevelBreak = work === 'Pier Head' && pierHeadLevels.length > 1;
 
     // Draw inner rectangles: T5-T8, T9-T12, T13-T16, ... in groups of 4
     const tNums = tPts.map(p => parseInt(p.label.slice(1))).filter(n => n >= 5).sort((a,b)=>a-b);
@@ -6653,6 +6659,93 @@ function drawPileArray(pier) {
       ctx.setLineDash([10,6]);
       ctx.stroke();
       ctx.setLineDash([]);
+    }
+
+    // Show a clear, data-driven level-break line on every multi-level pier head.
+    // T-point groups at the same elevation form the contour. Two-point special
+    // heads use a connecting break line; a single point receives a ring marker.
+    if (hasPierHeadLevelBreak) {
+      const baseLevel = Number.isFinite(Number(pierHeadLevelMap.T2))
+        ? Number(pierHeadLevelMap.T2)
+        : pierHeadLevels[0];
+      const levelGroups = new Map();
+      tPts.forEach(point => {
+        const elevation = Number(pierHeadLevelMap[point.label]);
+        if (!Number.isFinite(elevation) || Math.abs(elevation - baseLevel) < 0.0005) return;
+        const key = elevation.toFixed(3);
+        if (!levelGroups.has(key)) levelGroups.set(key, []);
+        levelGroups.get(key).push({ x: toX(point.os), y: toY(point.ch), point });
+      });
+
+      const convexHull = points => {
+        if (points.length <= 2) return points;
+        const sorted = [...points].sort((a, b) => a.x - b.x || a.y - b.y);
+        const cross = (o, a, b) => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+        const lower = [];
+        for (const point of sorted) {
+          while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0) lower.pop();
+          lower.push(point);
+        }
+        const upper = [];
+        for (let i = sorted.length - 1; i >= 0; i--) {
+          const point = sorted[i];
+          while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0) upper.pop();
+          upper.push(point);
+        }
+        lower.pop();
+        upper.pop();
+        return lower.concat(upper);
+      };
+
+      ctx.save();
+      ctx.strokeStyle = '#0067a3';
+      ctx.fillStyle = '#0067a3';
+      ctx.lineWidth = 3.2;
+      ctx.setLineDash([12, 7]);
+      const levelBreakLabels = [];
+      for (const [levelText, group] of levelGroups.entries()) {
+        const hull = convexHull(group);
+        if (hull.length >= 3) {
+          const cx = hull.reduce((sum, point) => sum + point.x, 0) / hull.length;
+          const cy = hull.reduce((sum, point) => sum + point.y, 0) / hull.length;
+          const outset = 7;
+          ctx.beginPath();
+          hull.forEach((point, index) => {
+            const dx = point.x - cx, dy = point.y - cy;
+            const distance = Math.hypot(dx, dy) || 1;
+            const x = point.x + dx / distance * outset;
+            const y = point.y + dy / distance * outset;
+            index ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+          });
+          ctx.closePath();
+          ctx.stroke();
+        } else if (hull.length === 2) {
+          ctx.beginPath();
+          ctx.moveTo(hull[0].x, hull[0].y);
+          ctx.lineTo(hull[1].x, hull[1].y);
+          ctx.stroke();
+        } else if (hull.length === 1) {
+          ctx.beginPath();
+          ctx.arc(hull[0].x, hull[0].y, Math.max(12, r * 1.7), 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        const delta = Number(levelText) - baseLevel;
+        levelBreakLabels.push(`${delta >= 0 ? '+' : ''}${delta.toFixed(3)} m (EL ${levelText})`);
+      }
+      const legend = `LEVEL BREAK: ${levelBreakLabels.join(' / ')}`;
+      ctx.setLineDash([]);
+      ctx.font = 'bold 22px Arial';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      const legendWidth = ctx.measureText(legend).width;
+      const legendX = Math.max(22, W - legendWidth - 28);
+      const legendY = H - 43;
+      ctx.fillStyle = 'rgba(255,255,255,0.94)';
+      ctx.fillRect(legendX - 6, legendY - 5, legendWidth + 12, 32);
+      ctx.fillStyle = '#0067a3';
+      ctx.fillText(legend, legendX, legendY);
+      ctx.restore();
     }
   }
 
