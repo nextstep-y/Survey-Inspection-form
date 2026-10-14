@@ -1893,10 +1893,49 @@ function _formatPileCapTablePoints(pier, arrayKey, pts) {
 // chainage. Reverse the shared BR115TRANS chainage axis for this pier so the
 // pier-head outline, control points, table, export and canvas agree.
 function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
-  if (hasExcelOverride || pier?.id !== 'P-1091' || work !== 'Pier Head') return points;
-  return (points || []).map(point => Number.isFinite(Number(point.ch))
-    ? {...point, ch: -Number(point.ch)}
-    : point);
+  if (hasExcelOverride || pier?.id !== 'P-1091') return points;
+  if (work === 'Pier Head') {
+    return (points || []).map(point => Number.isFinite(Number(point.ch))
+      ? {...point, ch: -Number(point.ch)}
+      : point);
+  }
+  if (work !== 'Bearing Plinths') return points;
+
+  // Drawing 023165-C: P-1091 has the larger plinths on the increasing/up-
+  // chainage side, opposite the shared P-1094 BR115TRANS geometry. Exchange
+  // only each U/D footprint size; retain every bearing centre, label and side.
+  const source = (points || []).map(point => ({...point}));
+  const bounds = prefix => {
+    const group = source.filter(point => String(point.label || '').startsWith(prefix));
+    if (!group.length) return null;
+    const ch = group.map(point => Number(point.ch));
+    const os = group.map(point => Number(point.os));
+    return {
+      centerCH:(Math.min(...ch)+Math.max(...ch))/2,
+      centerOS:(Math.min(...os)+Math.max(...os))/2,
+      height:Math.max(...ch)-Math.min(...ch),
+      width:Math.max(...os)-Math.min(...os),
+    };
+  };
+  const pairs = [['UL','DL'],['UR','DR']];
+  const targetSize = new Map();
+  pairs.forEach(([up,down]) => {
+    const upBounds=bounds(up), downBounds=bounds(down);
+    if (upBounds && downBounds) {
+      targetSize.set(up,{height:downBounds.height,width:downBounds.width});
+      targetSize.set(down,{height:upBounds.height,width:upBounds.width});
+    }
+  });
+  return source.map(point => {
+    const prefix=String(point.label || '').match(/^(UL|UR|DL|DR)/)?.[1];
+    const own=bounds(prefix), target=targetSize.get(prefix);
+    if (!own || !target || own.height === 0 || own.width === 0) return point;
+    return {
+      ...point,
+      ch:own.centerCH+(Number(point.ch)-own.centerCH)*target.height/own.height,
+      os:own.centerOS+(Number(point.os)-own.centerOS)*target.width/own.width,
+    };
+  });
 }
 
 function _buildPileCapPoints(pier, arrayKey, pts, includePiles = true) {
