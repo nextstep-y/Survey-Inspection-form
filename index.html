@@ -460,8 +460,9 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     -webkit-box-shadow: none !important;
     padding: 0 !important;
   }
-  /* Hide survey rows beyond 12 when printing */
-  #survey-body tr:nth-child(n+13) { display: none !important; }
+  /* Match the first-page cutoff used by printDoc's continuation tables. */
+  body:not(.structural-print) #survey-body tr:nth-child(n+13) { display: none !important; }
+  body.structural-print #survey-body tr:nth-child(n+17) { display: none !important; }
   /* Print split tables: appended to body, shown as full pages */
   .print-split-table { 
     display: block !important; 
@@ -734,7 +735,9 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   .pier-info-grid  #pier-array-wrapper { display: block !important; }
   #main-content-wrapper { display: flex !important; flex-direction: row !important; align-items: stretch !important; width: 100% !important; }
   #pile-canvas { width: 228pt !important; height: 114pt !important; display: block !important; margin: auto !important; image-rendering: crisp-edges !important; }
-  #pile-canvas.canvas-3d { height: 152pt !important; }
+  /* Keep the 900:600 view proportional while reclaiming 32pt of print height. */
+  #pile-canvas.canvas-3d { width: 180pt !important; height: 120pt !important; }
+  body.structural-print #survey-table tbody td { line-height: 1.2 !important; }
   .canvas-view-controls { display:none !important; }
   #pile-array-section { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; border-left: 0.5pt solid #888 !important; padding: 3pt 2px !important; width: 238pt !important; flex-shrink: 0 !important; align-self: stretch !important; overflow: hidden !important; }
   .pier-info-grid { flex: 1 !important; }
@@ -8292,6 +8295,8 @@ function printDoc() {
   const _elVal = document.getElementById('element')?.value || '';
   document.body.classList.toggle('col-lift', work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
   document.title = `${pier}_${_elVal.replace(/\s+/g,'_')}`;
+  const structuralPrint = ['Pier Head','Bearing Plinths','Elastomeric'].includes(work);
+  document.body.classList.toggle('structural-print', structuralPrint);
   applyColWidths();
   // Force sig-card-bp visibility for Bored Pile print
   const _sigMain = document.getElementById('sig-card');
@@ -8375,13 +8380,13 @@ function printDoc() {
 
   if (mainTbody && theadHTML) {
     const allRows = [...mainTbody.rows];
-    const FIRST_PAGE_ROWS = 12;
+    const FIRST_PAGE_ROWS = structuralPrint ? 16 : 12;
     const ROWS_PER_PAGE = 20;
 
     if (allRows.length > FIRST_PAGE_ROWS) {
       const surveyCard = document.getElementById('survey-card');
 
-      // Step 1: Truncate mainTbody to first 12 rows FIRST
+      // Keep the complete 16-point structural set together on the first page.
       while (mainTbody.rows.length > FIRST_PAGE_ROWS) {
         mainTbody.deleteRow(FIRST_PAGE_ROWS);
       }
@@ -8497,6 +8502,7 @@ function printDoc() {
   const restoreAfterPrint = () => {
       document.title = 'NSCR CP N-03 — Survey Check Sheet';
       document.body.classList.remove('is-printing');
+      document.body.classList.remove('structural-print');
       document.body.classList.remove('bp-onepage');
       document.body.classList.remove('bp-fewpoints');
       // Re-insert sig-card and footer-bar into DOM
