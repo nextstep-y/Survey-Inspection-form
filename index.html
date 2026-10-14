@@ -2185,31 +2185,43 @@ for (const [pierId, correction] of Object.entries(PIER_HEAD_SCHEDULE_LEVEL_OVERR
 }
 
 // Pier-head survey elevations are tied to the latest Top of Column/Pier level.
-// T2/T4 are on the main pier-head surface. Most raised-island T points are
-// 300 mm above it. Older special-pier records incorrectly left T1/T3 at the
-// main-surface elevation; normalize them here and shift the full set whenever
-// a newer column drawing revises Top of Pier.
+// Standard heads use T2/T4 on the main surface and raised-island points above
+// it. Transition heads must instead follow their longitudinal level break:
+// boundary points take the higher surface, while island points add the island
+// height to the surface on their own side of the T2-T4 construction joint.
 const PIER_HEAD_T_RISE_OVERRIDES = {
+  // NSCR-ITD-N03-ZWD-DWG-ST-023165-C, transition BR115 P-1091.
+  // High side = +0.600 m, low side = Top of Pier, island = +0.317 m.
+  // T2/T4 lie on the boundary and therefore take the higher surface level.
+  'P-1091': {
+    T1: 0.917, T2: 0.600, T3: 0.317, T4: 0.600,
+    T5: 0.317, T6: 0.917, T7: 0.917, T8: 0.317,
+  },
   // NSCR-ITD-N03-ZWD-DWG-ST-023168-B, Pier Head BR115 P-1092 elevation.
   'P-1092': {T1: 0.439, T3: 0.439},
-  // NSCR-ITD-N03-ZWD-DWG-ST-023170-B, Pier Head BR115 P-1094 elevation.
-  // The 1.200 x 3.500 m central island is 600 mm above RL'A' Top of Pier.
-  'P-1094': {T1: 0.600, T3: 0.600, T5: 0.600, T6: 0.600, T7: 0.600, T8: 0.600},
+  // NSCR-ITD-N03-ZWD-DWG-ST-023170-B, transition BR115 P-1094.
+  // The up-chainage side is +0.600 m; both sides have a +0.317 m island.
+  'P-1094': {
+    T1: 0.917, T2: 0.600, T3: 0.317, T4: 0.600,
+    T5: 0.317, T6: 0.917, T7: 0.917, T8: 0.317,
+  },
 };
 let livePierHeadElevations = {};
 
 function getPierHeadTElevations(pier) {
   const live = livePierHeadElevations[pier?.id];
-  if (live && Object.keys(live).length) return { ...live };
   const stored = PIER_T_ELEVATIONS[pier?.id] || {};
+  // A live Sheet row is the editable base source, but drawing-controlled
+  // special-pier rises below must still take precedence over stale Sheet data.
+  const source = live && Object.keys(live).length ? live : stored;
   const result = {};
-  const storedTop = Number(stored.T2);
+  const storedTop = Number(source.T2);
   const currentTop = Number(getTopOfColumnElevation(pier));
   const levelShift = Number.isFinite(storedTop) && Number.isFinite(currentTop)
     ? currentTop - storedTop
     : 0;
 
-  for (const [label, elevation] of Object.entries(stored)) {
+  for (const [label, elevation] of Object.entries(source)) {
     result[label] = Number.isFinite(Number(elevation))
       ? Number((Number(elevation) + levelShift).toFixed(3))
       : elevation;
@@ -2217,9 +2229,9 @@ function getPierHeadTElevations(pier) {
 
   const sameLevel = (a, b) => Number.isFinite(Number(a)) && Number.isFinite(Number(b))
     && Math.abs(Number(a) - Number(b)) < 0.0005;
-  const hasRaisedIsland = Number.isFinite(Number(stored.T5)) && Number.isFinite(storedTop)
-    && Math.abs((Number(stored.T5) - storedTop) - 0.300) < 0.0005;
-  if (hasRaisedIsland && sameLevel(stored.T1, stored.T2) && sameLevel(stored.T3, stored.T4)) {
+  const hasRaisedIsland = Number.isFinite(Number(source.T5)) && Number.isFinite(storedTop)
+    && Math.abs((Number(source.T5) - storedTop) - 0.300) < 0.0005;
+  if (hasRaisedIsland && sameLevel(source.T1, source.T2) && sameLevel(source.T3, source.T4)) {
     result.T1 = Number((currentTop + 0.300).toFixed(3));
     result.T3 = Number((currentTop + 0.300).toFixed(3));
   }
