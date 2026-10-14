@@ -1892,18 +1892,29 @@ function _formatPileCapTablePoints(pier, arrayKey, pts) {
 // P-1091's transition head is oriented with the low surface toward increasing
 // chainage. Reverse the shared BR115TRANS chainage axis for this pier so the
 // pier-head outline, control points, table, export and canvas agree.
+const P1091_BEARING_PLAN_CENTERS = Object.freeze({
+  UL:{ch: 0.925,os:-1.700}, UR:{ch: 0.925,os: 1.700},
+  DL:{ch:-0.925,os:-2.400}, DR:{ch:-0.925,os: 2.400},
+  EUL:{ch: 0.925,os:-1.700}, EUR:{ch: 0.925,os: 1.700},
+  EDL:{ch:-0.925,os:-2.400}, EDR:{ch:-0.925,os: 2.400},
+});
 function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
-  if (hasExcelOverride || pier?.id !== 'P-1091') return points;
+  if (pier?.id !== 'P-1091') return points;
   if (work === 'Pier Head') {
+    if (hasExcelOverride) return points;
     return (points || []).map(point => Number.isFinite(Number(point.ch))
       ? {...point, ch: -Number(point.ch)}
       : point);
   }
   if (!['Bearing Plinths','Elastomeric'].includes(work)) return points;
 
-  // Drawing 023165-C: P-1091 has the larger plinths on the increasing/up-
-  // chainage side, opposite the shared P-1094 BR115TRANS geometry. Exchange
-  // the U/D footprint sizes, then place every centre at the drawing dimensions.
+  // Drawing-controlled P-1091 bearing geometry remains authoritative even
+  // when a stale imported override exists; otherwise the centre error returns.
+
+  // Drawing 023165-C plan controls both axes. In this legacy array U/D denotes
+  // the upper/lower transverse row, while L/R denotes increasing/down chainage.
+  // The small row is 1.700 m from CL Pier, the pot-bearing row is 2.400 m, and
+  // both rows are 0.925 m from the transverse centre line.
   const source = (points || []).map(point => ({...point}));
   const prefixes = work === 'Bearing Plinths'
     ? ['UL','UR','DL','DR']
@@ -1920,32 +1931,29 @@ function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false)
       width:Math.max(...os)-Math.min(...os),
     };
   };
-  const pairs = work === 'Bearing Plinths' ? [['UL','DL'],['UR','DR']] : [];
   const targetSize = new Map();
-  pairs.forEach(([up,down]) => {
-    const upBounds=bounds(up), downBounds=bounds(down);
-    if (upBounds && downBounds) {
-      targetSize.set(up,{height:downBounds.height,width:downBounds.width});
-      targetSize.set(down,{height:upBounds.height,width:upBounds.width});
-    }
-  });
+  // The increasing-chainage pot plinth (S1) is larger than the down-chainage
+  // pot plinth (S3); the shared P-1094 geometry stores those two sizes reversed.
+  const largeLeft=work === 'Bearing Plinths' ? 'DL' : 'EDL';
+  const largeRight=work === 'Bearing Plinths' ? 'DR' : 'EDR';
+  const leftBounds=bounds(largeLeft), rightBounds=bounds(largeRight);
+  if (leftBounds && rightBounds) {
+    targetSize.set(largeLeft,{height:rightBounds.height,width:rightBounds.width});
+    targetSize.set(largeRight,{height:leftBounds.height,width:leftBounds.width});
+  }
   return source.map(point => {
     const prefix=prefixes.find(value => String(point.label || '').startsWith(value));
     const own=bounds(prefix), target=targetSize.get(prefix);
     if (!own) return point;
-    // Plan dimensions: every bearing centre is 2.400 m from CL Pier in the
-    // transverse direction and 0.925 m in the longitudinal direction.
-    const isUp=prefix === 'UL' || prefix === 'UR' || prefix === 'EUL' || prefix === 'EUR';
-    const isLeft=prefix === 'UL' || prefix === 'DL' || prefix === 'EUL' || prefix === 'EDL';
-    const targetCenterCH=isUp ? 0.925 : -0.925;
-    const targetCenterOS=isLeft ? -2.400 : 2.400;
+    const control=P1091_BEARING_PLAN_CENTERS[prefix];
+    if (!control) return point;
     const height=target?.height ?? own.height;
     const width=target?.width ?? own.width;
     if (own.height === 0 || own.width === 0) return point;
     return {
       ...point,
-      ch:targetCenterCH+(Number(point.ch)-own.centerCH)*height/own.height,
-      os:targetCenterOS+(Number(point.os)-own.centerOS)*width/own.width,
+      ch:control.ch+(Number(point.ch)-own.centerCH)*height/own.height,
+      os:control.os+(Number(point.os)-own.centerOS)*width/own.width,
     };
   });
 }
@@ -2129,11 +2137,15 @@ function getWorkPointElev(pier, work, label) {
   const transitionOffsets = TRANSITION_BEARING_ELEVATION_OFFSETS[pier.id];
   if (transitionOffsets && (work === 'Bearing Plinths' || work === 'Elastomeric')) {
     const point = String(label || '').toUpperCase().replace(/^E/, '');
-    const side = /^U(?:L|R)\d+$/.test(point) ? 'up' : (/^D(?:L|R)\d+$/.test(point) ? 'down' : null);
+    // P-1091's source array names the transverse rows U/D; its L/R suffix is
+    // what actually separates increasing and down chainage in drawing 023165-C.
+    const side = pier.id === 'P-1091'
+      ? (/^(?:U|D)L\d+$/.test(point) ? 'up' : (/^(?:U|D)R\d+$/.test(point) ? 'down' : null))
+      : (/^U(?:L|R)\d+$/.test(point) ? 'up' : (/^D(?:L|R)\d+$/.test(point) ? 'down' : null));
     if (side) {
       const bearingType = getBearingType();
-      // P-1091's latest drawing reverses the former U/D orientation. Keep the
-      // drawing-controlled offsets authoritative over a stale live Sheet rule.
+      // Keep P-1091's drawing-controlled L/R chainage offsets authoritative
+      // over a stale live Sheet rule.
       const plinthHeight = pier.id === 'P-1091'
         ? transitionOffsets[side]
         : (getBearingRuleHeight(pier.id, 'Bearing Plinths', point, bearingType) ?? transitionOffsets[side]);
