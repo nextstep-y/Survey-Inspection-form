@@ -5,6 +5,8 @@
 // PLAN B.C. bridge direction is increasing chainage (the large, low pair).
 // The viaduct/small pair is down chainage. Do not transfer the SIDE ELEVATION
 // page's left/right axes directly to the PLAN.
+// T-point identities follow the user's clarified increasing-chainage-up map:
+// T7/T1/T6 = low island; T8/T3/T5 = high island.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -32,6 +34,7 @@ vm.runInContext(html.slice(renderStart, renderEnd), context, { filename: 'index.
 const api = vm.runInContext(`({
   orient: _orientPierSpecificPoints,
   elevation: getWorkPointElev,
+  headLevels: getPierHeadTElevations,
   formatOffset: formatSurveyOffset,
   geometry: getStructuralCanvasGeometry,
   project: projectStructuralPoint,
@@ -130,7 +133,7 @@ const headSource = ['T1','T2','T3','T4','T5','T6','T7','T8','S1','S2']
   .map((label, index) => ({ label, ch: index, os: index / 10 }));
 const head = api.orient(pier, 'Pier Head', headSource);
 same(api.orient(pier, 'Pier Head', head), head, 'Pier Head orientation is idempotent');
-same(head.map(point => point.ch), [-1.750,0,1.750,0,1.750,-1.750,-1.750,1.750,0.925,-0.925], 'Pier Head physical chainage controls');
+same(head.map(point => point.ch), [1.750,0,-1.750,0,-1.750,1.750,1.750,-1.750,0.925,-0.925], 'Pier Head physical chainage controls');
 same(head.map(point => point.os), headSource.map(point => point.os), 'Pier Head orientation preserves offsets');
 for (const otherId of ['P-1094', 'P-989', 'P-990']) {
   assert.equal(api.orient({ id: otherId }, 'Bearing Plinths', headSource), headSource, `${otherId}: no geometry override`);
@@ -148,6 +151,17 @@ same(api.formatOffset(null), '—', 'Missing offset stays missing');
 const realPier = api.piers['P-1091'];
 assert.equal(realPier.id, 'P-1091', 'Real source pier must retain its identifier');
 const structural = api.geometry(realPier);
+const headLevels = api.headLevels(realPier);
+for (const label of ['T7','T1','T6']) {
+  near(structural.points.find(point=>point.label===label).ch, 1.750, `${label}: low group is increasing-chainage`);
+  near(headLevels[label], 115.110, `${label}: low island level = Top of Pier + 0.317m`);
+}
+for (const label of ['T8','T3','T5']) {
+  near(structural.points.find(point=>point.label===label).ch, -1.750, `${label}: high group is down-chainage`);
+  near(headLevels[label], 115.710, `${label}: high island level = Top of Pier + 0.600m + 0.317m`);
+}
+near(headLevels.T8-headLevels.T7, 0.600, 'Opposite island groups differ by the drawn 0.600m step');
+for (const label of ['T2','T4']) near(headLevels[label], 115.393, `${label}: joint point retains higher surface level`);
 near(structural.maxOS - structural.minOS, 6.480, 'Real P-1091 head transverse dimension');
 near(structural.maxCH - structural.minCH, 3.500, 'Real P-1091 head chainage dimension');
 near(structural.depth, 2.900, 'Head depth from top cap, actual column height and top pier');

@@ -1917,7 +1917,9 @@ function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false)
   if (pier?.id !== 'P-1091') return points;
   if (work === 'Pier Head') {
     if (hasExcelOverride) return points;
-    const chainages = {T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,T6:-1.750,T7:-1.750,T8:1.750,S1:0.925,S2:-0.925};
+    // With +CH upward, T7/T1/T6 identify the low increasing-chainage island.
+    // Keep these point identities aligned with their elevation overrides.
+    const chainages = {T1:1.750,T2:0,T3:-1.750,T4:0,T5:-1.750,T6:1.750,T7:1.750,T8:-1.750,S1:0.925,S2:-0.925};
     return (points || []).map(point => Object.hasOwn(chainages, point.label)
       ? {...point, ch:chainages[point.label]} : point);
   }
@@ -2257,9 +2259,10 @@ const PIER_HEAD_T_RISE_OVERRIDES = {
   // NSCR-ITD-N03-ZWD-DWG-ST-023165-C, transition BR115 P-1091.
   // High side = +0.600 m, low side = Top of Pier, island = +0.317 m.
   // T2/T4 lie on the boundary and therefore take the higher surface level.
+  // T7/T1/T6 are increasing-chainage / low; T8/T3/T5 are down-chainage / high.
   'P-1091': {
-    T1: 0.917, T2: 0.600, T3: 0.317, T4: 0.600,
-    T5: 0.317, T6: 0.917, T7: 0.917, T8: 0.317,
+    T1: 0.317, T2: 0.600, T3: 0.917, T4: 0.600,
+    T5: 0.917, T6: 0.317, T7: 0.317, T8: 0.917,
   },
   // NSCR-ITD-N03-ZWD-DWG-ST-023168-B, Pier Head BR115 P-1092 elevation.
   'P-1092': {T1: 0.439, T3: 0.439},
@@ -6738,7 +6741,7 @@ function drawPileArray(pier) {
   // For Column lift: reserve left/right zones for text, array draws in center zone
   const LEFT_ZONE  = _isColLift ? 480 : 0;
   const RIGHT_ZONE = _isColLift ? 480 : 0;
-  const BOT_ZONE   = _isColLift ? 130 : 0;
+  const BOT_ZONE   = _isColLift ? 130 : (work === 'Pier Head' ? 36 : 0);
   const TOP_ZONE = ['Pier Head','Bearing Plinths','Elastomeric'].includes(work) ? 75 : 0;
   const PAD = _isColLift ? 20 : 30;
   const drawW = W - LEFT_ZONE - RIGHT_ZONE - PAD * 2;
@@ -7001,14 +7004,17 @@ function drawPileArray(pier) {
           const delta = level - baseLevel;
           return `${delta >= 0 ? '+' : ''}${delta.toFixed(3)} m (EL ${level.toFixed(3)})`;
         });
-        const legend = `LEVEL BREAK T2-T4: ${levelBreakLabels.join(' / ')}`;
+        const isTransitionHead = ['P-1091','P-1094'].includes(pier.id);
+        const legend = isTransitionHead
+          ? 'LEVEL BREAK T2-T4: 0.600 m | ISLAND +0.317 m'
+          : `LEVEL BREAK T2-T4: ${levelBreakLabels.join(' / ')}`;
         ctx.setLineDash([]);
-        ctx.font = 'bold 22px Arial';
+        ctx.font = 'bold 18px Arial';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
         const legendWidth = ctx.measureText(legend).width;
         const legendX = Math.max(22, W - legendWidth - 28);
-        const legendY = H - 43;
+        const legendY = H - 25;
         ctx.fillStyle = 'rgba(255,255,255,0.94)';
         ctx.fillRect(legendX - 6, legendY - 5, legendWidth + 12, 32);
         ctx.fillStyle = '#0067a3';
