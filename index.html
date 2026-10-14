@@ -1899,12 +1899,15 @@ function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false)
       ? {...point, ch: -Number(point.ch)}
       : point);
   }
-  if (work !== 'Bearing Plinths') return points;
+  if (!['Bearing Plinths','Elastomeric'].includes(work)) return points;
 
   // Drawing 023165-C: P-1091 has the larger plinths on the increasing/up-
   // chainage side, opposite the shared P-1094 BR115TRANS geometry. Exchange
-  // only each U/D footprint size; retain every bearing centre, label and side.
+  // the U/D footprint sizes, then place every centre at the drawing dimensions.
   const source = (points || []).map(point => ({...point}));
+  const prefixes = work === 'Bearing Plinths'
+    ? ['UL','UR','DL','DR']
+    : ['EUL','EUR','EDL','EDR'];
   const bounds = prefix => {
     const group = source.filter(point => String(point.label || '').startsWith(prefix));
     if (!group.length) return null;
@@ -1917,7 +1920,7 @@ function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false)
       width:Math.max(...os)-Math.min(...os),
     };
   };
-  const pairs = [['UL','DL'],['UR','DR']];
+  const pairs = work === 'Bearing Plinths' ? [['UL','DL'],['UR','DR']] : [];
   const targetSize = new Map();
   pairs.forEach(([up,down]) => {
     const upBounds=bounds(up), downBounds=bounds(down);
@@ -1927,13 +1930,22 @@ function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false)
     }
   });
   return source.map(point => {
-    const prefix=String(point.label || '').match(/^(UL|UR|DL|DR)/)?.[1];
+    const prefix=prefixes.find(value => String(point.label || '').startsWith(value));
     const own=bounds(prefix), target=targetSize.get(prefix);
-    if (!own || !target || own.height === 0 || own.width === 0) return point;
+    if (!own) return point;
+    // Plan dimensions: every bearing centre is 2.400 m from CL Pier in the
+    // transverse direction and 0.925 m in the longitudinal direction.
+    const isUp=prefix === 'UL' || prefix === 'UR' || prefix === 'EUL' || prefix === 'EUR';
+    const isLeft=prefix === 'UL' || prefix === 'DL' || prefix === 'EUL' || prefix === 'EDL';
+    const targetCenterCH=isUp ? 0.925 : -0.925;
+    const targetCenterOS=isLeft ? -2.400 : 2.400;
+    const height=target?.height ?? own.height;
+    const width=target?.width ?? own.width;
+    if (own.height === 0 || own.width === 0) return point;
     return {
       ...point,
-      ch:own.centerCH+(Number(point.ch)-own.centerCH)*target.height/own.height,
-      os:own.centerOS+(Number(point.os)-own.centerOS)*target.width/own.width,
+      ch:targetCenterCH+(Number(point.ch)-own.centerCH)*height/own.height,
+      os:targetCenterOS+(Number(point.os)-own.centerOS)*width/own.width,
     };
   });
 }
