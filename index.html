@@ -1913,18 +1913,14 @@ const P1091_BEARING_LAYOUT = Object.freeze({
 });
 // Retain the existing bearing footprints; their centres follow the same plan.
 const P1091_BEARING_ELEMENT_SIZES = {UL:[0.880,0.880],UR:[0.950,0.950],DL:[0.450,0.550],DR:[0.450,0.550]};
-// Survey offsets reconcile to the user-approved P-1091_Pier_Head_Design.csv.
-// Diagram placement is a separate view convention and must not rotate N/E.
-const P1091_PIER_HEAD_SURVEY_CH = Object.freeze({T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,T6:-1.750,T7:-1.750,T8:1.750,S1:0.925,S2:-0.925});
+// Canonical local geometry, reconciled to the user-approved survey coordinates.
+const P1091_PIER_HEAD_CH = Object.freeze({T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,T6:-1.750,T7:-1.750,T8:1.750,S1:0.925,S2:-0.925});
 function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
   if (pier?.id !== 'P-1091') return points;
   if (work === 'Pier Head') {
     if (hasExcelOverride) return points;
-    // With +CH upward, T7/T1/T6 identify the low increasing-chainage island.
-    // Keep these point identities aligned with their elevation overrides.
-    const chainages = {T1:1.750,T2:0,T3:-1.750,T4:0,T5:-1.750,T6:1.750,T7:1.750,T8:-1.750,S1:0.925,S2:-0.925};
-    return (points || []).map(point => Object.hasOwn(chainages, point.label)
-      ? {...point, ch:chainages[point.label], surveyCh:P1091_PIER_HEAD_SURVEY_CH[point.label]} : point);
+    return (points || []).map(point => Object.hasOwn(P1091_PIER_HEAD_CH, point.label)
+      ? {...point, ch:P1091_PIER_HEAD_CH[point.label]} : point);
   }
   if (!['Bearing Plinths','Elastomeric'].includes(work)) return points;
   const isElement = work === 'Elastomeric';
@@ -2262,7 +2258,7 @@ const PIER_HEAD_T_RISE_OVERRIDES = {
   // NSCR-ITD-N03-ZWD-DWG-ST-023165-C, transition BR115 P-1091.
   // High side = +0.600 m, low side = Top of Pier, island = +0.317 m.
   // T2/T4 lie on the boundary and therefore take the higher surface level.
-  // T7/T1/T6 are increasing-chainage / low; T8/T3/T5 are down-chainage / high.
+  // User-confirmed point levels: T7/T1/T6 low; T8/T3/T5 high.
   'P-1091': {
     T1: 0.317, T2: 0.600, T3: 0.917, T4: 0.600,
     T5: 0.917, T6: 0.317, T7: 0.317, T8: 0.917,
@@ -2314,14 +2310,21 @@ function getPierHeadTElevations(pier) {
 // Pier-head form rows and coordinate exports consume the same N/E/Z result.
 function getPierHeadPointDesign(pier, point) {
   const angle=((pier.deg||0)+(pier.min||0)/60+(pier.sec||0)/3600)*Math.PI/180;
-  const ch=Number.isFinite(point.surveyCh) ? point.surveyCh : point.ch;
-  const os=Number.isFinite(point.surveyOs) ? point.surveyOs : point.os;
+  const {ch,os}=point;
   return {
     ch, os,
     n: pier.n+(ch*Math.sin(angle)+os*Math.cos(angle)),
     e: pier.e+(-ch*Math.cos(angle)+os*Math.sin(angle)),
     z: getPierHeadTElevations(pier)[point.label] ?? null,
   };
+}
+
+function getPierHeadModel(pier) {
+  const imported=_excelChOsPoints(pier, 'Pier Head', 'table');
+  const source=imported || ARRAYS_RAW[WORK_ARRAY_KEY['Pier Head'](pier)] || [];
+  const canonical=_orientPierSpecificPoints(pier, 'Pier Head', source, Boolean(imported));
+  const points=canonical.map(point=>Object.freeze({...point,...getPierHeadPointDesign(pier,point)}));
+  return Object.freeze({points:Object.freeze(points),topPier:Number(getTopOfColumnElevation(pier))});
 }
 
 // P-1093 BR115 main pier head and bearing plinth geometry from
@@ -6477,9 +6480,16 @@ const SPECIAL_PIER_CHAINAGE_LEVEL_SIDE = {
   'P-1094': 'HIGH SIDE',
 };
 
-function getStructuralCanvasGeometry(pier) {
-  const source = ARRAYS_RAW[WORK_ARRAY_KEY['Pier Head'](pier)] || [];
-  const points = _orientPierSpecificPoints(pier, 'Pier Head', source);
+// Canvas camera configuration contains no point coordinates or label mappings.
+// P-1091's approved Pier Head offsets use the opposite local CH sense to its
+// requested paper view. Apply that view direction only during projection.
+function getCanvasCamera(pier, work) {
+  return {chSign:pier?.id === 'P-1091' && work === 'Pier Head' ? -1 : 1};
+}
+
+function getStructuralCanvasGeometry(pier, work = 'Pier Head') {
+  const model = getPierHeadModel(pier);
+  const points = model.points;
   const outer = points.filter(p => /^T\d+$/.test(p.label));
   if (outer.length < 4) return null;
   const extent = values => [Math.min(...values), Math.max(...values)];
@@ -6487,7 +6497,7 @@ function getStructuralCanvasGeometry(pier) {
   const [minOS,maxOS] = extent(outer.map(p => p.os));
   if (!(maxCH>minCH && maxOS>minOS)) return null;
   const column = _columnArrayPoints(pier).filter(p => /^\d+$/.test(p.label));
-  const topPier = Number(getTopOfColumnElevation(pier));
+  const topPier = model.topPier;
   const derivedDepth = topPier - (Number(pier.topCap) + Number(pier.columnHeightMm) / 1000);
   const knownDepth = Number.isFinite(derivedDepth) && derivedDepth > 0 && derivedDepth < 6;
   return {points, column, minCH,maxCH,minOS,maxOS, topPier,
@@ -6495,27 +6505,29 @@ function getStructuralCanvasGeometry(pier) {
     // Only P-1091's 0.400 m rim is checked against the side elevation here.
     rim: pier.id === 'P-1091' ? 0.400 : 0.300,
     step: ['P-1091','P-1094'].includes(pier.id) ? 0.600 : 0,
-    highCHSign: pier.id === 'P-1091' ? -1 : 1,
+    highCHSign: pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1,
+    // Bearing templates use their own local frame for the contextual head.
+    // This frame conversion is not applied to survey points or coordinate math.
+    headFrameCHSign:pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1,
   };
 }
 
-// Axial oblique view: CH has no horizontal component, and OS has no vertical
-// component. Equal-CH / equal-EL pairs therefore stay horizontally aligned.
+// Axial oblique camera projection. It reads canonical points without mutating
+// their coordinates; equal-CH / equal-EL pairs remain horizontally aligned.
 function projectStructuralPoint(point, elevation, view) {
   return {
     x: view.x + point.os * view.scale,
-    y: view.y - point.ch * view.scale * 0.65 - (elevation-view.datum) * view.scale * 0.76,
+    y: view.y - point.ch * (view.chSign ?? 1) * view.scale * 0.65 - (elevation-view.datum) * view.scale * 0.76,
   };
 }
 
 function drawWorkArray3D(ctx, W, H, pier, work, pts) {
-  const geometry = getStructuralCanvasGeometry(pier);
+  const geometry = getStructuralCanvasGeometry(pier, work);
   if (!geometry) return false;
-  const topPier = Number(getTopOfColumnElevation(pier));
-  const pierHeadElevations = getPierHeadTElevations(pier);
+  const topPier = geometry.topPier;
   const rendered = pts.map(point => {
     let elevation = work === 'Pier Head'
-      ? Number(pierHeadElevations[point.label])
+      ? Number(point.z ?? NaN)
       : Number(getWorkPointElev(pier, work, point.label));
     const hasDesignElevation = Number.isFinite(elevation);
     if (!Number.isFinite(elevation)) elevation = topPier;
@@ -6529,7 +6541,8 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   const maxRise = Math.max(0.4, ...rendered.map(p => p.elevation-topPier));
   const planScale = Math.min((W-330)/rangeOS, (H-200)/(rangeCH*0.65+(depth+stemShown+maxRise)*0.76));
   const originX = W / 2;
-  const view = {x:originX, y:120+maxCH*planScale*0.65+maxRise*planScale*0.76, scale:planScale, datum:topPier};
+  const camera = getCanvasCamera(pier, work);
+  const view = {x:originX, y:120+maxCH*planScale*0.65+maxRise*planScale*0.76, scale:planScale, datum:topPier, ...camera};
   const project = (point, elevation = point.elevation) => projectStructuralPoint(point, elevation, view);
   const hull = points => {
     if (points.length < 3) return [...points];
@@ -6584,7 +6597,9 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
 
   // Raised islands use the actual T-point rectangle, split at the T2-T4 joint
   // for transition heads. Do not create a hull from unrelated elevated points.
-  const islandPoints = geometry.points.filter(p=>/^T\d+$/.test(p.label) && Number(p.label.slice(1))>=5);
+  const islandPoints = geometry.points
+    .filter(p=>/^T\d+$/.test(p.label) && Number(p.label.slice(1))>=5)
+    .map(p=>({...p,ch:p.ch*geometry.headFrameCHSign}));
   for (let i=0;i<islandPoints.length;i+=4) {
     const island = islandPoints.slice(i,i+4);
     if (island.length!==4) continue;
@@ -6592,7 +6607,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
     const c=Math.min(...island.map(p=>p.os)), d=Math.max(...island.map(p=>p.os));
     const pieces = geometry.step && a<0 && b>0 ? [[a,0],[0,b]] : [[a,b]];
     for (const [lo,hi] of pieces) {
-      const levels = island.filter(p=>p.ch>=lo-1e-6&&p.ch<=hi+1e-6).map(p=>Number(pierHeadElevations[p.label])).filter(Number.isFinite);
+      const levels = island.filter(p=>p.ch>=lo-1e-6&&p.ch<=hi+1e-6).map(p=>Number(p.z ?? NaN)).filter(Number.isFinite);
       if (!levels.length) continue;
       const level=Math.max(...levels), base=surfaceAt((lo+hi)/2);
       if (level>base+0.0005) drawExtrudedPlan(rect(lo,hi,c,d),level,base,'#c7dde8','#8fb1c6');
@@ -6624,8 +6639,9 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
 
   // Two label rails, placed outside the real structure envelope.
   const labels = rendered.map(point => ({point, ...project(point)}));
-  const left = labels.filter(label => label.point.os < 0).sort((a,b)=>b.point.ch-a.point.ch||a.point.os-b.point.os);
-  const right = labels.filter(label => label.point.os >= 0).sort((a,b)=>b.point.ch-a.point.ch||a.point.os-b.point.os);
+  const railOrder = (a,b)=>(b.point.ch-a.point.ch)*camera.chSign||a.point.os-b.point.os;
+  const left = labels.filter(label => label.point.os < 0).sort(railOrder);
+  const right = labels.filter(label => label.point.os >= 0).sort(railOrder);
   const layoutRail = (items, side) => {
     const x = side === 'left' ? 18 : W-18;
     const align = side === 'left' ? 'left' : 'right';
@@ -6642,7 +6658,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
       const width=ctx.measureText(text).width;
       ctx.fillStyle='rgba(255,255,255,0.97)';
       ctx.fillRect(side==='left'?x-4:x-width-4,y-fontSize/2-2,width+8,fontSize+4);
-      ctx.fillStyle=label.point.ch>=0?'#0b5877':'#714510'; ctx.fillText(text,x,y);
+      ctx.fillStyle=label.point.ch*camera.chSign>=0?'#0b5877':'#714510'; ctx.fillText(text,x,y);
     });
   };
   layoutRail(left,'left'); layoutRail(right,'right');
@@ -6651,7 +6667,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   ctx.fillStyle='#173d5a'; ctx.font='bold 27px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top';
   ctx.fillText(`${work.toUpperCase()} - ${pier.id} - 3D`, W/2, 10);
   ctx.font='17px monospace'; ctx.fillStyle='#52677c';
-  ctx.fillText(`EL (m) | Top of Pier ${topPier.toFixed(3)} | +CH UP / +OS RIGHT`,W/2,H-65);
+  ctx.fillText(`EL (m) | Top of Pier ${topPier.toFixed(3)} | VIEW ${camera.chSign<0?'-CH':'+CH'} UP / +OS RIGHT`,W/2,H-65);
   const columnText = column.length ? `Column ${pier.colDim} m` : 'Column dimensions unavailable';
   ctx.fillText(`${columnText} | Head ${formatSurveyOffset(rangeOS)} x ${formatSurveyOffset(rangeCH)} m`,W/2,H-43);
   ctx.font='15px sans-serif';
@@ -6665,12 +6681,14 @@ function drawPileArray(pier) {
   const keyFn = WORK_ARRAY_KEY[element] || WORK_ARRAY_KEY[work];
   const arrayKey = keyFn ? keyFn(pier) : pier.piles;
   const excelPts = _excelChOsPoints(pier, work, 'canvas');
-  let pts = isClarkStationElement(pier)
+  let pts = work === 'Pier Head' && !isClarkStationElement(pier) && !isSubstationPier(pier)
+    ? getPierHeadModel(pier).points
+    : isClarkStationElement(pier)
     ? clarkRenderPointsForWork(pier, work)
     : isSubstationPier(pier)
     ? ss19PointsForWork(pier, work)
     : (excelPts || (_isColumnWork(work) ? _columnArrayPoints(pier) : (ARRAYS_RAW[arrayKey] || ARRAYS_RAW[pier.piles] || [])));
-  pts = _orientPierSpecificPoints(pier, work, pts, Boolean(excelPts));
+  if (work !== 'Pier Head') pts = _orientPierSpecificPoints(pier, work, pts, Boolean(excelPts));
   if (!isSubstationPier(pier) && !excelPts && work === 'Blinding Concrete') pts = _buildBlindingCanvasPoints(pier);
   if (!isSubstationPier(pier) && !isClarkStationElement(pier) && !excelPts && work === 'Pile cap') pts = _buildPileCapCanvasPoints(pier, arrayKey, pts);
 
@@ -6774,8 +6792,9 @@ function drawPileArray(pier) {
     : Math.min(squareSide / rangeOS, squareSide / rangeCH) * 0.78;
   const r = Math.min(9, Math.max(4, scale * 0.55));
 
+  const camera = getCanvasCamera(pier, work);
   const toX = os => centerX + (os - midOS) * scale;
-  const toY = ch => centerY - (ch - midCH) * scale;
+  const toY = ch => centerY - (ch - midCH) * camera.chSign * scale;
 
   // Draw pile cap outline with padding
   const bx = toX(minOS) - r - 4;
@@ -7366,7 +7385,7 @@ function drawPileArray(pier) {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
   ctx.fillStyle = '#555';
-  ctx.fillText('PILE/ELEMENT ARRAY', centerX, 22);
+  ctx.fillText(work === 'Pier Head' ? `PIER HEAD - VIEW ${camera.chSign<0?'-CH':'+CH'} UP` : 'PILE/ELEMENT ARRAY', centerX, 22);
   // Use the same explicit wording as the source side elevation so the drawing
   // direction is checked before interpreting any special-pier level break.
   if (['Pier Head','Bearing Plinths','Elastomeric'].includes(work)) {
@@ -7577,12 +7596,14 @@ function renderSurveyTable(pier) {
   const keyFn = WORK_ARRAY_KEY[work];
   const arrayKey = keyFn ? keyFn(pier) : pier.piles;
   const excelPts = _excelChOsPoints(pier, work, 'table');
-  let pts = isClarkStationElement(pier)
+  let pts = work === 'Pier Head' && !isClarkStationElement(pier) && !isSubstationPier(pier)
+    ? getPierHeadModel(pier).points
+    : isClarkStationElement(pier)
     ? clarkRenderPointsForWork(pier, work)
     : isSubstationPier(pier)
     ? ss19PointsForWork(pier, work)
     : (excelPts || (_isColumnWork(work) ? _columnArrayPoints(pier) : (ARRAYS_RAW[arrayKey] || ARRAYS_RAW[pier.piles] || [])));
-  pts = _orientPierSpecificPoints(pier, work, pts, Boolean(excelPts));
+  if (work !== 'Pier Head') pts = _orientPierSpecificPoints(pier, work, pts, Boolean(excelPts));
   if (!isSubstationPier(pier) && !isClarkStationElement(pier) && work === 'Pile cap') pts = _formatPileCapTablePoints(pier, arrayKey, pts);
 
   // Blinding Concrete: only show A-D corner points in measurement table
@@ -7599,7 +7620,6 @@ function renderSurveyTable(pier) {
   // For Pier Head: use per-T-label elevation from PIER_T_ELEVATIONS lookup
   // For other works: use WORK_ELEV function (single value for all points)
   const _isPierHead = (work === 'Pier Head');
-  const _tElevMap = _isPierHead ? getPierHeadTElevations(pier) : {};
   const elevDesign = (!_isPierHead && WORK_ELEV[work]) ? WORK_ELEV[work](pier) : null;
   // Helper: get design elevation for a specific point label
   const getPointElev = (label) => {
@@ -7608,8 +7628,7 @@ function renderSurveyTable(pier) {
       return pt && Number.isFinite(pt.z) ? pt.z : null;
     }
     if (_isPierHead) {
-      const v = _tElevMap[label];
-      return (v != null) ? v : null;
+      return pts.find(point=>point.label===label)?.z ?? null;
     }
     const pointElev = getWorkPointElev(pier, work, label);
     return pointElev != null ? pointElev : elevDesign;
@@ -7654,7 +7673,7 @@ function renderSurveyTable(pier) {
 
   pts.forEach((p, i) => {
     // Design coordinates
-    const headDesign = _isPierHead ? getPierHeadPointDesign(pier, p) : null;
+    const headDesign = _isPierHead ? p : null;
     const dN = headDesign ? headDesign.n : isClarkStationElement(pier) && Number.isFinite(p.n)
       ? p.n
       : p.ch * Math.sin(wcbRad) + p.os * Math.cos(wcbRad) + pier.n;
@@ -8033,7 +8052,7 @@ function exportDesign(fmt) {
     const exactClark = isClarkStationElement(pier) && Number.isFinite(p.n) && Number.isFinite(p.e);
     const dN = exactClark ? 0 : ch * Math.sin(wcbRad) + os * Math.cos(wcbRad);
     const dE = exactClark ? 0 : -ch * Math.cos(wcbRad) + os * Math.sin(wcbRad);
-    const headDesign = _isPierHeadExp ? getPierHeadPointDesign(pier, p) : null;
+    const headDesign = _isPierHeadExp ? p : null;
     const N = (headDesign ? headDesign.n : exactClark ? p.n : pier.n + dN).toFixed(3);
     const E = (headDesign ? headDesign.e : exactClark ? p.e : pier.e + dE).toFixed(3);
     const pointWorkElev = getWorkPointElev(pier, work, p.label);
