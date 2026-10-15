@@ -1913,6 +1913,9 @@ const P1091_BEARING_LAYOUT = Object.freeze({
 });
 // Retain the existing bearing footprints; their centres follow the same plan.
 const P1091_BEARING_ELEMENT_SIZES = {UL:[0.880,0.880],UR:[0.950,0.950],DL:[0.450,0.550],DR:[0.450,0.550]};
+// Survey offsets reconcile to the user-approved P-1091_Pier_Head_Design.csv.
+// Diagram placement is a separate view convention and must not rotate N/E.
+const P1091_PIER_HEAD_SURVEY_CH = Object.freeze({T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,T6:-1.750,T7:-1.750,T8:1.750,S1:0.925,S2:-0.925});
 function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
   if (pier?.id !== 'P-1091') return points;
   if (work === 'Pier Head') {
@@ -1921,7 +1924,7 @@ function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false)
     // Keep these point identities aligned with their elevation overrides.
     const chainages = {T1:1.750,T2:0,T3:-1.750,T4:0,T5:-1.750,T6:1.750,T7:1.750,T8:-1.750,S1:0.925,S2:-0.925};
     return (points || []).map(point => Object.hasOwn(chainages, point.label)
-      ? {...point, ch:chainages[point.label]} : point);
+      ? {...point, ch:chainages[point.label], surveyCh:P1091_PIER_HEAD_SURVEY_CH[point.label]} : point);
   }
   if (!['Bearing Plinths','Elastomeric'].includes(work)) return points;
   const isElement = work === 'Elastomeric';
@@ -2306,6 +2309,19 @@ function getPierHeadTElevations(pier) {
     result[label] = Number((currentTop + Number(rise)).toFixed(3));
   }
   return result;
+}
+
+// Pier-head form rows and coordinate exports consume the same N/E/Z result.
+function getPierHeadPointDesign(pier, point) {
+  const angle=((pier.deg||0)+(pier.min||0)/60+(pier.sec||0)/3600)*Math.PI/180;
+  const ch=Number.isFinite(point.surveyCh) ? point.surveyCh : point.ch;
+  const os=Number.isFinite(point.surveyOs) ? point.surveyOs : point.os;
+  return {
+    ch, os,
+    n: pier.n+(ch*Math.sin(angle)+os*Math.cos(angle)),
+    e: pier.e+(-ch*Math.cos(angle)+os*Math.sin(angle)),
+    z: getPierHeadTElevations(pier)[point.label] ?? null,
+  };
 }
 
 // P-1093 BR115 main pier head and bearing plinth geometry from
@@ -7638,13 +7654,14 @@ function renderSurveyTable(pier) {
 
   pts.forEach((p, i) => {
     // Design coordinates
-    const dN = isClarkStationElement(pier) && Number.isFinite(p.n)
+    const headDesign = _isPierHead ? getPierHeadPointDesign(pier, p) : null;
+    const dN = headDesign ? headDesign.n : isClarkStationElement(pier) && Number.isFinite(p.n)
       ? p.n
       : p.ch * Math.sin(wcbRad) + p.os * Math.cos(wcbRad) + pier.n;
-    const dE = isClarkStationElement(pier) && Number.isFinite(p.e)
+    const dE = headDesign ? headDesign.e : isClarkStationElement(pier) && Number.isFinite(p.e)
       ? p.e
       : -p.ch * Math.cos(wcbRad) + p.os * Math.sin(wcbRad) + pier.e;
-    const ptElev = getPointElev(p.label);
+    const ptElev = headDesign ? headDesign.z : getPointElev(p.label);
 
     const tr = document.createElement('tr');
     tr.dataset.dn = dN.toFixed(4);
@@ -7657,8 +7674,8 @@ function renderSurveyTable(pier) {
       // PD: set widths inline via DOM after innerHTML for guaranteed override
       tr.innerHTML = `
         <td class="label-cell">${p.label || (i+1)}</td>
-        <td class="auto-cell">${formatSurveyOffset(p.ch)}</td>
-        <td class="auto-cell">${formatSurveyOffset(p.os)}</td>
+        <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.ch : p.ch)}</td>
+        <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.os : p.os)}</td>
         <td class="auto-cell">${dN.toFixed(3)}</td>
         <td class="auto-cell">${dE.toFixed(3)}</td>
         <td class="auto-cell">${ptElev != null ? ptElev.toFixed(3) : '—'}</td>
@@ -7677,8 +7694,8 @@ function renderSurveyTable(pier) {
       // ── Standard row (Bored Pile etc) ────────────────────────────────────
       tr.innerHTML = `
         <td class="label-cell">${p.label || (i+1)}</td>
-        <td class="auto-cell">${formatSurveyOffset(p.ch)}</td>
-        <td class="auto-cell">${formatSurveyOffset(p.os)}</td>
+        <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.ch : p.ch)}</td>
+        <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.os : p.os)}</td>
         <td class="auto-cell">${dN.toFixed(3)}</td>
         <td class="auto-cell">${dE.toFixed(3)}</td>
         <td class="auto-cell">${ptElev != null ? ptElev.toFixed(3) : '—'}</td>
@@ -8002,7 +8019,6 @@ function exportDesign(fmt) {
   const work = document.getElementById('element').value;
   const pier = currentPier;
   const _isPierHeadExp = (work === 'Pier Head');
-  const _tElevMapExp = _isPierHeadExp ? getPierHeadTElevations(pier) : {};
   const elevDesignFn = WORK_ELEV[work];
   const elevDesignGlobal = (!_isPierHeadExp && elevDesignFn) ? parseFloat(elevDesignFn(pier)) : null;
 
@@ -8017,10 +8033,11 @@ function exportDesign(fmt) {
     const exactClark = isClarkStationElement(pier) && Number.isFinite(p.n) && Number.isFinite(p.e);
     const dN = exactClark ? 0 : ch * Math.sin(wcbRad) + os * Math.cos(wcbRad);
     const dE = exactClark ? 0 : -ch * Math.cos(wcbRad) + os * Math.sin(wcbRad);
-    const N = (exactClark ? p.n : pier.n + dN).toFixed(3);
-    const E = (exactClark ? p.e : pier.e + dE).toFixed(3);
+    const headDesign = _isPierHeadExp ? getPierHeadPointDesign(pier, p) : null;
+    const N = (headDesign ? headDesign.n : exactClark ? p.n : pier.n + dN).toFixed(3);
+    const E = (headDesign ? headDesign.e : exactClark ? p.e : pier.e + dE).toFixed(3);
     const pointWorkElev = getWorkPointElev(pier, work, p.label);
-    const ptElevExp = isClarkStationElement(pier) && Number.isFinite(p.z) ? p.z : (_isPierHeadExp ? (_tElevMapExp[p.label] ?? null) : (pointWorkElev != null ? pointWorkElev : elevDesignGlobal));
+    const ptElevExp = headDesign ? headDesign.z : isClarkStationElement(pier) && Number.isFinite(p.z) ? p.z : (pointWorkElev != null ? pointWorkElev : elevDesignGlobal);
     const Z = ptElevExp != null ? parseFloat(ptElevExp).toFixed(3) : '';
     const label = p.label || ('P' + (i + 1));
     rows.push([label, E, N, Z]);

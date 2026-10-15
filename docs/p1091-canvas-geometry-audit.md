@@ -31,7 +31,9 @@ The small plinth footprint is dimensioned 0.550 along OS and 0.450 along CH in t
 
 ## Pier head and column proportions
 
-With increasing chainage pointing upward, the application's point names are mapped as clarified by the user: **T7/T1/T6** are the low increasing-chainage island at CH +1.750 m and EL 115.110 m (Top of Pier 114.793 +0.317). **T8/T3/T5** are the high down-chainage island at CH -1.750 m and EL 115.710 m (Top of Pier +0.600 +0.317). T2/T4 remain on the joint at CH 0 and take the higher surface EL 115.393 m. The T labels are program survey-point identities; the physical low/high surfaces and their 0.600 m step are verified from 023165-C. Point identity, CH position and elevation must be checked together.
+With increasing chainage pointing upward in the schematic Canvas, the application's point names are displayed as clarified by the user: **T7/T1/T6** at view CH +1.750 m and EL 115.110 m (Top of Pier 114.793 +0.317), and **T8/T3/T5** at view CH -1.750 m and EL 115.710 m (Top of Pier +0.600 +0.317). T2/T4 remain on the joint and take EL 115.393 m. The T labels are program survey-point identities; the physical surfaces and 0.600 m step are verified from 023165-C.
+
+The user subsequently confirmed the N/E coordinates in `P-1091_Pier_Head_Design.csv` (downloaded 2026-10-15 at 08:06) as authoritative while retaining the latest elevations above. Its survey CH offsets are T1/T6/T7 = -1.750 m, T3/T5/T8 = +1.750 m, T2/T4 = 0, S1 = +0.925 m and S2 = -0.925 m. These survey offsets drive the form's CH/N/E cells and all coordinate exports through `getPierHeadPointDesign`. Canvas view placement is kept separately in the point's diagram CH. The approved CSV's older Z values are superseded by the user's latest elevation choice. A change to the diagram must never rotate or relabel the approved survey coordinates.
 
 | Element | Width along OS | Depth along CH | Vertical dimension |
 | --- | ---: | ---: | --- |
@@ -52,9 +54,10 @@ The head's 2.900 m depth consists of a 0.400 m vertical portion below the low da
 ## Implementation checks
 
 - The user clarified that CH/OS must remain in metres, with only abnormally long floating-point tails removed. Display formatting keeps up to four decimals, including half-millimetre source values; it does not round coordinates to whole metres.
-- `node scripts/check-p1091-geometry.js` passes 108 source and point-mapping controls, validates 367 stored pier geometries, and executes 731 mocked Canvas renders with finite coordinates. This full-set test is a software regression check, not a fresh drawing audit for all piers.
+- `node scripts/check-p1091-geometry.js` passes 148 source and point-mapping controls, validates 367 stored pier geometries, and executes 731 mocked Canvas renders with finite coordinates. This full-set test is a software regression check, not a fresh drawing audit for all piers.
 - Browser verification covered P-1091 Bearing Plinths in 2D and 3D, Pier Head in 3D, Elastomeric table readback, and the dense P-989 plinth layout. No browser runtime errors were observed.
 - P-1091 table readback: UL/UR plinths 114.917 m, DL/DR 115.543 m; corresponding Elastomeric values under the retained +0.067 m rule are 114.984 m and 115.610 m.
 - The 3D projection makes increasing CH vertical on screen and keeps equal-CH/equal-elevation points horizontally aligned. Head/column surfaces are simplified and the displayed shaft is shortened; unsourced head depth is explicitly marked schematic.
 - An enlarged Canvas preview is available through the expand button. Reference markers without a sourced design elevation show `REF`, not an assumed elevation.
 - After the T-point correction, actual application Canvas output was checked in both 2D and 3D. Both corresponding A4 landscape PDFs remain one page and their survey rows contain the corrected CH and elevation values. The 2D level-break legend has dedicated bottom space and states the physical 0.600 m step separately from the 0.317 m island rise.
+- Following the user's coordinate-source confirmation, an actual application runtime comparison verified all 10 form N/E values against the approved downloaded CSV, and all 10 form N/E/Z values against a fresh CSV export. Both comparisons had zero mismatches. PDF text readback verified the approved N/E with the latest Z values; printing remains one page.

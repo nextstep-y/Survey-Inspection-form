@@ -35,6 +35,7 @@ const api = vm.runInContext(`({
   orient: _orientPierSpecificPoints,
   elevation: getWorkPointElev,
   headLevels: getPierHeadTElevations,
+  headDesign: getPierHeadPointDesign,
   formatOffset: formatSurveyOffset,
   geometry: getStructuralCanvasGeometry,
   project: projectStructuralPoint,
@@ -152,6 +153,23 @@ const realPier = api.piers['P-1091'];
 assert.equal(realPier.id, 'P-1091', 'Real source pier must retain its identifier');
 const structural = api.geometry(realPier);
 const headLevels = api.headLevels(realPier);
+// Independent N/E controls from the CSV the user approved on 2026-10-15.
+// Its old Z column is intentionally superseded by the latest level instruction.
+const acceptedSurvey = {
+  T1:[1677387.736,455096.426,-1.750], T2:[1677389.917,455099.393,0],
+  T3:[1677391.202,455095.942,1.750], T4:[1677389.021,455092.975,0],
+  T5:[1677391.285,455096.536,1.750], T6:[1677387.819,455097.020,-1.750],
+  T7:[1677387.653,455095.832,-1.750], T8:[1677391.119,455095.348,1.750],
+  S1:[1677390.385,455096.056,0.925], S2:[1677388.553,455096.312,-0.925],
+};
+for (const [label,[n,e,ch]] of Object.entries(acceptedSurvey)) {
+  const point=structural.points.find(point=>point.label===label);
+  const design=api.headDesign(realPier,point);
+  near(Number(design.n.toFixed(3)),n,`${label}: form/export Northing matches approved CSV`);
+  near(Number(design.e.toFixed(3)),e,`${label}: form/export Easting matches approved CSV`);
+  near(design.ch,ch,`${label}: table CH uses survey offset`);
+  same(api.headDesign(realPier,{...point,ch:point.ch+10}),design,`${label}: diagram movement cannot alter survey N/E/Z`);
+}
 for (const label of ['T7','T1','T6']) {
   near(structural.points.find(point=>point.label===label).ch, 1.750, `${label}: low group is increasing-chainage`);
   near(headLevels[label], 115.110, `${label}: low island level = Top of Pier + 0.317m`);
