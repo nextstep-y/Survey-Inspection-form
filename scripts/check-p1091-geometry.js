@@ -33,6 +33,8 @@ assert.ok(renderStart >= 0 && renderEnd > renderStart, 'Structural Canvas helper
 vm.runInContext(html.slice(renderStart, renderEnd), context, { filename: 'index.html:structural-renderer' });
 const api = vm.runInContext(`({
   orient: _orientPierSpecificPoints,
+  baseOrient:_orientPierSpecificPointsBase,
+  expand:expandBearingPlinthEdges,
   elevation: getWorkPointElev,
   headLevels: getPierHeadTElevations,
   headDesign: getPierHeadPointDesign,
@@ -108,8 +110,8 @@ for (const work of ['Bearing Plinths', 'Elastomeric']) {
     const actual = summary(corners);
     near(actual.ch, control.ch, `${work} ${group}: center CH`);
     near(actual.os, control.os, `${work} ${group}: center OS`);
-    near(actual.sizeCH, isElement ? expectedElements[group][0] : control.sizeCH, `${work} ${group}: CH dimension`);
-    near(actual.sizeOS, isElement ? expectedElements[group][1] : control.sizeOS, `${work} ${group}: OS dimension`);
+    near(actual.sizeCH, isElement ? expectedElements[group][0] : control.sizeCH+.060, `${work} ${group}: CH dimension`);
+    near(actual.sizeOS, isElement ? expectedElements[group][1] : control.sizeOS+.060, `${work} ${group}: OS dimension`);
     for (const point of corners) {
       near(api.elevation(pier, work, point.label), control.level + (isElement ? 0.067 : 0), `${work} ${point.label}: elevation`);
       assert.equal(Math.sign(point.ch), Math.sign(control.ch), `${work} ${point.label}: physical chainage side`);
@@ -281,3 +283,28 @@ for(const p of Object.values(api.piers)){
 assert.ok(coverage.column.length>300 && coverage.pilecap.length>300);
 console.log(JSON.stringify({liveModelCoverage:{column:coverage.column.length,pilecap:coverage.pilecap.length,
   missingColumn:coverage.missingColumn,missingCap:coverage.missingCap}}));
+let expandedGroups=0;
+for(const p of Object.values(api.piers)){
+ const work='Bearing Plinths',raw=api.arrays[api.arrayKey[work](p)]||[];
+ const base=api.baseOrient(p,work,raw),out=api.orient(p,work,raw);
+ const before=JSON.stringify(base);same(api.expand(out),out,'30mm enlargement is idempotent');
+ const groups=new Map();for(const q of base){const m=q.label.match(/^(.+?)(\d+)$/);if(!m)continue;const k=m[1]+':'+Math.floor((+m[2]-1)/4);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(q);}
+ for(const g of groups.values()){
+  if(g.length!==4)continue;
+  const cx=g.reduce((s,q)=>s+q.os,0)/4,cy=g.reduce((s,q)=>s+q.ch,0)/4;
+  const ring=[...g].sort((a,b)=>Math.atan2(a.ch-cy,a.os-cx)-Math.atan2(b.ch-cy,b.os-cx));
+  const enlarged=ring.map(q=>out.find(t=>t.label===q.label));
+  assert.ok(enlarged.every(q=>q.plinthEdgeExpansionMm===30),p.id+' all four corners expanded');
+  for(let i=0;i<4;i++){
+   const a=ring[i],b=ring[(i+1)%4],q=enlarged[i],r=enlarged[(i+1)%4];
+   const dx=b.os-a.os,dy=b.ch-a.ch,len=Math.hypot(dx,dy);
+   near(((q.os-a.os)*dy-(q.ch-a.ch)*dx)/len,.030,p.id+' edge offset',1e-7);
+   near((r.os-q.os)*dy-(r.ch-q.ch)*dx,0,p.id+' edge parallel',1e-7);
+  }
+  near(enlarged.reduce((s,q)=>s+q.os,0)/4,cx,p.id+' center OS retained',.0001);
+  near(enlarged.reduce((s,q)=>s+q.ch,0)/4,cy,p.id+' center CH retained',.0001);
+  expandedGroups++;
+ }
+ assert.equal(JSON.stringify(base),before,'source geometry unchanged');
+}
+console.log('PASS: '+expandedGroups+' plinth groups enlarged 30mm per edge, unchanged centers, parallel edges, idempotent.');

@@ -1747,7 +1747,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261016-1"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261016-30mm"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -1939,6 +1939,34 @@ const P1091_BEARING_ELEMENT_SIZES = {UL:[0.880,0.880],UR:[0.950,0.950],DL:[0.450
 // Canonical local geometry, reconciled to the user-approved survey coordinates.
 const P1091_PIER_HEAD_CH = Object.freeze({T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,T6:-1.750,T7:-1.750,T8:1.750,S1:0.925,S2:-0.925});
 function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
+  const canonical=_orientPierSpecificPointsBase(pier,work,points,hasExcelOverride);
+  return work==='Bearing Plinths'?expandBearingPlinthEdges(canonical):canonical;
+}
+// User-approved enlargement: perpendicular offset of EVERY edge by 30mm.
+// Not an axis-aligned bounding-box expansion: rotated plinths stay rotated.
+function expandBearingPlinthEdges(points){
+  const groups=new Map(),result=new Map();
+  for(const p of points||[]){const m=String(p.label).match(/^(.+?)(\d+)$/);if(!m)continue;const key=m[1]+':'+Math.floor((+m[2]-1)/4);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(p);}
+  for(const group of groups.values()){
+    if(group.length!==4||group.every(p=>p.plinthEdgeExpansionMm===30))continue;
+    const cx=group.reduce((s,p)=>s+p.os,0)/4,cy=group.reduce((s,p)=>s+p.ch,0)/4;
+    const ring=[...group].sort((a,b)=>Math.atan2(a.ch-cy,a.os-cx)-Math.atan2(b.ch-cy,b.os-cx));
+    const offsets=[];let valid=true;
+    for(let i=0;i<4;i++){
+      const a=ring[(i+3)%4],b=ring[i],c=ring[(i+1)%4];
+      const u={x:b.os-a.os,y:b.ch-a.ch},v={x:c.os-b.os,y:c.ch-b.ch};
+      const lu=Math.hypot(u.x,u.y),lv=Math.hypot(v.x,v.y),cross=u.x*v.y-u.y*v.x;
+      if(lu<1e-8||lv<1e-8||cross<=1e-10){valid=false;break;}
+      const q={x:b.os+.030*u.y/lu,y:b.ch-.030*u.x/lu};
+      const r={x:b.os+.030*v.y/lv,y:b.ch-.030*v.x/lv};
+      const t=((r.x-q.x)*v.y-(r.y-q.y)*v.x)/cross;
+      offsets.push({...b,os:Number((q.x+t*u.x).toFixed(8)),ch:Number((q.y+t*u.y).toFixed(8)),plinthEdgeExpansionMm:30});
+    }
+    if(valid)for(const p of offsets)result.set(p.label,p);
+  }
+  return result.size?(points||[]).map(p=>result.get(p.label)||p):points;
+}
+function _orientPierSpecificPointsBase(pier, work, points, hasExcelOverride = false) {
   if (pier?.id !== 'P-1091') return points;
   if (work === 'Pier Head') {
     if (hasExcelOverride) return points;
@@ -2077,7 +2105,7 @@ function getBearingType() {
 
 function updateBearingElev() {
   // Re-render table to update elevation when bearing type changes
-  if (currentPier) renderSurveyTable(currentPier);
+  if (currentPier) { renderSurveyTable(currentPier); drawPileArray(currentPier); }
 }
 
 function bearingRuleMatchesPoint(pointGroup, label, bearingType = '') {
@@ -6508,7 +6536,7 @@ function drawP1091BearingPreview(ctx,W,H,pier,work,points){
   if(!p1091BearingPreview){
     const image=new Image();p1091BearingPreview={image,ready:false};
     image.onload=()=>{p1091BearingPreview.ready=true;if(currentPier?.id==='P-1091'&&document.getElementById('element').value===work&&canvasViewMode==='3d')drawPileArray(currentPier);};
-    image.src='assets/p1091-bearing-blender-v1.png';
+    image.src='assets/p1091-bearing-blender-30mm.png';
   }
   if(!p1091BearingPreview.ready)return false;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
@@ -6585,7 +6613,7 @@ function drawP1091BlenderPreview(ctx, W, H, pier, work) {
       p1091BlenderPreview.ready=true;
       if (currentPier?.id==='P-1091' && document.getElementById('element').value==='Pier Head' && canvasViewMode==='3d') drawPileArray(currentPier);
     };
-    image.src='assets/p1091-blender-preview-v5.png';
+    image.src='assets/p1091-blender-preview-v5-30mm.png';
   }
   if (!p1091BlenderPreview.ready) return false;
   ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
