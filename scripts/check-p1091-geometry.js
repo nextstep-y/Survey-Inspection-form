@@ -18,7 +18,7 @@ const dataScript = html.match(/<script id="data-script">([\s\S]*?)<\/script>/)?.
 assert.ok(dataScript, 'The application data script must exist');
 const context = vm.createContext({
   window: {},
-  document: { getElementById: () => ({ value: 'TYPE1' }) },
+  document: { body:{classList:{add(){}}},getElementById: () => ({ value: 'TYPE1',classList:{add(){}} }) },
 });
 vm.runInContext(dataScript, context, { filename: 'index.html:data-script' });
 // Load the app's embedded geometry and drawing overrides, stopping before any
@@ -42,6 +42,9 @@ const api = vm.runInContext(`({
   geometry: getStructuralCanvasGeometry,
   project: projectStructuralPoint,
   draw3D: drawWorkArray3D,
+  drawColumnCap:drawColumnCapModel3D,
+  columnPoints:_columnArrayPoints,
+  capPoints(p){const key=_pileCapArrayKey(p);return _buildPileCapCanvasPoints(p,key,ARRAYS_RAW[key]||[]);},
   piers: PIERS_RAW,
   arrays: ARRAYS_RAW,
   arrayKey: WORK_ARRAY_KEY,
@@ -266,3 +269,15 @@ for (const [id, sourcePier] of Object.entries(api.piers)) {
 }
 assert.ok(geometryCount > 250 && renderCount > 500 && canvasCalls > 10000, 'Exercise the full real-pier set');
 console.log(`PASS: ${checks} source controls; ${geometryCount} pier geometries and ${renderCount} Canvas renders with finite coordinates.`);
+const coverage={column:[],pilecap:[],missingColumn:[],missingCap:[]};
+for(const p of Object.values(api.piers)){
+  for(const [kind,work,points] of [['column','Pier Column (1st-Lift)',api.columnPoints(p)],['pilecap','Pile cap',api.capPoints(p)]]){
+    const before=JSON.stringify(points);
+    const rendered=api.drawColumnCap(mockCanvas,900,480,p,work,points);
+    assert.equal(JSON.stringify(points),before,`${p.id} ${kind}: rendering must not mutate survey points`);
+    coverage[rendered?kind:kind==='column'?'missingColumn':'missingCap'].push(p.id);
+  }
+}
+assert.ok(coverage.column.length>300 && coverage.pilecap.length>300);
+console.log(JSON.stringify({liveModelCoverage:{column:coverage.column.length,pilecap:coverage.pilecap.length,
+  missingColumn:coverage.missingColumn,missingCap:coverage.missingCap}}));

@@ -737,6 +737,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   #pile-canvas { width: 228pt !important; height: 114pt !important; display: block !important; margin: auto !important; image-rendering: crisp-edges !important; }
   /* Keep the 900:600 view proportional while reclaiming 32pt of print height. */
   #pile-canvas.canvas-3d { width: 180pt !important; height: 120pt !important; }
+  #pile-canvas.canvas-blender-detail { width: 280pt !important; height: 149.333pt !important; image-rendering: auto !important; }
+  body.blender-detail-view #pile-array-section { width: 290pt !important; min-width: 290pt !important; }
   body.structural-print #survey-table tbody td { line-height: 1.2 !important; }
   .canvas-view-controls { display:none !important; }
   #pile-array-section { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; border-left: 0.5pt solid #888 !important; padding: 3pt 2px !important; width: 238pt !important; flex-shrink: 0 !important; align-self: stretch !important; overflow: hidden !important; }
@@ -756,6 +758,19 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   #pile-canvas { width: 228pt !important; height: 114pt !important; display: block !important; margin: auto !important; image-rendering: crisp-edges !important; }
   body.col-lift #pile-array-section { width: 230pt !important; min-width: 230pt !important; justify-content: center !important; overflow: visible !important; padding: 1pt 1pt !important; }
   body.col-lift #pile-canvas { width: 220pt !important; height: auto !important; aspect-ratio: 1120 / 680 !important; max-width: 220pt !important; }
+  body.col-lift #pile-canvas.canvas-column-model { width: 220pt !important; height: 92.889pt !important; aspect-ratio: 90 / 38 !important; }
+  #pile-canvas.canvas-cap-model { width: 250pt !important; height: 137.5pt !important; }
+  #pile-canvas.canvas-live-model { width: 228pt !important; height: 121.6pt !important; }
+  #pile-canvas.canvas-bearing-detail { width: 228pt !important; height: 121.6pt !important; image-rendering: auto !important; }
+  body.col-lift #pile-canvas.canvas-live-model { width: 220pt !important; height: 117.333pt !important; aspect-ratio: 15 / 8 !important; }
+  body.blender-cap-view #pile-array-section { width: 260pt !important; min-width: 260pt !important; }
+  /* Shared cap print spacing; continuation pages remain for larger point sets. */
+  body.compact-pilecap-print #pile-canvas.canvas-cap-model { width: 228pt !important; height: 125.4pt !important; }
+  body.compact-pilecap-print #pile-array-section { width: 238pt !important; min-width: 238pt !important; }
+  body.compact-pilecap-print #survey-table tbody td { line-height: 1.25 !important; }
+  body.compact-pilecap-print #occ-table td,
+  body.compact-pilecap-print #occ-table th { height: 10pt !important; padding-top: 0 !important; padding-bottom: 0 !important; }
+  body.compact-pilecap-print .sig-line { height: 10px !important; margin-bottom: 2px !important; }
   .pile-type-badge { font-size: 5pt !important; padding: 0px 2px !important; margin-top: 0px !important; }
   .pile-panel-title { font-size: 4.5pt !important; }
   /* ── MAIN SURVEY TABLE ── */
@@ -1012,6 +1027,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     min-width: 300px !important;
     max-width: 420px !important;
   }
+  body.blender-detail-view #pile-array-section {
+    width: 42% !important;
+    max-width: 600px !important;
+  }
+  body.blender-column-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
+  body.blender-cap-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
+  body.live-model-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
   body.elastomeric-work #pile-array-section {
     width: 100% !important;
     min-width: 0 !important;
@@ -6435,6 +6457,117 @@ function drawClarkStationArray(ctx, W, H, pier, pts) {
 }
 
 let canvasViewMode = '3d';
+// Blender V5 print styling of the approved V4 geometry; fixed review image.
+// Keep fallback Canvas geometry available offline and if the design changes.
+let p1091BlenderPreview = null;
+let p1091ColumnPreview = null;
+let p1091CapPreview=null;
+let p1091BearingPreview=null;
+function drawP1091BearingPreview(ctx,W,H,pier,work,points){
+  if(pier.id!=='P-1091'||work!=='Bearing Plinths'||Math.abs(getTopOfColumnElevation(pier)-114.793)>1e-7)return false;
+  const expected=_orientPierSpecificPoints(pier,work,[],true);
+  if(points.length!==16 || !expected.every(p=>{
+    const q=points.find(q=>q.label===p.label);
+    const level=p.label.startsWith('U')?114.917:115.543;
+    return q&&Math.abs(q.ch-p.ch)<1e-7&&Math.abs(q.os-p.os)<1e-7&&Math.abs(getWorkPointElev(pier,work,p.label)-level)<1e-7;
+  }))return false;
+  if(!p1091BearingPreview){
+    const image=new Image();p1091BearingPreview={image,ready:false};
+    image.onload=()=>{p1091BearingPreview.ready=true;if(currentPier?.id==='P-1091'&&document.getElementById('element').value===work&&canvasViewMode==='3d')drawPileArray(currentPier);};
+    image.src='assets/p1091-bearing-blender-v1.png';
+  }
+  if(!p1091BearingPreview.ready)return false;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  const image=p1091BearingPreview.image,scale=Math.min(W/image.naturalWidth,H/image.naturalHeight);
+  const w=image.naturalWidth*scale,h=image.naturalHeight*scale;
+  ctx.drawImage(image,(W-w)/2,(H-h)/2,w,h);
+  document.getElementById('pile-canvas').classList.add('canvas-bearing-detail');document.body.classList.add('live-model-view');
+  return true;
+}
+function drawP1091CapPreview(ctx,W,H,pier,work,points) {
+  if(pier.id!=='P-1091' || work!=='Pile cap' || Math.abs(pier.topCap-102.923)>1e-7) return false;
+  const controls={A:[3.6,-5.85],B:[3.6,5.85],C:[-3.6,5.85],D:[-3.6,-5.85],
+    P1:[2.25,-4.5],P2:[2.25,0],P3:[2.25,4.5],P4:[-2.25,-4.5],P5:[-2.25,0],P6:[-2.25,4.5],
+    '1':[.5,-1.5],'2':[1,-1],'3':[1,1],'4':[.5,1.5],'5':[-.5,1.5],'6':[-1,1],'7':[-1,-1],'8':[-.5,-1.5]};
+  if(!Object.entries(controls).every(([name,v])=>{const p=points.find(p=>p.label===name);return p && Math.abs(p.ch-v[0])<1e-7 && Math.abs(p.os-v[1])<1e-7;})) return false;
+  if(!p1091CapPreview) {
+    const image=new Image();p1091CapPreview={image,ready:false};
+    image.onload=()=>{p1091CapPreview.ready=true;if(currentPier?.id==='P-1091' && document.getElementById('element').value==='Pile cap' && canvasViewMode==='3d')drawPileArray(currentPier);};
+    image.src='assets/p1091-pilecap-v1.png';
+  }
+  if(!p1091CapPreview.ready)return false;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.drawImage(p1091CapPreview.image,0,0,W,H);
+  document.getElementById('pile-canvas').classList.add('canvas-cap-model');document.body.classList.add('blender-cap-view');
+  return true;
+}
+function drawP1091ColumnPreview(ctx,W,H,pier,work) {
+  if(pier.id!=='P-1091' || !_isColumnWork(work) ||
+    Math.abs(pier.topCap-102.923)>1e-7 || pier.columnHeightMm!==8970 || pier.colDim!=='3 X 2') return false;
+  if(!p1091ColumnPreview) {
+    const image=new Image(); p1091ColumnPreview={image,ready:false};
+    image.onload=()=>{
+      p1091ColumnPreview.ready=true;
+      if(currentPier?.id==='P-1091' && _isColumnWork(document.getElementById('element').value) && canvasViewMode==='3d') drawPileArray(currentPier);
+    };
+    image.src='assets/p1091-column-labels-only.png';
+  }
+  if(!p1091ColumnPreview.ready) return false;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  const image=p1091ColumnPreview.image;
+  // Detail-only presentation for both lifts: keep all twelve point labels,
+  // omit the full shaft. Source model and survey calculations are unchanged.
+  const scale=W/1400;
+  ctx.drawImage(image,200,225,1400,420,0,70,W,420*scale);
+  ctx.drawImage(image,1260,60,320,170,W-200,0,190,100.938);
+  ctx.fillStyle='#111';ctx.textAlign='left';ctx.font='bold 19px sans-serif';
+  ctx.fillText('P-1091 COLUMN - POINT DETAIL',12,24);
+  ctx.font='14px sans-serif';
+  ctx.fillText('PARTIAL - lift joint not defined',12,47);
+  ctx.textAlign='center';ctx.font='13px sans-serif';
+  ctx.fillText('Upper shaft detail only - column height not shown',W/2,H-8);
+  document.getElementById('pile-canvas').classList.add('canvas-column-model');
+  document.body.classList.add('blender-column-view');
+  return true;
+}
+function drawP1091BlenderPreview(ctx, W, H, pier, work) {
+  if (pier.id !== 'P-1091' || work !== 'Pier Head') return false;
+  const points = getPierHeadModel(pier).points;
+  const expected = {T1:[-1.75,0,115.110],T2:[0,3.24,115.393],T3:[1.75,0,115.710],
+    T4:[0,-3.24,115.393],T5:[1.75,.6,115.710],T6:[-1.75,.6,115.110],
+    T7:[-1.75,-.6,115.110],T8:[1.75,-.6,115.710]};
+  const near=(a,b)=>Math.abs(Number(a)-b)<1e-7;
+  if (!near(pier.n,1677389.469) || !near(pier.e,455096.184) ||
+      !near(pier.deg,82) || !near(pier.min,2) || !near(pier.sec,54) ||
+      !near(pier.topCap,102.923) || !near(pier.columnHeightMm,8970) ||
+      !near(getTopOfColumnElevation(pier),114.793) ||
+      !Object.entries(expected).every(([name,v])=>{
+        const p=points.find(p=>p.label===name);
+        return p && near(p.ch,v[0]) && near(p.os,v[1]) && near(p.z,v[2]);
+      })) return false;
+  if (!p1091BlenderPreview) {
+    const image = new Image();
+    p1091BlenderPreview = {image,ready:false};
+    image.onload=()=>{
+      p1091BlenderPreview.ready=true;
+      if (currentPier?.id==='P-1091' && document.getElementById('element').value==='Pier Head' && canvasViewMode==='3d') drawPileArray(currentPier);
+    };
+    image.src='assets/p1091-blender-preview-v5.png';
+  }
+  if (!p1091BlenderPreview.ready) return false;
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const image=p1091BlenderPreview.image;
+  // Camera-only crop: retain enlarged T labels and the chainage
+  // compass, remove the long shaft and unused margins. Never alter source PNG.
+  const crop={x:50,y:115,w:1500,h:725};
+  const scale=Math.min(W/crop.w,(H-16)/crop.h);
+  const w=crop.w*scale,h=crop.h*scale;
+  ctx.drawImage(image,crop.x,crop.y,crop.w,crop.h,(W-w)/2,0,w,h);
+  ctx.fillStyle='#111'; ctx.font='12px sans-serif'; ctx.textAlign='center';
+  ctx.fillText('P-1091 | Blender V5 detail | PARTIAL survey model',W/2,H-3);
+  document.getElementById('pile-canvas').classList.add('canvas-blender-detail');
+  document.body.classList.add('blender-detail-view');
+  return true;
+}
 
 function openCanvasPreview() {
   const canvas = document.getElementById('pile-canvas');
@@ -6535,14 +6668,19 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   }).filter(point => Number.isFinite(point.ch) && Number.isFinite(point.os) && Number.isFinite(point.elevation));
   if (!rendered.length) return false;
 
-  const {minCH,maxCH,minOS,maxOS,depth,column} = geometry;
+  const bearingDetail=work==='Bearing Plinths';
+  if(bearingDetail){ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);}
+  const {minCH,maxCH,minOS,maxOS,column} = geometry;
+  const depth=bearingDetail?Math.min(geometry.depth,.85):geometry.depth;
   const rangeCH = maxCH-minCH, rangeOS = maxOS-minOS;
-  const stemShown = column.length ? 1.0 : 0;
+  const stemShown = bearingDetail?0:column.length ? 1.0 : 0;
   const maxRise = Math.max(0.4, ...rendered.map(p => p.elevation-topPier));
-  const planScale = Math.min((W-330)/rangeOS, (H-200)/(rangeCH*0.65+(depth+stemShown+maxRise)*0.76));
+  const visibleOS=Math.max(rangeOS,...rendered.map(p=>Math.abs(p.os)*2));
+  const visibleCH=Math.max(rangeCH,...rendered.map(p=>Math.abs(p.ch)*2));
+  const planScale = Math.min((W-330)/visibleOS, (H-(bearingDetail?145:200))/(visibleCH*0.65+(depth+stemShown+maxRise)*0.76));
   const originX = W / 2;
   const camera = getCanvasCamera(pier, work);
-  const view = {x:originX, y:120+maxCH*planScale*0.65+maxRise*planScale*0.76, scale:planScale, datum:topPier, ...camera};
+  const view = {x:originX, y:(bearingDetail?85:120)+maxCH*planScale*0.65+maxRise*planScale*0.76, scale:planScale, datum:topPier, ...camera};
   const project = (point, elevation = point.elevation) => projectStructuralPoint(point, elevation, view);
   const hull = points => {
     if (points.length < 3) return [...points];
@@ -6578,7 +6716,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
 
   // Real column plan dimensions, with only the visible shaft length shortened.
   // A lack of source column geometry is not replaced with an invented width.
-  if (column.length) {
+  if (column.length && !bearingDetail) {
     drawExtrudedPlan(column,topPier-depth,topPier-depth-stemShown,'#c9d5de','#adbecb');
     const columnOS = [Math.min(...column.map(p=>p.os)),Math.max(...column.map(p=>p.os))];
     const columnCH = [Math.min(...column.map(p=>p.ch)),Math.max(...column.map(p=>p.ch))];
@@ -6627,7 +6765,15 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
     [...groups.values()].sort((a,b)=>b[0].ch-a[0].ch).forEach(points=>{
       if (points.length!==4) return;
       const centerCH=points.reduce((sum,p)=>sum+p.ch,0)/4;
-      drawExtrudedPlan(points,points[0].elevation,surfaceAt(centerCH),'#f5c56c','#ca9137','#8a5b13');
+      // Never flatten a genuinely sloped/group-dependent design to point 1.
+      const boundary=hull(points);
+      const top=boundary.map(p=>project(p,p.elevation));
+      const bottom=boundary.map(p=>project(p,surfaceAt(p.ch)));
+      for(let i=0;i<top.length;i++){
+        const j=(i+1)%top.length;
+        polygon([top[i],top[j],bottom[j],bottom[i]],'#d0a34f','#78551e');
+      }
+      polygon(top,'#f4d48e','#78551e');
     });
   }
 
@@ -6639,30 +6785,47 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
 
   // Two label rails, placed outside the real structure envelope.
   const labels = rendered.map(point => ({point, ...project(point)}));
-  const railOrder = (a,b)=>(b.point.ch-a.point.ch)*camera.chSign||a.point.os-b.point.os;
+  const railOrder = bearingDetail ? (a,b)=>a.y-b.y||a.x-b.x : (a,b)=>(b.point.ch-a.point.ch)*camera.chSign||a.point.os-b.point.os;
   const left = labels.filter(label => label.point.os < 0).sort(railOrder);
   const right = labels.filter(label => label.point.os >= 0).sort(railOrder);
   const layoutRail = (items, side) => {
     const x = side === 'left' ? 18 : W-18;
     const align = side === 'left' ? 'left' : 'right';
-    const top = 136, bottom = H-110;
+    const top = bearingDetail?105:136, bottom = H-(bearingDetail?68:110);
     const step = items.length > 1 ? Math.min(32, (bottom-top)/(items.length-1)) : 0;
     items.forEach((label,index) => {
       const y = items.length === 1 ? (top+bottom)/2 : top+index*step;
       const elbowX = side === 'left' ? 166 : W-166;
       ctx.beginPath(); ctx.moveTo(label.x,label.y); ctx.lineTo(elbowX,y); ctx.lineTo(side==='left'?x+5:x-5,y);
-      ctx.strokeStyle='rgba(67,88,105,0.42)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.strokeStyle=bearingDetail?'#333':'rgba(67,88,105,0.42)'; ctx.lineWidth=1; ctx.stroke();
       const text = `${label.point.label} ${label.point.hasDesignElevation ? label.point.elevation.toFixed(3) : 'REF'}`;
       const fontSize=items.length>1 ? Math.min(21,step-4) : 21;
       ctx.font=`bold ${fontSize}px monospace`; ctx.textAlign=align; ctx.textBaseline='middle';
       const width=ctx.measureText(text).width;
       ctx.fillStyle='rgba(255,255,255,0.97)';
       ctx.fillRect(side==='left'?x-4:x-width-4,y-fontSize/2-2,width+8,fontSize+4);
-      ctx.fillStyle=label.point.ch*camera.chSign>=0?'#0b5877':'#714510'; ctx.fillText(text,x,y);
+      ctx.fillStyle=bearingDetail?'#111':label.point.ch*camera.chSign>=0?'#0b5877':'#714510'; ctx.fillText(text,x,y);
     });
   };
   layoutRail(left,'left'); layoutRail(right,'right');
 
+  if(bearingDetail){
+    ctx.strokeStyle='#a73514';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(W-115,76);ctx.lineTo(W-115,50);ctx.moveTo(W-120,58);ctx.lineTo(W-115,50);ctx.lineTo(W-110,58);ctx.stroke();
+    ctx.fillStyle='#111';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillText('INCREASING CHAINAGE',W-120,27);
+    const sideNote=SPECIAL_PIER_CHAINAGE_LEVEL_SIDE[pier.id];
+    if(sideNote){ctx.font='12px sans-serif';ctx.fillText(sideNote,W-120,80);}
+    ctx.fillStyle='#111';ctx.font='bold 22px sans-serif';ctx.textAlign='left';ctx.textBaseline='top';
+    ctx.fillText(`${pier.id} - BEARING PLINTHS`,14,12);
+    ctx.font='15px sans-serif';ctx.fillText('PARTIAL | head context cropped; plinth point elevations retained',14,42);
+    ctx.textAlign='center';ctx.font='14px sans-serif';
+    ctx.fillText(`EL in metres | Top of Pier ${topPier.toFixed(3)} | ${geometry.step?'stepped surfaces':'context surface simplified'}`,W/2,H-40);
+    ctx.fillText('Per-pier CH/OS geometry | no pot-bearing assembly included',W/2,H-19);
+    document.getElementById('pile-canvas').classList.add('canvas-bearing-detail');
+    document.body.classList.add('live-model-view');
+    return true;
+  }
   drawIncreasingChainageArrow(ctx,{x:W/2,y:104},{x:W/2,y:72},W/2,54,SPECIAL_PIER_CHAINAGE_LEVEL_SIDE[pier.id] || '');
   ctx.fillStyle='#173d5a'; ctx.font='bold 27px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top';
   ctx.fillText(`${work.toUpperCase()} - ${pier.id} - 3D`, W/2, 10);
@@ -6675,8 +6838,77 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   return true;
 }
 
+// Live, per-pier review geometry. No shared P-1091 dimensions or elevations.
+// Unknown cap thickness is deliberately shown as a surface, not a solid.
+function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
+  const column=_isColumnWork(work),cap=work==='Pile cap';
+  if(!column && !cap)return false;
+  const valid=points.filter(p=>Number.isFinite(Number(p.ch)) && Number.isFinite(Number(p.os)));
+  let ring=valid.filter(p=>column?/^\d+$/.test(p.label):/^[A-H]$/.test(p.label));
+  if(ring.length<3)return false;
+  const center={ch:ring.reduce((s,p)=>s+p.ch,0)/ring.length,os:ring.reduce((s,p)=>s+p.os,0)/ring.length};
+  ring=[...ring].sort((a,b)=>Math.atan2(a.ch-center.ch,a.os-center.os)-Math.atan2(b.ch-center.ch,b.os-center.os));
+  const extentOS=Math.max(...ring.map(p=>p.os))-Math.min(...ring.map(p=>p.os));
+  const extentCH=Math.max(...ring.map(p=>p.ch))-Math.min(...ring.map(p=>p.ch));
+  if(!(extentOS>0 && extentCH>0))return false;
+  const raw=(p,z=0)=>({x:(p.os-center.os)*.87+(p.ch-center.ch)*.45,y:(p.os-center.os)*.2-(p.ch-center.ch)*.48-z*.85});
+  // Column is intentionally a clipped upper-shaft illustration, NOT a lift height.
+  const stub=column?Math.min(extentOS,extentCH)*.65:0;
+  const all=ring.flatMap(p=>[raw(p),raw(p,-stub)]);
+  const minX=Math.min(...all.map(p=>p.x)),maxX=Math.max(...all.map(p=>p.x));
+  const minY=Math.min(...all.map(p=>p.y)),maxY=Math.max(...all.map(p=>p.y));
+  const scale=Math.min(W*.58/(maxX-minX),(H-160)/Math.max(maxY-minY,.1));
+  const origin={x:W/2-(minX+maxX)*scale/2,y:105-minY*scale};
+  const project=(p,z=0)=>{const v=raw(p,z);return{x:origin.x+v.x*scale,y:origin.y+v.y*scale};};
+  const polygon=(ps,color)=>{ctx.beginPath();ps.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#56636b';ctx.lineWidth=1;ctx.stroke();};
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  if(column)for(let i=0;i<ring.length;i++){
+    const a=ring[i],b=ring[(i+1)%ring.length];
+    polygon([project(a),project(b),project(b,-stub),project(a,-stub)],i%2?'#8b989f':'#a8b3b9');
+  }
+  polygon(ring.map(p=>project(p)),'#d8dfe3');
+  const vertices=valid.filter(p=>/^\d+$/.test(p.label));
+  if(cap && vertices.length>=3){
+    const ordered=[...vertices].sort((a,b)=>Number(a.label)-Number(b.label));
+    ctx.beginPath();ordered.forEach((p,i)=>{const v=project(p);i?ctx.lineTo(v.x,v.y):ctx.moveTo(v.x,v.y);});ctx.closePath();ctx.strokeStyle='#486476';ctx.lineWidth=2;ctx.stroke();
+  }
+  const rails={left:[],right:[]};
+  for(const p of valid){
+    const v=project(p);ctx.beginPath();ctx.arc(v.x,v.y,3.2,0,Math.PI*2);ctx.fillStyle='#bf5b14';ctx.fill();
+    if(cap && !/^\d+$/.test(p.label)){
+      // Keep outer corners / pile axes locally labelled so their leaders do
+      // not cross the central column-vertex annotation rails.
+      ctx.fillStyle='#111';ctx.font='bold 17px sans-serif';ctx.textBaseline='bottom';
+      ctx.textAlign=v.x<W/2?'right':'left';ctx.fillText(String(p.label),v.x+(v.x<W/2?-7:7),v.y-6);
+      continue;
+    }
+    rails[v.x<W/2?'left':'right'].push({p,v});
+  }
+  for(const side of ['left','right']){
+    const list=rails[side].sort((a,b)=>a.v.y-b.v.y);
+    const gap=Math.min(25,(H-155)/Math.max(list.length,1));
+    let y=100;
+    list.forEach(({p,v},i)=>{
+      y=Math.max(y,Math.min(v.y,H-65-(list.length-1-i)*gap));
+      const x=side==='left'?W*.16:W*.84;
+      ctx.beginPath();ctx.moveTo(v.x,v.y);ctx.lineTo(x,y);ctx.strokeStyle='#222';ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle='#111';ctx.font='bold 18px sans-serif';ctx.textAlign=side==='left'?'right':'left';ctx.textBaseline='middle';
+      ctx.fillText(String(p.label),x+(side==='left'?-8:8),y);y+=gap;
+    });
+  }
+  ctx.textAlign='left';ctx.textBaseline='top';ctx.fillStyle='#111';ctx.font='bold 22px sans-serif';
+  ctx.fillText(`${pier.id} - ${column?'COLUMN POINT DETAIL':'PILE CAP TOP SURFACE'}`,14,12);
+  ctx.font='15px sans-serif';ctx.fillText(`PARTIAL | ${column?'upper shaft only; lift boundary not defined':'cap thickness not verified; no invented solid depth'}`,14,43);
+  drawIncreasingChainageArrow(ctx,{x:W-110,y:75},{x:W-75,y:50},W-115,27,'');
+  ctx.fillStyle='#111';ctx.textAlign='center';ctx.font='14px sans-serif';
+  ctx.fillText(column?'Point labels only | display shaft shortened; no design elevation assumed':'Pile labels show projected axes | shape from this pier\'s CH/OS',W/2,H-25);
+  document.getElementById('pile-canvas').classList.add('canvas-live-model');document.body.classList.add('live-model-view');
+  return true;
+}
+
 function drawPileArray(pier) {
   const work = document.getElementById('element').value;
+  document.body.classList.toggle('compact-pilecap-print',work==='Pile cap' && !isSubstationPier(pier) && !isClarkStationElement(pier));
   const element = document.getElementById('element').value;
   const keyFn = WORK_ARRAY_KEY[element] || WORK_ARRAY_KEY[work];
   const arrayKey = keyFn ? keyFn(pier) : pier.piles;
@@ -6700,14 +6932,25 @@ function drawPileArray(pier) {
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const _isColLift = (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
-  const supports3D = work === 'Pier Head' || work === 'Bearing Plinths';
+  const ordinaryPier=!isSubstationPier(pier) && !isClarkStationElement(pier);
+  const columnModel=ordinaryPier && _isColumnWork(work);
+  const capModel=ordinaryPier && work==='Pile cap';
+  const supports3D = work === 'Pier Head' || work === 'Bearing Plinths' || columnModel || capModel;
   const controls = document.getElementById('canvas-view-controls');
   if (controls) controls.style.display = supports3D ? 'flex' : 'none';
   const use3D = supports3D && canvasViewMode === '3d';
   canvas.classList.toggle('canvas-3d', use3D);
+  canvas.classList.remove('canvas-blender-detail');
+  canvas.classList.remove('canvas-column-model');
+  canvas.classList.remove('canvas-bearing-detail');
+  canvas.classList.remove('canvas-live-model');document.body.classList.remove('live-model-view');
+  canvas.classList.remove('canvas-cap-model');document.body.classList.remove('blender-cap-view');
+  document.body.classList.remove('blender-column-view');
+  document.body.classList.remove('blender-detail-view');
   // Canvas logical size: wider for Column lift to accommodate side text
-  const W = _isColLift ? 1120 : 900;
-  const H = _isColLift ? 680 : (use3D ? 600 : 450);
+  const W = _isColLift && !(columnModel && use3D) ? 1120 : 900;
+  const detailFrame=use3D && pier.id==='P-1091' && work==='Pier Head' && p1091BlenderPreview?.ready;
+  const H = work==='Bearing Plinths' && use3D ? 480 : capModel && use3D ? (pier.id==='P-1091'?495:480) : columnModel && use3D ? (pier.id==='P-1091'?380:480) : _isColLift ? 680 : (detailFrame ? 480 : use3D ? 600 : 450);
   canvas.width  = W * dpr;
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -6721,7 +6964,12 @@ function drawPileArray(pier) {
     return;
   }
 
-  if (use3D && drawWorkArray3D(ctx, W, H, pier, work, pts)) return;
+  if (use3D && drawP1091ColumnPreview(ctx,W,H,pier,work)) return;
+  if (use3D && drawP1091CapPreview(ctx,W,H,pier,work,pts)) return;
+  if (use3D && drawP1091BearingPreview(ctx,W,H,pier,work,pts)) return;
+  if (use3D && ordinaryPier && drawColumnCapModel3D(ctx,W,H,pier,work,pts)) return;
+  if (use3D && !columnModel && drawP1091BlenderPreview(ctx, W, H, pier, work)) return;
+  if (use3D && !columnModel && !capModel && drawWorkArray3D(ctx, W, H, pier, work, pts)) return;
 
   if (isSubstationPier(pier)) {
     if (_isColLift) drawSubstationColumnArray(ctx, W, H, pier, pts);
@@ -8334,6 +8582,7 @@ function exportFormExcel() {
 function printDoc() {
   const pier = currentPier?.id || 'NSCR';
   const work = document.getElementById('element').value;
+  document.body.classList.toggle('compact-pilecap-print',work==='Pile cap' && currentPier && !isSubstationPier(currentPier) && !isClarkStationElement(currentPier));
   const _elVal = document.getElementById('element')?.value || '';
   document.body.classList.toggle('col-lift', work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
   document.title = `${pier}_${_elVal.replace(/\s+/g,'_')}`;
