@@ -1,0 +1,17 @@
+[
+  {
+    "pier": "P-1092",
+    "work": "Pier Head",
+    "source": "Read from the live application's Sheet-backed getPierHeadModel on 2026-10-17. Render variant only; does not override survey data.",
+    "points": [
+      {"label":"T1","ch":2.5,"os":0,"rise":0.439},
+      {"label":"T2","ch":0,"os":3,"rise":0},
+      {"label":"T3","ch":-2.5,"os":0,"rise":0.439},
+      {"label":"T4","ch":0,"os":-3,"rise":0},
+      {"label":"T5","ch":2.5,"os":1,"rise":0.439},
+      {"label":"T6","ch":-2.5,"os":1,"rise":0.439},
+      {"label":"T7","ch":-2.5,"os":-1,"rise":0.439},
+      {"label":"T8","ch":2.5,"os":-1,"rise":0.439}
+    ]
+  }
+]

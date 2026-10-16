@@ -1,5 +1,7 @@
 # Per-pier 3D review views - 2026-10-16
 
+Superseded for rendering on 2026-10-17 by [the Blender batch](structural-blender-batch.md) and [current per-pier coverage](structural-blender-coverage.md). The data limitations below remain relevant.
+
 User authorized extending the three work families to all piers. This rollout is a live, code-generated review visualization, not a full drawing certification or a Blender asset batch.
 
 - Pier Head: existing per-pier surface/elevation renderer, 367 valid embedded head geometries; P-1091 retains the approved Blender V5 image. Unknown depths remain labelled schematic in the existing renderer.

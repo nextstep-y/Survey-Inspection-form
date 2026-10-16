@@ -1386,6 +1386,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   <!-- Right: Canvas -->
   <div id="pile-array-section" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:6px; border-left:1px solid var(--border); border-right:1px solid var(--border); width:auto; min-width:310px; max-width:720px; flex-shrink:0; background:var(--surface); overflow:visible;">
     <div id="canvas-view-controls" class="canvas-view-controls" aria-label="Canvas view">
+      <span id="canvas-model-status" style="font-size:10px;align-self:center;margin-right:6px;max-width:190px;"></span>
       <button type="button" id="canvas-view-2d" class="canvas-view-btn" aria-pressed="false" onclick="setCanvasViewMode('2d')">2D</button>
       <button type="button" id="canvas-view-3d" class="canvas-view-btn active" aria-pressed="true" onclick="setCanvasViewMode('3d')">3D</button>
       <button type="button" class="canvas-view-btn" onclick="openCanvasPreview()" aria-label="Expand canvas">⛶</button>
@@ -1748,6 +1749,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
 <script src="assets/bearing-blender-manifest.js?v=20261016-30mm"></script>
+<script src="assets/structural-blender-geometry.js?v=20261017"></script>
+<script src="assets/structural-blender-manifest.js?v=20261017"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -6493,6 +6496,47 @@ let p1091ColumnPreview = null;
 let p1091CapPreview=null;
 let p1091BearingPreview=null;
 const bearingBlenderImages=new Map();
+const structuralBlenderImages=new Map();
+function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
+  if(pier.id==='P-1091')return false;
+  const kind=_isColumnWork(work)?'Column':work, manifest=window.STRUCTURAL_BLENDER_MANIFEST;
+  const record=manifest?.records[pier.id+'|'+kind];
+  if(!record||!window.StructuralBlender)return false;
+  const geometry=window.StructuralBlender.build(pier,work,points);
+  // Compare the whole model, including context surfaces and relative levels.
+  // A Sheet edit must never leave a stale static Blender image in use.
+  const signature=JSON.stringify(geometry);
+  const templateId=[record.template,...(record.variants||[])].find(id=>signature===JSON.stringify(manifest.templates[id]?.geometry));
+  if(!geometry||!templateId)return false;
+  const template=manifest.templates[templateId];
+  let cached=structuralBlenderImages.get(templateId);
+  if(!cached){
+    const image=new Image();cached={image,ready:false};structuralBlenderImages.set(templateId,cached);
+    image.onload=()=>{cached.ready=true;if(currentPier&&canvasViewMode==='3d')drawPileArray(currentPier);};
+    image.onerror=()=>structuralBlenderImages.delete(templateId);
+    image.src=template.image;
+  }
+  if(!cached.ready)return false;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  const scale=Math.min(W/1800,H/1000),w=1800*scale,h=1000*scale,x=(W-w)/2,y=(H-h)/2;
+  ctx.drawImage(cached.image,x,y,w,h);
+  ctx.textAlign='left';ctx.textBaseline='top';ctx.fillStyle='#111';ctx.font='bold 21px sans-serif';
+  ctx.fillText(pier.id+' - '+kind.toUpperCase()+' | BLENDER',14,10);
+  ctx.font='12px sans-serif';ctx.fillText(geometry.status,14,37);
+  ctx.textAlign='center';ctx.font='bold 11px sans-serif';ctx.fillText('INCREASING CHAINAGE',W-110,17);
+  const count=Math.max(...[-1,1].map(side=>template.anchors.filter(a=>a.side===side).length));
+  ctx.font=`bold ${Math.min(19,Math.max(11,300/count))}px monospace`;ctx.textBaseline='middle';
+  for(const a of template.anchors){
+    const p=points.find(p=>p.label===a.label);ctx.textAlign=a.side<0?'right':'left';
+    const label=kind==='Pier Head'&&Number.isFinite(p.z)?p.label+' '+p.z.toFixed(3):kind==='Pier Head'&&/^T\d+$/.test(p.label)?p.label+' ?':p.label;
+    ctx.fillText(label,x+a.x*w+(a.side<0?-7:7),y+a.y*h);
+  }
+  ctx.textAlign='center';ctx.font='13px sans-serif';
+  ctx.fillText(kind==='Pier Head'?'EL in metres | Top of Pier '+getTopOfColumnElevation(pier).toFixed(3):kind==='Column'?'Point labels only | shaft shortened for print':'Pile locations are projected axes | local CH/OS geometry',W/2,H-15);
+  document.getElementById('pile-canvas').classList.add('canvas-live-model');document.body.classList.add('live-model-view');
+  document.getElementById('pile-canvas').dataset.modelSource='Blender';
+  return true;
+}
 function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
   if(work!=='Bearing Plinths'||pier.id==='P-1091')return false;
   const manifest=window.BEARING_BLENDER_MANIFEST;
@@ -6503,7 +6547,8 @@ function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
   let cached=bearingBlenderImages.get(record.template);
   if(!cached){
     const image=new Image();cached={image,ready:false};bearingBlenderImages.set(record.template,cached);
-    image.onload=()=>{cached.ready=true;if(currentPier?.id===pier.id&&document.getElementById('element').value===work&&canvasViewMode==='3d')drawPileArray(currentPier);};
+    image.onload=()=>{cached.ready=true;if(currentPier&&canvasViewMode==='3d')drawPileArray(currentPier);};
+    image.onerror=()=>bearingBlenderImages.delete(record.template);
     image.src=template.image;
   }
   if(!cached.ready)return false;
@@ -6523,6 +6568,7 @@ function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
   }
   ctx.textAlign='center';ctx.font='13px sans-serif';ctx.fillText('Top of Pier '+record.topPier.toFixed(3)+' m | no pot bearing, anchors or certified head detail',W/2,H-14);
   document.getElementById('pile-canvas').classList.add('canvas-bearing-detail');document.body.classList.add('live-model-view');
+  document.getElementById('pile-canvas').dataset.modelSource='Blender';
   return true;
 }
 function drawP1091BearingPreview(ctx,W,H,pier,work,points){
@@ -6991,6 +7037,7 @@ function drawPileArray(pier) {
 
   const canvas = document.getElementById('pile-canvas');
   if (!canvas) return;
+  canvas.dataset.modelSource='Canvas';
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const _isColLift = (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
@@ -7001,6 +7048,12 @@ function drawPileArray(pier) {
   const controls = document.getElementById('canvas-view-controls');
   if (controls) controls.style.display = supports3D ? 'flex' : 'none';
   const use3D = supports3D && canvasViewMode === '3d';
+  const modelStatus=document.getElementById('canvas-model-status');
+  if(modelStatus)modelStatus.textContent=use3D?'ภาพคำนวณ / โมเดล Blender ยังไม่พร้อม':'';
+  const blenderShown=()=>{
+    canvas.dataset.modelSource='Blender';
+    if(modelStatus)modelStatus.textContent='Blender 3D';
+  };
   canvas.classList.toggle('canvas-3d', use3D);
   canvas.classList.remove('canvas-blender-detail');
   canvas.classList.remove('canvas-column-model');
@@ -7012,7 +7065,7 @@ function drawPileArray(pier) {
   // Canvas logical size: wider for Column lift to accommodate side text
   const W = _isColLift && !(columnModel && use3D) ? 1120 : 900;
   const detailFrame=use3D && pier.id==='P-1091' && work==='Pier Head' && p1091BlenderPreview?.ready;
-  const H = work==='Bearing Plinths' && use3D ? 480 : capModel && use3D ? (pier.id==='P-1091'?495:480) : columnModel && use3D ? (pier.id==='P-1091'?380:480) : _isColLift ? 680 : (detailFrame ? 480 : use3D ? 600 : 450);
+  const H = work==='Bearing Plinths' && use3D ? 480 : capModel && use3D ? (pier.id==='P-1091'?495:480) : columnModel && use3D ? (pier.id==='P-1091'?380:480) : _isColLift ? 680 : (detailFrame || use3D&&work==='Pier Head'&&pier.id!=='P-1091' ? 480 : use3D ? 600 : 450);
   canvas.width  = W * dpr;
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -7026,12 +7079,13 @@ function drawPileArray(pier) {
     return;
   }
 
-  if (use3D && drawP1091ColumnPreview(ctx,W,H,pier,work)) return;
-  if (use3D && drawP1091CapPreview(ctx,W,H,pier,work,pts)) return;
-  if (use3D && drawP1091BearingPreview(ctx,W,H,pier,work,pts)) return;
-  if (use3D && drawBearingBlenderBatch(ctx,W,H,pier,work,pts)) return;
+  if (use3D && drawP1091ColumnPreview(ctx,W,H,pier,work)) {blenderShown();return;}
+  if (use3D && drawP1091CapPreview(ctx,W,H,pier,work,pts)) {blenderShown();return;}
+  if (use3D && drawP1091BearingPreview(ctx,W,H,pier,work,pts)) {blenderShown();return;}
+  if (use3D && drawBearingBlenderBatch(ctx,W,H,pier,work,pts)) {blenderShown();return;}
+  if (use3D && ordinaryPier && drawStructuralBlenderBatch(ctx,W,H,pier,work,pts)) {blenderShown();return;}
   if (use3D && ordinaryPier && drawColumnCapModel3D(ctx,W,H,pier,work,pts)) return;
-  if (use3D && !columnModel && drawP1091BlenderPreview(ctx, W, H, pier, work)) return;
+  if (use3D && !columnModel && drawP1091BlenderPreview(ctx, W, H, pier, work)) {blenderShown();return;}
   if (use3D && !columnModel && !capModel && drawWorkArray3D(ctx, W, H, pier, work, pts)) return;
 
   if (isSubstationPier(pier)) {
