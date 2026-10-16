@@ -1747,6 +1747,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261016-1"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -6463,6 +6464,39 @@ let p1091BlenderPreview = null;
 let p1091ColumnPreview = null;
 let p1091CapPreview=null;
 let p1091BearingPreview=null;
+const bearingBlenderImages=new Map();
+function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
+  if(work!=='Bearing Plinths'||pier.id==='P-1091')return false;
+  const manifest=window.BEARING_BLENDER_MANIFEST;
+  const record=manifest?.records[pier.id+'|'+getBearingType()];
+  if(!record||record.points.length!==points.length||Math.abs(getTopOfColumnElevation(pier)-record.topPier)>1e-6)return false;
+  if(!record.points.every(p=>{const q=points.find(q=>q.label===p.label);return q&&Math.abs(q.ch-p.ch)<1e-6&&Math.abs(q.os-p.os)<1e-6&&Math.abs(getWorkPointElev(pier,work,p.label)-p.z)<1e-6;}))return false;
+  const template=manifest.templates[record.template];if(!template)return false;
+  let cached=bearingBlenderImages.get(record.template);
+  if(!cached){
+    const image=new Image();cached={image,ready:false};bearingBlenderImages.set(record.template,cached);
+    image.onload=()=>{cached.ready=true;if(currentPier?.id===pier.id&&document.getElementById('element').value===work&&canvasViewMode==='3d')drawPileArray(currentPier);};
+    image.src=template.image;
+  }
+  if(!cached.ready)return false;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  // Same 1.8 aspect as the Blender camera; no image stretching.
+  const scale=Math.min(W/1800,H/1000),w=1800*scale,h=1000*scale,x=(W-w)/2,y=(H-h)/2;
+  ctx.drawImage(cached.image,x,y,w,h);
+  ctx.fillStyle='#111';ctx.textBaseline='top';ctx.textAlign='left';ctx.font='bold 21px sans-serif';
+  ctx.fillText(pier.id+' - BEARING PLINTHS | BLENDER',14,10);
+  ctx.font='13px sans-serif';ctx.fillText('PARTIAL | app geometry; head context simplified | EL in metres',14,38);
+  ctx.textAlign='center';ctx.font='bold 11px sans-serif';ctx.fillText('INCREASING CHAINAGE',W-120,17);
+  const count=Math.max(template.anchors.filter(a=>a.side<0).length,template.anchors.filter(a=>a.side>0).length);
+  ctx.font=`bold ${Math.min(19,Math.max(11,300/count))}px monospace`;ctx.textBaseline='middle';
+  for(const a of template.anchors){
+    const p=record.points.find(p=>p.label===a.label);ctx.textAlign=a.side<0?'right':'left';
+    ctx.fillText(p.label+' '+p.z.toFixed(3),x+a.x*w+(a.side<0?-7:7),y+a.y*h);
+  }
+  ctx.textAlign='center';ctx.font='13px sans-serif';ctx.fillText('Top of Pier '+record.topPier.toFixed(3)+' m | no pot bearing, anchors or certified head detail',W/2,H-14);
+  document.getElementById('pile-canvas').classList.add('canvas-bearing-detail');document.body.classList.add('live-model-view');
+  return true;
+}
 function drawP1091BearingPreview(ctx,W,H,pier,work,points){
   if(pier.id!=='P-1091'||work!=='Bearing Plinths'||Math.abs(getTopOfColumnElevation(pier)-114.793)>1e-7)return false;
   const expected=_orientPierSpecificPoints(pier,work,[],true);
@@ -6967,6 +7001,7 @@ function drawPileArray(pier) {
   if (use3D && drawP1091ColumnPreview(ctx,W,H,pier,work)) return;
   if (use3D && drawP1091CapPreview(ctx,W,H,pier,work,pts)) return;
   if (use3D && drawP1091BearingPreview(ctx,W,H,pier,work,pts)) return;
+  if (use3D && drawBearingBlenderBatch(ctx,W,H,pier,work,pts)) return;
   if (use3D && ordinaryPier && drawColumnCapModel3D(ctx,W,H,pier,work,pts)) return;
   if (use3D && !columnModel && drawP1091BlenderPreview(ctx, W, H, pier, work)) return;
   if (use3D && !columnModel && !capModel && drawWorkArray3D(ctx, W, H, pier, work, pts)) return;
