@@ -6780,9 +6780,9 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   const bearingDetail=work==='Bearing Plinths';
   if(bearingDetail){ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);}
   const {minCH,maxCH,minOS,maxOS,column} = geometry;
-  const depth=bearingDetail?Math.min(geometry.depth,.85):geometry.depth;
+  const depth=geometry.depth;
   const rangeCH = maxCH-minCH, rangeOS = maxOS-minOS;
-  const stemShown = bearingDetail?0:column.length ? 1.0 : 0;
+  const stemShown = column.length ? 1.0 : 0;
   const maxRise = Math.max(0.4, ...rendered.map(p => p.elevation-topPier));
   const visibleOS=Math.max(rangeOS,...rendered.map(p=>Math.abs(p.os)*2));
   const visibleCH=Math.max(rangeCH,...rendered.map(p=>Math.abs(p.ch)*2));
@@ -6825,7 +6825,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
 
   // Real column plan dimensions, with only the visible shaft length shortened.
   // A lack of source column geometry is not replaced with an invented width.
-  if (column.length && !bearingDetail) {
+  if (column.length) {
     drawExtrudedPlan(column,topPier-depth,topPier-depth-stemShown,'#c9d5de','#adbecb');
     const columnOS = [Math.min(...column.map(p=>p.os)),Math.max(...column.map(p=>p.os))];
     const columnCH = [Math.min(...column.map(p=>p.ch)),Math.max(...column.map(p=>p.ch))];
