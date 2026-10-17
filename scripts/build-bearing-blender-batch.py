@@ -15,7 +15,7 @@ for index,(key,g) in enumerate(source['templates'].items()):
  bpy.ops.wm.read_factory_settings(use_empty=True);s=bpy.context.scene;bpy.context.preferences.filepaths.save_version=0
  def material(name,color):
   m=bpy.data.materials.new(name);m.diffuse_color=(*color,1);return m
- concrete=material('PARTIAL context surface',(.73,.78,.8));gold=material('Plinth',(.87,.7,.36));ink=material('Leaders',(.02,.02,.02));orange=material('Points',(.9,.3,.04))
+ concrete=material('PARTIAL context surface',(.73,.78,.8));island_mat=material('Pier head island',(.54,.7,.77));gold=material('Plinth',(.87,.7,.36));ink=material('Leaders',(.02,.02,.02));orange=material('Points',(.9,.3,.04))
  def mesh(name,verts,faces,mat):
   me=bpy.data.meshes.new(name);me.from_pydata(verts,[],faces);me.update();o=bpy.data.objects.new(name,me);s.collection.objects.link(o);me.materials.append(mat);return o
  def line(name,coords,mat=ink,r=.01):
@@ -31,10 +31,17 @@ for index,(key,g) in enumerate(source['templates'].items()):
   else:mesh('Context top',top,[(0,1,2,3)],concrete)
  if g['step'] and lo<0<hi:surface(lo,0,0);surface(0,hi,g['step'])
  else:surface(lo,hi,0)
+ for index_island,island in enumerate(g['islands']['surfaces']):
+  ps=island['ring'];n=len(ps);base=[(p['os'],p['ch'],island['bottom']) for p in ps];top=[(p['os'],p['ch'],island['top']) for p in ps]
+  mesh('Island '+str(index_island+1),base+top,[tuple(range(n,2*n)),tuple(reversed(range(n)))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)],island_mat)
+  bounds += [Vector(v) for v in base+top]
  for group in g['groups']:
   ch=sum(p['ch'] for p in group)/4;os=sum(p['os'] for p in group)/4
   ring=sorted(group,key=lambda p:math.atan2(p['ch']-ch,p['os']-os))
   base=g['step'] if ch*g['highSign']>0 else 0
+  for island in g['islands']['surfaces']:
+   ps=island['ring']
+   if min(p['ch'] for p in ps)<=ch<=max(p['ch'] for p in ps) and min(p['os'] for p in ps)<=os<=max(p['os'] for p in ps) and island['top']<=min(p['z'] for p in ring):base=max(base,island['top'])
   # A top below assumed context cannot be fabricated into a negative solid.
   solid=min(p['z'] for p in ring)>=base
   top=[(p['os'],p['ch'],p['z']) for p in ring]
@@ -78,7 +85,7 @@ for index,(key,g) in enumerate(source['templates'].items()):
  s.world=bpy.data.worlds.new('White');s.world.color=(1,1,1);s.display.shading.background_type='VIEWPORT';s.display.shading.background_color=(1,1,1)
  s.view_settings.view_transform='Standard';s.view_settings.look='None';s.render.resolution_x=1800;s.render.resolution_y=1000;s.render.resolution_percentage=100
  s.render.filepath=str(OUT/(key+'.png'));bpy.ops.wm.save_as_mainfile(filepath=str(MODELS/(key+'.blend')),compress=True);bpy.ops.render.render(write_still=True)
- layouts[key]={'image':'assets/bearing-blender/'+key+'.png','anchors':anchors,'body':g.get('body')}
+ layouts[key]={'image':'assets/bearing-blender/'+key+'.png','anchors':anchors,'body':g.get('body'),'islands':g['islands']}
  print('TEMPLATE_PROGRESS '+str(index+1)+'/'+str(len(source['templates'])),flush=True)
 manifest={'records':source['records'],'templates':layouts,'skipped':source['skipped'],'status':'PARTIAL app-data-derived Blender review templates'}
 (ROOT/'assets/bearing-blender-manifest.js').write_text('window.BEARING_BLENDER_MANIFEST='+json.dumps(manifest,separators=(',',':'))+';\n')

@@ -35,6 +35,8 @@ const rows=Object.values(api.piers).map(p=>{
   if(!record)return 'Missing source geometry';
   counts[kind]++;
   const missing=kind!=='Bearing Plinths'&&templates[record.template].points.filter(p=>p.z===null).map(p=>p.label);
+  const islandMissing=kind==='Bearing Plinths'?bearing.templates[record.template].islands?.missing:templates[record.template].islandMissing;
+  if(islandMissing&&!missing?.length)return 'Blender PARTIAL - Island data incomplete';
   return missing?.length?'Blender PARTIAL - missing EL: '+missing.join(', '):'Blender PARTIAL';
  });return '| '+p.id+' | '+cells.join(' | ')+' |';
 });

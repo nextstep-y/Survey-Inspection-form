@@ -1748,9 +1748,9 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261017-body"></script>
-<script src="assets/structural-blender-geometry.js?v=20261017-cap-volume"></script>
-<script src="assets/structural-blender-manifest.js?v=20261017-cap-volume"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261017-islands"></script>
+<script src="assets/structural-blender-geometry.js?v=20261017-islands"></script>
+<script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -6543,13 +6543,15 @@ function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
   const record=manifest?.records[pier.id+'|'+getBearingType()];
   if(!record||record.points.length!==points.length||Math.abs(getTopOfColumnElevation(pier)-record.topPier)>1e-6)return false;
   if(!record.points.every(p=>{const q=points.find(q=>q.label===p.label);return q&&Math.abs(q.ch-p.ch)<1e-6&&Math.abs(q.os-p.os)<1e-6&&Math.abs(getWorkPointElev(pier,work,p.label)-p.z)<1e-6;}))return false;
-  const template=manifest.templates[record.template];if(!template)return false;
-  if(!window.StructuralBlender||JSON.stringify(window.StructuralBlender.bodyFor(pier,work))!==JSON.stringify(template.body))return false;
-  let cached=bearingBlenderImages.get(record.template);
+  if(!window.StructuralBlender)return false;
+  const body=JSON.stringify(window.StructuralBlender.bodyFor(pier,work)),islands=JSON.stringify(window.StructuralBlender.islandsFor(pier));
+  const templateId=[record.template,...(record.variants||[])].find(id=>body===JSON.stringify(manifest.templates[id]?.body)&&islands===JSON.stringify(manifest.templates[id]?.islands));
+  const template=manifest.templates[templateId];if(!template)return false;
+  let cached=bearingBlenderImages.get(templateId);
   if(!cached){
-    const image=new Image();cached={image,ready:false};bearingBlenderImages.set(record.template,cached);
+    const image=new Image();cached={image,ready:false};bearingBlenderImages.set(templateId,cached);
     image.onload=()=>{cached.ready=true;if(currentPier&&canvasViewMode==='3d')drawPileArray(currentPier);};
-    image.onerror=()=>bearingBlenderImages.delete(record.template);
+    image.onerror=()=>bearingBlenderImages.delete(templateId);
     image.src=template.image;
   }
   if(!cached.ready)return false;
@@ -6559,7 +6561,7 @@ function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
   ctx.drawImage(cached.image,x,y,w,h);
   ctx.fillStyle='#111';ctx.textBaseline='top';ctx.textAlign='left';ctx.font='bold 21px sans-serif';
   ctx.fillText(pier.id+' - BEARING PLINTHS | BLENDER',14,10);
-  ctx.font='12px sans-serif';ctx.fillText(template.body?.status||'PARTIAL | lower profile unavailable',14,38);
+  ctx.font='12px sans-serif';ctx.fillText((template.body?.status||'PARTIAL | lower profile unavailable')+(template.islands?.missing?' | Island data incomplete':''),14,38);
   ctx.textAlign='center';ctx.font='bold 11px sans-serif';ctx.fillText('INCREASING CHAINAGE',W-120,17);
   const count=Math.max(template.anchors.filter(a=>a.side<0).length,template.anchors.filter(a=>a.side>0).length);
   ctx.font=`bold ${Math.min(19,Math.max(11,300/count))}px monospace`;ctx.textBaseline='middle';
@@ -6844,6 +6846,12 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
 
   // Raised islands use the actual T-point rectangle, split at the T2-T4 joint
   // for transition heads. Do not create a hull from unrelated elevated points.
+  const verifiedIslands=window.StructuralBlender
+    ? work==='Pier Head'?window.StructuralBlender.build(pier,'Pier Head')?.surfaces.filter(s=>s.name==='Island'):window.StructuralBlender.islandsFor(pier).surfaces
+    : null;
+  if(verifiedIslands){
+    for(const island of verifiedIslands)drawExtrudedPlan(island.ring,topPier+island.top,topPier+island.bottom,'#c7dde8','#8fb1c6');
+  }else{
   const islandPoints = geometry.points
     .filter(p=>/^T\d+$/.test(p.label) && Number(p.label.slice(1))>=5)
     .map(p=>({...p,ch:p.ch*geometry.headFrameCHSign}));
@@ -6859,6 +6867,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
       const level=Math.max(...levels), base=surfaceAt((lo+hi)/2);
       if (level>base+0.0005) drawExtrudedPlan(rect(lo,hi,c,d),level,base,'#c7dde8','#8fb1c6');
     }
+  }
   }
 
   if (work !== 'Pier Head') {

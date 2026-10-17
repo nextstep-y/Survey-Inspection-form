@@ -55,7 +55,13 @@ for key,t in bearing['templates'].items():
  assert 'Head tapered underside - schematic profile' in bpy.data.objects
  ob=bpy.data.objects['Head tapered underside - schematic profile']
  assert abs(min(v.co.z for v in ob.data.vertices)+body['depth'])<1e-5
- record=next(r for r in bearing['records'].values() if r['template']==key)
+ record=next(r for r in bearing['records'].values() if r['template']==key or key in r.get('variants',[]))
+ for i,island in enumerate(t['islands']['surfaces']):
+  ob=bpy.data.objects['Island '+str(i+1)];vertices=[v.co for v in ob.data.vertices]
+  assert abs(min(v.z for v in vertices)-island['bottom'])<1e-5
+  assert abs(max(v.z for v in vertices)-island['top'])<1e-5
+  assert abs(min(v.x for v in vertices)-min(p['os'] for p in island['ring']))<1e-5
+  assert abs(max(v.y for v in vertices)-max(p['ch'] for p in island['ring']))<1e-5
  for p in record['points']:
   ob=bpy.data.objects[p['label']]
   assert abs(ob.location.x-p['os'])<1e-5 and abs(ob.location.y-p['ch'])<1e-5

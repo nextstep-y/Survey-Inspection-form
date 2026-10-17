@@ -74,8 +74,8 @@ Column: upper shaft only, both lift forms. Pile Cap: solid review volume with ex
 | P-886 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-887 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-888 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-889 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Missing source geometry |
-| P-890 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Missing source geometry |
+| P-889 | Blender PARTIAL - Island data incomplete | Blender PARTIAL | Blender PARTIAL | Missing source geometry |
+| P-890 | Blender PARTIAL - Island data incomplete | Blender PARTIAL | Blender PARTIAL | Missing source geometry |
 | P-891 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-892 | Missing source geometry | Missing source geometry | Missing source geometry | Missing source geometry |
 | P-893 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
@@ -154,7 +154,7 @@ Column: upper shaft only, both lift forms. Pile Cap: solid review volume with ex
 | MT03-ABUT | Missing source geometry | Missing source geometry | Blender PARTIAL | Missing source geometry |
 | MT03-1 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | MT03-2 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-966 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
+| P-966 | Blender PARTIAL - Island data incomplete | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-967 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-967A | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-968 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
@@ -167,10 +167,10 @@ Column: upper shaft only, both lift forms. Pile Cap: solid review volume with ex
 | P-975 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-976 | Missing source geometry | Missing source geometry | Blender PARTIAL | Missing source geometry |
 | P-976L | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-976R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
+| P-976R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-977 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-977L | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-977R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
+| P-977R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-978 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-978NB | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-978SB | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
@@ -206,7 +206,7 @@ Column: upper shaft only, both lift forms. Pile Cap: solid review volume with ex
 | P-988SB | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-989 | Blender PARTIAL | Missing source geometry | Blender PARTIAL | Blender PARTIAL |
 | P-989L | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-989R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
+| P-989R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-990 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-991 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-991A | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
@@ -332,9 +332,9 @@ Column: upper shaft only, both lift forms. Pile Cap: solid review volume with ex
 | P-1105 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1106 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1107 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-1108  | Blender PARTIAL - missing EL: T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24 | Missing source geometry | Blender PARTIAL | Blender PARTIAL |
+| P-1108  | Blender PARTIAL - missing EL: T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24 | Missing source geometry | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-1108L | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-1108R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
+| P-1108R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-1109 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1109SB | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1109NB | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
@@ -369,11 +369,11 @@ Column: upper shaft only, both lift forms. Pile Cap: solid review volume with ex
 | P-1119SB | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1119NB | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1120 | Missing source geometry | Missing source geometry | Blender PARTIAL | Missing source geometry |
-| P-1120L | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-1120R | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
+| P-1120L | Blender PARTIAL - Island data incomplete | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
+| P-1120R | Blender PARTIAL - Island data incomplete | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-1121 | Missing source geometry | Missing source geometry | Blender PARTIAL | Missing source geometry |
 | P-1121L | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
-| P-1121R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
+| P-1121R | Blender PARTIAL - missing EL: T17, T18, T19, T20, T21, T22, T23, T24 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL - Island data incomplete |
 | P-1122 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1123 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |
 | P-1124 | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL | Blender PARTIAL |

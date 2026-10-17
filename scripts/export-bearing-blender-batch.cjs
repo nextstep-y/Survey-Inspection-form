@@ -8,7 +8,8 @@ vm.runInContext(h.match(/<script id="data-script">([\s\S]*?)<\/script>/)[1],c);
 const start=h.indexOf('const PIERS_RAW = ');vm.runInContext(h.slice(start,h.indexOf('// STATE',start)),c);
 vm.runInContext(fs.readFileSync(path.join(root,'assets/structural-blender-geometry.js'),'utf8'),c);
 const api=vm.runInContext(`({piers:PIERS_RAW,arrays:ARRAYS_RAW,key:WORK_ARRAY_KEY,orient:_orientPierSpecificPoints,
- elev:getWorkPointElev,head:getPierHeadModel,body:window.StructuralBlender.bodyFor,imported:_excelChOsPoints})`,c);
+ elev:getWorkPointElev,head:getPierHeadModel,body:window.StructuralBlender.bodyFor,islands:window.StructuralBlender.islandsFor,imported:_excelChOsPoints})`,c);
+const variants=JSON.parse(fs.readFileSync(path.join(root,'assets/structural-blender-variants.json'),'utf8'));
 const templates={},records={},skipped=[];
 for(const pier of Object.values(api.piers)){
  if(pier.id==='P-1091')continue; // Keep approved detailed Blender model.
@@ -28,10 +29,16 @@ for(const pier of Object.values(api.piers)){
   if(Object.values(groups).some(g=>g.length!==4)||Object.values(groups).flat().length!==points.length){skipped.push({pier:pier.id,type,reason:'incomplete four-corner groups'});continue;}
   const geometry={points:relative,groups:Object.values(groups),
    head:{minCH:Math.min(...ts.map(p=>p.ch)),maxCH:Math.max(...ts.map(p=>p.ch)),minOS:Math.min(...ts.map(p=>p.os)),maxOS:Math.max(...ts.map(p=>p.os))},
-   step:pier.id==='P-1094'?.6:0,highSign:1,body:api.body(pier,'Bearing Plinths'),renderRevision:'lower-head-fit-2'};
+   step:pier.id==='P-1094'?.6:0,highSign:1,body:api.body(pier,'Bearing Plinths'),islands:api.islands(pier),renderRevision:'central-islands-1'};
   const id=crypto.createHash('sha256').update(JSON.stringify(geometry)).digest('hex').slice(0,16);
   templates[id]=geometry;
   records[pier.id+'|'+type]={template:id,topPier:head.topPier,points};
+  for(const variant of variants.filter(v=>v.pier===pier.id&&v.work==='Pier Head')){
+   const input=variant.points.map(p=>({label:p.label,ch:p.ch,os:p.os,z:head.topPier+p.rise}));
+   const alternative={...geometry,islands:api.islands(pier,input)};
+   const variantId=crypto.createHash('sha256').update(JSON.stringify(alternative)).digest('hex').slice(0,16);
+   templates[variantId]=alternative;(records[pier.id+'|'+type].variants??=[]).push(variantId);
+  }
  }
 }
 const out=path.join(root,'output/bearing-blender-batch');fs.mkdirSync(out,{recursive:true});
