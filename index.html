@@ -1749,8 +1749,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
 <script src="assets/bearing-blender-manifest.js?v=20261017-body"></script>
-<script src="assets/structural-blender-geometry.js?v=20261017-body"></script>
-<script src="assets/structural-blender-manifest.js?v=20261017-body"></script>
+<script src="assets/structural-blender-geometry.js?v=20261017-cap-volume"></script>
+<script src="assets/structural-blender-manifest.js?v=20261017-cap-volume"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -6948,7 +6948,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
 }
 
 // Live, per-pier review geometry. No shared P-1091 dimensions or elevations.
-// Unknown cap thickness is deliberately shown as a surface, not a solid.
+// Unverified cap thickness is explicitly a schematic display depth.
 function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
   const column=_isColumnWork(work),cap=work==='Pile cap';
   if(!column && !cap)return false;
@@ -6962,7 +6962,7 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
   if(!(extentOS>0 && extentCH>0))return false;
   const raw=(p,z=0)=>({x:(p.os-center.os)*.87+(p.ch-center.ch)*.45,y:(p.os-center.os)*.2-(p.ch-center.ch)*.48-z*.85});
   // Column is intentionally a clipped upper-shaft illustration, NOT a lift height.
-  const stub=column?Math.min(extentOS,extentCH)*.65:0;
+  const stub=column?Math.min(extentOS,extentCH)*.65:Math.max(.6,Math.min(2.5,Math.min(extentOS,extentCH)*.2));
   const all=ring.flatMap(p=>[raw(p),raw(p,-stub)]);
   const minX=Math.min(...all.map(p=>p.x)),maxX=Math.max(...all.map(p=>p.x));
   const minY=Math.min(...all.map(p=>p.y)),maxY=Math.max(...all.map(p=>p.y));
@@ -6971,7 +6971,7 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
   const project=(p,z=0)=>{const v=raw(p,z);return{x:origin.x+v.x*scale,y:origin.y+v.y*scale};};
   const polygon=(ps,color)=>{ctx.beginPath();ps.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#56636b';ctx.lineWidth=1;ctx.stroke();};
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
-  if(column)for(let i=0;i<ring.length;i++){
+  if(column||cap)for(let i=0;i<ring.length;i++){
     const a=ring[i],b=ring[(i+1)%ring.length];
     polygon([project(a),project(b),project(b,-stub),project(a,-stub)],i%2?'#8b989f':'#a8b3b9');
   }
@@ -7006,8 +7006,8 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
     });
   }
   ctx.textAlign='left';ctx.textBaseline='top';ctx.fillStyle='#111';ctx.font='bold 22px sans-serif';
-  ctx.fillText(`${pier.id} - ${column?'COLUMN POINT DETAIL':'PILE CAP TOP SURFACE'}`,14,12);
-  ctx.font='15px sans-serif';ctx.fillText(`PARTIAL | ${column?'upper shaft only; lift boundary not defined':'cap thickness not verified; no invented solid depth'}`,14,43);
+  ctx.fillText(`${pier.id} - ${column?'COLUMN POINT DETAIL':'PILE CAP 3D'}`,14,12);
+  ctx.font='15px sans-serif';ctx.fillText(`PARTIAL | ${column?'upper shaft only; lift boundary not defined':'cap depth schematic; pile axes projected to top'}`,14,43);
   drawIncreasingChainageArrow(ctx,{x:W-110,y:75},{x:W-75,y:50},W-115,27,'');
   ctx.fillStyle='#111';ctx.textAlign='center';ctx.font='14px sans-serif';
   ctx.fillText(column?'Point labels only | display shaft shortened; no design elevation assumed':'Pile labels show projected axes | shape from this pier\'s CH/OS',W/2,H-25);

@@ -7,7 +7,7 @@ This inventory covers the 384 embedded pier records, including split-pier entrie
 - Pile cap: 378 piers, including P-1091.
 - Bearing Plinths: 364 piers, including P-1091.
 
-Column: upper shaft only, both lift forms. Pile Cap: top surface except source-verified P-1091. Pier Head and Bearing Plinths now include a solid lower head envelope and a shortened column connection where the profile exists. Depth uses source levels when available; otherwise the display depth is schematic. The rim/taper profile is schematic outside P-1091. Grey points with ? have no elevation and are projected on the datum. Bearing Plinths retain the 30 mm outward expansion on each edge.
+Column: upper shaft only, both lift forms. Pile Cap: solid review volume with explicitly schematic display depth, except source-verified P-1091. Pile circles are axes projected to the top, and are drawn only when diameter is present in the source data. Pier Head and Bearing Plinths include a solid lower head envelope and a shortened column connection where the profile exists. Head depth uses source levels when available; otherwise the display depth is schematic. The rim/taper profile is schematic outside P-1091. Grey points with ? have no elevation and are projected on the datum. Bearing Plinths retain the 30 mm outward expansion on each edge.
 
 | Pier | Pier Head | Column | Pile Cap | Bearing Plinths |
 |---|---|---|---|---|

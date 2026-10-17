@@ -9,6 +9,15 @@ manifest=json.loads(text.split('=',1)[1].rstrip(';\n'))
 for key,t in manifest['templates'].items():
  bpy.ops.wm.open_mainfile(filepath=str(root/'assets/models/structural-blender'/f'{key}.blend'))
  scene=bpy.context.scene
+ if t['geometry']['kind']=='Pile cap':
+  ob=bpy.data.objects['Cap body']
+  assert abs(min(v.co.z for v in ob.data.vertices)+t['geometry']['capDepth']['value'])<1e-5
+  assert max(v.co.z for v in ob.data.vertices)==0
+  for ob in scene.objects:
+   if ob.type=='MESH':
+    for vertex in ob.data.vertices:
+     v=world_to_camera_view(scene,scene.camera,ob.matrix_world@vertex.co)
+     assert v.z>0 and .04<v.x<.96 and .06<v.y<.94,(key,ob.name,'cap clipped')
  body=t['geometry'].get('body')
  if body:
   for name in ['Head lower rim - review envelope','Head tapered underside - schematic profile']:

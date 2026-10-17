@@ -39,6 +39,7 @@ for index,(key,g) in enumerate(source['templates'].items()):
  q=cam.rotation_euler.to_quaternion();right=q@Vector((1,0,0));up=q@Vector((0,1,0));toward=(cam.location-center).normalized()
  xs=[(p-center).dot(right) for p in bounds];ys=[(p-center).dot(up) for p in bounds]
  scale=max((max(xs)-min(xs))/.60,(max(ys)-min(ys))*1.8/.65,3);cam.data.ortho_scale=scale;height=scale/1.8
+ if g['kind']=='Pile cap':center+=right*((min(xs)+max(xs))/2)+up*((min(ys)+max(ys))/2)
  # The annotation plane must stay in front of the camera even for wide special
  # heads. Orthographic framing is unchanged by this distance adjustment.
  cam.location=center+toward*(scale*3);cam.data.clip_end=max(1000,scale*5)

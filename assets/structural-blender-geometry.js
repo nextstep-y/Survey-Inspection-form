@@ -43,16 +43,23 @@ window.StructuralBlender = (() => {
     const minOS=Math.min(...boundary.map(p=>p.os)),maxOS=Math.max(...boundary.map(p=>p.os));
     if(!(maxCH>minCH&&maxOS>minOS))return null;
     const surfaces=[],lines=[];
+    let capDepth=null;
     const add=(name,ps,top,bottom=null)=>surfaces.push({name,ring:ring(ps).map(p=>({ch:p.ch,os:p.os})),top:round(top),bottom:bottom===null?null:round(bottom)});
     let status;
     if(kind==='Column') {
       add('Upper shaft',boundary,0,-Math.min(maxCH-minCH,maxOS-minOS)*.65);
       status='PARTIAL | upper shaft only; lift height not shown';
     } else if(kind==='Pile cap') {
-      add('Cap top',boundary,0);
+      capDepth={value:round(Math.max(.6,Math.min(2.5,Math.min(maxCH-minCH,maxOS-minOS)*.2))),known:false,source:'schematic display proportion only'};
+      add('Cap body',boundary,0,-capDepth.value);
       const column=points.filter(p=>/^\d+$/.test(p.label));
       if(column.length>=3)lines.push(ring(column));
-      status='PARTIAL | cap top surface; thickness not verified';
+      const diameter=String(pier.piles||'').match(/(\d{3,4})\s*DIA/i);
+      if(diameter){
+        const radius=Number(diameter[1])/2000;
+        for(const p of points.filter(p=>/^P\d+$/.test(p.label)))lines.push(Array.from({length:48},(_,i)=>({os:round(p.os+radius*Math.cos(i*Math.PI/24)),ch:round(p.ch+radius*Math.sin(i*Math.PI/24))})));
+      }
+      status='PARTIAL | cap depth schematic; pile axes projected to top';
     } else {
       const step=pier.id==='P-1094'||pier.id==='P-1091'?.6:0;
       if(step&&minCH<0&&maxCH>0){
@@ -75,7 +82,7 @@ window.StructuralBlender = (() => {
       status=bodyFor(pier,work)?.status||'PARTIAL | lower profile unavailable';
       if(points.some(p=>p.z===null))status+=' | ? = missing EL';
     }
-    return {kind,points,surfaces,lines,status,chSign:pier.id==='P-1091'&&head?-1:1,...(head?{body:bodyFor(pier,work)}:{})};
+    return {kind,points,surfaces,lines,status,chSign:pier.id==='P-1091'&&head?-1:1,...(head?{body:bodyFor(pier,work)}:{}),...(capDepth?{capDepth}:{})};
   }
   return {build,pointsFor,bodyFor};
 })();

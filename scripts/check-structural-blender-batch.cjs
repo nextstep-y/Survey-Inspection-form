@@ -14,7 +14,12 @@ for(const [id,t] of Object.entries(m.templates)){
   const anchors=t.anchors.filter(a=>a.side===side).sort((a,b)=>a.y-b.y);
   for(let i=0;i<anchors.length;i++){assert.ok(anchors[i].y>=.15&&anchors[i].y<=.85);if(i)assert.ok(anchors[i].y-anchors[i-1].y>.018);}
  }
- if(t.geometry.kind==='Pile cap')assert.ok(t.geometry.surfaces.every(s=>s.bottom===null),'No invented cap thickness');
+ if(t.geometry.kind==='Pile cap'){
+  assert.equal(t.geometry.capDepth.known,false,'Unverified depth must be explicitly schematic');
+  assert.match(t.geometry.capDepth.source,/schematic/);
+  assert.equal(t.geometry.surfaces[0].bottom,-t.geometry.capDepth.value);
+  assert.ok(t.geometry.points.every(p=>p.z===0),'Survey and projected-axis points stay on cap top');
+ }
 }
 let count=0;
 for(const p of Object.values(api.piers))for(const kind of ['Pier Head','Column','Pile cap']){

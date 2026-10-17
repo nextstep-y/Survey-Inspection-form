@@ -6,7 +6,7 @@ The new batch renders geometry in Blender and saves both `.blend` files and 1800
 
 `assets/structural-blender-geometry.js` supplies the same deterministic geometry to the exporter and runtime validity check. The browser compares all points, surfaces, relative elevations and orientation before choosing an image. Changed Sheet geometry cannot silently reuse an obsolete image. The model status next to the 2D/3D controls distinguishes Blender from the calculated fallback.
 
-The exporter loads the same pile-cap CH/OS override asset as the app. Six head records have incomplete T elevations: those levels stay null, their markers are grey and explicitly labelled `?`, and no island solid is generated from the unresolved group. No cap thickness is transferred from P-1091 to other piers. The later [lower-head volume update](lower-head-volume.md) adds a schematic underside for Head and Bearing views.
+The exporter loads the same pile-cap CH/OS override asset as the app. Six head records have incomplete T elevations: those levels stay null, their markers are grey and explicitly labelled `?`, and no island solid is generated from the unresolved group. No cap thickness is transferred from P-1091 to other piers. The [lower-head volume update](lower-head-volume.md) adds a schematic underside for Head and Bearing views, and the [Pile Cap update](pile-cap-volume.md) adds an explicitly schematic cap volume to the other prepared cap models.
 
 The P-1092 live Sheet gives T5-T8 a rise of 0.439 m, whereas the embedded fallback gives 0.300 m. A read-only observed render variant covers the live state; it does not modify the Sheet, table, CSV, or embedded elevation calculation. The complete geometry comparison selects the appropriate version.
 
@@ -25,7 +25,7 @@ Browser QA must additionally exercise the actual display and printDoc path. Revi
 
 ## Verification on 2026-10-17
 
-- 1,111 new pier/work snapshots match their complete geometry contract; 96 saved Blender scenes pass actual-camera checks for survey markers, leader endpoints and chainage arrows.
+- 1,111 pier/work snapshots match their complete geometry contract; the current batch contains 103 saved Blender scenes with actual-camera checks for survey markers, leader endpoints and chainage arrows.
 - All 1,111 new records render through the browser Blender path. Existing bearing records also match the live application data. Cold-load switching between piers redraws the current selection when a shared image finishes loading.
 - Twelve actual application/print examples passed without JavaScript errors: ordinary P-826, transition P-1094, P-1142 Column and Cap, P-989 Bearing, split P-1101L Cap, live P-1092 Head, partial P-976R Head, and all four P-1091 prototypes.
 - Standard samples remain one A4 landscape page, including table/signatures. P-989 Bearing retains three pages for 40 points; P-976R Head retains two pages for 30 points. No rows are dropped to force a single page.
