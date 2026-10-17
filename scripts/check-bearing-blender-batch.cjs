@@ -7,6 +7,7 @@ for(const [key,t] of Object.entries(m.templates)){
  assert.ok(fs.statSync(path.join(root,'assets/models/bearing-blender',key+'.blend')).size>0);
  assert.equal(new Set(t.anchors.map(a=>a.label)).size,t.anchors.length);
  for(const a of t.anchors)assert.ok(a.x>0&&a.x<1&&a.y>0&&a.y<1);
+ assert.ok(t.body&&t.body.depth>0,'Lower head body required in every prepared bearing template');
 }
 for(const r of Object.values(m.records)){
  const t=m.templates[r.template];assert.ok(t);assert.equal(r.points.length,t.anchors.length);

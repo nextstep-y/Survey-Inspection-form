@@ -7,6 +7,20 @@ window.StructuralBlender = (() => {
     return [...ps].sort((a,b)=>Math.atan2(a.ch-ch,a.os-os)-Math.atan2(b.ch-ch,b.os-os));
   };
   const rect = (a,b,c,d) => [{ch:a,os:c},{ch:a,os:d},{ch:b,os:d},{ch:b,os:c}];
+  function bodyFor(pier,work='Pier Head') {
+    const model=getPierHeadModel(pier),ps=model.points.filter(p=>/^T\d+$/.test(p.label));
+    if(ps.length<4)return null;
+    const sign=pier.id==='P-1091'&&work!=='Pier Head'?-1:1;
+    const a=Math.min(...ps.map(p=>p.ch*sign)),b=Math.max(...ps.map(p=>p.ch*sign)),c=Math.min(...ps.map(p=>p.os)),d=Math.max(...ps.map(p=>p.os));
+    if(!(b>a&&d>c))return null;
+    const measured=model.topPier-(Number(pier.topCap)+Number(pier.columnHeightMm)/1000);
+    const knownDepth=Number(pier.columnHeightMm)>0&&Number.isFinite(Number(pier.topCap))&&Number.isFinite(measured)&&measured>0&&measured<6;
+    const depth=round(knownDepth?measured:Math.min(b-a,d-c)*.45);
+    const column=ring(_columnArrayPoints(pier).filter(p=>/^\d+$/.test(p.label))).map(p=>({ch:round(p.ch),os:round(p.os)}));
+    const stub=column.length>=3?round(Math.min(Math.max(...column.map(p=>p.ch))-Math.min(...column.map(p=>p.ch)),Math.max(...column.map(p=>p.os))-Math.min(...column.map(p=>p.os)))*.55):0;
+    return {upper:ring(rect(a,b,c,d)),column,depth,rim:round(Math.min(.3,depth*.2)),stub,knownDepth,
+      status:knownDepth?'PARTIAL | head depth from levels; lower profile schematic':'PARTIAL | lower profile and depth schematic'};
+  }
   function pointsFor(pier,work) {
     if(work==='Pier Head')return getPierHeadModel(pier).points;
     const imported=_excelChOsPoints(pier,work,'canvas');
@@ -58,10 +72,10 @@ window.StructuralBlender = (() => {
           if(zs[0]>base)add('Island',rect(lo,hi,c,d),zs[0],base);
         }
       }
-      status='PARTIAL | head top and islands; underside / wall details not verified';
-      if(points.some(p=>p.z===null))status='PARTIAL | ? = level missing; grey points projected on datum; underside not verified';
+      status=bodyFor(pier,work)?.status||'PARTIAL | lower profile unavailable';
+      if(points.some(p=>p.z===null))status+=' | ? = missing EL';
     }
-    return {kind,points,surfaces,lines,status,chSign:pier.id==='P-1091'&&head?-1:1};
+    return {kind,points,surfaces,lines,status,chSign:pier.id==='P-1091'&&head?-1:1,...(head?{body:bodyFor(pier,work)}:{})};
   }
-  return {build,pointsFor};
+  return {build,pointsFor,bodyFor};
 })();

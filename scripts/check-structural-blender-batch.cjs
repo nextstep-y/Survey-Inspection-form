@@ -39,5 +39,5 @@ for(const variant of JSON.parse(fs.readFileSync(path.join(root,'assets/structura
 }
 const partial=m.templates[m.records['P-976R|Pier Head'].template].geometry;
 assert.equal(partial.points.find(p=>p.label==='T17').z,null,'Missing levels must stay unknown');
-assert.match(partial.status,/level missing/);
+assert.match(partial.status,/missing EL/);
 console.log('PASS: '+count+' pier/work snapshots; '+Object.keys(m.templates).length+' Blender models; live-change guards; P-1142 all three works.');

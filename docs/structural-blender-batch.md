@@ -6,7 +6,7 @@ The new batch renders geometry in Blender and saves both `.blend` files and 1800
 
 `assets/structural-blender-geometry.js` supplies the same deterministic geometry to the exporter and runtime validity check. The browser compares all points, surfaces, relative elevations and orientation before choosing an image. Changed Sheet geometry cannot silently reuse an obsolete image. The model status next to the 2D/3D controls distinguishes Blender from the calculated fallback.
 
-The exporter loads the same pile-cap CH/OS override asset as the app. Six head records have incomplete T elevations: those levels stay null, their markers are grey and explicitly labelled `?`, and no island solid is generated from the unresolved group. No cap thickness or full head underside is transferred from P-1091 to other piers.
+The exporter loads the same pile-cap CH/OS override asset as the app. Six head records have incomplete T elevations: those levels stay null, their markers are grey and explicitly labelled `?`, and no island solid is generated from the unresolved group. No cap thickness is transferred from P-1091 to other piers. The later [lower-head volume update](lower-head-volume.md) adds a schematic underside for Head and Bearing views.
 
 The P-1092 live Sheet gives T5-T8 a rise of 0.439 m, whereas the embedded fallback gives 0.300 m. A read-only observed render variant covers the live state; it does not modify the Sheet, table, CSV, or embedded elevation calculation. The complete geometry comparison selects the appropriate version.
 

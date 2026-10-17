@@ -1,8 +1,10 @@
 """Render each distinct surveyed geometry in Blender, preserving incomplete-data status."""
-import bpy,json,math
+import bpy,json,math,sys
 from pathlib import Path
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'scripts'))
+from blender_head_body import add_head_body
 source=json.loads((ROOT/'output/structural-blender-batch/source.json').read_text())
 OUT=ROOT/'assets/structural-blender';OUT.mkdir(parents=True,exist_ok=True)
 MODELS=ROOT/'assets/models/structural-blender';MODELS.mkdir(parents=True,exist_ok=True)
@@ -19,7 +21,7 @@ for index,(key,g) in enumerate(source['templates'].items()):
   for v,co in zip(p.points,coords):v.co=(*co,1)
   ob=bpy.data.objects.new(name,c);s.collection.objects.link(ob);c.materials.append(mat)
  def position(p,z=None):return Vector((p['os'],p['ch']*g['chSign'],(p.get('z') or 0) if z is None else z))
- bounds=[]
+ bounds=add_head_body(g.get('body'),concrete,g['chSign'])
  for surface in g['surfaces']:
   ps=surface['ring'];n=len(ps);top=[position(p,surface['top']) for p in ps];bottom=surface['bottom'];bounds+=top
   mat=island if surface['name']=='Island' else concrete

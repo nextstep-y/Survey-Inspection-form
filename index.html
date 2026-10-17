@@ -1748,9 +1748,9 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261016-30mm"></script>
-<script src="assets/structural-blender-geometry.js?v=20261017"></script>
-<script src="assets/structural-blender-manifest.js?v=20261017"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261017-body"></script>
+<script src="assets/structural-blender-geometry.js?v=20261017-body"></script>
+<script src="assets/structural-blender-manifest.js?v=20261017-body"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -6544,6 +6544,7 @@ function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
   if(!record||record.points.length!==points.length||Math.abs(getTopOfColumnElevation(pier)-record.topPier)>1e-6)return false;
   if(!record.points.every(p=>{const q=points.find(q=>q.label===p.label);return q&&Math.abs(q.ch-p.ch)<1e-6&&Math.abs(q.os-p.os)<1e-6&&Math.abs(getWorkPointElev(pier,work,p.label)-p.z)<1e-6;}))return false;
   const template=manifest.templates[record.template];if(!template)return false;
+  if(!window.StructuralBlender||JSON.stringify(window.StructuralBlender.bodyFor(pier,work))!==JSON.stringify(template.body))return false;
   let cached=bearingBlenderImages.get(record.template);
   if(!cached){
     const image=new Image();cached={image,ready:false};bearingBlenderImages.set(record.template,cached);
@@ -6558,7 +6559,7 @@ function drawBearingBlenderBatch(ctx,W,H,pier,work,points){
   ctx.drawImage(cached.image,x,y,w,h);
   ctx.fillStyle='#111';ctx.textBaseline='top';ctx.textAlign='left';ctx.font='bold 21px sans-serif';
   ctx.fillText(pier.id+' - BEARING PLINTHS | BLENDER',14,10);
-  ctx.font='13px sans-serif';ctx.fillText('PARTIAL | app geometry; head context simplified | EL in metres',14,38);
+  ctx.font='12px sans-serif';ctx.fillText(template.body?.status||'PARTIAL | lower profile unavailable',14,38);
   ctx.textAlign='center';ctx.font='bold 11px sans-serif';ctx.fillText('INCREASING CHAINAGE',W-120,17);
   const count=Math.max(template.anchors.filter(a=>a.side<0).length,template.anchors.filter(a=>a.side>0).length);
   ctx.font=`bold ${Math.min(19,Math.max(11,300/count))}px monospace`;ctx.textBaseline='middle';

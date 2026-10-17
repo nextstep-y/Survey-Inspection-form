@@ -3,17 +3,20 @@ const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('cry
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'index.html'),'utf8');
 let bearingType='TYPE1';
 const c=vm.createContext({window:{},document:{getElementById:()=>({value:bearingType})}});
+vm.runInContext(fs.readFileSync(path.join(root,'assets/pilecap_ch_os_overrides.js'),'utf8'),c);
 vm.runInContext(h.match(/<script id="data-script">([\s\S]*?)<\/script>/)[1],c);
 const start=h.indexOf('const PIERS_RAW = ');vm.runInContext(h.slice(start,h.indexOf('// STATE',start)),c);
+vm.runInContext(fs.readFileSync(path.join(root,'assets/structural-blender-geometry.js'),'utf8'),c);
 const api=vm.runInContext(`({piers:PIERS_RAW,arrays:ARRAYS_RAW,key:WORK_ARRAY_KEY,orient:_orientPierSpecificPoints,
- elev:getWorkPointElev,head:getPierHeadModel})`,c);
+ elev:getWorkPointElev,head:getPierHeadModel,body:window.StructuralBlender.bodyFor,imported:_excelChOsPoints})`,c);
 const templates={},records={},skipped=[];
 for(const pier of Object.values(api.piers)){
  if(pier.id==='P-1091')continue; // Keep approved detailed Blender model.
  for(const type of ['TYPE1','TYPE2']){
   bearingType=type;
-  const raw=api.arrays[api.key['Bearing Plinths'](pier)]||[];
-  const points=api.orient(pier,'Bearing Plinths',raw).map(p=>({label:p.label,ch:p.ch,os:p.os,z:api.elev(pier,'Bearing Plinths',p.label)}));
+  const imported=api.imported(pier,'Bearing Plinths','canvas');
+  const raw=imported||api.arrays[api.key['Bearing Plinths'](pier)]||[];
+  const points=api.orient(pier,'Bearing Plinths',raw,Boolean(imported)).map(p=>({label:p.label,ch:p.ch,os:p.os,z:api.elev(pier,'Bearing Plinths',p.label)}));
   const head=api.head(pier);
   if(points.length<4 || points.some(p=>!Number.isFinite(p.z)||!Number.isFinite(p.ch)||!Number.isFinite(p.os))||!Number.isFinite(head.topPier)){
    skipped.push({pier:pier.id,type,reason:'missing bearing points/levels'});continue;
@@ -25,7 +28,7 @@ for(const pier of Object.values(api.piers)){
   if(Object.values(groups).some(g=>g.length!==4)||Object.values(groups).flat().length!==points.length){skipped.push({pier:pier.id,type,reason:'incomplete four-corner groups'});continue;}
   const geometry={points:relative,groups:Object.values(groups),
    head:{minCH:Math.min(...ts.map(p=>p.ch)),maxCH:Math.max(...ts.map(p=>p.ch)),minOS:Math.min(...ts.map(p=>p.os)),maxOS:Math.max(...ts.map(p=>p.os))},
-   step:pier.id==='P-1094'?.6:0,highSign:1};
+   step:pier.id==='P-1094'?.6:0,highSign:1,body:api.body(pier,'Bearing Plinths')};
   const id=crypto.createHash('sha256').update(JSON.stringify(geometry)).digest('hex').slice(0,16);
   templates[id]=geometry;
   records[pier.id+'|'+type]={template:id,topPier:head.topPier,points};
