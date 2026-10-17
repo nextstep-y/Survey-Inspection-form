@@ -38,6 +38,11 @@ bearing=json.loads(text.split('=',1)[1].rstrip(';\n'))
 for key,t in bearing['templates'].items():
  bpy.ops.wm.open_mainfile(filepath=str(root/'assets/models/bearing-blender'/f'{key}.blend'))
  scene=bpy.context.scene;body=t['body']
+ for ob in scene.objects:
+  if ob.type=='MESH':
+   for vertex in ob.data.vertices:
+    v=world_to_camera_view(scene,scene.camera,ob.matrix_world@vertex.co)
+    assert v.z>0 and .04<v.x<.96 and .06<v.y<.94,(key,ob.name,'model clipped')
  assert 'Head tapered underside - schematic profile' in bpy.data.objects
  ob=bpy.data.objects['Head tapered underside - schematic profile']
  assert abs(min(v.co.z for v in ob.data.vertices)+body['depth'])<1e-5

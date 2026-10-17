@@ -42,14 +42,16 @@ for index,(key,g) in enumerate(source['templates'].items()):
    mesh('Plinth '+ring[0]['label'],[(p['os'],p['ch'],base) for p in ring]+top,
      [(4,5,6,7),(3,2,1,0)]+[(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)],gold)
   else:mesh('PARTIAL top only '+ring[0]['label'],top,[(0,1,2,3)],gold)
- spanOS=max(rightOS-left,max(p['os'] for p in g['points'])-min(p['os'] for p in g['points']))
- spanCH=max(hi-lo,max(p['ch'] for p in g['points'])-min(p['ch'] for p in g['points']))
- depth=g['body']['depth']+g['body']['stub'] if g.get('body') else 0
- scale=max(spanOS*1.85,spanCH*2.0,depth*3,8)
- target=Vector(((left+rightOS)/2,(lo+hi)/2,-depth*.32))
- bpy.ops.object.camera_add(location=target+Vector((10,-13,13))*max(scale/15,1));cam=bpy.context.object
- cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=scale;s.camera=cam
- q=cam.rotation_euler.to_quaternion();r=q@Vector((1,0,0));u=q@Vector((0,1,0));toward=(cam.location-target).normalized();height=scale*1000/1800
+ bounds += [Vector((p['os'],p['ch'],p['z'])) for p in g['points']]
+ bounds += [Vector((os,ch,g['step'] if ch>0 else 0)) for os in [left,rightOS] for ch in [lo,hi]]
+ target=Vector(tuple((min(p[i] for p in bounds)+max(p[i] for p in bounds))/2 for i in range(3)))
+ bpy.ops.object.camera_add(location=target+Vector((10,-13,13)));cam=bpy.context.object
+ cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';s.camera=cam
+ q=cam.rotation_euler.to_quaternion();r=q@Vector((1,0,0));u=q@Vector((0,1,0));toward=(cam.location-target).normalized()
+ xs=[(p-target).dot(r) for p in bounds];ys=[(p-target).dot(u) for p in bounds]
+ scale=max((max(xs)-min(xs))/.60,(max(ys)-min(ys))*1.8/.65,8);cam.data.ortho_scale=scale
+ target+=r*((min(xs)+max(xs))/2)+u*((min(ys)+max(ys))/2)
+ cam.location=target+toward*(scale*3);cam.data.clip_end=max(1000,scale*5);height=scale/1.8
  def screen(nx,ny):return target+r*((nx-.5)*scale)+u*((.5-ny)*height)+toward*scale
  entries={-1:[],1:[]}
  for p in g['points']:

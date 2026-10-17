@@ -28,7 +28,7 @@ for(const pier of Object.values(api.piers)){
   if(Object.values(groups).some(g=>g.length!==4)||Object.values(groups).flat().length!==points.length){skipped.push({pier:pier.id,type,reason:'incomplete four-corner groups'});continue;}
   const geometry={points:relative,groups:Object.values(groups),
    head:{minCH:Math.min(...ts.map(p=>p.ch)),maxCH:Math.max(...ts.map(p=>p.ch)),minOS:Math.min(...ts.map(p=>p.os)),maxOS:Math.max(...ts.map(p=>p.os))},
-   step:pier.id==='P-1094'?.6:0,highSign:1,body:api.body(pier,'Bearing Plinths')};
+   step:pier.id==='P-1094'?.6:0,highSign:1,body:api.body(pier,'Bearing Plinths'),renderRevision:'lower-head-fit-2'};
   const id=crypto.createHash('sha256').update(JSON.stringify(geometry)).digest('hex').slice(0,16);
   templates[id]=geometry;
   records[pier.id+'|'+type]={template:id,topPier:head.topPier,points};
