@@ -1035,33 +1035,27 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   body.blender-column-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
   body.blender-cap-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
   body.live-model-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
-  /* Bearing Plinth uses the standard compact screen panel. Print dimensions
+  /* Bearing Plinth and Elastomeric use the compact upper-right screen panel. Print dimensions
      and the high-resolution model/preview remain unchanged. */
-  body.bearing-plinth-work #pile-array-section {
+  body.bearing-plinth-work #pile-array-section,
+  body.elastomeric-work #pile-array-section {
     width: 29% !important;
     min-width: 300px !important;
     max-width: 420px !important;
     order: 2;
     align-self: stretch;
     justify-content: flex-start !important;
+    border-left: 1px solid var(--border) !important;
+    border-top: 0 !important;
   }
-  body.bearing-plinth-work #main-content-wrapper {
+  body.bearing-plinth-work #main-content-wrapper,
+  body.elastomeric-work #main-content-wrapper {
     flex-direction: row !important;
     align-items: stretch !important;
   }
-  body.elastomeric-work #pile-array-section {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    border-left: 0 !important;
-    border-top: 1px solid var(--border);
-  }
-  body.elastomeric-work #main-content-wrapper {
-    flex-direction: column !important;
-  }
   body.elastomeric-work #pile-canvas {
-    width: min(100%, 900px) !important;
-    max-width: 900px !important;
+    width: 100% !important;
+    max-width: 420px !important;
   }
   .work-select-card .select-grid {
     grid-template-columns:
