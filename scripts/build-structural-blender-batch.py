@@ -1,16 +1,26 @@
 """Render each distinct surveyed geometry in Blender, preserving incomplete-data status."""
-import bpy,json,math,sys
+import bpy,json,math,sys,os
 from pathlib import Path
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from blender_head_body import add_head_body
-source=json.loads((ROOT/'output/structural-blender-batch/source.json').read_text())
-OUT=ROOT/'assets/structural-blender';OUT.mkdir(parents=True,exist_ok=True)
-MODELS=ROOT/'assets/models/structural-blender';MODELS.mkdir(parents=True,exist_ok=True)
+family=os.environ.get('BLENDER_FAMILY','structural')
+source=json.loads((ROOT/('output/'+family+'-blender-batch/source.json')).read_text())
+OUT=ROOT/('assets/'+family+'-blender');OUT.mkdir(parents=True,exist_ok=True)
+MODELS=ROOT/('assets/models/'+family+'-blender');MODELS.mkdir(parents=True,exist_ok=True)
 layouts={}
 for index,(key,g) in enumerate(source['templates'].items()):
- bpy.ops.wm.read_factory_settings(use_empty=True);s=bpy.context.scene;bpy.context.preferences.filepaths.save_version=0
+ if g.get('detailedP1091'):
+  bpy.ops.wm.open_mainfile(filepath=str(ROOT/'assets/models/p1091/P-1091-PARTIAL-v5.blend'))
+  for ob in list(bpy.data.objects):
+   if ob.type in ['CURVE','FONT','CAMERA'] or (ob.type=='MESH' and ob.name.startswith('T') and ' EL ' in ob.name):bpy.data.objects.remove(ob,do_unlink=True)
+  column=bpy.data.objects.get('Column 3x2m H8.970m - app corner profile')
+  if column:
+   for v in column.data.vertices:v.co.z=max(v.co.z,-4.0)
+   column.name='Column connection - DISPLAY shortened'
+ else:bpy.ops.wm.read_factory_settings(use_empty=True)
+ s=bpy.context.scene;bpy.context.preferences.filepaths.save_version=0
  def material(name,color):
   m=bpy.data.materials.new(name);m.diffuse_color=(*color,1);return m
  concrete=material('Concrete',(.72,.78,.81));island=material('Raised island',(.56,.7,.76));ink=material('Leaders',(.025,.025,.025));orange=material('Survey point',(.9,.28,.025));unknown=material('Unknown level - projected point',(.4,.4,.4))
@@ -19,10 +29,10 @@ for index,(key,g) in enumerate(source['templates'].items()):
  def line(name,coords,mat=ink,r=.008):
   c=bpy.data.curves.new(name,'CURVE');c.dimensions='3D';c.bevel_depth=r;p=c.splines.new('POLY');p.points.add(len(coords)-1)
   for v,co in zip(p.points,coords):v.co=(*co,1)
-  ob=bpy.data.objects.new(name,c);s.collection.objects.link(ob);c.materials.append(mat)
- def position(p,z=None):return Vector((p['os'],p['ch']*g['chSign'],(p.get('z') or 0) if z is None else z))
- bounds=add_head_body(g.get('body'),concrete,g['chSign'])
- for surface in g['surfaces']:
+  ob=bpy.data.objects.new(name,c);s.collection.objects.link(ob);c.materials.append(mat);return ob
+ def position(p,z=None):return Vector((p['os'],p.get('modelCH',p['ch'])*g['chSign'],(p.get('z') or 0) if z is None else z))
+ bounds=[ob.matrix_world@v.co for ob in s.objects if ob.type=='MESH' for v in ob.data.vertices] if g.get('detailedP1091') else add_head_body(g.get('body'),concrete,g['chSign'])
+ for surface in ([] if g.get('detailedP1091') else g['surfaces']):
   ps=surface['ring'];n=len(ps);top=[position(p,surface['top']) for p in ps];bottom=surface['bottom'];bounds+=top
   mat=island if surface['name']=='Island' else concrete
   if bottom is None:mesh(surface['name'],top,[tuple(range(n))],mat)
@@ -50,6 +60,11 @@ for index,(key,g) in enumerate(source['templates'].items()):
   entries[side].append((.5-(pos-center).dot(up)/height,p,pos))
   bpy.ops.mesh.primitive_uv_sphere_add(segments=8,ring_count=4,radius=scale*.0028,location=pos);ob=bpy.context.object;ob.name=p['label'];ob.data.materials.append(unknown if p['z'] is None else orange)
   ob['CH']=p['ch'];ob['OS']=p['os'];ob['relative_Z']=p['z'] if p['z'] is not None else 'UNKNOWN - projected on datum'
+  if p.get('kind')=='dowel':
+   ob['relative_Z']='UNKNOWN - plan axis projection only'
+   cyan=material('Dowel axis',(.02,.42,.66));ob.data.materials.clear();ob.data.materials.append(cyan)
+   ob.show_in_front=True
+   for dx,dy in [(scale*.006,0),(0,scale*.006)]:line('Dowel cross '+p['label'],[pos+Vector((-dx,-dy,0)),pos+Vector((dx,dy,0))],cyan,scale*.0006).show_in_front=True
  anchors=[]
  for side,items in entries.items():
   items.sort(key=lambda x:x[0]);gap=min(.06,.66/max(len(items)-1,1));previous=.17-gap
@@ -70,10 +85,10 @@ for index,(key,g) in enumerate(source['templates'].items()):
  s.view_settings.view_transform='Standard';s.view_settings.look='None';s.render.resolution_x=1800;s.render.resolution_y=1000;s.render.resolution_percentage=100
  s.render.image_settings.color_mode='RGB';s.render.image_settings.compression=15
  s.render.filepath=str(OUT/(key+'.png'));bpy.ops.wm.save_as_mainfile(filepath=str(MODELS/(key+'.blend')),compress=True);bpy.ops.render.render(write_still=True)
- layouts[key]={'image':'assets/structural-blender/'+key+'.png','anchors':anchors,'geometry':g}
+ layouts[key]={'image':'assets/'+family+'-blender/'+key+'.png','anchors':anchors,'geometry':g}
  print('TEMPLATE_PROGRESS '+str(index+1)+'/'+str(len(source['templates'])),flush=True)
 manifest={'records':source['records'],'templates':layouts,'skipped':source['skipped'],'version':'20261017','status':'PARTIAL survey review geometry'}
-temporary=ROOT/'output/structural-blender-batch/manifest.js'
-temporary.write_text('window.STRUCTURAL_BLENDER_MANIFEST='+json.dumps(manifest,separators=(',',':'))+';\n')
-temporary.replace(ROOT/'assets/structural-blender-manifest.js')
+temporary=ROOT/('output/'+family+'-blender-batch/manifest.js')
+temporary.write_text('window.'+family.upper()+'_BLENDER_MANIFEST='+json.dumps(manifest,separators=(',',':'))+';\n')
+temporary.replace(ROOT/('assets/'+family+'-blender-manifest.js'))
 print('BATCH_COMPLETE '+str(len(layouts)),flush=True)

@@ -462,7 +462,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   }
   /* Match the first-page cutoff used by printDoc's continuation tables. */
   body:not(.structural-print) #survey-body tr:nth-child(n+13) { display: none !important; }
-  body.structural-print #survey-body tr:nth-child(n+17) { display: none !important; }
+  body.structural-print:not(.dowel-print) #survey-body tr:nth-child(n+17) { display: none !important; }
+  body.structural-print.dowel-print #survey-body tr:nth-child(n+19) { display: none !important; }
   /* Print split tables: appended to body, shown as full pages */
   .print-split-table { 
     display: block !important; 
@@ -1749,10 +1750,11 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
 <script src="assets/bearing-blender-manifest.js?v=20261017-islands"></script>
-<script src="assets/structural-blender-geometry.js?v=20261017-islands"></script>
+<script src="assets/structural-blender-geometry.js?v=20261018-dowel"></script>
 <script src="assets/elastomeric-blender-geometry.js?v=20261018-2"></script>
 <script src="assets/elastomeric-blender-manifest.js?v=20261018-2"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
+<script src="assets/dowel-blender-manifest.js?v=20261018"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -2386,12 +2388,51 @@ function getPierHeadPointDesign(pier, point) {
   };
 }
 
+// Plan dimensions are per-pier controls, not a BR-family default. CH is the
+// bearing/keyplan chainage frame; Dowel Z remains unknown (axes only).
+const BR_DOWEL_LAYOUTS = Object.freeze({
+ 'P-888': {source:'023177-A',bridge:'BC01',ch:.925,bearings:[['S3',-2.4,378],['S1',2.4,414]]},
+ 'P-889': {source:'023011-B',bridge:'BC01',ch:0,bearings:[['S5',-2,873],['S4',2,902]]},
+ 'P-890': {source:'023159-A',bridge:'BC01',ch:0,bearings:[['S6',-2,795],['S2',2,852]]},
+ 'P-891': {source:'023158-B',bridge:'BC01',ch:-.925,bearings:[['S3',-2.4,378],['S1',2.4,414]]},
+ 'P-1048':{source:'023003-B',bridge:'BC02',ch:.925,bearings:[['S3',-2.4,400],['S1',2.4,449]]},
+ 'P-1091':{source:'023165-C',bridge:'BC03',ch:.925,projectionRise:.124,bearings:[['S3',-2.4,453],['S1',2.4,488]]},
+ 'P-1092':{source:'023167-B',bridge:'BC03',ch:0,bearings:[['S5',-2,1004],['S4',2,1047]]},
+ 'P-1093':{source:'023162-B',bridge:'BC03',ch:0,bearings:[['S6',-2,933],['S2',2,1004]]},
+ 'P-1094':{source:'023170-B',bridge:'BC03',ch:-.925,projectionRise:.124,bearings:[['S3',-2.4,453],['S1',2.4,488]]},
+});
+const BR_DOWEL_PENDING = {'P-1049':'Skipped by user: Pier Head layout not finalized','P-1050':'Skipped by user: Pier Head layout not finalized','P-1051':'Unverified: available plan title identifies P-1048'};
+function getPierHeadDowelPoints(pier){
+ const layout=BR_DOWEL_LAYOUTS[pier.id];if(!layout)return [];
+ return layout.bearings.flatMap(([bearing,os,spacing])=>[[1,-1],[1,1],[-1,1],[-1,-1]].map(([dc,ds],i)=>{
+  const ch=Number((layout.ch+dc*spacing/2000).toFixed(6));
+  return {label:bearing+'-D'+(i+1),ch,os:Number((os+ds*spacing/2000).toFixed(6)),kind:'dowel',bearing,spacingMm:spacing,source:layout.source,
+   projectionRise:layout.projectionRise||0,...(pier.id==='P-1091'?{modelCH:-ch}:{})};
+ }));
+}
 function getPierHeadModel(pier) {
   const imported=_excelChOsPoints(pier, 'Pier Head', 'table');
   const source=imported || ARRAYS_RAW[WORK_ARRAY_KEY['Pier Head'](pier)] || [];
   const canonical=_orientPierSpecificPoints(pier, 'Pier Head', source, Boolean(imported));
-  const points=canonical.map(point=>Object.freeze({...point,...getPierHeadPointDesign(pier,point)}));
+  const dowels=getPierHeadDowelPoints(pier),reserved=new Set(dowels.map(p=>p.label));
+  const points=[...canonical.filter(p=>!reserved.has(p.label)),...dowels].map(point=>Object.freeze({...point,...getPierHeadPointDesign(pier,point)}));
   return Object.freeze({points:Object.freeze(points),topPier:Number(getTopOfColumnElevation(pier))});
+}
+function getDowelBlenderGeometry(pier,input=getPierHeadModel(pier).points){
+ if(!BR_DOWEL_LAYOUTS[pier.id])return null;
+ let g=window.StructuralBlender.build(pier,'Pier Head',input);
+ const layout=BR_DOWEL_LAYOUTS[pier.id],a=layout.ch===0?2.5:1.75,b=layout.ch===0?3:3.24;
+ const ring=[{ch:-a,os:-b},{ch:-a,os:b},{ch:a,os:b},{ch:a,os:-b}];
+ if(!g){
+  const measured=getTopOfColumnElevation(pier)-(Number(pier.topCap)+Number(pier.columnHeightMm)/1000),known=Number.isFinite(measured)&&measured>0&&measured<6;
+  g={kind:'Pier Head',points:[],surfaces:[],lines:[],chSign:1,islandMissing:true,status:'PARTIAL | Head outline from plan; T controls unavailable',body:{upper:ring,column:[],depth:known?Number(measured.toFixed(6)):1.5,rim:.3,stub:0,knownDepth:known,status:'PARTIAL | lower profile schematic'}};
+ }
+ // Verified overall plan envelope only. Do not fabricate/relocate T controls
+ // when older digitized point extents differ from the controlling PDF.
+ const top={name:'Head plan envelope',ring,top:0,bottom:null};
+ const surfaces=pier.id==='P-1094'?[{...top,ring:[{ch:-a,os:-b},{ch:-a,os:b},{ch:0,os:b},{ch:0,os:-b}]},{...top,name:'High top',ring:[{ch:0,os:-b},{ch:0,os:b},{ch:a,os:b},{ch:a,os:-b}],top:.6,bottom:0}]:[top];
+ g={...g,body:{...g.body,upper:ring},surfaces:[...surfaces,...g.surfaces.filter(s=>s.name==='Island')]};
+ return {...g,points:[...g.points,...getPierHeadDowelPoints(pier).map(p=>({label:p.label,ch:p.ch,os:p.os,z:p.projectionRise,kind:'dowel',surveyZ:null,...(p.modelCH===undefined?{}:{modelCH:p.modelCH})}))],dowelSource:BR_DOWEL_LAYOUTS[pier.id],...(pier.id==='P-1091'?{detailedP1091:true}:{}),status:g.status+' | Dowel plan axes only; Z unverified'};
 }
 
 // P-1093 BR115 main pier head and bearing plinth geometry from
@@ -6540,11 +6581,12 @@ function drawElastomericBlenderBatch(ctx,W,H,pier,work,points){
   return true;
 }
 function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
-  if(pier.id==='P-1091')return false;
-  const kind=_isColumnWork(work)?'Column':work, manifest=window.STRUCTURAL_BLENDER_MANIFEST;
+  const withDowel=work==='Pier Head'&&points.some(p=>p.kind==='dowel');
+  if(pier.id==='P-1091'&&!withDowel)return false;
+  const kind=_isColumnWork(work)?'Column':work, manifest=withDowel?window.DOWEL_BLENDER_MANIFEST:window.STRUCTURAL_BLENDER_MANIFEST;
   const record=manifest?.records[pier.id+'|'+kind];
   if(!record||!window.StructuralBlender)return false;
-  const geometry=window.StructuralBlender.build(pier,work,points);
+  const geometry=withDowel?getDowelBlenderGeometry(pier,points):window.StructuralBlender.build(pier,work,points);
   // Compare the whole model, including context surfaces and relative levels.
   // A Sheet edit must never leave a stale static Blender image in use.
   const signature=JSON.stringify(geometry);
@@ -6564,7 +6606,7 @@ function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
   ctx.drawImage(cached.image,x,y,w,h);
   ctx.textAlign='left';ctx.textBaseline='top';ctx.fillStyle='#111';ctx.font='bold 21px sans-serif';
   ctx.fillText(pier.id+' - '+kind.toUpperCase()+' | BLENDER',14,10);
-  ctx.font='12px sans-serif';ctx.fillText(geometry.status,14,37);
+  ctx.font='12px sans-serif';ctx.fillText(geometry.status+(work==='Pier Head'&&BR_DOWEL_PENDING[pier.id]?' | Dowel not verified':''),14,37);
   ctx.textAlign='center';ctx.font='bold 11px sans-serif';ctx.fillText('INCREASING CHAINAGE',W-110,17);
   const count=Math.max(...[-1,1].map(side=>template.anchors.filter(a=>a.side===side).length));
   ctx.font=`bold ${Math.min(19,Math.max(11,300/count))}px monospace`;ctx.textBaseline='middle';
@@ -6574,7 +6616,7 @@ function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
     ctx.fillText(label,x+a.x*w+(a.side<0?-7:7),y+a.y*h);
   }
   ctx.textAlign='center';ctx.font='13px sans-serif';
-  ctx.fillText(kind==='Pier Head'?'EL in metres | Top of Pier '+getTopOfColumnElevation(pier).toFixed(3):kind==='Column'?'Point labels only | shaft shortened for print':'Pile locations are projected axes | local CH/OS geometry',W/2,H-15);
+  ctx.fillText(kind==='Pier Head'?'EL in metres | Top of Pier '+getTopOfColumnElevation(pier).toFixed(3)+(withDowel?' | Dowel: plan axes only; no design Z':''):kind==='Column'?'Point labels only | shaft shortened for print':'Pile locations are projected axes | local CH/OS geometry',W/2,H-15);
   document.getElementById('pile-canvas').classList.add('canvas-live-model');document.body.classList.add('live-model-view');
   document.getElementById('pile-canvas').dataset.modelSource='Blender';
   return true;
@@ -6685,6 +6727,7 @@ function drawP1091ColumnPreview(ctx,W,H,pier,work) {
 function drawP1091BlenderPreview(ctx, W, H, pier, work) {
   if (pier.id !== 'P-1091' || work !== 'Pier Head') return false;
   const points = getPierHeadModel(pier).points;
+  if(points.some(p=>p.kind==='dowel'))return false; // Never show the old image without new axes.
   const expected = {T1:[-1.75,0,115.110],T2:[0,3.24,115.393],T3:[1.75,0,115.710],
     T4:[0,-3.24,115.393],T5:[1.75,.6,115.710],T6:[-1.75,.6,115.110],
     T7:[-1.75,-.6,115.110],T8:[1.75,-.6,115.710]};
@@ -6803,7 +6846,7 @@ function getStructuralCanvasGeometry(pier, work = 'Pier Head') {
 function projectStructuralPoint(point, elevation, view) {
   return {
     x: view.x + point.os * view.scale,
-    y: view.y - point.ch * (view.chSign ?? 1) * view.scale * 0.65 - (elevation-view.datum) * view.scale * 0.76,
+    y: view.y - (point.modelCH??point.ch) * (view.chSign ?? 1) * view.scale * 0.65 - (elevation-view.datum) * view.scale * 0.76,
   };
 }
 
@@ -6816,7 +6859,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
       ? Number(point.z ?? NaN)
       : Number(getWorkPointElev(pier, work, point.label));
     const hasDesignElevation = Number.isFinite(elevation);
-    if (!Number.isFinite(elevation)) elevation = topPier;
+    if (!Number.isFinite(elevation)) elevation = topPier+(point.projectionRise||0);
     return {...point, elevation, hasDesignElevation};
   }).filter(point => Number.isFinite(point.ch) && Number.isFinite(point.os) && Number.isFinite(point.elevation));
   if (!rendered.length) return false;
@@ -7101,10 +7144,10 @@ function drawPileArray(pier) {
   if (controls) controls.style.display = supports3D ? 'flex' : 'none';
   const use3D = supports3D && canvasViewMode === '3d';
   const modelStatus=document.getElementById('canvas-model-status');
-  if(modelStatus)modelStatus.textContent=use3D?'ภาพคำนวณ / โมเดล Blender ยังไม่พร้อม':'';
+  if(modelStatus)modelStatus.textContent=work==='Pier Head'&&BR_DOWEL_PENDING[pier.id]?'Dowel: รอยืนยันแบบ':use3D?'ภาพคำนวณ / โมเดล Blender ยังไม่พร้อม':'';
   const blenderShown=()=>{
     canvas.dataset.modelSource='Blender';
-    if(modelStatus)modelStatus.textContent='Blender 3D';
+    if(modelStatus)modelStatus.textContent='Blender 3D'+(work==='Pier Head'&&BR_DOWEL_PENDING[pier.id]?' · Dowel: รอยืนยันแบบ':'');
   };
   canvas.classList.toggle('canvas-3d', use3D);
   canvas.classList.remove('canvas-blender-detail');
@@ -7117,7 +7160,7 @@ function drawPileArray(pier) {
   // Canvas logical size: wider for Column lift to accommodate side text
   const W = _isColLift && !(columnModel && use3D) ? 1120 : 900;
   const detailFrame=use3D && pier.id==='P-1091' && work==='Pier Head' && p1091BlenderPreview?.ready;
-  const H = ['Bearing Plinths','Elastomeric'].includes(work) && use3D ? 480 : capModel && use3D ? (pier.id==='P-1091'?495:480) : columnModel && use3D ? (pier.id==='P-1091'?380:480) : _isColLift ? 680 : (detailFrame || use3D&&work==='Pier Head'&&pier.id!=='P-1091' ? 480 : use3D ? 600 : 450);
+  const H = ['Bearing Plinths','Elastomeric'].includes(work) && use3D ? 480 : capModel && use3D ? (pier.id==='P-1091'?495:480) : columnModel && use3D ? (pier.id==='P-1091'?380:480) : _isColLift ? 680 : (detailFrame || use3D&&work==='Pier Head'&&(pier.id!=='P-1091'||BR_DOWEL_LAYOUTS[pier.id]) ? 480 : use3D ? 600 : 450);
   canvas.width  = W * dpr;
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -7140,6 +7183,9 @@ function drawPileArray(pier) {
   if (use3D && ordinaryPier && drawColumnCapModel3D(ctx,W,H,pier,work,pts)) return;
   if (use3D && !columnModel && drawP1091BlenderPreview(ctx, W, H, pier, work)) {blenderShown();return;}
   if (use3D && !columnModel && !capModel && drawWorkArray3D(ctx, W, H, pier, work, pts)) return;
+  // The P-1091 approved Head display frame is reversed from bearing CH.
+  // Convert only the visual copy; table / CSV retain calculated survey CH/N/E.
+  if(work==='Pier Head')pts=pts.map(p=>p.modelCH===undefined?p:{...p,ch:p.modelCH});
 
   if (isSubstationPier(pier)) {
     if (_isColLift) drawSubstationColumnArray(ctx, W, H, pier, pts);
@@ -8105,6 +8151,7 @@ function renderSurveyTable(pier) {
     tr.dataset.de = dE.toFixed(4);
     tr.dataset.ez = ptElev != null ? ptElev.toFixed(3) : '';
     tr.dataset.idx = i;
+    if(p.kind==='dowel')tr.title='Dowel center axis | '+p.source+' | N/E only; design Z unverified';
 
     if (work === 'Pile Deviate') {
       // ── Pile Deviate row ────────────────────────────────────────────────
@@ -8758,6 +8805,7 @@ function printDoc() {
   document.title = `${pier}_${_elVal.replace(/\s+/g,'_')}`;
   const structuralPrint = ['Pier Head','Bearing Plinths','Elastomeric'].includes(work);
   document.body.classList.toggle('structural-print', structuralPrint);
+  document.body.classList.toggle('dowel-print',work==='Pier Head'&&Boolean(BR_DOWEL_LAYOUTS[currentPier?.id]));
   applyColWidths();
   // Force sig-card-bp visibility for Bored Pile print
   const _sigMain = document.getElementById('sig-card');
@@ -8841,13 +8889,13 @@ function printDoc() {
 
   if (mainTbody && theadHTML) {
     const allRows = [...mainTbody.rows];
-    const FIRST_PAGE_ROWS = structuralPrint ? 16 : 12;
+    const FIRST_PAGE_ROWS = structuralPrint ? (work==='Pier Head'&&BR_DOWEL_LAYOUTS[currentPier?.id]?18:16) : 12;
     const ROWS_PER_PAGE = 20;
 
     if (allRows.length > FIRST_PAGE_ROWS) {
       const surveyCard = document.getElementById('survey-card');
 
-      // Keep the complete 16-point structural set together on the first page.
+      // Keep the complete reviewed Head + 8 Dowel set together (up to 18).
       while (mainTbody.rows.length > FIRST_PAGE_ROWS) {
         mainTbody.deleteRow(FIRST_PAGE_ROWS);
       }

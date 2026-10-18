@@ -30,6 +30,9 @@ window.StructuralBlender = (() => {
     return work==='Pile cap'&&!imported?_buildPileCapCanvasPoints(pier,key,points):points;
   }
   function build(pier,work,input=pointsFor(pier,work)) {
+    // Dowel axes have a separate source-guarded Blender overlay/model. Do not
+    // change the certified T controls or shared head/island context hashes.
+    input=input.filter(p=>p.kind!=='dowel');
     const kind=_isColumnWork(work)?'Column':work;
     if(!['Column','Pile cap','Pier Head'].includes(kind))return null;
     const head=kind==='Pier Head', datum=head?getTopOfColumnElevation(pier):0;
