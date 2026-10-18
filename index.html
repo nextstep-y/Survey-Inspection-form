@@ -1750,6 +1750,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-w25-data.js"></script>
 <script src="assets/bearing-blender-manifest.js?v=20261017-islands"></script>
 <script src="assets/structural-blender-geometry.js?v=20261017-islands"></script>
+<script src="assets/elastomeric-blender-geometry.js?v=20261018"></script>
+<script src="assets/elastomeric-blender-manifest.js?v=20261018"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
@@ -2170,6 +2172,17 @@ const WORK_ELEV = {
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  // Derive the pad from the same per-point plinth level, never a separate
+  // type-dependent fallback that can drift from its supporting concrete.
+  if(work==='Elastomeric'){
+    if(pier.id==='P-1091')return getWorkPointElev(pier,'Bearing Plinths',String(label||'').replace(/^E/,''))+.067;
+    const type=getBearingType(),rule=getBearingRule(pier.id,work,label,type);
+    // Legacy Sheet rows incorrectly say "Top of Pier" for the confirmed
+    // 0.067 m pad thickness. That value is an increment above the plinth.
+    if(rule&&Number.isFinite(Number(rule.height))&&Math.abs(Number(rule.height)-.067)>1e-7&& !/above.*plinth/i.test(rule.note||'')&&/^TOP OF (PIER|COLUMN)$/i.test(rule.reference))return getTopOfColumnElevation(pier)+Number(rule.height);
+    const base=getWorkPointElev(pier,'Bearing Plinths',String(label||'').replace(/^E/,''));
+    return Number.isFinite(base)?base+(getBearingRuleHeight(pier.id,work,label,type)??.067):null;
+  }
   if (pier.id === 'P-1091' && ['Bearing Plinths','Elastomeric'].includes(work)) {
     const group = String(label || '').toUpperCase().match(/^E?(UL|UR|DL|DR)[1-4]$/)?.[1];
     if (group) return getTopOfColumnElevation(pier) + P1091_BEARING_LAYOUT[group].rise + (work === 'Elastomeric' ? 0.067 : 0);
@@ -6497,6 +6510,35 @@ let p1091CapPreview=null;
 let p1091BearingPreview=null;
 const bearingBlenderImages=new Map();
 const structuralBlenderImages=new Map();
+const elastomericBlenderImages=new Map();
+function drawElastomericBlenderBatch(ctx,W,H,pier,work,points){
+  if(work!=='Elastomeric')return false;
+  const manifest=window.ELASTOMERIC_BLENDER_MANIFEST,record=manifest?.records[pier.id+'|'+getBearingType()];
+  if(!record||Math.abs(record.topPier-getTopOfColumnElevation(pier))>1e-6||!window.ElastomericBlender)return false;
+  const g=window.ElastomericBlender.build(pier,points),signature=JSON.stringify(g);
+  const id=[record.template,...(record.variants||[])].find(id=>signature===JSON.stringify(manifest.templates[id]?.geometry));
+  const template=manifest.templates[id];if(!g||!template)return false;
+  let cached=elastomericBlenderImages.get(id);
+  if(!cached){const image=new Image();cached={image,ready:false};elastomericBlenderImages.set(id,cached);
+    image.onload=()=>{cached.ready=true;if(currentPier&&canvasViewMode==='3d')drawPileArray(currentPier);};
+    image.onerror=()=>elastomericBlenderImages.delete(id);image.src=template.image;}
+  if(!cached.ready)return false;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  const scale=Math.min(W/1800,H/1000),w=1800*scale,h=1000*scale,x=(W-w)/2,y=(H-h)/2;
+  ctx.drawImage(cached.image,x,y,w,h);ctx.fillStyle='#111';ctx.textAlign='left';ctx.textBaseline='top';ctx.font='bold 21px sans-serif';
+  ctx.fillText(pier.id+' - ELASTOMERIC | BLENDER',14,10);ctx.font='12px sans-serif';
+  ctx.fillText((g.body?.status||'PARTIAL context')+(g.supportMissing?' | Plinth footprint unresolved':g.islands.missing?' | Island data incomplete':''),14,37);
+  ctx.textAlign='center';ctx.font='bold 11px sans-serif';ctx.fillText('INCREASING CHAINAGE',W-120,17);
+  const count=Math.max(...[-1,1].map(side=>template.anchors.filter(a=>a.side===side).length));
+  ctx.font=`bold ${Math.min(19,Math.max(11,300/count))}px monospace`;ctx.textBaseline='middle';
+  for(const a of template.anchors){const p=g.points.find(p=>p.label===a.label);ctx.textAlign=a.side<0?'right':'left';
+    ctx.fillText(p.label+' '+(record.topPier+p.z).toFixed(3),x+a.x*w+(a.side<0?-7:7),y+a.y*h);}
+  ctx.textAlign='center';ctx.font='13px sans-serif';
+  const rises=[...new Set(g.pads.map(p=>p.rise.toFixed(3)))].join(' / ');
+  ctx.fillText('Top of Pier '+record.topPier.toFixed(3)+' m | Elastomeric above Plinth '+rises+' m | not a Pot Bearing assembly',W/2,H-14);
+  document.getElementById('pile-canvas').classList.add('canvas-bearing-detail');document.body.classList.add('live-model-view');
+  return true;
+}
 function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
   if(pier.id==='P-1091')return false;
   const kind=_isColumnWork(work)?'Column':work, manifest=window.STRUCTURAL_BLENDER_MANIFEST;
@@ -7054,7 +7096,7 @@ function drawPileArray(pier) {
   const ordinaryPier=!isSubstationPier(pier) && !isClarkStationElement(pier);
   const columnModel=ordinaryPier && _isColumnWork(work);
   const capModel=ordinaryPier && work==='Pile cap';
-  const supports3D = work === 'Pier Head' || work === 'Bearing Plinths' || columnModel || capModel;
+  const supports3D = work === 'Pier Head' || work === 'Bearing Plinths' || work === 'Elastomeric' || columnModel || capModel;
   const controls = document.getElementById('canvas-view-controls');
   if (controls) controls.style.display = supports3D ? 'flex' : 'none';
   const use3D = supports3D && canvasViewMode === '3d';
@@ -7075,7 +7117,7 @@ function drawPileArray(pier) {
   // Canvas logical size: wider for Column lift to accommodate side text
   const W = _isColLift && !(columnModel && use3D) ? 1120 : 900;
   const detailFrame=use3D && pier.id==='P-1091' && work==='Pier Head' && p1091BlenderPreview?.ready;
-  const H = work==='Bearing Plinths' && use3D ? 480 : capModel && use3D ? (pier.id==='P-1091'?495:480) : columnModel && use3D ? (pier.id==='P-1091'?380:480) : _isColLift ? 680 : (detailFrame || use3D&&work==='Pier Head'&&pier.id!=='P-1091' ? 480 : use3D ? 600 : 450);
+  const H = ['Bearing Plinths','Elastomeric'].includes(work) && use3D ? 480 : capModel && use3D ? (pier.id==='P-1091'?495:480) : columnModel && use3D ? (pier.id==='P-1091'?380:480) : _isColLift ? 680 : (detailFrame || use3D&&work==='Pier Head'&&pier.id!=='P-1091' ? 480 : use3D ? 600 : 450);
   canvas.width  = W * dpr;
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -7093,6 +7135,7 @@ function drawPileArray(pier) {
   if (use3D && drawP1091CapPreview(ctx,W,H,pier,work,pts)) {blenderShown();return;}
   if (use3D && drawP1091BearingPreview(ctx,W,H,pier,work,pts)) {blenderShown();return;}
   if (use3D && drawBearingBlenderBatch(ctx,W,H,pier,work,pts)) {blenderShown();return;}
+  if (use3D && drawElastomericBlenderBatch(ctx,W,H,pier,work,pts)) {blenderShown();return;}
   if (use3D && ordinaryPier && drawStructuralBlenderBatch(ctx,W,H,pier,work,pts)) {blenderShown();return;}
   if (use3D && ordinaryPier && drawColumnCapModel3D(ctx,W,H,pier,work,pts)) return;
   if (use3D && !columnModel && drawP1091BlenderPreview(ctx, W, H, pier, work)) {blenderShown();return;}

@@ -1,15 +1,17 @@
 """Build reusable Blender templates only for byte-identical relative geometry.
 Actual per-pier EL labels are overlaid by the app and guarded against live changes.
 """
-import bpy,json,math,sys
+import bpy,json,math,sys,os
 from pathlib import Path
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from blender_head_body import add_head_body
-source=json.loads((ROOT/'output/bearing-blender-batch/source.json').read_text())
-OUT=ROOT/'assets/bearing-blender';OUT.mkdir(parents=True,exist_ok=True)
-MODELS=ROOT/'assets/models/bearing-blender';MODELS.mkdir(parents=True,exist_ok=True)
+elastomeric=os.environ.get('BLENDER_WORK')=='Elastomeric'
+family='elastomeric' if elastomeric else 'bearing'
+source=json.loads((ROOT/('output/'+family+'-blender-batch/source.json')).read_text())
+OUT=ROOT/('assets/'+family+'-blender');OUT.mkdir(parents=True,exist_ok=True)
+MODELS=ROOT/('assets/models/'+family+'-blender');MODELS.mkdir(parents=True,exist_ok=True)
 layouts={}
 for index,(key,g) in enumerate(source['templates'].items()):
  bpy.ops.wm.read_factory_settings(use_empty=True);s=bpy.context.scene;bpy.context.preferences.filepaths.save_version=0
@@ -35,6 +37,7 @@ for index,(key,g) in enumerate(source['templates'].items()):
   ps=island['ring'];n=len(ps);base=[(p['os'],p['ch'],island['bottom']) for p in ps];top=[(p['os'],p['ch'],island['top']) for p in ps]
   mesh('Island '+str(index_island+1),base+top,[tuple(range(n,2*n)),tuple(reversed(range(n)))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)],island_mat)
   bounds += [Vector(v) for v in base+top]
+ rubber=material('Elastomeric rubber',(.08,.13,.17)) if elastomeric else None
  for group in g['groups']:
   ch=sum(p['ch'] for p in group)/4;os=sum(p['os'] for p in group)/4
   ring=sorted(group,key=lambda p:math.atan2(p['ch']-ch,p['os']-os))
@@ -49,6 +52,13 @@ for index,(key,g) in enumerate(source['templates'].items()):
    mesh('Plinth '+ring[0]['label'],[(p['os'],p['ch'],base) for p in ring]+top,
      [(4,5,6,7),(3,2,1,0)]+[(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)],gold)
   else:mesh('PARTIAL top only '+ring[0]['label'],top,[(0,1,2,3)],gold)
+ if elastomeric:
+  for pad in g['pads']:
+   group=pad['points'];ch=sum(p['ch'] for p in group)/4;os0=sum(p['os'] for p in group)/4
+   ring=sorted(group,key=lambda p:math.atan2(p['ch']-ch,p['os']-os0))
+   base=[(p['os'],p['ch'],pad['base']) for p in ring];top=[(p['os'],p['ch'],p['z']) for p in ring]
+   ob=mesh('Elastomeric '+ring[0]['label'],base+top,[(4,5,6,7),(3,2,1,0)]+[(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)],rubber)
+   ob['height_above_plinth']=pad['rise']
  bounds += [Vector((p['os'],p['ch'],p['z'])) for p in g['points']]
  bounds += [Vector((os,ch,g['step'] if ch>0 else 0)) for os in [left,rightOS] for ch in [lo,hi]]
  target=Vector(tuple((min(p[i] for p in bounds)+max(p[i] for p in bounds))/2 for i in range(3)))
@@ -85,8 +95,9 @@ for index,(key,g) in enumerate(source['templates'].items()):
  s.world=bpy.data.worlds.new('White');s.world.color=(1,1,1);s.display.shading.background_type='VIEWPORT';s.display.shading.background_color=(1,1,1)
  s.view_settings.view_transform='Standard';s.view_settings.look='None';s.render.resolution_x=1800;s.render.resolution_y=1000;s.render.resolution_percentage=100
  s.render.filepath=str(OUT/(key+'.png'));bpy.ops.wm.save_as_mainfile(filepath=str(MODELS/(key+'.blend')),compress=True);bpy.ops.render.render(write_still=True)
- layouts[key]={'image':'assets/bearing-blender/'+key+'.png','anchors':anchors,'body':g.get('body'),'islands':g['islands']}
+ layouts[key]={'image':'assets/'+family+'-blender/'+key+'.png','anchors':anchors,'body':g.get('body'),'islands':g['islands']}
+ if elastomeric:layouts[key]['geometry']=g
  print('TEMPLATE_PROGRESS '+str(index+1)+'/'+str(len(source['templates'])),flush=True)
 manifest={'records':source['records'],'templates':layouts,'skipped':source['skipped'],'status':'PARTIAL app-data-derived Blender review templates'}
-(ROOT/'assets/bearing-blender-manifest.js').write_text('window.BEARING_BLENDER_MANIFEST='+json.dumps(manifest,separators=(',',':'))+';\n')
+(ROOT/('assets/'+family+'-blender-manifest.js')).write_text('window.'+('ELASTOMERIC' if elastomeric else 'BEARING')+'_BLENDER_MANIFEST='+json.dumps(manifest,separators=(',',':'))+';\n')
 print('BATCH_COMPLETE '+str(len(layouts)),flush=True)
