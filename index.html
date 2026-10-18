@@ -1041,6 +1041,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     width: 29% !important;
     min-width: 300px !important;
     max-width: 420px !important;
+    order: 2;
+    align-self: stretch;
+    justify-content: flex-start !important;
+  }
+  body.bearing-plinth-work #main-content-wrapper {
+    flex-direction: row !important;
+    align-items: stretch !important;
   }
   body.elastomeric-work #pile-array-section {
     width: 100% !important;
@@ -7119,6 +7126,9 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
 function drawPileArray(pier) {
   const work = document.getElementById('element').value;
   document.body.classList.toggle('bearing-plinth-work',work==='Bearing Plinths');
+  // Clear the full-width Elastomeric layout on every render, including
+  // restored forms / direct Pier selections that bypass the work-change UI.
+  document.body.classList.toggle('elastomeric-work',work==='Elastomeric');
   document.body.classList.toggle('compact-pilecap-print',work==='Pile cap' && !isSubstationPier(pier) && !isClarkStationElement(pier));
   const element = document.getElementById('element').value;
   const keyFn = WORK_ARRAY_KEY[element] || WORK_ARRAY_KEY[work];
