@@ -1035,6 +1035,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   body.blender-column-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
   body.blender-cap-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
   body.live-model-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
+  /* Bearing Plinth uses the standard compact screen panel. Print dimensions
+     and the high-resolution model/preview remain unchanged. */
+  body.bearing-plinth-work #pile-array-section {
+    width: 29% !important;
+    min-width: 300px !important;
+    max-width: 420px !important;
+  }
   body.elastomeric-work #pile-array-section {
     width: 100% !important;
     min-width: 0 !important;
@@ -7111,6 +7118,7 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
 
 function drawPileArray(pier) {
   const work = document.getElementById('element').value;
+  document.body.classList.toggle('bearing-plinth-work',work==='Bearing Plinths');
   document.body.classList.toggle('compact-pilecap-print',work==='Pile cap' && !isSubstationPier(pier) && !isClarkStationElement(pier));
   const element = document.getElementById('element').value;
   const keyFn = WORK_ARRAY_KEY[element] || WORK_ARRAY_KEY[work];
