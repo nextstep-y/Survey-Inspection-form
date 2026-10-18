@@ -13,7 +13,13 @@ source=json.loads((ROOT/('output/'+family+'-blender-batch/source.json')).read_te
 OUT=ROOT/('assets/'+family+'-blender');OUT.mkdir(parents=True,exist_ok=True)
 MODELS=ROOT/('assets/models/'+family+'-blender');MODELS.mkdir(parents=True,exist_ok=True)
 layouts={}
+cached_layouts={}
+if os.environ.get('BLENDER_ONLY_NEW')=='1':
+ manifest_path=ROOT/('assets/'+family+'-blender-manifest.js')
+ if manifest_path.exists():cached_layouts=json.loads(manifest_path.read_text().split('=',1)[1].rstrip(';\n'))['templates']
 for index,(key,g) in enumerate(source['templates'].items()):
+ if key in cached_layouts and (OUT/(key+'.png')).exists() and (MODELS/(key+'.blend')).exists():
+  layouts[key]=cached_layouts[key];continue
  bpy.ops.wm.read_factory_settings(use_empty=True);s=bpy.context.scene;bpy.context.preferences.filepaths.save_version=0
  def material(name,color):
   m=bpy.data.materials.new(name);m.diffuse_color=(*color,1);return m
@@ -31,7 +37,7 @@ for index,(key,g) in enumerate(source['templates'].items()):
   if z>0:
    mesh('High head step',[(x,y,0) for x,y,_ in top]+top,[(4,5,6,7),(3,2,1,0)]+[(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)],concrete)
   else:mesh('Context top',top,[(0,1,2,3)],concrete)
- if g['step'] and lo<0<hi:surface(lo,0,0);surface(0,hi,g['step'])
+ if g['step'] and lo<0<hi:surface(lo,0,g['step'] if g['highSign']<0 else 0);surface(0,hi,g['step'] if g['highSign']>0 else 0)
  else:surface(lo,hi,0)
  for index_island,island in enumerate(g['islands']['surfaces']):
   ps=island['ring'];n=len(ps);base=[(p['os'],p['ch'],island['bottom']) for p in ps];top=[(p['os'],p['ch'],island['top']) for p in ps]

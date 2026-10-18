@@ -23,6 +23,8 @@ for(const p of Object.values(a.piers))for(type of ['TYPE1','TYPE2']){
  for(const q of g.points)assert.ok(Math.abs(a.elev(p,'Elastomeric',q.label)-a.elev(p,'Bearing Plinths',q.label.replace(/^E/,''))-.067)<1e-6);
 }
 for(const id of ['P-989','P-990','P-1091','P-1092','P-1093','P-1094','P-1142'])assert.ok(m.records[id+'|TYPE1']);
+assert.equal(m.templates[m.records['P-1091|TYPE1'].template].geometry.highSign,-1,'P-1091 increasing chainage must remain low');
+assert.equal(m.templates[m.records['P-1094|TYPE1'].template].geometry.highSign,1,'P-1094 increasing chainage is high');
 vm.runInContext("liveBearingElevationRules=[{pier:'P-1092',work:'Elastomeric',pointGroup:'*',height:.067,reference:'Top of Pier',note:'67 mm above Top of Plinth'}]",c);
 assert.ok(Math.abs(a.elev(a.piers['P-1092'],'Elastomeric','CL1')-a.elev(a.piers['P-1092'],'Bearing Plinths','CL1')-.067)<1e-6,'Legacy mislabeled Sheet reference must not put pad below plinth');
 console.log('PASS '+Object.keys(m.records).length+' pier/type records; '+Object.keys(m.templates).length+' Blender templates; 67 mm levels; stale-image guards; P-1142.');

@@ -7,6 +7,10 @@ m=json.loads((root/'assets/elastomeric-blender-manifest.js').read_text().split('
 for key,t in m['templates'].items():
  bpy.ops.wm.open_mainfile(filepath=str(root/'assets/models/elastomeric-blender'/f'{key}.blend'))
  s=bpy.context.scene
+ g=t['geometry']
+ if g['step'] and g['head']['minCH']<0<g['head']['maxCH']:
+  ob=bpy.data.objects['High head step']
+  assert all(v.co.y*g['highSign']>=-1e-6 for v in ob.data.vertices),(key,'wrong high-chainage side')
  for p in t['geometry']['points']:
   ob=bpy.data.objects[p['label']]
   assert abs(ob.location.x-p['os'])<1e-5 and abs(ob.location.y-p['ch'])<1e-5
