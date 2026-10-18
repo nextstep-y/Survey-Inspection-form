@@ -7117,6 +7117,18 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
   return true;
 }
 
+function columnToleranceTitle(){return 'Allowable tolerance = (HD:VD)=(1:600)';}
+function drawColumnTolerance3D(ctx,W,H){
+ const y=H-108;
+ ctx.save();ctx.fillStyle='#fff';ctx.fillRect(0,y,W,108);
+ ctx.strokeStyle='#aab4bd';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(12,y);ctx.lineTo(W-12,y);ctx.stroke();
+ ctx.fillStyle='#222';ctx.textAlign='left';ctx.textBaseline='top';ctx.font='bold 22px sans-serif';
+ ctx.fillText(columnToleranceTitle(),14,y+9);
+ ctx.font='19px sans-serif';ctx.fillText('T = Top of formwork    B = Bottom of formwork',14,y+39);
+ ctx.fillText('h = Column height = __________ mm.',W*.59,y+39);
+ ctx.font='22px sans-serif';ctx.fillText('Tolerance = (1\u00d7h) / 600 = __________ mm.',14,y+70);
+ ctx.restore();
+}
 function drawPileArray(pier) {
   const work = document.getElementById('element').value;
   document.body.classList.toggle('bearing-plinth-work',work==='Bearing Plinths');
@@ -7145,6 +7157,7 @@ function drawPileArray(pier) {
   const canvas = document.getElementById('pile-canvas');
   if (!canvas) return;
   canvas.dataset.modelSource='Canvas';
+  delete canvas.dataset.columnTolerance;
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const _isColLift = (work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)');
@@ -7186,7 +7199,19 @@ function drawPileArray(pier) {
     return;
   }
 
-  if (use3D && drawP1091ColumnPreview(ctx,W,H,pier,work)) {blenderShown();return;}
+  if(use3D&&columnModel){
+    // Keep the original model, camera and point labels together. Reserve a
+    // separate annotation band without stretching the image or enlarging print.
+    const layer=document.createElement('canvas');layer.width=W*dpr;layer.height=H*dpr;
+    const modelCtx=layer.getContext('2d');modelCtx.setTransform(dpr,0,0,dpr,0,0);
+    const fromBlender=drawP1091ColumnPreview(modelCtx,W,H,pier,work)||drawStructuralBlenderBatch(modelCtx,W,H,pier,work,pts);
+    if(fromBlender||drawColumnCapModel3D(modelCtx,W,H,pier,work,pts)){
+      const scale=(H-118)/H,w=W*scale,h=H*scale;
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.drawImage(layer,0,0,layer.width,layer.height,(W-w)/2,0,w,h);
+      drawColumnTolerance3D(ctx,W,H);canvas.dataset.columnTolerance='1:600';
+      if(fromBlender)blenderShown();return;
+    }
+  }
   if (use3D && drawP1091CapPreview(ctx,W,H,pier,work,pts)) {blenderShown();return;}
   if (use3D && drawP1091BearingPreview(ctx,W,H,pier,work,pts)) {blenderShown();return;}
   if (use3D && drawBearingBlenderBatch(ctx,W,H,pier,work,pts)) {blenderShown();return;}
@@ -7919,7 +7944,7 @@ function drawPileArray(pier) {
     ctx.font = `bold ${fs}px sans-serif`;
     ctx.textAlign = 'left';
     ctx.fillStyle = '#222';
-    ctx.fillText('Allowable tolerance = (HD:VD)=(1:600)', lx, ly); ly += lh;
+    ctx.fillText(columnToleranceTitle(), lx, ly); ly += lh;
     ctx.font = `${fs}px sans-serif`;
     ctx.fillText('T = Top of formwork',    lx, ly); ly += lh;
     ctx.fillText('B = Bottom of formwork', lx, ly); ly += lh;

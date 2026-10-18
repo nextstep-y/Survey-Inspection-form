@@ -1,6 +1,20 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
 const root=path.resolve(__dirname,'..'),h=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const c=vm.createContext({window:{},document:{getElementById:()=>({value:'TYPE1'})}});
+// The 3D note shares the existing 2D criterion, without substituting the
+// shortened review-model height for the as-yet unspecified formwork height.
+const noteStart=h.indexOf('function columnToleranceTitle()'),noteEnd=h.indexOf('function drawPileArray(',noteStart);
+assert.ok(noteStart>=0&&noteEnd>noteStart);
+vm.runInContext(h.slice(noteStart,noteEnd),c);
+const notes=vm.runInContext('({title:columnToleranceTitle,draw:drawColumnTolerance3D})',c);
+assert.equal(notes.title(),'Allowable tolerance = (HD:VD)=(1:600)');
+for(const height of [380,480]){
+ const text=[],ctx={save(){},restore(){},fillRect(){},beginPath(){},moveTo(){},lineTo(){},stroke(){},fillText(t,x,y){text.push({t,x,y});}};
+ notes.draw(ctx,900,height);assert.ok(text.some(p=>p.t===notes.title()));
+ assert.ok(text.some(p=>p.t==='h = Column height = __________ mm.'));
+ assert.ok(text.some(p=>p.t==='Tolerance = (1×h) / 600 = __________ mm.'));
+ assert.ok(text.every(p=>p.x>=0&&p.y>=height-108&&p.y+22<height));
+}
 for(const file of ['assets/pilecap_ch_os_overrides.js','assets/structural-blender-geometry.js','assets/structural-blender-manifest.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),c);
 vm.runInContext(h.match(/<script id="data-script">([\s\S]*?)<\/script>/)[1],c);
 const s=h.indexOf('const PIERS_RAW = ');vm.runInContext(h.slice(s,h.indexOf('// STATE',s)),c);
