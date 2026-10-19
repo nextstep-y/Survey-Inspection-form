@@ -1760,13 +1760,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261019-p1092"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261020-grout"></script>
 <script src="assets/structural-blender-geometry.js?v=20261018-dowel"></script>
 <script src="assets/elastomeric-blender-geometry.js?v=20261018-2"></script>
-<script src="assets/elastomeric-blender-manifest.js?v=20261019-p1092"></script>
+<script src="assets/elastomeric-blender-manifest.js?v=20261020-grout"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261018"></script>
-<script src="assets/pot-blender-manifest.js?v=20261019-live"></script>
+<script src="assets/pot-blender-manifest.js?v=20261020-solids"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -2178,8 +2178,8 @@ const WORK_ELEV = {
   'Pier Column (1st-Lift)': p => p.topPier,
   'Pier Column (2nd Lift)': p => p.topPier,
   'Pier Head': p => p.topPier,
-  'Bearing Plinths': p => p.id==='P-1092'?null:p.id === 'P-1093' ? getTopOfColumnElevation(p) + 0.120 : (TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
-  'Elastomeric': p => p.id==='P-1092'?null:Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
+  'Bearing Plinths': p => ['P-1092','P-1093'].includes(p.id)?null:(TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
+  'Elastomeric': p => ['P-1092','P-1093'].includes(p.id)?null:Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
     ? getTopOfColumnElevation(p) + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id] + 0.067
     : (TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up + 0.067 : getTopOfColumnElevation(p) + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
 };
@@ -2189,13 +2189,13 @@ function getWorkPointElev(pier, work, label) {
   if(work==='Pot Bearing') return getPotBearingPoints(pier).find(p=>p.label===label)?.z ?? null;
   // 038136-C sections D1/D2: BC03 S5 = 120 mm, S4 = 124 mm.
   // Drawing-controlled per-bearing rule precedes generic type / Sheet fallbacks.
-  if(pier.id==='P-1092'&&work==='Bearing Plinths'){
-    const rise=getP1092PlinthRise(label);return rise===null?null:getTopOfColumnElevation(pier)+rise;
+  if(['P-1092','P-1093'].includes(pier.id)&&work==='Bearing Plinths'){
+    const rise=getBR115MainPlinthRise(pier,label);return rise===null?null:getTopOfColumnElevation(pier)+rise;
   }
   // Derive the pad from the same per-point plinth level, never a separate
   // type-dependent fallback that can drift from its supporting concrete.
   if(work==='Elastomeric'){
-    if(pier.id==='P-1092'){const base=getWorkPointElev(pier,'Bearing Plinths',String(label||'').replace(/^E/,''));return Number.isFinite(base)?base+.067:null;}
+    if(['P-1092','P-1093'].includes(pier.id)){const base=getWorkPointElev(pier,'Bearing Plinths',String(label||'').replace(/^E/,''));return Number.isFinite(base)?base+.067:null;}
     if(pier.id==='P-1091')return getWorkPointElev(pier,'Bearing Plinths',String(label||'').replace(/^E/,''))+.067;
     const type=getBearingType(),rule=getBearingRule(pier.id,work,label,type);
     // Legacy Sheet rows incorrectly say "Top of Pier" for the confirmed
@@ -2399,9 +2399,19 @@ function getPierHeadTElevations(pier) {
 // Verified BR115 manufacturer top-plate outlines, 066052-066057 Rev B, pp6-11.
 // +CH is up, +OS is right. Side midpoints run top/left/bottom/right (CCW).
 // Scope is deliberately per-pier; no unverified BR-family geometry fallback.
-function getP1092PlinthRise(label){
+// SUMMARY HEIGHT OF BC 1 2 3.xlsx, 'RL A BC'!G25:K32; all inputs mm.
+// Top Pot excludes TOP grout: concrete + bottom grout + steel assembly.
+const BR115_POT_STACK={
+  'P-1091':{S1:{plinth:124,bottomGrout:50,bearing:147,topGrout:46,row:25},S3:{plinth:124,bottomGrout:50,bearing:143,topGrout:50,row:26}},
+  'P-1092':{S4:{plinth:124,bottomGrout:50,bearing:245,topGrout:50,row:27},S5:{plinth:120,bottomGrout:50,bearing:269,topGrout:30,row:28}},
+  'P-1093':{S2:{plinth:120,bottomGrout:50,bearing:269,topGrout:30,row:29},S6:{plinth:119,bottomGrout:50,bearing:250,topGrout:50,row:30}},
+  'P-1094':{S1:{plinth:124,bottomGrout:50,bearing:147,topGrout:46,row:31},S3:{plinth:124,bottomGrout:50,bearing:143,topGrout:50,row:32}}
+};
+function getBR115MainPlinthRise(pier,label){
   const p=String(label||'').replace(/^E/,'');
-  return /^(BL|CL|PBL)[1-4]$/.test(p)?.120:/^(BR|CR|PBR)[1-4]$/.test(p)?.124:null;
+  const left=/^(BL|CL|PBL)[1-4]$/.test(p),right=/^(BR|CR|PBR)[1-4]$/.test(p);
+  const type=pier.id==='P-1092'?(left?'S5':right?'S4':null):pier.id==='P-1093'?(left?'S6':right?'S2':null):null;
+  return type?BR115_POT_STACK[pier.id][type].plinth/1000:null;
 }
 function getPotBearingPoints(pier) {
   const layouts={
@@ -2420,10 +2430,11 @@ function getPotBearingPoints(pier) {
     S6:{width:1.165,length:1.275,height:.250,source:'066057-B'}
   };
   const layout=layouts[pier?.id];if(!layout)return [];
-  const bearings=layout.types.map((type,i)=>({...details[type],type,prefix:i?'PBR':'PBL',os:(i?1:-1)*layout.offset}));
+  const bearings=layout.types.map((type,i)=>({...details[type],stack:BR115_POT_STACK[pier.id][type],type,prefix:i?'PBR':'PBL',os:(i?1:-1)*layout.offset}));
   return bearings.flatMap(b=>[[b.length/2,0],[0,-b.width/2],[-b.length/2,0],[0,b.width/2]].map(([ch,delta],i)=>({
-    label:b.prefix+(i+1),ch:layout.ch+ch,os:b.os+delta,z:getTopOfColumnElevation(pier)+(pier.id==='P-1092'?getP1092PlinthRise(b.prefix+(i+1)):layout.rise)+b.height,
-    bearing:b.type,source:b.source,width:b.width,length:b.length,centerOS:b.os,centerCH:layout.ch
+    label:b.prefix+(i+1),ch:layout.ch+ch,os:b.os+delta,z:getTopOfColumnElevation(pier)+(b.stack.plinth+b.stack.bottomGrout+b.stack.bearing)/1000,
+    bearing:b.type,source:b.source,width:b.width,length:b.length,centerOS:b.os,centerCH:layout.ch,
+    plinthRise:b.stack.plinth/1000,bottomGrout:b.stack.bottomGrout/1000,assemblyHeight:b.stack.bearing/1000,topGrout:b.stack.topGrout/1000,stackSource:'RL A BC!G'+b.stack.row+':K'+b.stack.row
   })));
 }
 
@@ -2444,7 +2455,20 @@ function drawPotBearingBlender(ctx,W,H,pier,points){
   if(!img.complete||!img.naturalWidth)return false;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   const height=W*img.naturalHeight/img.naturalWidth;
-  ctx.drawImage(img,0,(H-height)/2,W,height);return true;
+  const offset=(H-height)/2;
+  ctx.drawImage(img,0,offset,W,height);
+  ctx.fillStyle='#163a57';ctx.textAlign='center';ctx.font='bold 24px Arial';
+  ctx.fillText(pier.id+' - POT BEARING | BLENDER 3D',W/2,26);
+  ctx.font='bold 17px Arial';ctx.fillText('INCREASING CHAINAGE',W*.77,offset+height*.15);
+  for(const a of record.anchors||[]){
+    const p=points.find(p=>p.label===a.label);if(!p)continue;
+    ctx.textAlign=a.side<0?'right':'left';ctx.fillStyle='#111';ctx.font='bold 24px Arial';
+    ctx.fillText(a.label,a.x*W,offset+a.y*height-8);
+    ctx.font='bold 21px monospace';ctx.fillText(p.z.toFixed(3),a.x*W,offset+a.y*height+16);
+  }
+  ctx.textAlign='center';ctx.font='14px Arial';ctx.fillStyle='#334';
+  ctx.fillText('External review model | internal thickness proportions schematic | Bottom Grout 50 mm',W/2,H-12);
+  return true;
 }
 function drawPotBearingPlan(ctx,W,H,pier,points){
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);

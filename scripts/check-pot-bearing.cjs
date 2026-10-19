@@ -16,7 +16,9 @@ app.whenReady().then(async()=>{const w=new BrowserWindow({show:false,width:1500,
    assert.equal(p[0].bearing,types[j]);assert.ok(Math.abs(p.reduce((s,x)=>s+x.ch,0)/4-ch)<1e-10);
    assert.ok(Math.abs(p.reduce((s,x)=>s+x.os,0)/4-center)<1e-10);
    assert.ok(Math.abs(p[0].ch-p[2].ch-dims[j][1])<1e-10);assert.ok(Math.abs(p[3].os-p[1].os-dims[j][0])<1e-10);
-   assert.ok(Math.abs(p[0].z-data.top-rise-(id==='P-1092'&&j===1?.004:0)-heights[j])<1e-10);
+   const plinth=rise+(id==='P-1092'&&j===1?.004:0)+(id==='P-1093'&&j===0?-.001:0);
+   assert.ok(Math.abs(p[0].z-data.top-plinth-.050-heights[j])<1e-10);
+   assert.equal(p[0].bottomGrout,.050);assert.equal(p[0].plinthRise,plinth);
    assert.ok(p.reduce((s,x,k)=>{const y=p[(k+1)%4];return s+x.os*y.ch-y.os*x.ch},0)>0);
   }
   data.points.forEach((p,i)=>{assert.ok(Math.abs(data.rows[i].n-(data.pier.n+p.ch*Math.sin(a)+p.os*Math.cos(a)))<.00006);assert.ok(Math.abs(data.rows[i].e-(data.pier.e-p.ch*Math.cos(a)+p.os*Math.sin(a)))<.00006)});
@@ -49,11 +51,16 @@ app.whenReady().then(async()=>{const w=new BrowserWindow({show:false,width:1500,
  await w.webContents.executeJavaScript(`document.getElementById('element').value='Pot Bearing';onPierSelect('P-1093');void 0;`);
  const r=await w.webContents.executeJavaScript(`({points:currentArray,rows:document.querySelectorAll('#survey-body tr').length,png:document.getElementById('pile-canvas').toDataURL(),top:getTopOfColumnElevation(currentPier)})`);
  assert.equal(r.rows,8);assert.equal(r.points.length,8);
+ const levels=await w.webContents.executeJavaScript(`({plinth:[getWorkPointElev(currentPier,'Bearing Plinths','BL1'),getWorkPointElev(currentPier,'Bearing Plinths','BR1')],pot:[...new Set(currentArray.map(p=>p.z))]})`);
+ assert.ok(Math.abs(levels.plinth[0]-113.465)<1e-9);assert.ok(Math.abs(levels.plinth[1]-113.466)<1e-9);
+ assert.ok(Math.abs(levels.pot[0]-113.765)<1e-9);assert.ok(Math.abs(levels.pot[1]-113.785)<1e-9);
+ const potCsv=await w.webContents.executeJavaScript(`(async()=>{let blob;const old=URL.createObjectURL,click=HTMLAnchorElement.prototype.click;URL.createObjectURL=b=>{blob=b;return 'blob:qa'};HTMLAnchorElement.prototype.click=function(){};try{exportDesign('csv');return await blob.text()}finally{URL.createObjectURL=old;HTMLAnchorElement.prototype.click=click}})()`);
+ potCsv.split('\n').forEach((line,i)=>assert.equal(Number(line.split(',')[3]),i<4?113.765:113.785));
  for(const [prefix,width,length,os,height] of [['PBL',1.165,1.275,-2,.250],['PBR',1.250,1.675,2,.269]]){
   const p=r.points.filter(x=>x.label.startsWith(prefix));assert.equal(p.length,4);
   assert.deepEqual(p.map(x=>x.label),[1,2,3,4].map(i=>prefix+i));
   assert.ok(Math.abs(p[0].ch-length/2)<1e-10);assert.ok(Math.abs(p[1].os-(os-width/2))<1e-10);
-  assert.ok(Math.abs(p[0].z-(r.top+.120+height))<1e-10);
+  assert.ok(Math.abs(p[0].z-(r.top+(prefix==='PBL'?.119:.120)+.050+height))<1e-10);
   const area=p.reduce((a,x,i)=>{const y=p[(i+1)%4];return a+x.os*y.ch-y.os*x.ch},0);assert.ok(area>0,'CCW');
  }
  fs.writeFileSync('/tmp/pot-bearing-preview.png',Buffer.from(r.png.split(',')[1],'base64'));
