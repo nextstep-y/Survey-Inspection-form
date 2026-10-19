@@ -1760,12 +1760,12 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261020-grout"></script>
-<script src="assets/structural-blender-geometry.js?v=20261018-dowel"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261020-br114"></script>
+<script src="assets/structural-blender-geometry.js?v=20261020-br114"></script>
 <script src="assets/elastomeric-blender-geometry.js?v=20261018-2"></script>
 <script src="assets/elastomeric-blender-manifest.js?v=20261020-grout"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
-<script src="assets/dowel-blender-manifest.js?v=20261018"></script>
+<script src="assets/dowel-blender-manifest.js?v=20261020-br114"></script>
 <script src="assets/pot-blender-manifest.js?v=20261020-solids"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
@@ -1957,6 +1957,22 @@ const P1091_BEARING_LAYOUT = Object.freeze({
 const P1091_BEARING_ELEMENT_SIZES = {UL:[0.880,0.880],UR:[0.950,0.950],DL:[0.450,0.550],DR:[0.450,0.550]};
 // Canonical local geometry, reconciled to the user-approved survey coordinates.
 const P1091_PIER_HEAD_CH = Object.freeze({T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,T6:-1.750,T7:-1.750,T8:1.750,S1:0.925,S2:-0.925});
+// Individually checked attached BR114 plans/elevations. Sizes below are the
+// original concrete outline; expandBearingPlinthEdges adds 30 mm ONCE.
+const BR114_DRAWING_CONTROLS={
+ 'P-888':{plan:'023177',rev:'A',step:.2,highSign:-1,plinths:{UL:{ch:.925,os:-2.4,sizeCH:.88,sizeOS:.88,rise:.119},UR:{ch:.925,os:2.4,sizeCH:.95,sizeOS:.95,rise:.119},DL:{ch:-.925,os:-1.7,sizeCH:.45,sizeOS:.55,rise:.350},DR:{ch:-.925,os:1.7,sizeCH:.45,sizeOS:.55,rise:.350}}},
+ 'P-889':{plan:'023011',rev:'B',step:0,highSign:1,plinths:{BL:{ch:0,os:-2,sizeCH:1.55,sizeOS:1.55,rise:.122},BR:{ch:0,os:2,sizeCH:1.62,sizeOS:1.62,rise:.122}}},
+ 'P-890':{plan:'023159',rev:'A',step:0,highSign:1,plinths:{BL:{ch:0,os:-2,sizeCH:1.43,sizeOS:1.43,rise:.122},BR:{ch:0,os:2,sizeCH:1.51,sizeOS:1.51,rise:.122}}},
+ 'P-891':{plan:'023158',rev:'B',step:.2,highSign:1,plinths:{UL:{ch:.925,os:-1.7,sizeCH:.45,sizeOS:.55,rise:.350},UR:{ch:.925,os:1.7,sizeCH:.45,sizeOS:.55,rise:.350},DL:{ch:-.925,os:-2.4,sizeCH:.88,sizeOS:.88,rise:.119},DR:{ch:-.925,os:2.4,sizeCH:.95,sizeOS:.95,rise:.119}}}
+};
+function getBR114HeadPoints(pier){
+ const main=!BR114_DRAWING_CONTROLS[pier.id].step,a=main?2.5:1.75,b=main?3:3.24,c=main?1:.6;
+ return [{label:'T1',ch:a,os:0},{label:'T2',ch:0,os:b},{label:'T3',ch:-a,os:0},{label:'T4',ch:0,os:-b},
+ {label:'T5',ch:-a,os:c},{label:'T6',ch:a,os:c},{label:'T7',ch:a,os:-c},{label:'T8',ch:-a,os:-c},...(!main?[{label:'S1',ch:.925,os:0},{label:'S2',ch:-.925,os:0}]:[])];
+}
+function getBR114PlinthPoints(pier){
+ return Object.entries(BR114_DRAWING_CONTROLS[pier.id].plinths).flatMap(([group,c])=>[[1,-1],[1,1],[-1,1],[-1,-1]].map(([a,b],i)=>({label:group+(i+1),ch:c.ch+a*c.sizeCH/2,os:c.os+b*c.sizeOS/2})));
+}
 function _orientPierSpecificPoints(pier, work, points, hasExcelOverride = false) {
   const canonical=_orientPierSpecificPointsBase(pier,work,points,hasExcelOverride);
   return work==='Bearing Plinths'?expandBearingPlinthEdges(canonical):canonical;
@@ -1986,6 +2002,10 @@ function expandBearingPlinthEdges(points){
   return result.size?(points||[]).map(p=>result.get(p.label)||p):points;
 }
 function _orientPierSpecificPointsBase(pier, work, points, hasExcelOverride = false) {
+  if(BR114_DRAWING_CONTROLS[pier?.id]){
+    if(work==='Pier Head')return getBR114HeadPoints(pier);
+    if(work==='Bearing Plinths')return getBR114PlinthPoints(pier);
+  }
   if (pier?.id !== 'P-1091') return points;
   if (work === 'Pier Head') {
     if (hasExcelOverride) return points;
@@ -2111,7 +2131,7 @@ const POT_BEARING_ELEMENT_ELEV_OFFSET = {
 // Up is the increasing-chainage side. The Up values include the raised
 // island plus the concrete plinth; Elastomeric adds 0.067 m above the plinth.
 const TRANSITION_BEARING_ELEVATION_OFFSETS = {
-  'P-888':  { up: 0.350, down: 0.119, drawing: '023177-A' },
+  'P-888':  { up: 0.119, down: 0.350, drawing: '023177-A' },
   'P-891':  { up: 0.350, down: 0.119, drawing: '023158-B' },
   // P-1091 is opposite to P-1094: increasing chainage is the low side.
   'P-1091': { up: 0.124, down: 0.750, drawing: '023165-C' },
@@ -2186,6 +2206,10 @@ const WORK_ELEV = {
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  if(BR114_DRAWING_CONTROLS[pier.id]&&work==='Bearing Plinths'){
+    const group=String(label||'').replace(/^E/,'').replace(/\d+$/,'').replace(/^C([LR])$/,'B$1');const control=BR114_DRAWING_CONTROLS[pier.id].plinths[group];
+    return control?getTopOfColumnElevation(pier)+control.rise:null;
+  }
   if(work==='Pot Bearing') return getPotBearingPoints(pier).find(p=>p.label===label)?.z ?? null;
   // 038136-C sections D1/D2: BC03 S5 = 120 mm, S4 = 124 mm.
   // Drawing-controlled per-bearing rule precedes generic type / Sheet fallbacks.
@@ -2331,6 +2355,7 @@ for (const [pierId, correction] of Object.entries(PIER_COLUMN_DRAWING_OVERRIDES)
 // purpose and review trail remain explicit.
 // NSCR-ITD-N03-ZWD-DWG-ST-023240-C, Pier Head Type P6 Schedule.
 const PIER_HEAD_SCHEDULE_LEVEL_OVERRIDES = {
+  "P-890": {"topPier":62.540,"sourcePierHeadSchedule":"NSCR-ITD-N03-ZWD-DWG-ST-023156-A"},
   "P-992": {"topPier": 90.905, "sourcePierHeadSchedule": "NSCR-ITD-N03-ZWD-DWG-ST-023240-C"}
 };
 for (const [pierId, correction] of Object.entries(PIER_HEAD_SCHEDULE_LEVEL_OVERRIDES)) {
@@ -2343,6 +2368,10 @@ for (const [pierId, correction] of Object.entries(PIER_HEAD_SCHEDULE_LEVEL_OVERR
 // boundary points take the higher surface, while island points add the island
 // height to the surface on their own side of the T2-T4 construction joint.
 const PIER_HEAD_T_RISE_OVERRIDES = {
+  'P-888':{T1:.297,T2:.200,T3:.497,T4:.200,T5:.497,T6:.297,T7:.297,T8:.497},
+  'P-889':{T1:.405,T2:0,T3:.405,T4:0,T5:.405,T6:.405,T7:.405,T8:.405},
+  'P-890':{T1:.405,T2:0,T3:.405,T4:0,T5:.405,T6:.405,T7:.405,T8:.405},
+  'P-891':{T1:.497,T2:.200,T3:.297,T4:.200,T5:.297,T6:.497,T7:.497,T8:.297},
   // NSCR-ITD-N03-ZWD-DWG-ST-023165-C, transition BR115 P-1091.
   // High side = +0.600 m, low side = Top of Pier, island = +0.317 m.
   // T2/T4 lie on the boundary and therefore take the higher surface level.
@@ -2549,7 +2578,7 @@ function getDowelBlenderGeometry(pier,input=getPierHeadModel(pier).points){
  // when older digitized point extents differ from the controlling PDF.
  const top={name:'Head plan envelope',ring,top:0,bottom:null};
  const surfaces=pier.id==='P-1094'?[{...top,ring:[{ch:-a,os:-b},{ch:-a,os:b},{ch:0,os:b},{ch:0,os:-b}]},{...top,name:'High top',ring:[{ch:0,os:-b},{ch:0,os:b},{ch:a,os:b},{ch:a,os:-b}],top:.6,bottom:0}]:[top];
- g={...g,body:{...g.body,upper:ring},surfaces:[...surfaces,...g.surfaces.filter(s=>s.name==='Island')]};
+ g={...g,body:{...g.body,upper:ring},surfaces:BR114_DRAWING_CONTROLS[pier.id]?g.surfaces:[...surfaces,...g.surfaces.filter(s=>s.name==='Island')]};
  return {...g,points:[...g.points,...getPierHeadDowelPoints(pier).map(p=>({label:p.label,ch:p.ch,os:p.os,z:p.projectionRise,kind:'dowel',surveyZ:null,...(p.modelCH===undefined?{}:{modelCH:p.modelCH})}))],dowelSource:BR_DOWEL_LAYOUTS[pier.id],...(pier.id==='P-1091'?{detailedP1091:true}:{}),status:g.status+' | Dowel plan axes only; Z unverified'};
 }
 
@@ -4482,6 +4511,7 @@ async function fetchDwgFromSheet() {
 
 function _workSpecificDwgOverride(pier) {
   const work = document.getElementById('element')?.value || '';
+  if(BR114_DRAWING_CONTROLS[pier?.id]&&['Pier Head','Bearing Plinths'].includes(work)){const c=BR114_DRAWING_CONTROLS[pier.id];return {dwg:'NSCR-ITD-N03-ZWD-DWG-ST-'+c.plan,rev:c.rev};}
   if(pier?.id==='P-1092'&&work==='Bearing Plinths')return {dwg:'NSCR-ITD-N03-ZWD-DWG-ST-038136',rev:'C'};
   if(work==='Pot Bearing') {const points=getPotBearingPoints(pier);return {dwg:points.length?'NSCR-ITD-N03-ZWD-DWG-ST-'+[...new Set(points.map(p=>p.source.replace(/-B$/,'')))].join(' / '):'UNVERIFIED - DO NOT SET OUT',rev:points.length?'B':''};}
   const registered = liveDrawingRegister[pier?.id] || {};
@@ -6956,8 +6986,8 @@ function getStructuralCanvasGeometry(pier, work = 'Pier Head') {
     depth: knownDepth ? derivedDepth : 1.5, knownDepth,
     // Only P-1091's 0.400 m rim is checked against the side elevation here.
     rim: pier.id === 'P-1091' ? 0.400 : 0.300,
-    step: ['P-1091','P-1094'].includes(pier.id) ? 0.600 : 0,
-    highCHSign: pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1,
+    step: BR114_DRAWING_CONTROLS[pier.id]?.step ?? (['P-1091','P-1094'].includes(pier.id) ? 0.600 : 0),
+    highCHSign:BR114_DRAWING_CONTROLS[pier.id]?.highSign ?? (pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1),
     // Bearing templates use their own local frame for the contextual head.
     // This frame conversion is not applied to survey points or coordinate math.
     headFrameCHSign:pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1,
@@ -7545,7 +7575,7 @@ function drawPileArray(pier) {
       .map(p => Number(pierHeadLevelMap[p.label]))
       .filter(Number.isFinite)
       .map(value => value.toFixed(3)))].map(Number).sort((a, b) => a - b);
-    const hasPierHeadLevelBreak = work === 'Pier Head' && pierHeadLevels.length > 1;
+    const hasPierHeadLevelBreak = work === 'Pier Head' && (BR114_DRAWING_CONTROLS[pier.id]?BR114_DRAWING_CONTROLS[pier.id].step>0:pierHeadLevels.length > 1);
 
     // Draw inner rectangles: T5-T8, T9-T12, T13-T16, ... in groups of 4
     const tNums = tPts.map(p => parseInt(p.label.slice(1))).filter(n => n >= 5).sort((a,b)=>a-b);
@@ -7663,7 +7693,9 @@ function drawPileArray(pier) {
           return `${delta >= 0 ? '+' : ''}${delta.toFixed(3)} m (EL ${level.toFixed(3)})`;
         });
         const isTransitionHead = ['P-1091','P-1094'].includes(pier.id);
-        const legend = isTransitionHead
+        const legend = BR114_DRAWING_CONTROLS[pier.id]?.step
+          ? 'LEVEL BREAK T2-T4: 0.200 m | ISLAND +0.297 m'
+          : isTransitionHead
           ? 'LEVEL BREAK T2-T4: 0.600 m | ISLAND +0.317 m'
           : `LEVEL BREAK T2-T4: ${levelBreakLabels.join(' / ')}`;
         ctx.setLineDash([]);

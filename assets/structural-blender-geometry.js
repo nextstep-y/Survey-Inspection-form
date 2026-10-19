@@ -64,10 +64,11 @@ window.StructuralBlender = (() => {
       }
       status='PARTIAL | cap depth schematic; pile axes projected to top';
     } else {
-      const step=pier.id==='P-1094'||pier.id==='P-1091'?.6:0;
+      const br114=BR114_DRAWING_CONTROLS[pier.id];
+      const step=br114?.step ?? (pier.id==='P-1094'||pier.id==='P-1091'?.6:0),highSign=br114?.highSign??1;
       if(step&&minCH<0&&maxCH>0){
-        add('Low top',rect(minCH,0,minOS,maxOS),0);
-        add('High top',rect(0,maxCH,minOS,maxOS),step,0);
+        add('Low top',rect(highSign<0?0:minCH,highSign<0?maxCH:0,minOS,maxOS),0);
+        add('High top',rect(highSign<0?minCH:0,highSign<0?0:maxCH,minOS,maxOS),step,0);
       }else add('Head top envelope',rect(minCH,maxCH,minOS,maxOS),0);
       const islands=points.filter(p=>/^T\d+$/.test(p.label)&&Number(p.label.slice(1))>=5).sort((a,b)=>Number(a.label.slice(1))-Number(b.label.slice(1)));
       for(let i=0;i<islands.length;i+=4){
@@ -87,7 +88,7 @@ window.StructuralBlender = (() => {
         for(const [lo,hi] of pieces){
           const zs=ps.filter(p=>p.ch>=lo-1e-6&&p.ch<=hi+1e-6).map(p=>p.z);
           if(!zs.length||zs.some(z=>z===null)||Math.max(...zs)-Math.min(...zs)>1e-5){islandMissing=true;continue;}
-          const base=step&&(lo+hi)>0?step:0;
+          const base=step&&(lo+hi)*highSign>0?step:0;
           if(zs[0]>base)add('Island',split?rect(lo,hi,c,d):ps,zs[0],base);
         }
       }
