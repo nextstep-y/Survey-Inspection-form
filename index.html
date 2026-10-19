@@ -1038,6 +1038,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   /* Bearing Plinth and Elastomeric use the compact upper-right screen panel. Print dimensions
      and the high-resolution model/preview remain unchanged. */
   body.bearing-plinth-work #pile-array-section,
+  body.pot-bearing-work #pile-array-section,
   body.elastomeric-work #pile-array-section {
     width: 29% !important;
     min-width: 300px !important;
@@ -1049,6 +1050,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
     border-top: 0 !important;
   }
   body.bearing-plinth-work #main-content-wrapper,
+  body.pot-bearing-work #main-content-wrapper,
   body.elastomeric-work #main-content-wrapper {
     flex-direction: row !important;
     align-items: stretch !important;
@@ -1334,6 +1336,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
         <option value="Pier Head">Pier Head</option>
         <option value="Bearing Plinths">Bearing Plinths</option>
         <option value="Elastomeric">Elastomeric</option>
+        <option value="Pot Bearing">Pot Bearing</option>
         <option value="Cross Beam">Cross Beam</option>
         <option value="Other">Other</option>
       </select>
@@ -1757,12 +1760,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261017-islands"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261019-p1092"></script>
 <script src="assets/structural-blender-geometry.js?v=20261018-dowel"></script>
 <script src="assets/elastomeric-blender-geometry.js?v=20261018-2"></script>
-<script src="assets/elastomeric-blender-manifest.js?v=20261018-2"></script>
+<script src="assets/elastomeric-blender-manifest.js?v=20261019-p1092"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261018"></script>
+<script src="assets/pot-blender-manifest.js?v=20261019"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -2174,17 +2178,24 @@ const WORK_ELEV = {
   'Pier Column (1st-Lift)': p => p.topPier,
   'Pier Column (2nd Lift)': p => p.topPier,
   'Pier Head': p => p.topPier,
-  'Bearing Plinths': p => p.id === 'P-1093' ? getTopOfColumnElevation(p) + 0.120 : (TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
-  'Elastomeric': p => Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
+  'Bearing Plinths': p => p.id==='P-1092'?null:p.id === 'P-1093' ? getTopOfColumnElevation(p) + 0.120 : (TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up : getTopOfColumnElevation(p) + (BEARING_PLINTH_ELEV[getBearingType()] || 0) / 1000),
+  'Elastomeric': p => p.id==='P-1092'?null:Object.prototype.hasOwnProperty.call(POT_BEARING_ELEMENT_ELEV_OFFSET, p.id)
     ? getTopOfColumnElevation(p) + POT_BEARING_ELEMENT_ELEV_OFFSET[p.id] + 0.067
     : (TRANSITION_BEARING_ELEVATION_OFFSETS[p.id] ? getTopOfColumnElevation(p) + TRANSITION_BEARING_ELEVATION_OFFSETS[p.id].up + 0.067 : getTopOfColumnElevation(p) + ((BEARING_PLINTH_ELEV[getBearingType()] || 0) + (ELASTOMERIC_ELEV[getBearingType()] || 0)) / 1000),
 };
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  if(work==='Pot Bearing') return getPotBearingPoints(pier).find(p=>p.label===label)?.z ?? null;
+  // 038136-C sections D1/D2: BC03 S5 = 120 mm, S4 = 124 mm.
+  // Drawing-controlled per-bearing rule precedes generic type / Sheet fallbacks.
+  if(pier.id==='P-1092'&&work==='Bearing Plinths'){
+    const rise=getP1092PlinthRise(label);return rise===null?null:getTopOfColumnElevation(pier)+rise;
+  }
   // Derive the pad from the same per-point plinth level, never a separate
   // type-dependent fallback that can drift from its supporting concrete.
   if(work==='Elastomeric'){
+    if(pier.id==='P-1092'){const base=getWorkPointElev(pier,'Bearing Plinths',String(label||'').replace(/^E/,''));return Number.isFinite(base)?base+.067:null;}
     if(pier.id==='P-1091')return getWorkPointElev(pier,'Bearing Plinths',String(label||'').replace(/^E/,''))+.067;
     const type=getBearingType(),rule=getBearingRule(pier.id,work,label,type);
     // Legacy Sheet rows incorrectly say "Top of Pier" for the confirmed
@@ -2385,6 +2396,80 @@ function getPierHeadTElevations(pier) {
 }
 
 // Pier-head form rows and coordinate exports consume the same N/E/Z result.
+// Verified BR115 manufacturer top-plate outlines, 066052-066057 Rev B, pp6-11.
+// +CH is up, +OS is right. Side midpoints run top/left/bottom/right (CCW).
+// Scope is deliberately per-pier; no unverified BR-family geometry fallback.
+function getP1092PlinthRise(label){
+  const p=String(label||'').replace(/^E/,'');
+  return /^(BL|CL|PBL)[1-4]$/.test(p)?.120:/^(BR|CR|PBR)[1-4]$/.test(p)?.124:null;
+}
+function getPotBearingPoints(pier) {
+  const layouts={
+    'P-1091':{types:['S3','S1'],ch:.925,offset:2.4,rise:.124},
+    'P-1092':{types:['S5','S4'],ch:0,offset:2,rise:.120},
+    'P-1093':{types:['S6','S2'],ch:0,offset:2,rise:.120},
+    'P-1094':{types:['S3','S1'],ch:-.925,offset:2.4,rise:.124}
+  };
+  const details={
+    S1:{width:.630,length:1.025,height:.147,source:'066052-B'},
+    S2:{width:1.250,length:1.675,height:.269,source:'066053-B'},
+    S3:{width:.595,length:.815,height:.143,source:'066054-B'},
+    S4:{width:1.480,length:1.480,height:.245,source:'066055-B'},
+    // S5 is guided transversely: its long plate axis is OS, not CH.
+    S5:{width:1.865,length:1.250,height:.269,source:'066056-B'},
+    S6:{width:1.165,length:1.275,height:.250,source:'066057-B'}
+  };
+  const layout=layouts[pier?.id];if(!layout)return [];
+  const bearings=layout.types.map((type,i)=>({...details[type],type,prefix:i?'PBR':'PBL',os:(i?1:-1)*layout.offset}));
+  return bearings.flatMap(b=>[[b.length/2,0],[0,-b.width/2],[-b.length/2,0],[0,b.width/2]].map(([ch,delta],i)=>({
+    label:b.prefix+(i+1),ch:layout.ch+ch,os:b.os+delta,z:getTopOfColumnElevation(pier)+(pier.id==='P-1092'?getP1092PlinthRise(b.prefix+(i+1)):layout.rise)+b.height,
+    bearing:b.type,source:b.source,width:b.width,length:b.length,centerOS:b.os,centerCH:layout.ch
+  })));
+}
+
+function getPotBearingContext(pier){
+  if(!getPotBearingPoints(pier).length||!window.StructuralBlender)return null;
+  const imported=_excelChOsPoints(pier,'Bearing Plinths','canvas');
+  const raw=imported||ARRAYS_RAW[WORK_ARRAY_KEY['Bearing Plinths'](pier)]||[];
+  const plinths=_orientPierSpecificPoints(pier,'Bearing Plinths',raw,Boolean(imported)).map(p=>({label:p.label,ch:p.ch,os:p.os,z:Number((getWorkPointElev(pier,'Bearing Plinths',p.label)-getTopOfColumnElevation(pier)).toFixed(6))}));
+  return {body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier),plinths,step:['P-1091','P-1094'].includes(pier.id)?.6:0,highSign:pier.id==='P-1091'?-1:1};
+}
+const potBlenderImages={};
+function drawPotBearingBlender(ctx,W,H,pier,points){
+  const record=window.POT_BLENDER_MANIFEST?.[pier.id];
+  if(!record||JSON.stringify(record.points)!==JSON.stringify(points)||JSON.stringify(record.context)!==JSON.stringify(getPotBearingContext(pier)))return false;
+  let img=potBlenderImages[record.image];
+  if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image;}
+  if(!img.complete||!img.naturalWidth)return false;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  const height=W*img.naturalHeight/img.naturalWidth;
+  ctx.drawImage(img,0,(H-height)/2,W,height);return true;
+}
+function drawPotBearingPlan(ctx,W,H,pier,points){
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#163a57';ctx.font='bold 22px Arial';ctx.textAlign='center';
+  ctx.fillText(pier.id+' - POT BEARING / TOP PLATE',W/2,32);
+  ctx.font='16px Arial';ctx.fillText('INCREASING CHAINAGE ↑',W/2,60);
+  if(!points.length){ctx.fillText('No verified Pot Bearing drawing for this Pier',W/2,H/2);return;}
+  const scale=115,cy=H/2+15;
+  for(const prefix of ['PBL','PBR']){
+    const group=points.filter(p=>p.label.startsWith(prefix)),b=group[0],cx=W/2+b.centerOS*scale;
+    const centerY=cy; // Frame follows the bearing row; coordinates retain its true CH offset.
+    ctx.fillStyle='#e8edf1';ctx.strokeStyle='#163a57';ctx.lineWidth=2;
+    ctx.fillRect(cx-b.width*scale/2,cy-b.length*scale/2,b.width*scale,b.length*scale);
+    ctx.strokeRect(cx-b.width*scale/2,cy-b.length*scale/2,b.width*scale,b.length*scale);
+    ctx.fillStyle='#163a57';ctx.font='bold 18px Arial';ctx.fillText(b.bearing,cx,cy-10);
+    ctx.font='15px Arial';ctx.fillText((b.width*1000)+' × '+(b.length*1000)+' mm',cx,cy+b.length*scale/2+53);
+    for(const p of group){const x=W/2+p.os*scale,y=centerY-(p.ch-b.centerCH)*scale;
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fillStyle='#b33122';ctx.fill();
+      const i=Number(p.label.slice(-1));ctx.textAlign=i===2?'right':i===4?'left':'center';
+      ctx.font='bold 18px Arial';ctx.fillStyle='#111';ctx.fillText(p.label,x+(i===2?-12:i===4?12:0),y+(i===1?-14:i===3?25:6));
+    }
+    ctx.textAlign='center';ctx.font='16px Arial';ctx.fillText('Top Pot '+b.z.toFixed(3)+' m',cx,H-36);
+  }
+  ctx.font='14px Arial';ctx.fillText('Bearing center CH '+points[0].centerCH.toFixed(3)+' m | 1 top → 2 left → 3 bottom → 4 right (CCW)',W/2,H-10);
+}
+
 function getPierHeadPointDesign(pier, point) {
   const angle=((pier.deg||0)+(pier.min||0)/60+(pier.sec||0)/3600)*Math.PI/180;
   const {ch,os}=point;
@@ -2687,6 +2772,7 @@ const DEFAULT_ELEMENT_OPTIONS = [
   'Pier Head',
   'Bearing Plinths',
   'Elastomeric',
+  'Pot Bearing',
   'Cross Beam',
   'Other',
 ];
@@ -4371,6 +4457,8 @@ async function fetchDwgFromSheet() {
 
 function _workSpecificDwgOverride(pier) {
   const work = document.getElementById('element')?.value || '';
+  if(pier?.id==='P-1092'&&work==='Bearing Plinths')return {dwg:'NSCR-ITD-N03-ZWD-DWG-ST-038136',rev:'C'};
+  if(work==='Pot Bearing') {const points=getPotBearingPoints(pier);return {dwg:points.length?'NSCR-ITD-N03-ZWD-DWG-ST-'+[...new Set(points.map(p=>p.source.replace(/-B$/,'')))].join(' / '):'UNVERIFIED - DO NOT SET OUT',rev:points.length?'B':''};}
   const registered = liveDrawingRegister[pier?.id] || {};
   if ((work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)') && registered.column) {
     return registered.column;
@@ -4957,6 +5045,7 @@ function updateTolerance() {
   const workDesc = document.getElementById('work-desc')?.value || '';
   const tolEl = document.getElementById('tol-bar-text');
   if (!tolEl) return;
+  if(work==='Pot Bearing'){tolEl.textContent='Tolerance: pending approved criteria';return;}
   // As-Built override: ±0.025 m for all works except Bored Pile, Blinding Concrete, Pile Deviate
   const _asBuiltExclude = ['Bored Pile', 'Blinding Concrete', 'Pile Deviate'];
   if (workDesc === 'As-Built' && !_asBuiltExclude.includes(work)) {
@@ -5410,6 +5499,7 @@ function drawColumnLiftFormworkDiagram(ctx, W, H, pier, pts) {
   };
 
   ctx.clearRect(0, 0, W, H);
+
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, W, H);
   ctx.lineCap = 'butt';
@@ -7138,9 +7228,10 @@ function drawPileArray(pier) {
   document.body.classList.toggle('compact-pilecap-print',work==='Pile cap' && !isSubstationPier(pier) && !isClarkStationElement(pier));
   const element = document.getElementById('element').value;
   const keyFn = WORK_ARRAY_KEY[element] || WORK_ARRAY_KEY[work];
+  document.body.classList.toggle('pot-bearing-work',work==='Pot Bearing');
   const arrayKey = keyFn ? keyFn(pier) : pier.piles;
   const excelPts = _excelChOsPoints(pier, work, 'canvas');
-  let pts = work === 'Pier Head' && !isClarkStationElement(pier) && !isSubstationPier(pier)
+  let pts = work === 'Pot Bearing' ? getPotBearingPoints(pier) : work === 'Pier Head' && !isClarkStationElement(pier) && !isSubstationPier(pier)
     ? getPierHeadModel(pier).points
     : isClarkStationElement(pier)
     ? clarkRenderPointsForWork(pier, work)
@@ -7164,7 +7255,7 @@ function drawPileArray(pier) {
   const ordinaryPier=!isSubstationPier(pier) && !isClarkStationElement(pier);
   const columnModel=ordinaryPier && _isColumnWork(work);
   const capModel=ordinaryPier && work==='Pile cap';
-  const supports3D = work === 'Pier Head' || work === 'Bearing Plinths' || work === 'Elastomeric' || columnModel || capModel;
+  const supports3D = work === 'Pot Bearing' || work === 'Pier Head' || work === 'Bearing Plinths' || work === 'Elastomeric' || columnModel || capModel;
   const controls = document.getElementById('canvas-view-controls');
   if (controls) controls.style.display = supports3D ? 'flex' : 'none';
   const use3D = supports3D && canvasViewMode === '3d';
@@ -7190,6 +7281,12 @@ function drawPileArray(pier) {
   canvas.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, W, H);
+  if(work==='Pot Bearing'){
+    if(use3D&&drawPotBearingBlender(ctx,W,H,pier,pts)){blenderShown();return;}
+    drawPotBearingPlan(ctx,W,H,pier,pts);
+    if(modelStatus&&use3D)modelStatus.textContent='2D fallback: loading or changed reference geometry';
+    return;
+  }
 
   if (!pts.length) {
     ctx.fillStyle = '#8aadcc';
@@ -8097,7 +8194,7 @@ function renderSurveyTable(pier) {
   const keyFn = WORK_ARRAY_KEY[work];
   const arrayKey = keyFn ? keyFn(pier) : pier.piles;
   const excelPts = _excelChOsPoints(pier, work, 'table');
-  let pts = work === 'Pier Head' && !isClarkStationElement(pier) && !isSubstationPier(pier)
+  let pts = work === 'Pot Bearing' ? getPotBearingPoints(pier) : work === 'Pier Head' && !isClarkStationElement(pier) && !isSubstationPier(pier)
     ? getPierHeadModel(pier).points
     : isClarkStationElement(pier)
     ? clarkRenderPointsForWork(pier, work)
@@ -8323,6 +8420,7 @@ function setDevCell(id, val, tol, isDeviate=false) {
   if (!el) return;
   el.textContent = val.toFixed(3);
   el.className = 'dev-cell';
+  if(document.getElementById('element').value==='Pot Bearing')return;
   const absVal = Math.abs(val);
   if (absVal <= tol) el.classList.add('dev-ok');
   else if (absVal <= tol * 2) el.classList.add('dev-warn');
