@@ -61,7 +61,7 @@ for id,g in source.items():
  def screen(x,y):return target+right*((x-.5)*16)+up*((.5-y)*height)+toward*18
  def text(body,x,y,size=.14,align='LEFT'):
   c=bpy.data.curves.new(body,'FONT');c.body=body;c.size=size;c.align_x=align;o=bpy.data.objects.new(body,c);s.collection.objects.link(o);o.location=screen(x,y);o.rotation_euler=cam.rotation_euler;c.materials.append(ink)
- text(id+' - POT BEARING | BLENDER',.035,.07,.19)
+ text(id.replace('-live','')+' - POT BEARING | BLENDER',.035,.07,.19)
  text('On concrete plinths / pier head lower profile schematic',.035,.115,.16)
  entries={-1:[],1:[]}
  for p in g['points']:

@@ -1766,7 +1766,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/elastomeric-blender-manifest.js?v=20261019-p1092"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261018"></script>
-<script src="assets/pot-blender-manifest.js?v=20261019"></script>
+<script src="assets/pot-blender-manifest.js?v=20261019-live"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -2427,17 +2427,18 @@ function getPotBearingPoints(pier) {
   })));
 }
 
-function getPotBearingContext(pier){
+function getPotBearingContext(pier,headPoints=null){
   if(!getPotBearingPoints(pier).length||!window.StructuralBlender)return null;
   const imported=_excelChOsPoints(pier,'Bearing Plinths','canvas');
   const raw=imported||ARRAYS_RAW[WORK_ARRAY_KEY['Bearing Plinths'](pier)]||[];
   const plinths=_orientPierSpecificPoints(pier,'Bearing Plinths',raw,Boolean(imported)).map(p=>({label:p.label,ch:p.ch,os:p.os,z:Number((getWorkPointElev(pier,'Bearing Plinths',p.label)-getTopOfColumnElevation(pier)).toFixed(6))}));
-  return {body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier),plinths,step:['P-1091','P-1094'].includes(pier.id)?.6:0,highSign:pier.id==='P-1091'?-1:1};
+  return {body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier,headPoints),plinths,step:['P-1091','P-1094'].includes(pier.id)?.6:0,highSign:pier.id==='P-1091'?-1:1};
 }
 const potBlenderImages={};
 function drawPotBearingBlender(ctx,W,H,pier,points){
-  const record=window.POT_BLENDER_MANIFEST?.[pier.id];
-  if(!record||JSON.stringify(record.points)!==JSON.stringify(points)||JSON.stringify(record.context)!==JSON.stringify(getPotBearingContext(pier)))return false;
+  const context=JSON.stringify(getPotBearingContext(pier));
+  const record=Object.entries(window.POT_BLENDER_MANIFEST||{}).find(([key,r])=>(key===pier.id||key.startsWith(pier.id+'-'))&&JSON.stringify(r.points)===JSON.stringify(points)&&JSON.stringify(r.context)===context)?.[1];
+  if(!record)return false;
   let img=potBlenderImages[record.image];
   if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image;}
   if(!img.complete||!img.naturalWidth)return false;
