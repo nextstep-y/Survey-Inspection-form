@@ -57,7 +57,8 @@ for index,(key,g) in enumerate(source['templates'].items()):
  entries={-1:[],1:[]}
  for p in g['points']:
   pos=position(p)+Vector((0,0,.012));side=-1 if (pos-center).dot(right)<0 else 1
-  entries[side].append((.5-(pos-center).dot(up)/height,p,pos))
+  if not (g['kind']=='Pile cap' and p['label'].startswith('P') and p['label'][1:].isdigit()):
+   entries[side].append((.5-(pos-center).dot(up)/height,p,pos))
   bpy.ops.mesh.primitive_uv_sphere_add(segments=8,ring_count=4,radius=scale*.0028,location=pos);ob=bpy.context.object;ob.name=p['label'];ob.data.materials.append(unknown if p['z'] is None else orange)
   ob['CH']=p['ch'];ob['OS']=p['os'];ob['relative_Z']=p['z'] if p['z'] is not None else 'UNKNOWN - projected on datum'
   if p.get('kind')=='dowel':

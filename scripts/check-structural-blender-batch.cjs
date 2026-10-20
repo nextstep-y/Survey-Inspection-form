@@ -23,7 +23,8 @@ for(const [id,t] of Object.entries(m.templates)){
  assert.equal(crypto.createHash('sha256').update(JSON.stringify(t.geometry)).digest('hex').slice(0,16),id);
  const png=fs.readFileSync(path.join(root,t.image));assert.equal(png.readUInt32BE(16),1800);assert.equal(png.readUInt32BE(20),1000);
  assert.ok(fs.statSync(path.join(root,'assets/models/structural-blender',id+'.blend')).size>0);
- assert.equal(new Set(t.anchors.map(a=>a.label)).size,t.geometry.points.length);
+ const visible=t.geometry.points.filter(p=>!(t.geometry.kind==='Pile cap'&&/^P\d+[A-Za-z]?$/.test(p.label)));
+ assert.equal(new Set(t.anchors.map(a=>a.label)).size,visible.length);
  for(const side of [-1,1]){
   const anchors=t.anchors.filter(a=>a.side===side).sort((a,b)=>a.y-b.y);
   for(let i=0;i<anchors.length;i++){assert.ok(anchors[i].y>=.15&&anchors[i].y<=.85);if(i)assert.ok(anchors[i].y-anchors[i-1].y>.018);}

@@ -49,6 +49,7 @@ def label(name,text,x,y,size=.28,align='LEFT'):
  ob=bpy.data.objects.new(name,c);s.collection.objects.link(ob);ob.location=screen(x,y);ob.rotation_euler=cam.rotation_euler;c.materials.append(ink)
 groups={-1:[],1:[]}
 for p in pts:
+ if p['label'].startswith('P') and p['label'][1:].isdigit():continue
  pos=Vector((p['os'],p['ch'],.035));sx=(pos-target).dot(right);sy=(pos-target).dot(up)
  groups[-1 if sx<0 else 1].append((sy,p,pos))
 for side,entries in groups.items():

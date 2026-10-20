@@ -1764,7 +1764,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/structural-blender-geometry.js?v=20261020-br114"></script>
 <script src="assets/elastomeric-blender-geometry.js?v=20261018-2"></script>
 <script src="assets/elastomeric-blender-manifest.js?v=20261020-grout"></script>
-<script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
+<script src="assets/structural-blender-manifest.js?v=20261020-cap-no-pile-labels"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261020-br114-no-dowels"></script>
 <script src="assets/pot-blender-manifest.js?v=20261020-br114-pot"></script>
 <script id="data-script">
@@ -6775,7 +6775,7 @@ function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
     const image=new Image();cached={image,ready:false};structuralBlenderImages.set(templateId,cached);
     image.onload=()=>{cached.ready=true;if(currentPier&&canvasViewMode==='3d')drawPileArray(currentPier);};
     image.onerror=()=>structuralBlenderImages.delete(templateId);
-    image.src=template.image;
+    image.src=template.image+(kind==='Pile cap'?'?v=20261020-no-pile-labels':'');
   }
   if(!cached.ready)return false;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
@@ -6788,6 +6788,7 @@ function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
   const count=Math.max(...[-1,1].map(side=>template.anchors.filter(a=>a.side===side).length));
   ctx.font=`bold ${Math.min(19,Math.max(11,300/count))}px monospace`;ctx.textBaseline='middle';
   for(const a of template.anchors){
+    if(kind==='Pile cap'&&/^P\d+[A-Za-z]?$/.test(a.label))continue;
     const p=points.find(p=>p.label===a.label);ctx.textAlign=a.side<0?'right':'left';
     const label=kind==='Pier Head'&&Number.isFinite(p.z)?p.label+' '+p.z.toFixed(3):kind==='Pier Head'&&/^T\d+$/.test(p.label)?p.label+' ?':p.label;
     ctx.fillText(label,x+a.x*w+(a.side<0?-7:7),y+a.y*h);
@@ -6865,7 +6866,7 @@ function drawP1091CapPreview(ctx,W,H,pier,work,points) {
   if(!p1091CapPreview) {
     const image=new Image();p1091CapPreview={image,ready:false};
     image.onload=()=>{p1091CapPreview.ready=true;if(currentPier?.id==='P-1091' && document.getElementById('element').value==='Pile cap' && canvasViewMode==='3d')drawPileArray(currentPier);};
-    image.src='assets/p1091-pilecap-v1.png';
+    image.src='assets/p1091-pilecap-v1.png?v=20261020-no-pile-labels';
   }
   if(!p1091CapPreview.ready)return false;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.drawImage(p1091CapPreview.image,0,0,W,H);
@@ -7255,6 +7256,7 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
   const rails={left:[],right:[]};
   for(const p of valid){
     const v=project(p);ctx.beginPath();ctx.arc(v.x,v.y,3.2,0,Math.PI*2);ctx.fillStyle='#bf5b14';ctx.fill();
+    if(cap&&/^P\d+[A-Za-z]?$/.test(p.label))continue;
     if(cap && !/^\d+$/.test(p.label)){
       // Keep outer corners / pile axes locally labelled so their leaders do
       // not cross the central column-vertex annotation rails.
@@ -7281,7 +7283,7 @@ function drawColumnCapModel3D(ctx,W,H,pier,work,points) {
   ctx.font='15px sans-serif';ctx.fillText(`PARTIAL | ${column?'upper shaft only; lift boundary not defined':'cap depth schematic; pile axes projected to top'}`,14,43);
   drawIncreasingChainageArrow(ctx,{x:W-110,y:75},{x:W-75,y:50},W-115,27,'');
   ctx.fillStyle='#111';ctx.textAlign='center';ctx.font='14px sans-serif';
-  ctx.fillText(column?'Point labels only | display shaft shortened; no design elevation assumed':'Pile labels show projected axes | shape from this pier\'s CH/OS',W/2,H-25);
+  ctx.fillText(column?'Point labels only | display shaft shortened; no design elevation assumed':'Pile axes projected without labels | shape from this pier\'s CH/OS',W/2,H-25);
   document.getElementById('pile-canvas').classList.add('canvas-live-model');document.body.classList.add('live-model-view');
   return true;
 }
@@ -7902,6 +7904,7 @@ function drawPileArray(pier) {
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(255,255,255,0.0)';
     ctx.fill();
+    if(work==='Pile cap'&&/^P\d+[A-Za-z]?$/.test(p.label))return;
     ctx.fillStyle = '#000';
     const fs = _denseP989BearingLabels ? 12 : (_denseBearingElementLabels ? 13 : ((['Bearing Plinths','Elastomeric'].includes(work)) ? Math.max(15, Math.min(18, r * 0.65)) : Math.max(20, Math.min(24, r * 0.85))));
     ctx.font = `bold ${fs}px monospace`;
