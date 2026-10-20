@@ -1,5 +1,11 @@
 # BR Dowel center-axis audit - 2026-10-18
 
+Update 2026-10-20: At the user's request, P-888, P-889, P-890 and P-891
+Pier Head work no longer includes Dowel controls (Sx-Dn) in its table, CSV,
+or Blender view. The historical drawing controls below remain source evidence,
+not active survey points for these four forms. Five other verified piers retain
+40 Dowel axes. T controls and elevations are unchanged by this removal.
+
 Status: 9 individually checked Pier Head plans, 72 calculated plan axes. P-1049 and P-1050 are excluded at the user's request because their Pier Head layouts are not finalized. P-1051 is withheld: the PDF found under its folder identifies P-1048 in the official title block. No inferred replacement layout is used.
 
 ## Drawing controls

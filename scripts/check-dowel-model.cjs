@@ -22,8 +22,10 @@ const expected={
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-7,`${a} != ${b}`);
 for(const [id,[ch,bearings]]of Object.entries(expected)){
  const p=api.piers[id],model=api.model(p),before=JSON.stringify(model),d=model.points.filter(p=>p.kind==='dowel');
- assert.equal(d.length,8);assert.equal(new Set(model.points.map(p=>p.label)).size,model.points.length);
- for(const [name,os,mm]of bearings){const g=d.filter(p=>p.bearing===name);assert.equal(g.length,4);
+ const hidden=['P-888','P-889','P-890','P-891'].includes(id);
+ assert.equal(d.length,hidden?0:8);assert.equal(new Set(model.points.map(p=>p.label)).size,model.points.length);
+ if(hidden)assert.ok(model.points.every(p=>!/^S\d+-D\d+$/.test(p.label)));
+ for(const [name,os,mm]of (hidden?[]:bearings)){const g=d.filter(p=>p.bearing===name);assert.equal(g.length,4);
   near(g.reduce((s,p)=>s+p.ch,0)/4,ch);near(g.reduce((s,p)=>s+p.os,0)/4,os);
   near(Math.max(...g.map(p=>p.ch))-Math.min(...g.map(p=>p.ch)),mm/1000);
   near(Math.max(...g.map(p=>p.os))-Math.min(...g.map(p=>p.os)),mm/1000);
@@ -43,4 +45,4 @@ for(const [id,t]of Object.entries(c.window.DOWEL_BLENDER_MANIFEST.templates)){
  assert.ok(fs.statSync('assets/models/dowel-blender/'+id+'.blend').size>0);
  assert.equal(new Set(t.anchors.map(a=>a.label)).size,t.geometry.points.length);
 }
-console.log('PASS 9 verified piers / 72 calculated Dowel axes; per-pier spacing, chainage side, N/E, blank Z, Blender guards; 3 excluded records.');
+console.log('PASS 5 displayed Dowel piers / 40 axes; 4 BR114 Pier Head forms without Dowel; spacing, N/E, blank Z and Blender guards.');

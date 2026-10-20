@@ -1765,7 +1765,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/elastomeric-blender-geometry.js?v=20261018-2"></script>
 <script src="assets/elastomeric-blender-manifest.js?v=20261020-grout"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
-<script src="assets/dowel-blender-manifest.js?v=20261020-br114"></script>
+<script src="assets/dowel-blender-manifest.js?v=20261020-br114-no-dowels"></script>
 <script src="assets/pot-blender-manifest.js?v=20261020-solids"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
@@ -2550,6 +2550,8 @@ const BR_DOWEL_LAYOUTS = Object.freeze({
 });
 const BR_DOWEL_PENDING = {'P-1049':'Skipped by user: Pier Head layout not finalized','P-1050':'Skipped by user: Pier Head layout not finalized','P-1051':'Unverified: available plan title identifies P-1048'};
 function getPierHeadDowelPoints(pier){
+ // These four Pier Head forms intentionally contain no bearing Dowel controls.
+ if(['P-888','P-889','P-890','P-891'].includes(pier.id))return [];
  const layout=BR_DOWEL_LAYOUTS[pier.id];if(!layout)return [];
  return layout.bearings.flatMap(([bearing,os,spacing])=>[[1,-1],[1,1],[-1,1],[-1,-1]].map(([dc,ds],i)=>{
   const ch=Number((layout.ch+dc*spacing/2000).toFixed(6));
@@ -2579,7 +2581,8 @@ function getDowelBlenderGeometry(pier,input=getPierHeadModel(pier).points){
  const top={name:'Head plan envelope',ring,top:0,bottom:null};
  const surfaces=pier.id==='P-1094'?[{...top,ring:[{ch:-a,os:-b},{ch:-a,os:b},{ch:0,os:b},{ch:0,os:-b}]},{...top,name:'High top',ring:[{ch:0,os:-b},{ch:0,os:b},{ch:a,os:b},{ch:a,os:-b}],top:.6,bottom:0}]:[top];
  g={...g,body:{...g.body,upper:ring},surfaces:BR114_DRAWING_CONTROLS[pier.id]?g.surfaces:[...surfaces,...g.surfaces.filter(s=>s.name==='Island')]};
- return {...g,points:[...g.points,...getPierHeadDowelPoints(pier).map(p=>({label:p.label,ch:p.ch,os:p.os,z:p.projectionRise,kind:'dowel',surveyZ:null,...(p.modelCH===undefined?{}:{modelCH:p.modelCH})}))],dowelSource:BR_DOWEL_LAYOUTS[pier.id],...(pier.id==='P-1091'?{detailedP1091:true}:{}),status:g.status+' | Dowel plan axes only; Z unverified'};
+ const dowels=getPierHeadDowelPoints(pier);
+ return {...g,points:[...g.points,...dowels.map(p=>({label:p.label,ch:p.ch,os:p.os,z:p.projectionRise,kind:'dowel',surveyZ:null,...(p.modelCH===undefined?{}:{modelCH:p.modelCH})}))],...(dowels.length?{dowelSource:BR_DOWEL_LAYOUTS[pier.id]}:{}),...(pier.id==='P-1091'?{detailedP1091:true}:{}),status:g.status+(dowels.length?' | Dowel plan axes only; Z unverified':'')};
 }
 
 // P-1093 BR115 main pier head and bearing plinth geometry from
@@ -6735,11 +6738,12 @@ function drawElastomericBlenderBatch(ctx,W,H,pier,work,points){
 }
 function drawStructuralBlenderBatch(ctx,W,H,pier,work,points){
   const withDowel=work==='Pier Head'&&points.some(p=>p.kind==='dowel');
+  const preparedHead=work==='Pier Head'&&Boolean(BR_DOWEL_LAYOUTS[pier.id]);
   if(pier.id==='P-1091'&&!withDowel)return false;
-  const kind=_isColumnWork(work)?'Column':work, manifest=withDowel?window.DOWEL_BLENDER_MANIFEST:window.STRUCTURAL_BLENDER_MANIFEST;
+  const kind=_isColumnWork(work)?'Column':work, manifest=preparedHead?window.DOWEL_BLENDER_MANIFEST:window.STRUCTURAL_BLENDER_MANIFEST;
   const record=manifest?.records[pier.id+'|'+kind];
   if(!record||!window.StructuralBlender)return false;
-  const geometry=withDowel?getDowelBlenderGeometry(pier,points):window.StructuralBlender.build(pier,work,points);
+  const geometry=preparedHead?getDowelBlenderGeometry(pier,points):window.StructuralBlender.build(pier,work,points);
   // Compare the whole model, including context surfaces and relative levels.
   // A Sheet edit must never leave a stale static Blender image in use.
   const signature=JSON.stringify(geometry);

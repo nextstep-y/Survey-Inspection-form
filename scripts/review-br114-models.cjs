@@ -1,7 +1,7 @@
 // Narrow generated model inputs/merge to the four attached-drawing Piers.
 const fs=require('fs'),cp=require('child_process'),vm=require('vm');
 const ids=['P-888','P-889','P-890','P-891'],mode=process.argv[2];
-for(const family of ['bearing','dowel']){
+for(const family of (process.argv[3]?[process.argv[3]]:['bearing','dowel'])){
  const file='assets/'+family+'-blender-manifest.js',folder='output/'+family+'-blender-batch/';
  if(mode==='select'){
   fs.copyFileSync(file,folder+'before-br114.js');
