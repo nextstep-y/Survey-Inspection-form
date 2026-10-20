@@ -3,6 +3,10 @@ app.whenReady().then(async()=>{const w=new BrowserWindow({show:false,width:1500,
  await w.loadURL('file:///Users/weerayutpooncharoen/Desktop/Inspection/index.html');
  const errors=[];w.webContents.on('console-message',(_e,level,message)=>{if(level>=3)errors.push(message)});
  for(const [id,ch,os,rise,types,dims,heights] of [
+  ['P-888',.925,2.4,.119,['S3','S1'],[[.510,.670],[.535,.850]],[.126,.128]],
+  ['P-889',0,2,.122,['S5','S4'],[[1.900,1.065],[1.275,1.275]],[.233,.213]],
+  ['P-890',0,2,.122,['S6','S2'],[[1.010,1.090],[1.055,1.420]],[.218,.233]],
+  ['P-891',-.925,2.4,.119,['S3','S1'],[[.510,.670],[.535,.850]],[.126,.128]],
   ['P-1091',.925,2.4,.124,['S3','S1'],[[.595,.815],[.630,1.025]],[.143,.147]],
   ['P-1092',0,2,.120,['S5','S4'],[[1.865,1.250],[1.480,1.480]],[.269,.245]],
   ['P-1093',0,2,.120,['S6','S2'],[[1.165,1.275],[1.250,1.675]],[.250,.269]],
@@ -22,6 +26,9 @@ app.whenReady().then(async()=>{const w=new BrowserWindow({show:false,width:1500,
    assert.ok(p.reduce((s,x,k)=>{const y=p[(k+1)%4];return s+x.os*y.ch-y.os*x.ch},0)>0);
   }
   data.points.forEach((p,i)=>{assert.ok(Math.abs(data.rows[i].n-(data.pier.n+p.ch*Math.sin(a)+p.os*Math.cos(a)))<.00006);assert.ok(Math.abs(data.rows[i].e-(data.pier.e-p.ch*Math.cos(a)+p.os*Math.sin(a)))<.00006)});
+  const exported=await w.webContents.executeJavaScript(`(async()=>{let blob;const old=URL.createObjectURL,click=HTMLAnchorElement.prototype.click;URL.createObjectURL=b=>{blob=b;return 'blob:qa'};HTMLAnchorElement.prototype.click=function(){};try{exportDesign('csv');return await blob.text()}finally{URL.createObjectURL=old;HTMLAnchorElement.prototype.click=click}})()`);
+  const csvRows=exported.split('\n');assert.equal(csvRows.length,8);
+  csvRows.forEach((line,i)=>{const q=line.split(','),p=data.points[i];assert.equal(q[0],p.label);assert.equal(q[1],(data.pier.e-p.ch*Math.cos(a)+p.os*Math.sin(a)).toFixed(3));assert.equal(q[2],(data.pier.n+p.ch*Math.sin(a)+p.os*Math.cos(a)).toFixed(3));assert.equal(q[3],p.z.toFixed(3));});
   await w.webContents.executeJavaScript(`setCanvasViewMode('3d');void 0;`);
   for(let tries=0;tries<50;tries++){if(await w.webContents.executeJavaScript(`document.getElementById('pile-canvas').dataset.modelSource==='Blender'`))break;await new Promise(r=>setTimeout(r,100));}
   assert.equal(await w.webContents.executeJavaScript(`document.getElementById('pile-canvas').dataset.modelSource`),'Blender');

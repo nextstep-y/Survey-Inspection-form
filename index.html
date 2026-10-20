@@ -1766,7 +1766,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/elastomeric-blender-manifest.js?v=20261020-grout"></script>
 <script src="assets/structural-blender-manifest.js?v=20261017-islands"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261020-br114-no-dowels"></script>
-<script src="assets/pot-blender-manifest.js?v=20261020-solids"></script>
+<script src="assets/pot-blender-manifest.js?v=20261020-br114-pot"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -2436,6 +2436,21 @@ const BR115_POT_STACK={
   'P-1093':{S2:{plinth:120,bottomGrout:50,bearing:269,topGrout:30,row:29},S6:{plinth:119,bottomGrout:50,bearing:250,topGrout:50,row:30}},
   'P-1094':{S1:{plinth:124,bottomGrout:50,bearing:147,topGrout:46,row:31},S3:{plinth:124,bottomGrout:50,bearing:143,topGrout:50,row:32}}
 };
+// BC01/BR114: RL A BC!G4:K11, checked against 066040--066045 Rev B.
+const BR114_POT_STACK={
+ 'P-888':{S1:{plinth:119,bottomGrout:50,bearing:128,topGrout:50,row:4},S3:{plinth:119,bottomGrout:50,bearing:126,topGrout:52,row:5}},
+ 'P-889':{S4:{plinth:122,bottomGrout:50,bearing:213,topGrout:50,row:6},S5:{plinth:122,bottomGrout:50,bearing:233,topGrout:30,row:7}},
+ 'P-890':{S2:{plinth:122,bottomGrout:50,bearing:233,topGrout:30,row:8},S6:{plinth:122,bottomGrout:50,bearing:218,topGrout:45,row:9}},
+ 'P-891':{S1:{plinth:119,bottomGrout:50,bearing:128,topGrout:50,row:10},S3:{plinth:119,bottomGrout:50,bearing:126,topGrout:52,row:11}}
+};
+const BR114_POT_DETAILS={
+ S1:{width:.535,length:.850,height:.128,source:'066040-B'},
+ S2:{width:1.055,length:1.420,height:.233,source:'066041-B'},
+ S3:{width:.510,length:.670,height:.126,source:'066042-B'},
+ S4:{width:1.275,length:1.275,height:.213,source:'066043-B'},
+ S5:{width:1.900,length:1.065,height:.233,source:'066044-B'},
+ S6:{width:1.010,length:1.090,height:.218,source:'066045-B'}
+};
 function getBR115MainPlinthRise(pier,label){
   const p=String(label||'').replace(/^E/,'');
   const left=/^(BL|CL|PBL)[1-4]$/.test(p),right=/^(BR|CR|PBR)[1-4]$/.test(p);
@@ -2444,6 +2459,10 @@ function getBR115MainPlinthRise(pier,label){
 }
 function getPotBearingPoints(pier) {
   const layouts={
+    'P-888':{types:['S3','S1'],ch:.925,offset:2.4},
+    'P-889':{types:['S5','S4'],ch:0,offset:2},
+    'P-890':{types:['S6','S2'],ch:0,offset:2},
+    'P-891':{types:['S3','S1'],ch:-.925,offset:2.4},
     'P-1091':{types:['S3','S1'],ch:.925,offset:2.4,rise:.124},
     'P-1092':{types:['S5','S4'],ch:0,offset:2,rise:.120},
     'P-1093':{types:['S6','S2'],ch:0,offset:2,rise:.120},
@@ -2459,7 +2478,8 @@ function getPotBearingPoints(pier) {
     S6:{width:1.165,length:1.275,height:.250,source:'066057-B'}
   };
   const layout=layouts[pier?.id];if(!layout)return [];
-  const bearings=layout.types.map((type,i)=>({...details[type],stack:BR115_POT_STACK[pier.id][type],type,prefix:i?'PBR':'PBL',os:(i?1:-1)*layout.offset}));
+  const br114=Boolean(BR114_POT_STACK[pier.id]);
+  const bearings=layout.types.map((type,i)=>({...((br114?BR114_POT_DETAILS:details)[type]),stack:(br114?BR114_POT_STACK:BR115_POT_STACK)[pier.id][type],type,prefix:i?'PBR':'PBL',os:(i?1:-1)*layout.offset}));
   return bearings.flatMap(b=>[[b.length/2,0],[0,-b.width/2],[-b.length/2,0],[0,b.width/2]].map(([ch,delta],i)=>({
     label:b.prefix+(i+1),ch:layout.ch+ch,os:b.os+delta,z:getTopOfColumnElevation(pier)+(b.stack.plinth+b.stack.bottomGrout+b.stack.bearing)/1000,
     bearing:b.type,source:b.source,width:b.width,length:b.length,centerOS:b.os,centerCH:layout.ch,
@@ -2472,7 +2492,7 @@ function getPotBearingContext(pier,headPoints=null){
   const imported=_excelChOsPoints(pier,'Bearing Plinths','canvas');
   const raw=imported||ARRAYS_RAW[WORK_ARRAY_KEY['Bearing Plinths'](pier)]||[];
   const plinths=_orientPierSpecificPoints(pier,'Bearing Plinths',raw,Boolean(imported)).map(p=>({label:p.label,ch:p.ch,os:p.os,z:Number((getWorkPointElev(pier,'Bearing Plinths',p.label)-getTopOfColumnElevation(pier)).toFixed(6))}));
-  return {body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier,headPoints),plinths,step:['P-1091','P-1094'].includes(pier.id)?.6:0,highSign:pier.id==='P-1091'?-1:1};
+  return {body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier,headPoints),plinths,step:BR114_DRAWING_CONTROLS[pier.id]?.step ?? (['P-1091','P-1094'].includes(pier.id)?.6:0),highSign:BR114_DRAWING_CONTROLS[pier.id]?.highSign ?? (pier.id==='P-1091'?-1:1)};
 }
 const potBlenderImages={};
 function drawPotBearingBlender(ctx,W,H,pier,points){

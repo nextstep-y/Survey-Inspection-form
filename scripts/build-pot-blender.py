@@ -1,5 +1,5 @@
 """External bearing review solids. Undimensioned component proportions are schematic."""
-import bpy,json,math,sys
+import bpy,json,math,sys,os
 from pathlib import Path
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[1]
@@ -9,7 +9,12 @@ source=json.loads((ROOT/'output/pot-blender/source.json').read_text())
 out=ROOT/'assets/pot-blender';out.mkdir(exist_ok=True)
 models=ROOT/'assets/models/pot-blender';models.mkdir(parents=True,exist_ok=True)
 manifest={}
+selected=os.environ.get('POT_PIERS','').split(',') if os.environ.get('POT_PIERS') else None
+manifest_file=ROOT/'assets/pot-blender-manifest.js'
+if selected and manifest_file.exists():
+ manifest=json.loads(manifest_file.read_text().split('=',1)[1].strip().rstrip(';'))
 for id,g in source.items():
+ if selected and id not in selected:continue
  bpy.ops.wm.read_factory_settings(use_empty=True);s=bpy.context.scene;bpy.context.preferences.filepaths.save_version=0
  def mat(name,color):
   m=bpy.data.materials.new(name);m.diffuse_color=(*color,1);return m
