@@ -1760,13 +1760,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261020-br114"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261024-p1094-plinth"></script>
 <script src="assets/structural-blender-geometry.js?v=20261020-br114"></script>
 <script src="assets/elastomeric-blender-geometry.js?v=20261018-2"></script>
 <script src="assets/elastomeric-blender-manifest.js?v=20261020-grout"></script>
 <script src="assets/structural-blender-manifest.js?v=20261020-cap-no-pile-labels"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261020-br114-no-dowels"></script>
-<script src="assets/pot-blender-manifest.js?v=20261020-br114-pot"></script>
+<script src="assets/pot-blender-manifest.js?v=20261024-p1094-plinth"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -2002,6 +2002,12 @@ function expandBearingPlinthEdges(points){
   return result.size?(points||[]).map(p=>result.get(p.label)||p):points;
 }
 function _orientPierSpecificPointsBase(pier, work, points, hasExcelOverride = false) {
+  // 023170-B: viaduct pair is 450 CH x 550 OS; do not reuse the
+  // legacy shared transition array. The wrapper adds 30 mm per edge once.
+  if(pier?.id==='P-1094'&&work==='Bearing Plinths'){
+    const controls={UL:[.925,-1.7,.450,.550],UR:[.925,1.7,.450,.550],DL:[-.925,-2.4,.980,.980],DR:[-.925,2.4,1.050,1.050]};
+    return Object.entries(controls).flatMap(([group,[ch,os,sizeCH,sizeOS]])=>[[1,-1],[1,1],[-1,1],[-1,-1]].map(([a,b],i)=>({label:group+(i+1),ch:Number((ch+a*sizeCH/2).toFixed(6)),os:Number((os+b*sizeOS/2).toFixed(6))})));
+  }
   if(BR114_DRAWING_CONTROLS[pier?.id]){
     if(work==='Pier Head')return getBR114HeadPoints(pier);
     if(work==='Bearing Plinths')return getBR114PlinthPoints(pier);
@@ -2500,7 +2506,7 @@ function drawPotBearingBlender(ctx,W,H,pier,points){
   const record=Object.entries(window.POT_BLENDER_MANIFEST||{}).find(([key,r])=>(key===pier.id||key.startsWith(pier.id+'-'))&&JSON.stringify(r.points)===JSON.stringify(points)&&JSON.stringify(r.context)===context)?.[1];
   if(!record)return false;
   let img=potBlenderImages[record.image];
-  if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image;}
+  if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image+(pier.id==='P-1094'?'?v=20261024-plinth':'');}
   if(!img.complete||!img.naturalWidth)return false;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   const height=W*img.naturalHeight/img.naturalWidth;
