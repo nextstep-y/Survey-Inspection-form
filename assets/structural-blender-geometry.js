@@ -11,7 +11,8 @@ window.StructuralBlender = (() => {
     const model=getPierHeadModel(pier),ps=model.points.filter(p=>/^T\d+$/.test(p.label));
     if(ps.length<4)return null;
     const sign=pier.id==='P-1091'&&work!=='Pier Head'?-1:1;
-    const a=Math.min(...ps.map(p=>p.ch*sign)),b=Math.max(...ps.map(p=>p.ch*sign)),c=Math.min(...ps.map(p=>p.os)),d=Math.max(...ps.map(p=>p.os));
+    const checked=work==='Bearing Plinths'?getDrawingPlinthControl(pier)?.headBounds:null;
+    const a=checked?.minCH??Math.min(...ps.map(p=>p.ch*sign)),b=checked?.maxCH??Math.max(...ps.map(p=>p.ch*sign)),c=checked?.minOS??Math.min(...ps.map(p=>p.os)),d=checked?.maxOS??Math.max(...ps.map(p=>p.os));
     if(!(b>a&&d>c))return null;
     const measured=model.topPier-(Number(pier.topCap)+Number(pier.columnHeightMm)/1000);
     const knownDepth=Number(pier.columnHeightMm)>0&&Number.isFinite(Number(pier.topCap))&&Number.isFinite(measured)&&measured>0&&measured<6;
@@ -103,7 +104,8 @@ window.StructuralBlender = (() => {
     if(!model)return {surfaces:[],missing:true};
     // P-1091 head survey CH has the opposite display sense to its bearing CH.
     const sign=pier.id==='P-1091'?-1:1;
-    return {surfaces:model.surfaces.filter(s=>s.name==='Island').map(s=>({...s,ring:s.ring.map(p=>({ch:round(p.ch*sign),os:p.os}))})),missing:model.islandMissing||model.points.some(p=>p.z===null)};
+    const shift=getDrawingPlinthControl(pier)?.islandOffsetOS||0;
+    return {surfaces:model.surfaces.filter(s=>s.name==='Island').map(s=>({...s,ring:s.ring.map(p=>({ch:round(p.ch*sign),os:round(p.os+shift)}))})),missing:model.islandMissing||model.points.some(p=>p.z===null)};
   }
   return {build,pointsFor,bodyFor,islandsFor};
 })();

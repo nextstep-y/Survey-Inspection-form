@@ -30,7 +30,7 @@ window.ElastomericBlender=(()=>{
    pads.push({points:g,base:round(base),rise:round(g[0].z-base)});
   }
   // Never fabricate or relocate a supporting footprint to hide a source conflict.
-  return {points:ps,groups:supportMissing?[]:pg,pads,supportMissing,head:{minCH:Math.min(...ts.map(p=>p.ch)),maxCH:Math.max(...ts.map(p=>p.ch)),minOS:Math.min(...ts.map(p=>p.os)),maxOS:Math.max(...ts.map(p=>p.os))},
+  return {points:ps,groups:supportMissing?[]:pg,pads,supportMissing,head:getDrawingPlinthControl(pier)?.headBounds||{minCH:Math.min(...ts.map(p=>p.ch)),maxCH:Math.max(...ts.map(p=>p.ch)),minOS:Math.min(...ts.map(p=>p.os)),maxOS:Math.max(...ts.map(p=>p.os))},
    step:['P-1091','P-1094'].includes(pier.id)?.6:0,highSign:pier.id==='P-1091'?-1:1,body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier,headInput),renderRevision:'elastomeric-1'};
  }
  return {build};

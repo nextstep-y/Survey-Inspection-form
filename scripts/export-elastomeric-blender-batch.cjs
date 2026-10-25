@@ -23,7 +23,7 @@ const rows=Object.values(api.piers).map(p=>{
  const r=records[p.id+'|TYPE1'],g=r&&templates[r.template];
  return '| '+p.id+' | '+(!g?'Not prepared - insufficient source geometry':g.supportMissing?'PARTIAL - supporting plinth footprint missing or inconsistent; omitted':g.islands.missing?'PARTIAL - Island geometry incomplete':'Prepared - contextual head profile remains PARTIAL')+' |';
 });
-fs.writeFileSync(path.join(root,'docs/elastomeric-blender-coverage.md'),[
+if(!process.env.EXPORT_SKIP_COVERAGE)fs.writeFileSync(path.join(root,'docs/elastomeric-blender-coverage.md'),[
  '# Elastomeric Blender coverage - 2026-10-18','',
  '366 pier records, 732 pier/type combinations, 84 distinct templates. Coverage means available review models, not drawing certification. Includes P-1091 and P-1142. The 18 unprepared records retain calculated Canvas fallback where possible; no fabricated survey coordinates are added.','',
  'Pad plan corners and levels come from the existing canonical app data. Concrete plinth footprints retain the earlier 30 mm expansion on every edge; elastomeric pad footprints are not enlarged. Offline pad top is exactly 0.067 m above the corresponding plinth level. Live reference changes invalidate a static image and fall back to the calculated view. A legacy Sheet reference of Top of Pier with thickness 0.067 m is interpreted as the confirmed increment above plinth; the Sheet itself is not edited. P-1091 retains its drawing-controlled elevation protection.','',
