@@ -37,7 +37,8 @@ for index,(key,g) in enumerate(source['templates'].items()):
   if z>0:
    mesh('High head step',[(x,y,0) for x,y,_ in top]+top,[(4,5,6,7),(3,2,1,0)]+[(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)],concrete)
   else:mesh('Context top',top,[(0,1,2,3)],concrete)
- if g['step'] and lo<0<hi:surface(lo,0,g['step'] if g['highSign']<0 else 0);surface(0,hi,g['step'] if g['highSign']>0 else 0)
+ split=g.get('stepCH',0)
+ if g['step'] and lo<split<hi:surface(lo,split,g['step'] if g['highSign']<0 else 0);surface(split,hi,g['step'] if g['highSign']>0 else 0)
  else:surface(lo,hi,0)
  for index_island,island in enumerate(g['islands']['surfaces']):
   ps=island['ring'];n=len(ps);base=[(p['os'],p['ch'],island['bottom']) for p in ps];top=[(p['os'],p['ch'],island['top']) for p in ps]
@@ -47,7 +48,7 @@ for index,(key,g) in enumerate(source['templates'].items()):
  for group in g['groups']:
   ch=sum(p['ch'] for p in group)/4;os=sum(p['os'] for p in group)/4
   ring=sorted(group,key=lambda p:math.atan2(p['ch']-ch,p['os']-os))
-  base=g['step'] if ch*g['highSign']>0 else 0
+  base=g['step'] if (ch-split)*g['highSign']>0 else 0
   for island in g['islands']['surfaces']:
    ps=island['ring']
    if min(p['ch'] for p in ps)<=ch<=max(p['ch'] for p in ps) and min(p['os'] for p in ps)<=os<=max(p['os'] for p in ps) and island['top']<=min(p['z'] for p in ring):base=max(base,island['top'])

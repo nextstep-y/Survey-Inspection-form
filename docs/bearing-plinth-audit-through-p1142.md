@@ -1,8 +1,8 @@
 # Bearing Plinth footprint audit through P-1142
 
-Date: 2026-10-24. Local changes only; not published.
+Updated: 2026-10-26. Baseline fcaa006 was published; the P5D combined-head update described here is local and not yet published.
 
-381 application records reviewed (includes suffixed / legacy records). 329 records have source-linked footprint controls and 5332 point checks passed. Six additional previously controlled records are retained. 46 records remain unresolved.
+381 application records reviewed (includes suffixed / legacy records). 353 records have source-linked footprint controls and 6016 point checks passed. Six additional previously controlled records are retained. 22 records remain unresolved.
 
 Scope: plan sizes, CH/OS centers, bearing-side assignment where confirmed, and one-time +30 mm on each edge. This is NOT certification of elevations, all survey works, or complete construction geometry. P6 elevation differences remain a separate review item. P-1100 Elastomeric support alignment requires review after its eccentric Plinth correction. Pending values are warned in the form; no guessed mapping has been substituted.
 
@@ -161,12 +161,12 @@ Scope: plan sizes, CH/OS centers, bearing-side assignment where confirmed, and o
 | P-973 | PENDING - DO NOT USE LEGACY FOOTPRINT | P1 | - | Drawing identity or schedule applicability unresolved; legacy values not verified |
 | P-974 | Footprint checked | P3-974 | 023069 B | Footprints and centers checked; existing elevations retained |
 | P-975 | Footprint checked | P3-975 | 023065 B | Footprints and centers checked; existing elevations retained |
-| P-976 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | 023210 | Drawing identity or schedule applicability unresolved; legacy values not verified |
-| P-976L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-976 | - | Combined-head / split-column reference requires individual review |
-| P-976R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-976 | - | Combined-head / split-column reference requires individual review |
-| P-977 | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-977 | 023210 | Combined-head / split-column reference requires individual review |
-| P-977L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-977 | - | Combined-head / split-column reference requires individual review |
-| P-977R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-977 | - | Combined-head / split-column reference requires individual review |
+| P-976 | Footprint checked | P-976 | 023211 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-976L | Footprint checked | P-976 | 023211 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-976R | Footprint checked | P-976 | 023211 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-977 | Footprint checked | P-977 | 023214 F | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-977L | Footprint checked | P-977 | 023214 F | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-977R | Footprint checked | P-977 | 023214 F | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
 | P-978 | PENDING - DO NOT USE LEGACY FOOTPRINT | P1 | - | Drawing identity or schedule applicability unresolved; legacy values not verified |
 | P-978NB | Footprint checked | P2 | 023031 A | Footprints and centers checked; existing elevations retained |
 | P-978SB | Footprint checked | P2 | 023031 A | Footprints and centers checked; existing elevations retained |
@@ -315,22 +315,22 @@ Scope: plan sizes, CH/OS centers, bearing-side assignment where confirmed, and o
 | P-1098 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | - | Drawing identity or schedule applicability unresolved; legacy values not verified |
 | P-1099 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | - | Drawing identity or schedule applicability unresolved; legacy values not verified |
 | P-1100 | Footprint checked | P12-1100 | 023181 C | Offset centers from P-1100-specific plan; not applicable to P-1104 |
-| P-1101 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | 023219 | Drawing identity or schedule applicability unresolved; legacy values not verified |
-| P-1101L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1101 | - | Combined-head / split-column reference requires individual review |
-| P-1101R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1101 | - | Combined-head / split-column reference requires individual review |
-| P-1102 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | 023222 | Drawing identity or schedule applicability unresolved; legacy values not verified |
-| P-1102L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1102 | - | Combined-head / split-column reference requires individual review |
-| P-1102R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1102 | - | Combined-head / split-column reference requires individual review |
-| P-1103 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | 023226 | Drawing identity or schedule applicability unresolved; legacy values not verified |
-| P-1103L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1103 | - | Combined-head / split-column reference requires individual review |
-| P-1103R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1103 | - | Combined-head / split-column reference requires individual review |
+| P-1101 | Footprint checked | P-1101 | 023220 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1101L | Footprint checked | P-1101 | 023220 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1101R | Footprint checked | P-1101 | 023220 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1102 | Footprint checked | P-1102 | 023223 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1102L | Footprint checked | P-1102 | 023223 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1102R | Footprint checked | P-1102 | 023223 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1103 | Footprint checked | P-1103 | 023226 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1103L | Footprint checked | P-1103 | 023226 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1103R | Footprint checked | P-1103 | 023226 A | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
 | P-1104 | PENDING - DO NOT USE LEGACY FOOTPRINT | P12 P-1104 | 023180 | Drawing identity or schedule applicability unresolved; legacy values not verified |
 | P-1105 | Footprint checked | P1 | 023000 B | Footprints and centers checked; existing elevations retained |
 | P-1106 | Footprint checked | P3-1106 | 023085 B | Footprints and centers checked; existing elevations retained |
 | P-1107 | Footprint checked | P3-1107 | 023081 B | Footprints and centers checked; existing elevations retained |
-| P-1108  | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1108 | 023228 | Combined-head / split-column reference requires individual review |
-| P-1108L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1108 | - | Combined-head / split-column reference requires individual review |
-| P-1108R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1108 | - | Combined-head / split-column reference requires individual review |
+| P-1108  | Footprint checked | P-1108 | 023229 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1108L | Footprint checked | P-1108 | 023229 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1108R | Footprint checked | P-1108 | 023229 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
 | P-1109 | Footprint checked | P1 | 023000 B | Footprints and centers checked; existing elevations retained |
 | P-1109SB | Footprint checked | P2 | 023031 A | Footprints and centers checked; existing elevations retained |
 | P-1109NB | Footprint checked | P2 | 023031 A | Footprints and centers checked; existing elevations retained |
@@ -364,12 +364,12 @@ Scope: plan sizes, CH/OS centers, bearing-side assignment where confirmed, and o
 | P-1119 | Footprint checked | P1 | 023000 B | Footprints and centers checked; existing elevations retained |
 | P-1119SB | Footprint checked | P2 | 023031 A | Footprints and centers checked; existing elevations retained |
 | P-1119NB | Footprint checked | P2 | 023031 A | Footprints and centers checked; existing elevations retained |
-| P-1120 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | - | Drawing identity or schedule applicability unresolved; legacy values not verified |
-| P-1120L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1120 | - | Combined-head / split-column reference requires individual review |
-| P-1120R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1120 | - | Combined-head / split-column reference requires individual review |
-| P-1121 | PENDING - DO NOT USE LEGACY FOOTPRINT | Unclassified | 023231 | Drawing identity or schedule applicability unresolved; legacy values not verified |
-| P-1121L | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1121 | - | Combined-head / split-column reference requires individual review |
-| P-1121R | PENDING - DO NOT USE LEGACY FOOTPRINT | P5D P-1121 | - | Combined-head / split-column reference requires individual review |
+| P-1120 | Footprint checked | P-1120 | 023232 E | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1120L | Footprint checked | P-1120 | 023232 E | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1120R | Footprint checked | P-1120 | 023232 E | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1121 | Footprint checked | P-1121 | 023235 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1121L | Footprint checked | P-1121 | 023235 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
+| P-1121R | Footprint checked | P-1121 | 023235 B | P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained |
 | P-1122 | Footprint checked | P3-1122 | 023073 A | Footprints and centers checked; existing elevations retained |
 | P-1123 | Footprint checked | P1 | 023000 B | Footprints and centers checked; existing elevations retained |
 | P-1124 | Footprint checked | P1 | 023000 B | Footprints and centers checked; existing elevations retained |

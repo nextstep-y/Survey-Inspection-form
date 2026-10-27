@@ -2,7 +2,7 @@ const {app,BrowserWindow}=require('electron'),assert=require('assert/strict');
 app.whenReady().then(async()=>{const w=new BrowserWindow({show:false,width:1500,height:1050,webPreferences:{sandbox:true,partition:'plinth-all-'+Date.now()}});try{
  w.webContents.session.webRequest.onBeforeRequest({urls:['https://*/*','http://*/*']},(_d,cb)=>cb({cancel:true}));
  await w.loadURL('file:///Users/weerayutpooncharoen/Desktop/Inspection/index.html');
- const ids=await w.webContents.executeJavaScript('Object.keys(BEARING_PLINTH_DRAWING_AUDIT.piers)');let total=0;
+ const ids=await w.webContents.executeJavaScript('Object.values(PIERS_RAW).filter(p=>getDrawingPlinthControl(p)).map(p=>p.id)');let total=0;
  for(const id of ids){
   const result=await w.webContents.executeJavaScript(`(()=>{document.getElementById('element').value='Bearing Plinths';onPierSelect(${JSON.stringify(id)});setCanvasViewMode('2d');const ps=currentArray,rs=[...document.querySelectorAll('#survey-body tr')];return {id:currentPier.id,n:ps.length,rows:rs.length,finite:rs.every(r=>Number.isFinite(+r.dataset.dn)&&Number.isFinite(+r.dataset.de)&&Number.isFinite(+r.dataset.ez)),warning:document.getElementById('bearing-footprint-audit').textContent}})()`);
   assert.equal(result.id,id);assert.equal(result.n,result.rows);assert.ok(result.finite);assert.match(result.warning,/FOOTPRINT AUDIT/);total+=result.rows;

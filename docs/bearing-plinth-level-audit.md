@@ -1,0 +1,1630 @@
+# Bearing Plinth level audit - 2026-10-27
+
+Read-only checker of the current locally corrected application. No Sheets or GitHub publication changed by this checker.
+
+Scope: all 381 application Pier records from P-826 through P-1142, including L/R and legacy aliases. Offset comparisons are independent rendered-drawing transcriptions against the embedded TYPE1 startup path. A different selector or live Sheet can change unconfirmed values.
+
+A matching offset does NOT certify the absolute level. COLUMN_TEXT_MATCH is extraction evidence only, not page-by-page visual certification. Ambiguous/missing RL A text stays unresolved. P6 uses the newer rendered schedule 023240-D. Existing BR/Pot controls are not automatically declared reverified.
+
+Summary:
+
+```json
+{
+  "records": 381,
+  "topStatus": {
+    "COLUMN_TEXT_MATCH": 364,
+    "MISSING_APP_TOP": 6,
+    "UNRESOLVED": 5,
+    "SCHEDULE_MATCH": 6
+  },
+  "offsetStatus": {
+    "OFFSET_MATCH": 1469,
+    "UNRESOLVED": 121
+  }
+}
+```
+
+Correction to the historical audit: P-990's increasing-chainage arrow points UP in 023077-B. Its footprints need no reversal; CIS40 U is +0.097 and CIS50 D is +0.112 m. P-1142 N03 D-side is +0.140 from RL A per 038582-C, not +0.140 from headstock. P-966 individual heights and P-1108/P-1120 Type2 remain unresolved. See special-bearing-levels-20261027.md for implementation and requested evidence.
+
+| Pier | App Top Pier m | Top evidence | Group | App offset m | Drawing offset m | Offset status | Source / limit |
+|---|---:|---|---|---:|---:|---|---|
+| P-826 | 50.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-826 | 50.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-826 | 50.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-826 | 50.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-827 | 50.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-827 | 50.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-827 | 50.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-827 | 50.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-828 | 50.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-828 | 50.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-828 | 50.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-828 | 50.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-829 | 51.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-829 | 51.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-829 | 51.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-829 | 51.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-830 | 51.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-830 | 51.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-830 | 51.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-830 | 51.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-831 | 51.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-831 | 51.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-831 | 51.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-831 | 51.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-832 | 51.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-832 | 51.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-832 | 51.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-832 | 51.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-833 | 51.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-833 | 51.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-833 | 51.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-833 | 51.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-834 | 52.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-834 | 52.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-834 | 52.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-834 | 52.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-835 | 52.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-835 | 52.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-835 | 52.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-835 | 52.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-836 | 52.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-836 | 52.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-836 | 52.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-836 | 52.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-837 | 52.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-837 | 52.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-837 | 52.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-837 | 52.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-838 | 52.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-838 | 52.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-838 | 52.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-838 | 52.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-839 | 53.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-839 | 53.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-839 | 53.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-839 | 53.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-840 | 53.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-840 | 53.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-840 | 53.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-840 | 53.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-841 | 53.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-841 | 53.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-841 | 53.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-841 | 53.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-842 | 53.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-842 | 53.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-842 | 53.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-842 | 53.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-843 | 53.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-843 | 53.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-843 | 53.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-843 | 53.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-844 | 54.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-844 | 54.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-844 | 54.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-844 | 54.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-845 | 54.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-845 | 54.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-845 | 54.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-845 | 54.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-846 | 54.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-846 | 54.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-846 | 54.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-846 | 54.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-847 | 54.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-847 | 54.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-847 | 54.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-847 | 54.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-848 | 54.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-848 | 54.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-848 | 54.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-848 | 54.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-849 | 55.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-849 | 55.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-849 | 55.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-849 | 55.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-850 | 55.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-850 | 55.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-850 | 55.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-850 | 55.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-851 | 55.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-851 | 55.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-851 | 55.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-851 | 55.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-852 | 55.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-852 | 55.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-852 | 55.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-852 | 55.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-853 | 55.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-853 | 55.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-853 | 55.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-853 | 55.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-854 | 56.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-854 | 56.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-854 | 56.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-854 | 56.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-855 | 56.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-855 | 56.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-855 | 56.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-855 | 56.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-856 | 56.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-856 | 56.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-856 | 56.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-856 | 56.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-857 | 56.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-857 | 56.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-857 | 56.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-857 | 56.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-858 | 56.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-858 | 56.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-858 | 56.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-858 | 56.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-859 | 57.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-859 | 57.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-859 | 57.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-859 | 57.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-860 | 57.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-860 | 57.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-860 | 57.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-860 | 57.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-861 | 57.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-861 | 57.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-861 | 57.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-861 | 57.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-862 | 57.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-862 | 57.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-862 | 57.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-862 | 57.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-863 | 57.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-863 | 57.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-863 | 57.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-863 | 57.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-864 | 58.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-864 | 58.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-864 | 58.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-864 | 58.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-865 | 58.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-865 | 58.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-865 | 58.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-865 | 58.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-866 | 58.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-866 | 58.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-866 | 58.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-866 | 58.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-867 | 58.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-867 | 58.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-867 | 58.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-867 | 58.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-868 | 58.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-868 | 58.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-868 | 58.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-868 | 58.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-869 | 59.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-869 | 59.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-869 | 59.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-869 | 59.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-870 | 59.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-870 | 59.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-870 | 59.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-870 | 59.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-871 | 59.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-871 | 59.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-871 | 59.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-871 | 59.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-872 | 59.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-872 | 59.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-872 | 59.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-872 | 59.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-873 | 59.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-873 | 59.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-873 | 59.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-873 | 59.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-874 | 60.050 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-874 | 60.050 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-874 | 60.050 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-874 | 60.050 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-875 | 60.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-875 | 60.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-875 | 60.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-875 | 60.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-876 | 60.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-876 | 60.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-876 | 60.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-876 | 60.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-877 | 60.650 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-877 | 60.650 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-877 | 60.650 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-877 | 60.650 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-878 | 60.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-878 | 60.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-878 | 60.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-878 | 60.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-879 | 61.101 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-879 | 61.101 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-879 | 61.101 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-879 | 61.101 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-880 | 61.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-880 | 61.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-880 | 61.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-880 | 61.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-881 | 61.900 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-881 | 61.900 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-881 | 61.900 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-881 | 61.900 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-882 | 62.300 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-882 | 62.300 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-882 | 62.300 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-882 | 62.300 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-883 | 62.700 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-883 | 62.700 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-883 | 62.700 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-883 | 62.700 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-884 | 63.100 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-884 | 63.100 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-884 | 63.100 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-884 | 63.100 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-885 | 63.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-885 | 63.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-885 | 63.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-885 | 63.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-886 | 63.900 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-886 | 63.900 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-886 | 63.900 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-886 | 63.900 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-887 | 64.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-887 | 64.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-887 | 64.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-887 | 64.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-888 | 64.341 | COLUMN_TEXT_MATCH | UL1-4 | 0.119 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-888 | 64.341 | COLUMN_TEXT_MATCH | UR1-4 | 0.119 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-888 | 64.341 | COLUMN_TEXT_MATCH | DL1-4 | 0.350 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-888 | 64.341 | COLUMN_TEXT_MATCH | DR1-4 | 0.350 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-889 | 62.540 | COLUMN_TEXT_MATCH | BL1-4 | 0.122 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-889 | 62.540 | COLUMN_TEXT_MATCH | BR1-4 | 0.122 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-890 | 62.540 | COLUMN_TEXT_MATCH | BL1-4 | 0.122 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-890 | 62.540 | COLUMN_TEXT_MATCH | BR1-4 | 0.122 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-891 | 64.403 | COLUMN_TEXT_MATCH | UL1-4 | 0.350 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-891 | 64.403 | COLUMN_TEXT_MATCH | UR1-4 | 0.350 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-891 | 64.403 | COLUMN_TEXT_MATCH | DL1-4 | 0.119 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-891 | 64.403 | COLUMN_TEXT_MATCH | DR1-4 | 0.119 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-892 | - | MISSING_APP_TOP | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-893 | 64.600 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-893 | 64.600 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-893 | 64.600 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-893 | 64.600 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-894 | 64.600 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-894 | 64.600 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-894 | 64.600 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-894 | 64.600 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-895 | 64.600 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-895 | 64.600 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-895 | 64.600 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-895 | 64.600 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-896 | 64.600 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-896 | 64.600 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-896 | 64.600 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-896 | 64.600 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-897 | 64.700 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-897 | 64.700 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-897 | 64.700 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-897 | 64.700 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-898 | 64.900 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-898 | 64.900 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-898 | 64.900 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-898 | 64.900 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-899 | 65.100 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-899 | 65.100 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-899 | 65.100 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-899 | 65.100 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-900 | 65.300 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-900 | 65.300 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-900 | 65.300 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-900 | 65.300 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-901 | 65.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-901 | 65.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-901 | 65.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-901 | 65.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-902 | 65.700 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-902 | 65.700 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-902 | 65.700 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-902 | 65.700 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-903 | 65.900 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-903 | 65.900 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-903 | 65.900 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-903 | 65.900 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-904 | 66.100 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-904 | 66.100 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-904 | 66.100 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-904 | 66.100 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-905 | 66.300 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-905 | 66.300 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-905 | 66.300 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-905 | 66.300 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-906 | 66.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-906 | 66.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-906 | 66.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-906 | 66.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-907 | 66.700 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-907 | 66.700 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-907 | 66.700 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-907 | 66.700 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-908 | 66.900 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-908 | 66.900 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-908 | 66.900 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-908 | 66.900 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-909 | 67.100 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-909 | 67.100 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-909 | 67.100 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-909 | 67.100 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-910 | 67.300 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-910 | 67.300 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-910 | 67.300 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-910 | 67.300 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-911 | 67.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-911 | 67.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-911 | 67.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-911 | 67.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-912 | 67.700 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-912 | 67.700 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-912 | 67.700 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-912 | 67.700 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-913 | 67.900 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-913 | 67.900 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-913 | 67.900 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-913 | 67.900 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-914 | 68.100 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-914 | 68.100 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-914 | 68.100 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-914 | 68.100 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-915 | 68.300 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-915 | 68.300 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-915 | 68.300 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-915 | 68.300 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-916 | 68.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-916 | 68.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-916 | 68.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-916 | 68.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-917 | 68.700 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-917 | 68.700 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-917 | 68.700 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-917 | 68.700 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-918 | 68.900 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-918 | 68.900 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-918 | 68.900 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-918 | 68.900 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-919 | 69.100 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-919 | 69.100 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-919 | 69.100 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-919 | 69.100 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-920 | 69.425 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-920 | 69.425 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-920 | 69.425 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-920 | 69.425 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-921 | 69.825 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-921 | 69.825 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-921 | 69.825 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-921 | 69.825 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-922 | 70.225 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-922 | 70.225 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-922 | 70.225 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-922 | 70.225 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-923 | 70.625 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-923 | 70.625 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-923 | 70.625 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-923 | 70.625 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-924 | 71.025 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-924 | 71.025 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-924 | 71.025 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-924 | 71.025 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-925 | 71.425 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-925 | 71.425 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-925 | 71.425 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-925 | 71.425 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-926 | 71.825 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-926 | 71.825 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-926 | 71.825 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-926 | 71.825 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-927 | 72.225 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-927 | 72.225 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-927 | 72.225 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-927 | 72.225 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-928 | 72.625 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-928 | 72.625 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-928 | 72.625 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-928 | 72.625 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-929 | 73.025 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-929 | 73.025 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-929 | 73.025 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-929 | 73.025 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-930 | 73.425 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-930 | 73.425 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-930 | 73.425 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-930 | 73.425 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-931 | 73.825 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-931 | 73.825 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-931 | 73.825 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-931 | 73.825 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-932 | 74.225 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-932 | 74.225 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-932 | 74.225 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-932 | 74.225 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-933 | 74.625 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-933 | 74.625 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-933 | 74.625 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-933 | 74.625 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-934 | 74.975 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-934 | 74.975 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-934 | 74.975 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-934 | 74.975 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-935 | 75.325 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-935 | 75.325 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-935 | 75.325 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-935 | 75.325 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-936 | 75.675 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-936 | 75.675 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-936 | 75.675 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-936 | 75.675 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-937 | 76.025 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-937 | 76.025 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-937 | 76.025 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-937 | 76.025 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-938 | 76.425 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-938 | 76.425 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-938 | 76.425 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-938 | 76.425 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-939 | 76.825 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-939 | 76.825 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-939 | 76.825 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-939 | 76.825 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-940 | 77.225 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-940 | 77.225 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-940 | 77.225 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-940 | 77.225 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-941 | 77.625 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-941 | 77.625 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-941 | 77.625 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-941 | 77.625 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-942 | 78.025 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-942 | 78.025 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-942 | 78.025 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-942 | 78.025 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-943 | 78.425 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-943 | 78.425 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-943 | 78.425 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-943 | 78.425 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-944 | 78.825 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-944 | 78.825 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-944 | 78.825 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-944 | 78.825 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-945 | 79.225 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-945 | 79.225 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-945 | 79.225 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-945 | 79.225 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-946 | 79.625 | UNRESOLVED | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-946 | 79.625 | UNRESOLVED | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-946 | 79.625 | UNRESOLVED | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-946 | 79.625 | UNRESOLVED | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-947 | 79.925 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-947 | 79.925 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-947 | 79.925 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-947 | 79.925 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-948 | 80.225 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-948 | 80.225 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-948 | 80.225 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-948 | 80.225 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-949 | 80.625 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-949 | 80.625 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-949 | 80.625 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-949 | 80.625 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-950 | 80.925 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-950 | 80.925 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-950 | 80.925 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-950 | 80.925 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-951 | 81.225 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-951 | 81.225 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-951 | 81.225 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-951 | 81.225 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-952 | 81.525 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-952 | 81.525 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-952 | 81.525 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-952 | 81.525 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-953 | 81.925 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-953 | 81.925 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-953 | 81.925 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-953 | 81.925 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-954 | 82.325 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-954 | 82.325 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-954 | 82.325 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-954 | 82.325 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-955 | 82.725 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-955 | 82.725 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-955 | 82.725 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-955 | 82.725 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-956 | 83.125 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-956 | 83.125 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-956 | 83.125 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-956 | 83.125 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-957 | 83.525 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-957 | 83.525 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-957 | 83.525 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-957 | 83.525 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-958 | 83.924 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-958 | 83.924 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-958 | 83.924 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-958 | 83.924 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-959 | 84.175 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-959 | 84.175 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-959 | 84.175 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-959 | 84.175 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-960 | 84.375 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-960 | 84.375 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-960 | 84.375 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-960 | 84.375 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-961 | 84.575 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-961 | 84.575 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-961 | 84.575 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-961 | 84.575 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-962 | 84.775 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-962 | 84.775 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-962 | 84.775 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-962 | 84.775 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-963 | 84.975 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-963 | 84.975 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-963 | 84.975 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-963 | 84.975 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-964 | 85.175 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-964 | 85.175 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-964 | 85.175 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-964 | 85.175 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-965 | 85.350 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-965 | 85.350 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-965 | 85.350 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-965 | 85.350 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-966 | 85.360 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | 023098-B / 038725-B; Special CIS40/CIS70/Type1 base heights; individual detail needed, generic family height is unsafe. |
+| P-966 | 85.360 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | 023098-B / 038725-B; Special CIS40/CIS70/Type1 base heights; individual detail needed, generic family height is unsafe. |
+| P-966 | 85.360 | COLUMN_TEXT_MATCH | UR5-8 | 0.140 | - | UNRESOLVED | 023098-B / 038725-B; Special CIS40/CIS70/Type1 base heights; individual detail needed, generic family height is unsafe. |
+| P-966 | 85.360 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | 023098-B / 038725-B; Special CIS40/CIS70/Type1 base heights; individual detail needed, generic family height is unsafe. |
+| P-966 | 85.360 | COLUMN_TEXT_MATCH | DL5-8 | 0.140 | - | UNRESOLVED | 023098-B / 038725-B; Special CIS40/CIS70/Type1 base heights; individual detail needed, generic family height is unsafe. |
+| P-966 | 85.360 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | 023098-B / 038725-B; Special CIS40/CIS70/Type1 base heights; individual detail needed, generic family height is unsafe. |
+| P-966 | 85.360 | COLUMN_TEXT_MATCH | DR5-8 | 0.140 | - | UNRESOLVED | 023098-B / 038725-B; Special CIS40/CIS70/Type1 base heights; individual detail needed, generic family height is unsafe. |
+| P-967 | 85.725 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967 | 85.725 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967 | 85.725 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967 | 85.725 | COLUMN_TEXT_MATCH | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967 | 85.725 | COLUMN_TEXT_MATCH | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967 | 85.725 | COLUMN_TEXT_MATCH | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967A | 85.875 | UNRESOLVED | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967A | 85.875 | UNRESOLVED | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967A | 85.875 | UNRESOLVED | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967A | 85.875 | UNRESOLVED | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967A | 85.875 | UNRESOLVED | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-967A | 85.875 | UNRESOLVED | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-968 | 86.025 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-968 | 86.025 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-968 | 86.025 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-968 | 86.025 | COLUMN_TEXT_MATCH | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-968 | 86.025 | COLUMN_TEXT_MATCH | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-968 | 86.025 | COLUMN_TEXT_MATCH | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023061-C elevation A;  |
+| P-969 | 86.175 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023095-B elevation A;  |
+| P-969 | 86.175 | COLUMN_TEXT_MATCH | UR5-8 | 0.140 | 0.140 | OFFSET_MATCH | 023095-B elevation A;  |
+| P-969 | 86.175 | COLUMN_TEXT_MATCH | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023095-B elevation A;  |
+| P-969 | 86.175 | COLUMN_TEXT_MATCH | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023095-B elevation A;  |
+| P-969 | 86.175 | COLUMN_TEXT_MATCH | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023095-B elevation A;  |
+| P-970 | 86.402 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-970 | 86.402 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-970 | 86.402 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-970 | 86.402 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-971 | 86.808 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-971 | 86.808 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-971 | 86.808 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-971 | 86.808 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-972 | 87.163 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-972 | 87.163 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-972 | 87.163 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-972 | 87.163 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-973 | 87.519 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-973 | 87.519 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-973 | 87.519 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-973 | 87.519 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-974 | 87.924 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023069-B elevation A;  |
+| P-974 | 87.924 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023069-B elevation A;  |
+| P-974 | 87.924 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023069-B elevation A;  |
+| P-974 | 87.924 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023069-B elevation A;  |
+| P-974 | 87.924 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023069-B elevation A;  |
+| P-975 | 88.280 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023065-B elevation A;  |
+| P-975 | 88.280 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023065-B elevation A;  |
+| P-975 | 88.280 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023065-B elevation A;  |
+| P-975 | 88.280 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023065-B elevation A;  |
+| P-975 | 88.280 | COLUMN_TEXT_MATCH | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023065-B elevation A;  |
+| P-975 | 88.280 | COLUMN_TEXT_MATCH | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023065-B elevation A;  |
+| P-975 | 88.280 | COLUMN_TEXT_MATCH | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023065-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976 | 88.559 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976L | 88.559 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-976R | 88.559 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023211-B elevation A;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | UL5-8 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | UL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | UR5-8 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | UR9-12 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977 | 88.838 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | UL5-8 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | UL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | UR5-8 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | UR9-12 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977L | 88.838 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | UL5-8 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | UL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | UR5-8 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | UR9-12 | 0.150 | 0.150 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-977R | 88.838 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023214-F / 023215-F / 039356-E / 039357-D;  |
+| P-978 | 89.143 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-978 | 89.143 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-978 | 89.143 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-978 | 89.143 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-978NB | 89.145 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-978NB | 89.145 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-978NB | 89.145 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-978NB | 89.145 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-978SB | 89.145 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-978SB | 89.145 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-978SB | 89.145 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-978SB | 89.145 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979 | 89.543 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-979 | 89.543 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-979 | 89.543 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-979 | 89.543 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-979NB | 89.544 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979NB | 89.544 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979NB | 89.544 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979NB | 89.544 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979SB | 89.544 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979SB | 89.544 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979SB | 89.544 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-979SB | 89.544 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980 | 89.739 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-980 | 89.739 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-980 | 89.739 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-980 | 89.739 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-980NB | 89.739 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980NB | 89.739 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980NB | 89.739 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980NB | 89.739 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980SB | 89.739 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980SB | 89.739 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980SB | 89.739 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-980SB | 89.739 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981 | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-981 | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-981 | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-981 | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-981NB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981NB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981NB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981NB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981SB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981SB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981SB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-981SB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982 | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-982 | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-982 | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-982 | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-982NB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982NB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982NB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982NB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982SB | 89.741 | UNRESOLVED | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982SB | 89.741 | UNRESOLVED | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982SB | 89.741 | UNRESOLVED | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-982SB | 89.741 | UNRESOLVED | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983 | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-983 | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-983 | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-983 | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-983NB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983NB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983NB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983NB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983SB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983SB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983SB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-983SB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984 | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-984 | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-984 | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-984 | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-984NB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984NB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984NB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984NB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984SB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984SB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984SB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-984SB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985 | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-985 | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-985 | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-985 | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-985NB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985NB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985NB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985NB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985SB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985SB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985SB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-985SB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986 | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-986 | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-986 | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-986 | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-986NB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986NB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986NB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986NB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986SB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986SB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986SB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-986SB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987 | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-987 | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-987 | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-987 | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-987NB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987NB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987NB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987NB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987SB | 89.741 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987SB | 89.741 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987SB | 89.741 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-987SB | 89.741 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988 | 89.761 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-988 | 89.761 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-988 | 89.761 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-988 | 89.761 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-988NB | 89.760 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988NB | 89.760 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988NB | 89.760 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988NB | 89.760 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988SB | 89.760 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988SB | 89.760 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988SB | 89.760 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-988SB | 89.760 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | DL5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | DL9-12 | 0.112 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | DR5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989 | 89.947 | COLUMN_TEXT_MATCH | DR9-12 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | UL5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | UR5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | DL5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | DL9-12 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | DR5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989L | 89.947 | COLUMN_TEXT_MATCH | DR9-12 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | UL5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | UR5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | DL5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | DL9-12 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | DR5-8 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-989R | 89.947 | COLUMN_TEXT_MATCH | DR9-12 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-990 | 90.085 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023077-B plan and elevation A; increasing arrow points UP, CIS40 U / CIS50 D;  |
+| P-990 | 90.085 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023077-B plan and elevation A; increasing arrow points UP, CIS40 U / CIS50 D;  |
+| P-990 | 90.085 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023077-B plan and elevation A; increasing arrow points UP, CIS40 U / CIS50 D;  |
+| P-990 | 90.085 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023077-B plan and elevation A; increasing arrow points UP, CIS40 U / CIS50 D;  |
+| P-990 | 90.085 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023077-B plan and elevation A; increasing arrow points UP, CIS40 U / CIS50 D;  |
+| P-990 | 90.085 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023077-B plan and elevation A; increasing arrow points UP, CIS40 U / CIS50 D;  |
+| P-990 | 90.085 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023077-B plan and elevation A; increasing arrow points UP, CIS40 U / CIS50 D;  |
+| P-991 | 90.230 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023088-A elevation A;  |
+| P-991 | 90.230 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023088-A elevation A;  |
+| P-991 | 90.230 | COLUMN_TEXT_MATCH | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023088-A elevation A;  |
+| P-991 | 90.230 | COLUMN_TEXT_MATCH | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023088-A elevation A;  |
+| P-991 | 90.230 | COLUMN_TEXT_MATCH | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023088-A elevation A;  |
+| P-991A | 90.367 | UNRESOLVED | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-991A | 90.367 | UNRESOLVED | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-991A | 90.367 | UNRESOLVED | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-991A | 90.367 | UNRESOLVED | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-992 | 89.905 | SCHEDULE_MATCH | UL1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-992 | 89.905 | SCHEDULE_MATCH | UR1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-992 | 89.905 | SCHEDULE_MATCH | DL1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-992 | 89.905 | SCHEDULE_MATCH | DR1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-993 | 90.372 | SCHEDULE_MATCH | UL1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-993 | 90.372 | SCHEDULE_MATCH | UR1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-993 | 90.372 | SCHEDULE_MATCH | DL1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-993 | 90.372 | SCHEDULE_MATCH | DR1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-994 | 91.347 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-994 | 91.347 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-994 | 91.347 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-994 | 91.347 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-995 | 91.697 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-995 | 91.697 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-995 | 91.697 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-995 | 91.697 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-996 | 92.047 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-996 | 92.047 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-996 | 92.047 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-996 | 92.047 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-997 | 92.447 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-997 | 92.447 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-997 | 92.447 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-997 | 92.447 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-998 | 92.847 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-998 | 92.847 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-998 | 92.847 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-998 | 92.847 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-999 | 93.197 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-999 | 93.197 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-999 | 93.197 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-999 | 93.197 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1000 | 93.547 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1000 | 93.547 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1000 | 93.547 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1000 | 93.547 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1001 | 93.897 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1001 | 93.897 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1001 | 93.897 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1001 | 93.897 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1002 | 94.297 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1002 | 94.297 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1002 | 94.297 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1002 | 94.297 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1003 | 94.697 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1003 | 94.697 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1003 | 94.697 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1003 | 94.697 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1004 | 95.097 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1004 | 95.097 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1004 | 95.097 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1004 | 95.097 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1005 | 95.497 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1005 | 95.497 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1005 | 95.497 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1005 | 95.497 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1006 | 95.897 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1006 | 95.897 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1006 | 95.897 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1006 | 95.897 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1007 | 96.297 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1007 | 96.297 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1007 | 96.297 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1007 | 96.297 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1008 | 96.697 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1008 | 96.697 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1008 | 96.697 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1008 | 96.697 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1009 | 97.097 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1009 | 97.097 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1009 | 97.097 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1009 | 97.097 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1010 | 97.447 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1010 | 97.447 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1010 | 97.447 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1010 | 97.447 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1011 | 97.797 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1011 | 97.797 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1011 | 97.797 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1011 | 97.797 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1012 | 98.147 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1012 | 98.147 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1012 | 98.147 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1012 | 98.147 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1013 | 98.497 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1013 | 98.497 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1013 | 98.497 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1013 | 98.497 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1014 | 98.897 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1014 | 98.897 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1014 | 98.897 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1014 | 98.897 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1015 | 99.247 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1015 | 99.247 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1015 | 99.247 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1015 | 99.247 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1016 | 99.597 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1016 | 99.597 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1016 | 99.597 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1016 | 99.597 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1017 | 99.947 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1017 | 99.947 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1017 | 99.947 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1017 | 99.947 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1018 | 100.297 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1018 | 100.297 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1018 | 100.297 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1018 | 100.297 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1019 | 100.647 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1019 | 100.647 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1019 | 100.647 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1019 | 100.647 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1020 | 100.997 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1020 | 100.997 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1020 | 100.997 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1020 | 100.997 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1021 | 100.645 | SCHEDULE_MATCH | UL1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1021 | 100.645 | SCHEDULE_MATCH | UR1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1021 | 100.645 | SCHEDULE_MATCH | DL1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1021 | 100.645 | SCHEDULE_MATCH | DR1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1022 | 100.751 | SCHEDULE_MATCH | UL1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1022 | 100.751 | SCHEDULE_MATCH | UR1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1022 | 100.751 | SCHEDULE_MATCH | DL1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1022 | 100.751 | SCHEDULE_MATCH | DR1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1023 | 101.411 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1023 | 101.411 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1023 | 101.411 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1023 | 101.411 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1024 | 101.471 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1024 | 101.471 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1024 | 101.471 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1024 | 101.471 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1025 | 101.536 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1025 | 101.536 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1025 | 101.536 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1025 | 101.536 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1026 | 101.616 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1026 | 101.616 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1026 | 101.616 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1026 | 101.616 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1027 | 101.696 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1027 | 101.696 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1027 | 101.696 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1027 | 101.696 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1028 | 101.776 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1028 | 101.776 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1028 | 101.776 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1028 | 101.776 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1029 | 101.856 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1029 | 101.856 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1029 | 101.856 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1029 | 101.856 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1030 | 101.935 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1030 | 101.935 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1030 | 101.935 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1030 | 101.935 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1031 | 102.015 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1031 | 102.015 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1031 | 102.015 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1031 | 102.015 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1032 | 102.095 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1032 | 102.095 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1032 | 102.095 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1032 | 102.095 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1033 | 102.165 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1033 | 102.165 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1033 | 102.165 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1033 | 102.165 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1034 | 102.235 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1034 | 102.235 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1034 | 102.235 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1034 | 102.235 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1035 | 102.305 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1035 | 102.305 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1035 | 102.305 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1035 | 102.305 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1036 | 102.385 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1036 | 102.385 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1036 | 102.385 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1036 | 102.385 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1037 | 102.465 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1037 | 102.465 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1037 | 102.465 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1037 | 102.465 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1038 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1038 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1038 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1038 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1039 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1039 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1039 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1039 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1040 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1040 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1040 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1040 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1041 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1041 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1041 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1041 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1042 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1042 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1042 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1042 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1043 | - | MISSING_APP_TOP | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1044 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1044 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1044 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1044 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1045 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1045 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1045 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1045 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1046 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1046 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1046 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1046 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1047 | 102.500 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1047 | 102.500 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1047 | 102.500 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1047 | 102.500 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1048 | 101.888 | COLUMN_TEXT_MATCH | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1049 | 99.310 | COLUMN_TEXT_MATCH | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1050 | 100.030 | COLUMN_TEXT_MATCH | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1051 | 103.238 | COLUMN_TEXT_MATCH | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1052 | 104.170 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1052 | 104.170 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1052 | 104.170 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1052 | 104.170 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1053 | 104.490 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1053 | 104.490 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1053 | 104.490 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1053 | 104.490 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1054 | 104.810 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1054 | 104.810 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1054 | 104.810 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1054 | 104.810 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1055 | 105.130 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1055 | 105.130 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1055 | 105.130 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1055 | 105.130 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1056 | - | MISSING_APP_TOP | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1057 | 105.410 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1057 | 105.410 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1057 | 105.410 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1057 | 105.410 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1058 | 105.690 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1058 | 105.690 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1058 | 105.690 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1058 | 105.690 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1059 | 105.970 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1059 | 105.970 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1059 | 105.970 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1059 | 105.970 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1060 | 106.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1060 | 106.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1060 | 106.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1060 | 106.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1061 | 106.530 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1061 | 106.530 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1061 | 106.530 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1061 | 106.530 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1062 | 106.810 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1062 | 106.810 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1062 | 106.810 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1062 | 106.810 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1063 | 107.130 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1063 | 107.130 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1063 | 107.130 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1063 | 107.130 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1064 | 107.410 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1064 | 107.410 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1064 | 107.410 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1064 | 107.410 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1065 | 107.690 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1065 | 107.690 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1065 | 107.690 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1065 | 107.690 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1066 | 107.970 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1066 | 107.970 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1066 | 107.970 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1066 | 107.970 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1067 | 108.250 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1067 | 108.250 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1067 | 108.250 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1067 | 108.250 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1068 | 108.530 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1068 | 108.530 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1068 | 108.530 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1068 | 108.530 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1069 | 108.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1069 | 108.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1069 | 108.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1069 | 108.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1070 | 109.170 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1070 | 109.170 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1070 | 109.170 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1070 | 109.170 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1071 | 109.490 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1071 | 109.490 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1071 | 109.490 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1071 | 109.490 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1072 | 109.810 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1072 | 109.810 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1072 | 109.810 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1072 | 109.810 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1073 | 110.130 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1073 | 110.130 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1073 | 110.130 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1073 | 110.130 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1074 | 110.410 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1074 | 110.410 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1074 | 110.410 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1074 | 110.410 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1075 | 110.690 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1075 | 110.690 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1075 | 110.690 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1075 | 110.690 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1076 | 111.010 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1076 | 111.010 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1076 | 111.010 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1076 | 111.010 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1077 | 111.290 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1077 | 111.290 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1077 | 111.290 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1077 | 111.290 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1078 | 111.570 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1078 | 111.570 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1078 | 111.570 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1078 | 111.570 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1079 | 111.890 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1079 | 111.890 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1079 | 111.890 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1079 | 111.890 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1080 | 112.210 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1080 | 112.210 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1080 | 112.210 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1080 | 112.210 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1081 | 112.530 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1081 | 112.530 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1081 | 112.530 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1081 | 112.530 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1082 | 112.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1082 | 112.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1082 | 112.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1082 | 112.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1083 | 113.170 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1083 | 113.170 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1083 | 113.170 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1083 | 113.170 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1084 | 113.490 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1084 | 113.490 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1084 | 113.490 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1084 | 113.490 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1085 | 113.810 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1085 | 113.810 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1085 | 113.810 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1085 | 113.810 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1086 | 114.130 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1086 | 114.130 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1086 | 114.130 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1086 | 114.130 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1087 | 114.450 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1087 | 114.450 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1087 | 114.450 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1087 | 114.450 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1088 | - | MISSING_APP_TOP | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1089 | 114.770 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1089 | 114.770 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1089 | 114.770 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1089 | 114.770 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1090 | 115.090 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1090 | 115.090 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1090 | 115.090 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1090 | 115.090 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1091 | 114.793 | COLUMN_TEXT_MATCH | UL1-4 | 0.124 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1091 | 114.793 | COLUMN_TEXT_MATCH | UR1-4 | 0.124 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1091 | 114.793 | COLUMN_TEXT_MATCH | DL1-4 | 0.750 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1091 | 114.793 | COLUMN_TEXT_MATCH | DR1-4 | 0.750 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1092 | 112.626 | COLUMN_TEXT_MATCH | BL1-4 | 0.120 | - | UNRESOLVED | 023167; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1092 | 112.626 | COLUMN_TEXT_MATCH | BR1-4 | 0.124 | - | UNRESOLVED | 023167; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1093 | 113.346 | COLUMN_TEXT_MATCH | BL1-4 | 0.119 | - | UNRESOLVED | 023162; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1093 | 113.346 | COLUMN_TEXT_MATCH | BR1-4 | 0.120 | - | UNRESOLVED | 023162; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1094 | 116.233 | COLUMN_TEXT_MATCH | UL1-4 | 0.750 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1094 | 116.233 | COLUMN_TEXT_MATCH | UR1-4 | 0.750 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1094 | 116.233 | COLUMN_TEXT_MATCH | DL1-4 | 0.124 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1094 | 116.233 | COLUMN_TEXT_MATCH | DR1-4 | 0.124 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1095 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1095 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1095 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1095 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1096 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1096 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1096 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1096 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1097 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1097 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1097 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1097 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1098 | - | MISSING_APP_TOP | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1099 | - | MISSING_APP_TOP | - | - | - | UNRESOLVED | No usable Bearing Plinth points |
+| P-1100 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023181-C elevation A;  |
+| P-1100 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023181-C elevation A;  |
+| P-1100 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023181-C elevation A;  |
+| P-1100 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023181-C elevation A;  |
+| P-1101 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101L | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101L | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101L | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101L | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101R | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101R | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101R | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1101R | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023220-A elevation A;  |
+| P-1102 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102L | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102L | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102L | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102L | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102R | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102R | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102R | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1102R | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023223-A elevation A;  |
+| P-1103 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103L | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103L | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103L | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103L | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103R | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103R | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103R | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1103R | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023226-A elevation A;  |
+| P-1104 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1104 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1104 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1104 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | - | UNRESOLVED | ; No new rendered level verification in this audit; prior individual controls or unresolved source retained. |
+| P-1105 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1105 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1105 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1105 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1106 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023085-B elevation A;  |
+| P-1106 | 116.850 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023085-B elevation A;  |
+| P-1106 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023085-B elevation A;  |
+| P-1106 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023085-B elevation A;  |
+| P-1106 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023085-B elevation A;  |
+| P-1107 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023081-B elevation A;  |
+| P-1107 | 116.850 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023081-B elevation A;  |
+| P-1107 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023081-B elevation A;  |
+| P-1107 | 116.850 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023081-B elevation A;  |
+| P-1107 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023081-B elevation A;  |
+| P-1107 | 116.850 | COLUMN_TEXT_MATCH | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023081-B elevation A;  |
+| P-1107 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023081-B elevation A;  |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | UL5-8 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | UL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | UR5-8 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | UR9-12 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108  | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | UL5-8 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | UL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | UR5-8 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | UR9-12 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108L | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | UL5-8 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | UL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | UR5-8 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | UR9-12 | 0.140 | - | UNRESOLVED | 039453-B section 10; Type2 section has no explicit vertical concrete-plinth dimension; do not infer it from volume or another Pier. |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1108R | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023229-B / 023230-B / 039451-B / 039452-B;  |
+| P-1109 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1109 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1109 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1109 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1109SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1109SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1109SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1109SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1109NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1109NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1109NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1109NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1110 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1110 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1110 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1110SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1110NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1111 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1111 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1111 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1111SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1111NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1112 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1112 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1112 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1112SB | 116.850 | UNRESOLVED | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112SB | 116.850 | UNRESOLVED | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112SB | 116.850 | UNRESOLVED | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112SB | 116.850 | UNRESOLVED | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1112NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1113 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1113 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1113 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1113SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1113NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1114 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1114 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1114 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1114SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1114NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1115 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1115 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1115 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1115SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1115NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1116 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1116 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1116 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1116SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1116NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1117 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1117 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1117 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1117SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1117NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1118 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1118 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1118 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1118SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1118NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1119 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1119 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1119 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1119SB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119SB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119SB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119SB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119NB | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119NB | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119NB | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1119NB | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.150 | 0.150 | OFFSET_MATCH | 023031-A elevation A/B;  |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | DL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120 | 116.850 | COLUMN_TEXT_MATCH | DR9-12 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | DL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120L | 116.850 | COLUMN_TEXT_MATCH | DR9-12 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | UL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | UR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | DL9-12 | 0.140 | 0.140 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023232-E / 023233-E / 039356;  |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1120R | 116.850 | COLUMN_TEXT_MATCH | DR9-12 | 0.140 | - | UNRESOLVED | 023232-E / 023233-E / 039356; Confirm the referenced Type2 reinforcement detail revision/applicability before assigning its vertical offset. |
+| P-1121 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121 | 116.850 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121 | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121 | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121L | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121L | 116.850 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121L | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121L | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121L | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121L | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121L | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121R | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121R | 116.850 | COLUMN_TEXT_MATCH | UC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121R | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 039491-D CIS40 section;  |
+| P-1121R | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121R | 116.850 | COLUMN_TEXT_MATCH | DL5-8 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121R | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1121R | 116.850 | COLUMN_TEXT_MATCH | DR5-8 | 0.112 | 0.112 | OFFSET_MATCH | 039489-C CIS50 section;  |
+| P-1122 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023073-A elevation A;  |
+| P-1122 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023073-A elevation A;  |
+| P-1122 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023073-A elevation A;  |
+| P-1122 | 116.850 | COLUMN_TEXT_MATCH | DC1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023073-A elevation A;  |
+| P-1122 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.097 | 0.097 | OFFSET_MATCH | 023073-A elevation A;  |
+| P-1123 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1123 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1123 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1123 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1124 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1124 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1124 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1124 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1125 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1125 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1125 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1125 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1126 | 116.850 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1126 | 116.850 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1126 | 116.850 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1126 | 116.850 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1127 | 116.848 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1127 | 116.848 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1127 | 116.848 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1127 | 116.848 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1128 | 116.700 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1128 | 116.700 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1128 | 116.700 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1128 | 116.700 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1129 | 116.540 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1129 | 116.540 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1129 | 116.540 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1129 | 116.540 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1130 | 115.780 | SCHEDULE_MATCH | UL1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1130 | 115.780 | SCHEDULE_MATCH | UR1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1130 | 115.780 | SCHEDULE_MATCH | DL1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1130 | 115.780 | SCHEDULE_MATCH | DR1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1131 | 115.560 | SCHEDULE_MATCH | UL1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1131 | 115.560 | SCHEDULE_MATCH | UR1-4 | 0.740 | 0.740 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1131 | 115.560 | SCHEDULE_MATCH | DL1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1131 | 115.560 | SCHEDULE_MATCH | DR1-4 | 0.049 | 0.049 | OFFSET_MATCH | 023240-D side schedule + 023241-E elevation A;  |
+| P-1132 | 116.020 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1132 | 116.020 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1132 | 116.020 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1132 | 116.020 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1133 | 115.880 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1133 | 115.880 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1133 | 115.880 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1133 | 115.880 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1134 | 115.740 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1134 | 115.740 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1134 | 115.740 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1134 | 115.740 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1135 | 115.580 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1135 | 115.580 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1135 | 115.580 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1135 | 115.580 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1136 | 115.420 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1136 | 115.420 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1136 | 115.420 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1136 | 115.420 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1137 | 115.247 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1137 | 115.247 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1137 | 115.247 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1137 | 115.247 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1138 | 114.860 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1138 | 114.860 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1138 | 114.860 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1138 | 114.860 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1139 | 114.460 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1139 | 114.460 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1139 | 114.460 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1139 | 114.460 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1140 | 114.060 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1140 | 114.060 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1140 | 114.060 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1140 | 114.060 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1141 | 113.660 | COLUMN_TEXT_MATCH | UL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1141 | 113.660 | COLUMN_TEXT_MATCH | UR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1141 | 113.660 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1141 | 113.660 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023000-B elevation A/B;  |
+| P-1142 | 113.260 | COLUMN_TEXT_MATCH | DL1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023091-G / 038582-C section 3 and bearing arrangement; N03 D-side only;  |
+| P-1142 | 113.260 | COLUMN_TEXT_MATCH | DR1-4 | 0.140 | 0.140 | OFFSET_MATCH | 023091-G / 038582-C section 3 and bearing arrangement; N03 D-side only;  |

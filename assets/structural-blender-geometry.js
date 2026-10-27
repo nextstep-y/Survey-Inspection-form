@@ -65,6 +65,15 @@ window.StructuralBlender = (() => {
       }
       status='PARTIAL | cap depth schematic; pile axes projected to top';
     } else {
+      const p6=getP6HeadControl(pier);
+      if(p6){
+        const split=p6.stepCH;
+        for(const [lo,hi]of [[minCH,split],[split,maxCH]]){
+          const base=((lo+hi)/2-split)*p6.highSign>0?p6.step:0;
+          add(base?'High top':'Low top',rect(lo,hi,minOS,maxOS),base,base?0:null);
+          add('Island',rect(lo,hi,-p6.islandHalfOS,p6.islandHalfOS),base+p6.islandRise,base);
+        }
+      }else{
       const br114=BR114_DRAWING_CONTROLS[pier.id];
       const step=br114?.step ?? (pier.id==='P-1094'||pier.id==='P-1091'?.6:0),highSign=br114?.highSign??1;
       if(step&&minCH<0&&maxCH>0){
@@ -93,6 +102,7 @@ window.StructuralBlender = (() => {
           if(zs[0]>base)add('Island',split?rect(lo,hi,c,d):ps,zs[0],base);
         }
       }
+      }
       status=bodyFor(pier,work)?.status||'PARTIAL | lower profile unavailable';
       if(points.some(p=>p.z===null))status+=' | ? = missing EL';
       else if(islandMissing)status+=' | Island geometry incomplete';
@@ -100,12 +110,16 @@ window.StructuralBlender = (() => {
     return {kind,points,surfaces,lines,status,chSign:pier.id==='P-1091'&&head?-1:1,...(head?{body:bodyFor(pier,work),islandMissing}:{}),...(capDepth?{capDepth}:{})};
   }
   function islandsFor(pier,headPoints=null) {
+    if(getP6HeadControl(pier)){
+      const model=build(pier,'Pier Head',headPoints||pointsFor(pier,'Pier Head'));
+      return {surfaces:model?.surfaces.filter(s=>s.name==='Island')||[],missing:!model,source:'023241-E / 039531-E'};
+    }
     const model=build(pier,'Pier Head',headPoints||pointsFor(pier,'Pier Head'));
     if(!model)return {surfaces:[],missing:true};
     // P-1091 head survey CH has the opposite display sense to its bearing CH.
     const sign=pier.id==='P-1091'?-1:1;
-    const shift=getDrawingPlinthControl(pier)?.islandOffsetOS||0;
-    return {surfaces:model.surfaces.filter(s=>s.name==='Island').map(s=>({...s,ring:s.ring.map(p=>({ch:round(p.ch*sign),os:round(p.os+shift)}))})),missing:model.islandMissing||model.points.some(p=>p.z===null)};
+    const control=getDrawingPlinthControl(pier),shift=(control?.islandOffsetOS||0)+(control?.referenceOffsetOS||0),shiftCH=control?.referenceOffsetCH||0;
+    return {surfaces:model.surfaces.filter(s=>s.name==='Island').map(s=>({...s,ring:s.ring.map(p=>({ch:round(p.ch*sign+shiftCH),os:round(p.os+shift)}))})),missing:model.islandMissing||model.points.some(p=>p.z===null)};
   }
   return {build,pointsFor,bodyFor,islandsFor};
 })();

@@ -1760,13 +1760,13 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/sigcom-c1-data.js"></script>
 <script src="assets/sigcom-sca-data.js"></script>
 <script src="assets/sigcom-w25-data.js"></script>
-<script src="assets/bearing-blender-manifest.js?v=20261024-p1142-audit"></script>
-<script src="assets/structural-blender-geometry.js?v=20261024-p1142-audit"></script>
-<script src="assets/elastomeric-blender-geometry.js?v=20261024-p1142-audit"></script>
-<script src="assets/elastomeric-blender-manifest.js?v=20261024-p1142-audit"></script>
-<script src="assets/structural-blender-manifest.js?v=20261020-cap-no-pile-labels"></script>
+<script src="assets/bearing-blender-manifest.js?v=20261027-special-levels"></script>
+<script src="assets/structural-blender-geometry.js?v=20261026-p6-island"></script>
+<script src="assets/elastomeric-blender-geometry.js?v=20261026-confirmed-levels"></script>
+<script src="assets/elastomeric-blender-manifest.js?v=20261027-special-levels"></script>
+<script src="assets/structural-blender-manifest.js?v=20261026-p6-island"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261020-br114-no-dowels"></script>
-<script src="assets/pot-blender-manifest.js?v=20261024-p1142-audit"></script>
+<script src="assets/pot-blender-manifest.js?v=20261027-pot-detail-axes"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -1960,7 +1960,58 @@ const P1091_PIER_HEAD_CH = Object.freeze({T1:-1.750,T2:0,T3:1.750,T4:0,T5:1.750,
 // Source-backed plan footprints only. Values are BEFORE the 30 mm offset.
 const BEARING_PLINTH_DRAWING_AUDIT={"date":"2026-10-24","scope":"Bearing Plinth plan footprint and center audit only","edgeExpansionMm":30,"families":{"P1":{"plan":"023000","rev":"B","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":1,"ch":0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55}],"note":"Footprints and centers checked; existing elevations retained"},"P2":{"plan":"023031","rev":"A","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-1.2,"sizeCH":0.4,"sizeOS":0.5},{"prefix":"UR","start":1,"ch":0.925,"os":1.2,"sizeCH":0.4,"sizeOS":0.5},{"prefix":"DL","start":1,"ch":-0.925,"os":-1.2,"sizeCH":0.4,"sizeOS":0.5},{"prefix":"DR","start":1,"ch":-0.925,"os":1.2,"sizeCH":0.4,"sizeOS":0.5}],"note":"Footprints and centers checked; existing elevations retained"},"P3-967":{"plan":"023061","rev":"C","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-5.15,"sizeCH":0.683,"sizeOS":0.834},{"prefix":"UC","start":1,"ch":0.925,"os":0,"sizeCH":0.683,"sizeOS":0.834},{"prefix":"UR","start":1,"ch":0.925,"os":5.15,"sizeCH":0.683,"sizeOS":0.834},{"prefix":"DL","start":1,"ch":-0.925,"os":-5.15,"sizeCH":0.683,"sizeOS":0.834},{"prefix":"DC","start":1,"ch":-0.925,"os":0,"sizeCH":0.683,"sizeOS":0.834},{"prefix":"DR","start":1,"ch":-0.925,"os":5.15,"sizeCH":0.683,"sizeOS":0.834}],"note":"Footprints and centers checked; existing elevations retained"},"P3-974":{"plan":"023069","rev":"B","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-3.394,"sizeCH":0.694,"sizeOS":0.834},{"prefix":"UC","start":1,"ch":0.925,"os":0,"sizeCH":0.694,"sizeOS":0.834},{"prefix":"UR","start":1,"ch":0.925,"os":3.394,"sizeCH":0.694,"sizeOS":0.834},{"prefix":"DL","start":1,"ch":-0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55}],"note":"Footprints and centers checked; existing elevations retained"},"P3-975":{"plan":"023065","rev":"B","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-5.419,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"UL","start":5,"ch":0.925,"os":-1.989,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"UR","start":1,"ch":0.925,"os":1.989,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"UR","start":5,"ch":0.925,"os":5.419,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"DL","start":1,"ch":-0.925,"os":-5.288,"sizeCH":0.694,"sizeOS":0.834},{"prefix":"DC","start":1,"ch":-0.925,"os":0,"sizeCH":0.694,"sizeOS":0.834},{"prefix":"DR","start":1,"ch":-0.925,"os":5.288,"sizeCH":0.694,"sizeOS":0.834}],"note":"Footprints and centers checked; existing elevations retained"},"P3-990":{"plan":"023077","rev":"B","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-5.246,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"UC","start":1,"ch":0.925,"os":0,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"UR","start":1,"ch":0.925,"os":5.246,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DL","start":1,"ch":-0.925,"os":-6.125,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"DL","start":5,"ch":-0.925,"os":-2.225,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"DR","start":1,"ch":-0.925,"os":2.225,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"DR","start":5,"ch":-0.925,"os":6.125,"sizeCH":0.654,"sizeOS":0.814}],"note":"Footprints and centers checked; existing elevations retained"},"P3-991":{"plan":"023088","rev":"A","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":1,"ch":0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-3.819,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DC","start":1,"ch":-0.925,"os":0,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DR","start":1,"ch":-0.925,"os":3.819,"sizeCH":0.684,"sizeOS":0.834}],"note":"Footprints and centers checked; existing elevations retained"},"P3-1106":{"plan":"023085","rev":"B","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-3.244,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"UC","start":1,"ch":0.925,"os":0,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"UR","start":1,"ch":0.925,"os":3.244,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DL","start":1,"ch":-0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55}],"note":"Footprints and centers checked; existing elevations retained"},"P3-1107":{"plan":"023081","rev":"B","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-5.19,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"UL","start":5,"ch":0.925,"os":-1.913,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"UR","start":1,"ch":0.925,"os":1.913,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"UR","start":5,"ch":0.925,"os":5.19,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"DL","start":1,"ch":-0.925,"os":-5.076,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DC","start":1,"ch":-0.925,"os":0,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DR","start":1,"ch":-0.925,"os":5.076,"sizeCH":0.684,"sizeOS":0.834}],"note":"Footprints and centers checked; existing elevations retained"},"P3-1122":{"plan":"023073","rev":"A","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":1,"ch":0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-3.59,"sizeCH":0.683,"sizeOS":0.834},{"prefix":"DC","start":1,"ch":-0.925,"os":0,"sizeCH":0.683,"sizeOS":0.834},{"prefix":"DR","start":1,"ch":-0.925,"os":3.59,"sizeCH":0.683,"sizeOS":0.834}],"note":"Footprints and centers checked; existing elevations retained"},"P3-969":{"plan":"023095","rev":"B","groups":[{"prefix":"UR","start":1,"ch":0.925,"os":1,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":5,"ch":0.925,"os":4.4,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-5.15,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DC","start":1,"ch":-0.925,"os":0,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DR","start":1,"ch":-0.925,"os":5.15,"sizeCH":0.684,"sizeOS":0.834}],"note":"Footprints and centers checked; existing elevations retained"},"P3-966":{"plan":"023098","rev":"B","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-4.825,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"UR","start":1,"ch":0.925,"os":0.325,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"UR","start":5,"ch":0.925,"os":5.475,"sizeCH":0.684,"sizeOS":0.834},{"prefix":"DL","start":1,"ch":-0.925,"os":-5.475,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"DL","start":5,"ch":-0.925,"os":-3.075,"sizeCH":0.654,"sizeOS":0.814},{"prefix":"DR","start":1,"ch":-0.925,"os":1.325,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":5,"ch":-0.925,"os":4.725,"sizeCH":0.45,"sizeOS":0.55}],"note":"Footprints and centers checked; existing elevations retained"},"P6-P-992":{"plan":"023241","rev":"E","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"UR","start":1,"ch":0.925,"os":2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"DL","start":1,"ch":-0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55}],"note":"Footprints/centers checked by 023240-D bearing-side schedule; elevation conflicts require review"},"P6-P-993":{"plan":"023241","rev":"E","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":1,"ch":0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"DR","start":1,"ch":-0.925,"os":2.45,"sizeCH":0.744,"sizeOS":0.864}],"note":"Footprints/centers checked by 023240-D bearing-side schedule; elevation conflicts require review"},"P6-P-1021":{"plan":"023241","rev":"E","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"UR","start":1,"ch":0.925,"os":2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"DL","start":1,"ch":-0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55}],"note":"Footprints/centers checked by 023240-D bearing-side schedule; elevation conflicts require review"},"P6-P-1022":{"plan":"023241","rev":"E","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":1,"ch":0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"DR","start":1,"ch":-0.925,"os":2.45,"sizeCH":0.744,"sizeOS":0.864}],"note":"Footprints/centers checked by 023240-D bearing-side schedule; elevation conflicts require review"},"P6-P-1130":{"plan":"023241","rev":"E","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"UR","start":1,"ch":0.925,"os":2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"DL","start":1,"ch":-0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55}],"note":"Footprints/centers checked by 023240-D bearing-side schedule; elevation conflicts require review"},"P6-P-1131":{"plan":"023241","rev":"E","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":1,"ch":0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-2.45,"sizeCH":0.744,"sizeOS":0.864},{"prefix":"DR","start":1,"ch":-0.925,"os":2.45,"sizeCH":0.744,"sizeOS":0.864}],"note":"Footprints/centers checked by 023240-D bearing-side schedule; elevation conflicts require review"},"P12-1100":{"plan":"023181","rev":"C","groups":[{"prefix":"UL","start":1,"ch":0.925,"os":-5.118,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"UR","start":1,"ch":0.925,"os":-1.718,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DL","start":1,"ch":-0.925,"os":-5.118,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":-1.718,"sizeCH":0.45,"sizeOS":0.55}],"note":"Offset centers from P-1100-specific plan; not applicable to P-1104"},"P13-1142":{"plan":"023091","rev":"G","groups":[{"prefix":"DL","start":1,"ch":-0.925,"os":-1.7,"sizeCH":0.45,"sizeOS":0.55},{"prefix":"DR","start":1,"ch":-0.925,"os":1.7,"sizeCH":0.45,"sizeOS":0.55}],"note":"Only two CP N03 plinths; upper CPN04 bearings excluded"},"BR115-1092":{"plan":"023167","rev":"B","groups":[{"prefix":"BL","start":1,"ch":0,"os":-2,"sizeCH":1.7,"sizeOS":1.7},{"prefix":"BR","start":1,"ch":0,"os":2,"sizeCH":1.8,"sizeOS":1.8}],"note":"Footprints and centers checked; existing elevations retained"},"BR115-1093":{"plan":"023162","rev":"B","groups":[{"prefix":"BL","start":1,"ch":0,"os":-2,"sizeCH":1.6,"sizeOS":1.6},{"prefix":"BR","start":1,"ch":0,"os":2,"sizeCH":1.7,"sizeOS":1.7}],"note":"Footprints and centers checked; existing elevations retained"}},"piers":{"P-826":"P1","P-827":"P1","P-828":"P1","P-829":"P1","P-830":"P1","P-831":"P1","P-832":"P1","P-833":"P1","P-834":"P1","P-835":"P1","P-836":"P1","P-837":"P1","P-838":"P1","P-839":"P1","P-840":"P1","P-841":"P1","P-842":"P1","P-843":"P1","P-844":"P1","P-845":"P1","P-846":"P1","P-847":"P1","P-848":"P1","P-849":"P1","P-850":"P1","P-851":"P1","P-852":"P1","P-853":"P1","P-854":"P1","P-855":"P1","P-856":"P1","P-857":"P1","P-858":"P1","P-859":"P1","P-860":"P1","P-861":"P1","P-862":"P1","P-863":"P1","P-864":"P1","P-865":"P1","P-866":"P1","P-867":"P1","P-868":"P1","P-869":"P1","P-870":"P1","P-871":"P1","P-872":"P1","P-873":"P1","P-874":"P1","P-875":"P1","P-876":"P1","P-877":"P1","P-878":"P1","P-879":"P1","P-880":"P1","P-881":"P1","P-882":"P1","P-883":"P1","P-884":"P1","P-885":"P1","P-886":"P1","P-887":"P1","P-893":"P1","P-894":"P1","P-895":"P1","P-896":"P1","P-897":"P1","P-898":"P1","P-899":"P1","P-900":"P1","P-901":"P1","P-902":"P1","P-903":"P1","P-904":"P1","P-905":"P1","P-906":"P1","P-907":"P1","P-908":"P1","P-909":"P1","P-910":"P1","P-911":"P1","P-912":"P1","P-913":"P1","P-914":"P1","P-915":"P1","P-916":"P1","P-917":"P1","P-918":"P1","P-919":"P1","P-920":"P1","P-921":"P1","P-922":"P1","P-923":"P1","P-924":"P1","P-925":"P1","P-926":"P1","P-927":"P1","P-928":"P1","P-929":"P1","P-930":"P1","P-931":"P1","P-932":"P1","P-933":"P1","P-934":"P1","P-935":"P1","P-936":"P1","P-937":"P1","P-938":"P1","P-939":"P1","P-940":"P1","P-941":"P1","P-942":"P1","P-943":"P1","P-944":"P1","P-945":"P1","P-946":"P1","P-947":"P1","P-948":"P1","P-949":"P1","P-950":"P1","P-951":"P1","P-952":"P1","P-953":"P1","P-954":"P1","P-955":"P1","P-956":"P1","P-957":"P1","P-958":"P1","P-959":"P1","P-960":"P1","P-961":"P1","P-962":"P1","P-963":"P1","P-964":"P1","P-965":"P1","P-970":"P1","P-971":"P1","P-972":"P1","P-982":"P1","P-983":"P1","P-986":"P1","P-987":"P1","P-988":"P1","P-994":"P1","P-995":"P1","P-996":"P1","P-997":"P1","P-998":"P1","P-999":"P1","P-1000":"P1","P-1001":"P1","P-1002":"P1","P-1003":"P1","P-1004":"P1","P-1005":"P1","P-1006":"P1","P-1007":"P1","P-1008":"P1","P-1009":"P1","P-1010":"P1","P-1011":"P1","P-1012":"P1","P-1013":"P1","P-1014":"P1","P-1015":"P1","P-1016":"P1","P-1017":"P1","P-1018":"P1","P-1019":"P1","P-1020":"P1","P-1023":"P1","P-1024":"P1","P-1025":"P1","P-1026":"P1","P-1027":"P1","P-1028":"P1","P-1029":"P1","P-1030":"P1","P-1031":"P1","P-1032":"P1","P-1033":"P1","P-1034":"P1","P-1035":"P1","P-1036":"P1","P-1037":"P1","P-1038":"P1","P-1039":"P1","P-1040":"P1","P-1041":"P1","P-1042":"P1","P-1044":"P1","P-1045":"P1","P-1046":"P1","P-1047":"P1","P-1052":"P1","P-1053":"P1","P-1054":"P1","P-1055":"P1","P-1057":"P1","P-1058":"P1","P-1059":"P1","P-1060":"P1","P-1061":"P1","P-1062":"P1","P-1063":"P1","P-1064":"P1","P-1065":"P1","P-1066":"P1","P-1067":"P1","P-1068":"P1","P-1069":"P1","P-1070":"P1","P-1071":"P1","P-1072":"P1","P-1073":"P1","P-1074":"P1","P-1075":"P1","P-1076":"P1","P-1077":"P1","P-1078":"P1","P-1079":"P1","P-1080":"P1","P-1081":"P1","P-1082":"P1","P-1083":"P1","P-1084":"P1","P-1085":"P1","P-1086":"P1","P-1087":"P1","P-1089":"P1","P-1090":"P1","P-1095":"P1","P-1096":"P1","P-1097":"P1","P-1105":"P1","P-1109":"P1","P-1110":"P1","P-1111":"P1","P-1112":"P1","P-1113":"P1","P-1114":"P1","P-1115":"P1","P-1116":"P1","P-1117":"P1","P-1118":"P1","P-1119":"P1","P-1123":"P1","P-1124":"P1","P-1125":"P1","P-1126":"P1","P-1127":"P1","P-1128":"P1","P-1129":"P1","P-1132":"P1","P-1133":"P1","P-1134":"P1","P-1135":"P1","P-1136":"P1","P-1137":"P1","P-1138":"P1","P-1139":"P1","P-1140":"P1","P-1141":"P1","P-978NB":"P2","P-978SB":"P2","P-979NB":"P2","P-979SB":"P2","P-980NB":"P2","P-980SB":"P2","P-981NB":"P2","P-981SB":"P2","P-982NB":"P2","P-982SB":"P2","P-983NB":"P2","P-983SB":"P2","P-984NB":"P2","P-984SB":"P2","P-985NB":"P2","P-985SB":"P2","P-986NB":"P2","P-986SB":"P2","P-987NB":"P2","P-987SB":"P2","P-988NB":"P2","P-988SB":"P2","P-1109SB":"P2","P-1109NB":"P2","P-1110SB":"P2","P-1110NB":"P2","P-1111SB":"P2","P-1111NB":"P2","P-1112SB":"P2","P-1112NB":"P2","P-1113SB":"P2","P-1113NB":"P2","P-1114SB":"P2","P-1114NB":"P2","P-1115SB":"P2","P-1115NB":"P2","P-1116SB":"P2","P-1116NB":"P2","P-1117SB":"P2","P-1117NB":"P2","P-1118SB":"P2","P-1118NB":"P2","P-1119SB":"P2","P-1119NB":"P2","P-967":"P3-967","P-967A":"P3-967","P-968":"P3-967","P-974":"P3-974","P-975":"P3-975","P-990":"P3-990","P-991":"P3-991","P-1106":"P3-1106","P-1107":"P3-1107","P-1122":"P3-1122","P-969":"P3-969","P-966":"P3-966","P-992":"P6-P-992","P-993":"P6-P-993","P-1021":"P6-P-1021","P-1022":"P6-P-1022","P-1130":"P6-P-1130","P-1131":"P6-P-1131","P-1100":"P12-1100","P-1142":"P13-1142","P-1092":"BR115-1092","P-1093":"BR115-1093"}};
 Object.assign(BEARING_PLINTH_DRAWING_AUDIT.families['P12-1100'],{headBounds:{minCH:-1.75,maxCH:1.75,minOS:-5.668,maxOS:1.75},islandOffsetOS:-3.418});
-function getDrawingPlinthControl(pier){const a=BEARING_PLINTH_DRAWING_AUDIT;return a.families[a.piers[pier?.id]]||null;}
+// P5D origins: user confirmed the main Pier coordinate is the combined-head
+// reference, not an individual column. Never infer a missing origin by averaging.
+const P5D_COMBINED_HEAD_IDS=['P-976','P-977','P-1101','P-1102','P-1103','P-1108','P-1120','P-1121'];
+const P5D_APPROVED_HEAD_CENTERS={'P-1121':{e:454880.370,n:1678492.912,source:'User confirmed combined-head X/Y, 2026-10-26'}};
+function p5dHeadReference(pier){
+  const id=String(pier?.id||'').trim().replace(/[LR]$/,'');
+  if(!P5D_COMBINED_HEAD_IDS.includes(id))return null;
+  const all=Object.values(PIERS_RAW),main=all.find(p=>p.id.trim()===id),left=all.find(p=>p.id===id+'L'),right=all.find(p=>p.id===id+'R');
+  if(P5D_APPROVED_HEAD_CENTERS[id])return {...left,...P5D_APPROVED_HEAD_CENTERS[id],id};
+  if(main&&Number.isFinite(main.n)&&Number.isFinite(main.e))return main;
+  if(left&&right&&Number.isFinite(left.n)&&Number.isFinite(left.e)&&left.n===right.n&&left.e===right.e)return left;
+  return null;
+}
+function getDrawingPlinthControl(pier){
+  const a=BEARING_PLINTH_DRAWING_AUDIT,f=a.families[a.piers[pier?.id]]||null;
+  if(!f?.combinedHead)return f;
+  const ref=p5dHeadReference(pier);if(!ref)return null;
+  const angle=((pier.deg||0)+(pier.min||0)/60+(pier.sec||0)/3600)*Math.PI/180;
+  const dn=ref.n-pier.n,de=ref.e-pier.e,dc=dn*Math.sin(angle)-de*Math.cos(angle),ds=dn*Math.cos(angle)+de*Math.sin(angle);
+  return {...f,referenceOffsetCH:dc,referenceOffsetOS:ds,groups:f.groups.map(g=>({...g,ch:g.ch+dc,os:g.os+ds})),headBounds:{minCH:f.headBounds.minCH+dc,maxCH:f.headBounds.maxCH+dc,minOS:f.headBounds.minOS+ds,maxOS:f.headBounds.maxOS+ds}};
+}
+// Source transcriptions: local dimensions are metres before +30 mm/edge.
+// Rotation is the bearing alignment WCB minus the main-line WCB.
+function registerP5DPlinthControls(){
+  const g=(prefix,start,ch,os,sizeCH,sizeOS,rotationDegrees=0)=>({prefix,start,ch,os,sizeCH,sizeOS,rotationDegrees});
+  const row=(up,os,chSize,osSize)=>os.map((x,i)=>g((up?'U':'D')+(i<os.length/2?'L':'R'),i%2?5:1,up?.925:-.925,x,chSize,osSize));
+  const four=(up,os)=>row(up,os,.654,.814);
+  const small=()=>[g('UL',1,.925,-1.7,.450,.550),g('UR',1,.925,1.7,.450,.550),g('DL',1,-.925,-1.7,.450,.550),g('DR',1,-.925,1.7,.450,.550)];
+  const dms=(d,m,s)=>d+m/60+s/3600;
+  const rotated=(prefix,start,ch,os,delta)=>g(prefix,start,ch,os,.400,.500,delta);
+  const pair=(prefix,start,ch,os,delta)=>{const t=delta*Math.PI/180;return [-1.2,1.2].map((x,i)=>rotated(prefix,start+i*4,ch-x*Math.sin(t),os+x*Math.cos(t),delta));};
+  const f={
+    'P-976':{plan:'023211',rev:'B',groups:[...four(true,[-7.710,-2.753,2.753,7.710]),...four(false,[-7.570,-2.707,2.707,7.570])],bounds:[-8.330,8.331]},
+    'P-977':{plan:'023214',rev:'F',groups:[...pair('UL',1,.925,-9.091,dms(25,35,45)-dms(31,17,57)),g('UL',9,.925,-1.7,.450,.550),g('UR',1,.925,1.7,.450,.550),...pair('UR',5,.925,9.081,dms(37,0,9)-dms(31,17,57)),...four(false,[-9.401,-3.318,3.318,9.401])],bounds:[-10.957,10.957]},
+    'P-1101':{plan:'023220',rev:'A',groups:small(),bounds:[-16.525,9.587]},
+    'P-1102':{plan:'023223',rev:'A',groups:small(),bounds:[-12.048,14.065]},
+    'P-1103':{plan:'023226',rev:'A',groups:small(),bounds:[-7.580,18.532]},
+    'P-1120':{plan:'023232',rev:'E',groups:[...four(true,[-9.526,-3.359,3.359,9.526]),...pair('DL',1,-.925,-9.237,-5.716666666666667),g('DL',9,-.925,-1.7,.450,.550),g('DR',1,-.925,1.7,.450,.550),...pair('DR',5,-.925,9.237,5.716666666666667)],bounds:[-11.112,11.111]},
+    'P-1121':{plan:'023235',rev:'B',groups:[g('UL',1,.925,-5.85,.694,.834),g('UC',1,.925,0,.694,.834),g('UR',1,.925,5.85,.694,.834),...four(false,[-6.007,-2.186,2.186,6.007])],bounds:[-6.665,6.665]}
+  };
+  const al=dms(70,31,45)-dms(76,9,46),ar=dms(81,56,35)-dms(76,9,46),tl=al*Math.PI/180,tr=ar*Math.PI/180;
+  f['P-1108']={plan:'023229',rev:'B',groups:[rotated('UL',1,.80725,-5.890-2.4*Math.cos(tl),al),rotated('UL',5,.80725-2.4*Math.sin(tl),-5.890,al),g('UL',9,.925,-1.7,.450,.550),g('UR',1,.925,1.7,.450,.550),rotated('UR',5,1.04591,5.891,ar),rotated('UR',9,1.04591-2.4*Math.sin(tr),5.891+2.4*Math.cos(tr),ar),...four(false,[-7.402,-2.651,2.651,7.402])],bounds:[-8.971,8.970]};
+  for(const [id,c]of Object.entries(f)){
+    c.combinedHead=true;c.headBounds={minCH:-2,maxCH:2,minOS:c.bounds[0],maxOS:c.bounds[1]};delete c.bounds;
+    c.note='P5D combined-head reference confirmed; plan footprint/rotation only, existing elevations retained';
+    BEARING_PLINTH_DRAWING_AUDIT.families[id]=c;
+    // P-1108's legacy main record has a trailing space; preserve its identity.
+    for(const suffix of ['', 'L','R'])BEARING_PLINTH_DRAWING_AUDIT.piers[id+suffix]=id;
+    if(id==='P-1108')BEARING_PLINTH_DRAWING_AUDIT.piers['P-1108 ']=id;
+  }
+}
+registerP5DPlinthControls();
 // Individually audited batches only. Each column drawing refers to 023000;
 // 023000-B P1 plan controls 450 CH x 550 OS before the 30 mm edge expansion.
 const P1_PLINTH_AUDITED_PIERS=new Set(['P-826','P-827','P-828','P-829','P-830','P-831','P-832','P-833','P-834','P-835','P-836','P-837','P-838','P-839','P-840','P-841','P-842','P-843','P-844','P-845']);
@@ -2009,8 +2060,9 @@ function expandBearingPlinthEdges(points){
   return result.size?(points||[]).map(p=>result.get(p.label)||p):points;
 }
 function _orientPierSpecificPointsBase(pier, work, points, hasExcelOverride = false) {
+  if(work==='Pier Head'&&getP6HeadControl(pier))return [...getP6HeadPoints(pier),...(points||[]).filter(p=>!/^T\d+$/.test(p.label))];
   const checked=work==='Bearing Plinths'&&getDrawingPlinthControl(pier);
-  if(checked)return checked.groups.flatMap(c=>[[1,-1],[1,1],[-1,1],[-1,-1]].map(([a,b],i)=>({label:c.prefix+(c.start+i),ch:Number((c.ch+a*c.sizeCH/2).toFixed(6)),os:Number((c.os+b*c.sizeOS/2).toFixed(6))})));
+  if(checked)return checked.groups.flatMap(c=>[[1,-1],[1,1],[-1,1],[-1,-1]].map(([a,b],i)=>{const t=(c.rotationDegrees||0)*Math.PI/180,x=a*c.sizeCH/2,y=b*c.sizeOS/2;return {label:c.prefix+(c.start+i),ch:Number((c.ch+x*Math.cos(t)-y*Math.sin(t)).toFixed(9)),os:Number((c.os+x*Math.sin(t)+y*Math.cos(t)).toFixed(9))};}));
   if(P1_PLINTH_AUDITED_PIERS.has(pier?.id)&&work==='Bearing Plinths'){
     return Object.entries({UL:[.925,-1.7],UR:[.925,1.7],DL:[-.925,-1.7],DR:[-.925,1.7]}).flatMap(([group,[ch,os]])=>[[1,-1],[1,1],[-1,1],[-1,-1]].map(([a,b],i)=>({label:group+(i+1),ch:Number((ch+a*.450/2).toFixed(6)),os:Number((os+b*.550/2).toFixed(6))})));
   }
@@ -2203,7 +2255,69 @@ function getBearingRule(pierId, work, label, bearingType = '') {
 
 // Single source of truth for every activity whose design elevation starts at
 // Top of Column. PIER_COLUMN_DRAWING_OVERRIDES is applied to topPier at load time.
+const CONFIRMED_TOP_PIER_LEVELS={'P-992':89.905,'P-993':90.372,'P-1021':100.645,'P-1022':100.751,'P-1051':103.238,'P-1130':115.780,'P-1131':115.560};
+const P6_CONFIRMED_PIERS=['P-992','P-993','P-1021','P-1022','P-1130','P-1131'];
+const P6_CIS60_INCREASING=new Set(['P-992','P-1021','P-1130']);
+function getConfirmedPlinthRise(pier,label){
+  const id=String(pier?.id||'').trim(),base=id.replace(/[LR]$/,''),point=String(label||'').replace(/^E/,'');
+  if(BEARING_PLINTH_DRAWING_AUDIT.piers[id]==='P2')return .150;
+  if(base==='P-976')return .112;
+  if(base==='P-1121')return /^U/.test(point)?.097:/^D/.test(point)?.112:null;
+  // 023077-B: increasing arrow points UP; CIS40 is the +CH row.
+  if(base==='P-990')return /^U/.test(point)?.097:/^D/.test(point)?.112:null;
+  // 038582-C section 3 / bearing arrangement: 140 mm starts at RL A,
+  // not at the headstock surface 100 mm above RL A. N03 D-side only.
+  if(base==='P-1142')return /^D/.test(point)?.140:null;
+  // Individually rendered plan/elevation controls, not generic bearing types.
+  if(['P-967','P-967A','P-968'].includes(id))return .097; // 023061-C
+  if(['P-969','P-991','P-1122'].includes(id))return /^U/.test(point)?.140:/^D/.test(point)?.097:null; // 023095-B / 023088-A / 023073-A
+  if(['P-974','P-1106'].includes(id))return /^U/.test(point)?.097:/^D/.test(point)?.140:null; // 023069-B / 023085-B
+  if(['P-975','P-1107'].includes(id))return /^U/.test(point)?.112:/^D/.test(point)?.097:null; // 023065-B / 023081-B
+  if(base==='P-977'){
+    if(/^D/.test(point))return .112; // 039356-E CIS50 section
+    if(/^U/.test(point))return /^(UL(?:9|10|11|12)|UR[1-4])$/.test(point)?.140:.150; // Type1 / Type2, section 03
+  }
+  // Only source-dimensioned groups are locked for these two P5D heads.
+  // Type2 remains unresolved: never borrow P-977's height by family name.
+  if(base==='P-1108'){
+    if(/^D/.test(point))return .112; // 039451-B section 03
+    if(/^(UL(?:9|10|11|12)|UR[1-4])$/.test(point))return .140; // 039452-B section 07
+  }
+  if(base==='P-1120'){
+    if(/^U/.test(point))return .112; // 023233-E elevation C
+    if(/^(DL(?:9|10|11|12)|DR[1-4])$/.test(point))return .140; // 023232-E elevation A
+  }
+  if(P6_CONFIRMED_PIERS.includes(id)){
+    const up=/^U/.test(point),down=/^D/.test(point);if(!up&&!down)return null;
+    return up===P6_CIS60_INCREASING.has(id)?.049:.740;
+  }
+  return null;
+}
+function getConfirmedBearingHeadStep(pier){
+  if(!P6_CONFIRMED_PIERS.includes(pier?.id))return null;
+  const highSign=P6_CIS60_INCREASING.has(pier.id)?-1:1;
+  return {step:.600,highSign,stepCH:.350*highSign};
+}
+function getP6HeadControl(pier){
+  const step=getConfirmedBearingHeadStep(pier);
+  return step?{...step,halfCH:1.750,halfOS:3.300,islandHalfOS:.600,islandRise:.300,source:'023240-D / 023241-E / 039531-E'}:null;
+}
+function getP6HeadPoints(pier){
+  const c=getP6HeadControl(pier);if(!c)return [];
+  // Same naming convention as P-1094: positive-CH island T1/T6/T7,
+  // negative-CH island T3/T5/T8; T2/T4 follow the actual offset joint.
+  return [['T1',c.halfCH,0],['T2',c.stepCH,c.halfOS],['T3',-c.halfCH,0],['T4',c.stepCH,-c.halfOS],
+    ['T5',-c.halfCH,c.islandHalfOS],['T6',c.halfCH,c.islandHalfOS],['T7',c.halfCH,-c.islandHalfOS],['T8',-c.halfCH,-c.islandHalfOS]]
+    .map(([label,ch,os])=>({label,ch,os,source:c.source}));
+}
+function getP6HeadPointRise(pier,p){
+  const c=getP6HeadControl(pier);if(!c)return null;
+  const boundary=Math.abs(p.ch-c.stepCH)<1e-8;
+  const surface=boundary||(p.ch-c.stepCH)*c.highSign>0?c.step:0;
+  return surface+(Math.abs(p.os)<=c.islandHalfOS+1e-8?c.islandRise:0);
+}
 function getTopOfColumnElevation(pier) {
+  if(Object.prototype.hasOwnProperty.call(CONFIRMED_TOP_PIER_LEVELS,pier?.id))return CONFIRMED_TOP_PIER_LEVELS[pier.id];
   const value = Number(pier?.topPier);
   return Number.isFinite(value) ? value : null;
 }
@@ -2224,6 +2338,12 @@ const WORK_ELEV = {
 
 function getWorkPointElev(pier, work, label) {
   if (!pier || !work) return null;
+  // User-confirmed drawing controls, 2026-10-26. They take precedence over
+  // cached/online wildcard TYPE1 defaults and the global type selector.
+  if(work==='Bearing Plinths'||work==='Elastomeric'){
+    const rise=getConfirmedPlinthRise(pier,label);
+    if(rise!==null)return Number((getTopOfColumnElevation(pier)+rise+(work==='Elastomeric'?.067:0)).toFixed(6));
+  }
   if(BR114_DRAWING_CONTROLS[pier.id]&&work==='Bearing Plinths'){
     const group=String(label||'').replace(/^E/,'').replace(/\d+$/,'').replace(/^C([LR])$/,'B$1');const control=BR114_DRAWING_CONTROLS[pier.id].plinths[group];
     return control?getTopOfColumnElevation(pier)+control.rise:null;
@@ -2371,13 +2491,16 @@ for (const [pierId, correction] of Object.entries(PIER_COLUMN_DRAWING_OVERRIDES)
 // Latest Pier Head Schedule levels from SURVEY CP-N03 SHARE DRIVE/Pier head type.
 // Keep these separate from column-height overrides so the controlling drawing
 // purpose and review trail remain explicit.
-// NSCR-ITD-N03-ZWD-DWG-ST-023240-C, Pier Head Type P6 Schedule.
+// NSCR-ITD-N03-ZWD-DWG-ST-023240-D, Pier Head Type P6 Schedule.
 const PIER_HEAD_SCHEDULE_LEVEL_OVERRIDES = {
   "P-890": {"topPier":62.540,"sourcePierHeadSchedule":"NSCR-ITD-N03-ZWD-DWG-ST-023156-A"},
-  "P-992": {"topPier": 90.905, "sourcePierHeadSchedule": "NSCR-ITD-N03-ZWD-DWG-ST-023240-C"}
+  "P-992": {"topPier": 89.905, "sourcePierHeadSchedule": "NSCR-ITD-N03-ZWD-DWG-ST-023240-D"}
 };
 for (const [pierId, correction] of Object.entries(PIER_HEAD_SCHEDULE_LEVEL_OVERRIDES)) {
   if (PIERS_RAW[pierId]) Object.assign(PIERS_RAW[pierId], correction);
+}
+for(const [id,topPier]of Object.entries(CONFIRMED_TOP_PIER_LEVELS)){
+  if(PIERS_RAW[id])Object.assign(PIERS_RAW[id],{topPier,levelConfirmation:'User confirmed drawing RL A, 2026-10-26'});
 }
 
 // Pier-head survey elevations are tied to the latest Top of Column/Pier level.
@@ -2410,6 +2533,7 @@ const PIER_HEAD_T_RISE_OVERRIDES = {
 let livePierHeadElevations = {};
 
 function getPierHeadTElevations(pier) {
+  if(getP6HeadControl(pier))return Object.fromEntries(getP6HeadPoints(pier).map(p=>[p.label,Number((getTopOfColumnElevation(pier)+getP6HeadPointRise(pier,p)).toFixed(3))]));
   const live = livePierHeadElevations[pier?.id];
   const stored = PIER_T_ELEVATIONS[pier?.id] || {};
   // A live Sheet row is the editable base source, but drawing-controlled
@@ -2491,8 +2615,10 @@ function getPotBearingPoints(pier) {
     S2:{width:1.250,length:1.675,height:.269,source:'066053-B'},
     S3:{width:.595,length:.815,height:.143,source:'066054-B'},
     S4:{width:1.480,length:1.480,height:.245,source:'066055-B'},
-    // S5 is guided transversely: its long plate axis is OS, not CH.
-    S5:{width:1.865,length:1.250,height:.269,source:'066056-B'},
+    // 066056-B enlarged dimension: outer 1565/2, bolt 1365/2.
+    // Latest user instruction supersedes the plan override: LONGITUDINAL=CH,
+    // TRANSVERSE=OS. 066056-B S5's 1565 dimension follows TRANSVERSE.
+    S5:{width:1.565,length:1.250,height:.269,source:'066056-B'},
     S6:{width:1.165,length:1.275,height:.250,source:'066057-B'}
   };
   const layout=layouts[pier?.id];if(!layout)return [];
@@ -2518,7 +2644,7 @@ function drawPotBearingBlender(ctx,W,H,pier,points){
   const record=Object.entries(window.POT_BLENDER_MANIFEST||{}).find(([key,r])=>(key===pier.id||key.startsWith(pier.id+'-'))&&JSON.stringify(r.points)===JSON.stringify(points)&&JSON.stringify(r.context)===context)?.[1];
   if(!record)return false;
   let img=potBlenderImages[record.image];
-  if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image+(['P-1092','P-1093','P-1094'].includes(pier.id)?'?v=20261024-plinth-audit':'');}
+  if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image+'?v=20261027-pot-detail-axes';}
   if(!img.complete||!img.naturalWidth)return false;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   const height=W*img.naturalHeight/img.naturalWidth;
@@ -2791,6 +2917,16 @@ function expandBearingPlinthArrays(expand = 0.030) {
 }
 
 expandBearingPlinthArrays();
+
+// Populate only combined-head metadata for empty main records when the two
+// legacy L/R records agree exactly. Do not copy pile/column setting-out data.
+for(const id of P5D_COMBINED_HEAD_IDS){
+  const main=Object.values(PIERS_RAW).find(p=>p.id.trim()===id),ref=p5dHeadReference({id});
+  if(main&&ref&&(!Number.isFinite(main.n)||!Number.isFinite(main.e))){
+    for(const key of ['n','e','deg','min','sec','topPier','pierType','pierReinf','pierDim','sta'])main[key]=ref[key];
+    main.combinedHeadReference=true;
+  }
+}
 
 // ═══════════════════════════════════════════
 // STATE
@@ -4291,7 +4427,7 @@ function applyReferenceRecords(records) {
   for (const [pierId, record] of Object.entries(records || {})) {
     if (!PIERS_RAW[pierId] || !record) continue;
     const topPier = record.topPier === null || record.topPier === '' ? NaN : Number(record.topPier);
-    if (Number.isFinite(topPier)) PIERS_RAW[pierId].topPier = topPier;
+    if (Number.isFinite(topPier)) PIERS_RAW[pierId].topPier = CONFIRMED_TOP_PIER_LEVELS[pierId] ?? topPier;
     const tMap = {};
     for (let t = 1; t <= 24; t++) {
       const rawValue = record.t?.[`T${t}`];
@@ -7030,8 +7166,9 @@ function getStructuralCanvasGeometry(pier, work = 'Pier Head') {
     depth: knownDepth ? derivedDepth : 1.5, knownDepth,
     // Only P-1091's 0.400 m rim is checked against the side elevation here.
     rim: pier.id === 'P-1091' ? 0.400 : 0.300,
-    step: BR114_DRAWING_CONTROLS[pier.id]?.step ?? (['P-1091','P-1094'].includes(pier.id) ? 0.600 : 0),
-    highCHSign:BR114_DRAWING_CONTROLS[pier.id]?.highSign ?? (pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1),
+    step: getConfirmedBearingHeadStep(pier)?.step ?? BR114_DRAWING_CONTROLS[pier.id]?.step ?? (['P-1091','P-1094'].includes(pier.id) ? 0.600 : 0),
+    stepCH:getConfirmedBearingHeadStep(pier)?.stepCH ?? 0,
+    highCHSign:getConfirmedBearingHeadStep(pier)?.highSign ?? BR114_DRAWING_CONTROLS[pier.id]?.highSign ?? (pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1),
     // Bearing templates use their own local frame for the contextual head.
     // This frame conversion is not applied to survey points or coordinate math.
     headFrameCHSign:pier.id === 'P-1091' && work !== 'Pier Head' ? -1 : 1,
@@ -7093,7 +7230,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   };
   const rect = (a,b,c,d) => [{ch:a,os:c},{ch:a,os:d},{ch:b,os:d},{ch:b,os:c}];
   const head = rect(minCH,maxCH,minOS,maxOS);
-  const surfaceAt = ch => topPier + (geometry.step && ch*geometry.highCHSign > 0 ? geometry.step : 0);
+  const surfaceAt = ch => topPier + (geometry.step && (ch-(geometry.stepCH||0))*geometry.highCHSign > 0 ? geometry.step : 0);
 
   const drawExtrudedPlan = (points, elevation, bottomElevation, topFill, sideFill, stroke='#58728a') => {
     if (points.length < 3) return;
@@ -7122,7 +7259,7 @@ function drawWorkArray3D(ctx, W, H, pier, work, pts) {
   }
   drawExtrudedPlan(head,topPier,topPier-geometry.rim,'#edf2f5','#c0ced8');
   if (geometry.step) {
-    const high = geometry.highCHSign > 0 ? rect(0,maxCH,minOS,maxOS) : rect(minCH,0,minOS,maxOS);
+    const high = geometry.highCHSign > 0 ? rect(geometry.stepCH||0,maxCH,minOS,maxOS) : rect(minCH,geometry.stepCH||0,minOS,maxOS);
     drawExtrudedPlan(high,topPier+geometry.step,topPier,'#e1eaf0','#a5bdcd');
   }
 
@@ -7738,7 +7875,7 @@ function drawPileArray(pier) {
           return `${delta >= 0 ? '+' : ''}${delta.toFixed(3)} m (EL ${level.toFixed(3)})`;
         });
         const isTransitionHead = ['P-1091','P-1094'].includes(pier.id);
-        const legend = BR114_DRAWING_CONTROLS[pier.id]?.step
+        const legend = getP6HeadControl(pier)?'P6 LEVEL BREAK T2-T4: 0.600 m | ISLAND +0.300 m | CH '+getP6HeadControl(pier).stepCH.toFixed(3)+' m':BR114_DRAWING_CONTROLS[pier.id]?.step
           ? 'LEVEL BREAK T2-T4: 0.200 m | ISLAND +0.297 m'
           : isTransitionHead
           ? 'LEVEL BREAK T2-T4: 0.600 m | ISLAND +0.317 m'
@@ -8317,9 +8454,16 @@ function renderSurveyTable(pier) {
   // Distinguish a checked plan footprint from legacy values awaiting evidence.
   let auditNote=document.getElementById('bearing-footprint-audit');
   if(!auditNote){auditNote=document.createElement('div');auditNote.id='bearing-footprint-audit';auditNote.style.cssText='font:11px Arial;padding:3px 8px;border:1px solid #bf9b42;background:#fff8df;color:#633e00';document.getElementById('survey-table')?.before(auditNote);}
-  const auditVisible=work==='Bearing Plinths'&&!isClarkStationElement(pier)&&!isSubstationPier(pier);
+  const auditVisible=['Bearing Plinths','Elastomeric'].includes(work)&&!isClarkStationElement(pier)&&!isSubstationPier(pier);
   auditNote.style.display=auditVisible?'block':'none';
-  if(auditVisible){const checked=getDrawingPlinthControl(pier),prior=BR114_DRAWING_CONTROLS[pier.id]||['P-1091','P-1094'].includes(pier.id);auditNote.textContent=checked?'FOOTPRINT AUDIT: '+checked.plan+' Rev.'+checked.rev+' | +30 mm per edge once | '+checked.note:prior?'FOOTPRINT: prior per-pier drawing controls; dimensions only, not full-work certification':'FOOTPRINT NOT VERIFIED - DO NOT SET OUT FROM LEGACY VALUES; drawing/identity reconciliation pending';}
+  if(auditVisible){
+    const checked=getDrawingPlinthControl(pier),prior=BR114_DRAWING_CONTROLS[pier.id]||['P-1091','P-1094'].includes(pier.id);
+    const confirmed=pts.length&&pts.every(p=>getConfirmedPlinthRise(pier,p.label)!==null);
+    const base=String(pier.id).trim().replace(/[LR]$/,'');
+    const levelIssue=['P-1108','P-1120'].includes(base)?'LEVELS PARTIAL - Type2 heights NOT VERIFIED; do not set out Type2 from legacy levels':base==='P-966'?'LEVELS NOT VERIFIED - individual CIS40/CIS70/Type1 heights required':null;
+    const scope=work==='Elastomeric'?'SUPPORTING PLINTH FOOTPRINT: ':'FOOTPRINT AUDIT: ';
+    auditNote.textContent=checked?scope+checked.plan+' Rev.'+checked.rev+' | Plinth +30 mm per edge once | '+(levelIssue||(confirmed?'Plinth levels: drawing-confirmed per bearing group; 3D context remains partial':checked.note)):prior?'FOOTPRINT: prior per-pier drawing controls; dimensions only, not full-work certification':'FOOTPRINT NOT VERIFIED - DO NOT SET OUT FROM LEGACY VALUES; drawing/identity reconciliation pending';
+  }
 
   // Compute WCB radians
   const wcbDec = (pier.deg||0) + (pier.min||0)/60 + (pier.sec||0)/3600;

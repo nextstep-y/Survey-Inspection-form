@@ -31,7 +31,7 @@ window.ElastomericBlender=(()=>{
   }
   // Never fabricate or relocate a supporting footprint to hide a source conflict.
   return {points:ps,groups:supportMissing?[]:pg,pads,supportMissing,head:getDrawingPlinthControl(pier)?.headBounds||{minCH:Math.min(...ts.map(p=>p.ch)),maxCH:Math.max(...ts.map(p=>p.ch)),minOS:Math.min(...ts.map(p=>p.os)),maxOS:Math.max(...ts.map(p=>p.os))},
-   step:['P-1091','P-1094'].includes(pier.id)?.6:0,highSign:pier.id==='P-1091'?-1:1,body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier,headInput),renderRevision:'elastomeric-1'};
+   step:['P-1091','P-1094'].includes(pier.id)?.6:0,highSign:pier.id==='P-1091'?-1:1,...(getConfirmedBearingHeadStep(pier)||{}),body:window.StructuralBlender.bodyFor(pier,'Bearing Plinths'),islands:window.StructuralBlender.islandsFor(pier,headInput),renderRevision:'elastomeric-1'};
  }
  return {build};
 })();
