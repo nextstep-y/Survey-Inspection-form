@@ -1225,8 +1225,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
       <input type="text" id="dwg-rev-input" placeholder="0">
     </div>
     <div class="dwg-actions">
-      <button class="btn btn-primary" onclick="saveDwgOverrideFromPanel()">Save DWG</button>
-      <button class="btn btn-danger-outline" onclick="clearDwgOverrideFromPanel()">Clear Override</button>
+      <button id="dwg-save-button" class="btn btn-primary" onclick="saveDwgOverrideFromPanel()">Save DWG</button>
+      <button id="dwg-clear-button" class="btn btn-danger-outline" onclick="clearDwgOverrideFromPanel()">Clear Override</button>
     </div>
     <div class="dwg-row dwg-file">
       <label for="dwg-import-file">Import CSV</label>
@@ -4581,20 +4581,22 @@ function applyDrawingRegisterRows(rows) {
   for (const row of rows || []) {
     if (String(row.status || '').trim().toUpperCase() !== 'VISUALLY REVIEWED') continue;
     const type = String(row.type || '').trim().toLowerCase();
-    const key = type === 'pier column'
-      ? 'column'
-      : (type === 'pier head' ? 'head' : (type === 'pier head schedule' ? 'schedule' : ''));
+    const key = {'pier column':'column','pier head':'head','pier head schedule':'schedule','bearing plinth':'plinth','bearing plinths':'plinth','pot bearing':'pot'}[type] || '';
     if (!key || !row.drawingNo) continue;
     const drawing = {
-      dwg: `NSCR-ITD-N03-ZWD-DWG-ST-${String(row.drawingNo).trim()}`,
-      rev: String(row.revision || '0').trim(),
+      dwg: normalizeWorkDrawingNumber(row.drawingNo),
+      rev: String(row.revision || '').trim(),
       filename: String(row.filename || '').trim(),
       status: 'VISUALLY REVIEWED',
     };
+    if (!drawing.dwg) continue;
     for (const pierId of String(row.piers || '').split(',').map(value => value.trim()).filter(Boolean)) {
       if (!PIERS_RAW[pierId]) continue;
       register[pierId] = register[pierId] || {};
-      register[pierId][key] = drawing;
+      const previous=register[pierId][key];
+      const references=previous?.references|| (previous?[previous]:[]);
+      if(!references.some(r=>r.dwg===drawing.dwg&&r.rev===drawing.rev))references.push(drawing);
+      register[pierId][key] = {...drawing,references};
     }
   }
   liveDrawingRegister = register;
@@ -4645,11 +4647,12 @@ async function fetchDrawingRegisterFromSheet() {
 function refreshDwgDisplay() {
   if (!currentPier) return;
   const merged = _getMergedPier(currentPier);
-  const dwgVal = merged.dwg ? `${merged.dwg} / Rev.${merged.rev||0}` : '—';
+  const dwgVal = merged.drawingText || (merged.dwg ? `${merged.dwg} / Rev.${merged.rev||0}` : '—');
   const el1 = document.getElementById('dwg-display');
   const el2 = document.getElementById('wi-drawing');
   if (el1) el1.textContent = dwgVal;
   if (el2) el2.textContent = dwgVal;
+  _updateDwgBadge();
   renderDwgPanel();
 }
 
@@ -4686,12 +4689,65 @@ async function fetchDwgFromSheet() {
   _updateDwgBadge();
 }
 
+// Work-specific references must never fall through to a Column/Pile Schedule
+// drawing. A reference identifies evidence, not certification of all geometry.
+function normalizeWorkDrawingNumber(value){
+  const s=String(value||'').trim();
+  if(/^\d{6}$/.test(s))return 'NSCR-ITD-N03-ZWD-DWG-ST-'+s;
+  return /^NSCR-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{6}$/i.test(s)?s.toUpperCase():'';
+}
+function getWorkDrawingReferences(pier,work){
+  if(!pier||!['Pier Head','Bearing Plinths','Pot Bearing'].includes(work))return null;
+  const refs=[],id=String(pier.id||'').trim(),base=id.replace(/[LR]$/,'');
+  const add=(number,rev,role,source='Embedded drawing control')=>{
+    const dwg=normalizeWorkDrawingNumber(number);if(!dwg)return;
+    const revision=String(rev||'').trim(),found=refs.find(r=>r.dwg===dwg&&r.rev===revision);
+    if(found){if(!found.roles.includes(role))found.roles.push(role);return;}
+    refs.push({dwg,rev:revision,roles:[role],source});
+  };
+  const fromRegister=(key,role)=>{
+    const r=liveDrawingRegister[pier.id]?.[key]||liveDrawingRegister[id]?.[key];
+    if(r)for(const item of r.references||[r])add(item.dwg,item.rev,role,'Reviewed Drawing Register');
+  };
+  if(work==='Pot Bearing'){
+    for(const p of getPotBearingPoints(pier)){
+      const match=String(p.source||'').match(/^(\d{6})-([A-Z0-9]+)$/);
+      if(match)add(match[1],match[2],p.bearing+' Top Plate / orientation');
+    }
+    if(!refs.length)fromRegister('pot','Pot Bearing detail');
+  }else{
+    // Dimensioned detail supersedes the general plan for P-1092 Plinth.
+    if(work==='Bearing Plinths'&&base==='P-1092')add('038136','C','Plinth reinforcement / height');
+    if(work==='Bearing Plinths'&&base==='P-1142')add('038582','C','Plinth detail / RL A datum');
+    const special={
+      'P-1091':[['023165','C']], 'P-1092':[['023167','B'],['023168','B']],
+      'P-1093':[['023162','B'],['023163','B']], 'P-1094':[['023170','B']]
+    }[base];
+    if(special)for(const [n,r]of special)add(n,r,'Pier Head plan / elevation');
+    else if(P6_CONFIRMED_PIERS.includes(id)){
+      add('023241','E','Pier Head plan / elevation');
+      add('023240','D','Pier-specific side / level schedule');
+      if(work==='Pier Head')add('039531','E','Island sections');
+    }else if(BR114_DRAWING_CONTROLS[id]){
+      const c=BR114_DRAWING_CONTROLS[id];add(c.plan,c.rev,'Pier Head plan / elevation');
+    }else{
+      const c=getDrawingPlinthControl(pier);
+      if(c)add(c.plan,c.rev,work==='Pier Head'?'Pier Head plan reference':'Plinth plan / footprint reference');
+    }
+    // Typed detail rows are additive, never a generic schedule masquerading as
+    // a Plinth reinforcement drawing. Unreviewed Sheet rows are filtered earlier.
+    if(work==='Bearing Plinths')fromRegister('plinth','Plinth detail');
+    if(!refs.length)fromRegister('head','Pier Head plan reference');
+  }
+  return {work,refs,status:refs.length?'REFERENCE FOUND':'NOT VERIFIED',
+    text:refs.length?refs.map(r=>r.dwg+' / Rev.'+(r.rev||'UNCONFIRMED')).join('; '):'DRAWING NOT VERIFIED - '+work};
+}
 function _workSpecificDwgOverride(pier) {
   const work = document.getElementById('element')?.value || '';
-  if(work==='Bearing Plinths'){const c=getDrawingPlinthControl(pier);if(c)return {dwg:'NSCR-ITD-N03-ZWD-DWG-ST-'+c.plan,rev:c.rev};}
-  if(BR114_DRAWING_CONTROLS[pier?.id]&&['Pier Head','Bearing Plinths'].includes(work)){const c=BR114_DRAWING_CONTROLS[pier.id];return {dwg:'NSCR-ITD-N03-ZWD-DWG-ST-'+c.plan,rev:c.rev};}
-  if(pier?.id==='P-1092'&&work==='Bearing Plinths')return {dwg:'NSCR-ITD-N03-ZWD-DWG-ST-038136',rev:'C'};
-  if(work==='Pot Bearing') {const points=getPotBearingPoints(pier);return {dwg:points.length?'NSCR-ITD-N03-ZWD-DWG-ST-'+[...new Set(points.map(p=>p.source.replace(/-B$/,'')))].join(' / '):'UNVERIFIED - DO NOT SET OUT',rev:points.length?'B':''};}
+  if(!isClarkStationElement(pier)&&!isSubstationPier(pier)){
+    const selected=getWorkDrawingReferences(pier,work);
+    if(selected)return {dwg:selected.refs.map(r=>r.dwg).join(' / '),rev:selected.refs.length===1?selected.refs[0].rev:'',drawingText:selected.text,drawingReferences:selected.refs,drawingStatus:selected.status};
+  }
   const registered = liveDrawingRegister[pier?.id] || {};
   if ((work === 'Pier Column (1st-Lift)' || work === 'Pier Column (2nd Lift)') && registered.column) {
     return registered.column;
@@ -4722,6 +4778,14 @@ function _getMergedPier(pier) {
 function _updateDwgBadge() {
   const badge = document.getElementById('dwg-sync-badge');
   if (!badge) return;
+  const work=document.getElementById('element')?.value;
+  const selected=currentPier&&!isClarkStationElement(currentPier)&&!isSubstationPier(currentPier)?getWorkDrawingReferences(currentPier,work):null;
+  if(selected){
+    badge.textContent=selected.refs.length?'DWG: '+selected.refs.length+' แบบตามชนิดงาน':'DWG: ยังไม่มีแบบยืนยัน';
+    badge.style.color=selected.refs.length?'#1a7a45':'#c06010';
+    badge.title=selected.text+' | References only; see DWG panel for role/source. Register connectivity: '+dwgFetchStatus;
+    return;
+  }
   const icons = { idle: '🔄', loading: '⏳', ok: '✅', error: '⚠️' };
   const labels = { idle: 'กำลังโหลด DWG...', loading: 'กำลังโหลด DWG...', ok: 'DWG อัปเดตแล้ว', error: 'ใช้ DWG จากโค้ด' };
   badge.textContent = icons[dwgFetchStatus] + ' ' + labels[dwgFetchStatus];
@@ -4749,12 +4813,22 @@ function renderDwgPanel() {
   const basePier = PIERS_RAW[pierId] || currentPier;
   const merged = _getMergedPier(basePier);
   const local = localDwgOverrides[pierId];
+  const workSpecific=Boolean(merged?.drawingReferences);
+  if(dwgInput){dwgInput.disabled=workSpecific;if(workSpecific)dwgInput.value=merged.drawingReferences[0]?.dwg||'';}
+  if(revInput){revInput.disabled=workSpecific;if(workSpecific){revInput.value=merged.drawingReferences.length===1?merged.drawingReferences[0].rev:'';revInput.placeholder='ดู Revision ของแต่ละแบบด้านบน';}}
+  for(const id of ['dwg-save-button','dwg-clear-button']){const b=document.getElementById(id);if(b){b.disabled=workSpecific;b.title=workSpecific?'ใช้ทะเบียน DRAWING REGISTER แยกตามชนิดงาน ไม่ใช้ Generic Override':'';}}
   if (pierInput && !pierInput.value && currentPier) pierInput.value = currentPier.id;
   if (dwgInput && !dwgInput.value && merged?.dwg) dwgInput.value = merged.dwg;
   if (revInput && !revInput.value && merged?.rev) revInput.value = merged.rev;
   if (current) {
-    const source = local ? 'Local override' : dwgOverrides[pierId] ? 'Google Sheet' : 'Embedded data';
-    current.textContent = `Current: ${merged?.dwg ? `${merged.dwg} / Rev.${merged.rev||0}` : '—'} (${source})`;
+    const source = merged?.drawingReferences ? 'Work-specific references (generic overrides not applied)' : local ? 'Local override' : dwgOverrides[pierId] ? 'Google Sheet' : 'Embedded data';
+    const summary=merged?.drawingText||(merged?.dwg?`${merged.dwg} / Rev.${merged.rev||0}`:'—');
+    current.textContent = `Current: ${summary} (${source})`+(workSpecific?' | เพิ่ม/แก้ทะเบียนด้วยประเภทงานใน DRAWING REGISTER':'');
+    if(merged?.drawingReferences?.length){
+      const list=document.createElement('div');list.style.cssText='white-space:normal;margin-top:6px;font-size:11px';
+      for(const r of merged.drawingReferences){const item=document.createElement('div');item.textContent=r.dwg+' / Rev.'+(r.rev||'UNCONFIRMED')+' — '+r.roles.join(', ')+' ['+r.source+']';list.append(item);}
+      current.append(list);
+    }
   }
   if (count) count.textContent = `Local overrides: ${Object.keys(localDwgOverrides).length}`;
 }
@@ -5600,10 +5674,11 @@ function renderPierInfo(pier) {
 
   const _dwgEl = document.getElementById('dwg-display');
   const _pier = _getMergedPier(pier);
-  const _dwgVal = _pier.dwg ? `${_pier.dwg} / Rev.${_pier.rev||0}` : '—';
+  const _dwgVal = _pier.drawingText || (_pier.dwg ? `${_pier.dwg} / Rev.${_pier.rev||0}` : '—');
   if (_dwgEl) _dwgEl.textContent = _dwgVal;
   const _wiDwg = document.getElementById('wi-drawing');
   if (_wiDwg) _wiDwg.textContent = _dwgVal;;
+  _updateDwgBadge();
 
   const grid = document.getElementById('pier-info-grid');
   grid.classList.remove('ss19-info-grid');
