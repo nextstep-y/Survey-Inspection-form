@@ -39,7 +39,8 @@ window.StructuralBlender = (() => {
     const head=kind==='Pier Head', datum=head?getTopOfColumnElevation(pier):0;
     if(head&&!Number.isFinite(datum))return null;
     if(!input.length || input.some(p=>!Number.isFinite(p.ch)||!Number.isFinite(p.os)))return null;
-    const points=input.map(p=>({label:String(p.label),ch:round(p.ch),os:round(p.os),z:head&&Number.isFinite(p.z)?round(p.z-datum):head&&/^T\d+$/.test(p.label)?null:0}));
+    const points=input.map(p=>({label:String(p.label),ch:round(p.ch),os:round(p.os),z:head&&Number.isFinite(p.z)?round(p.z-datum):head&&/^T\d+$/.test(p.label)?null:0,
+      ...(Number.isFinite(p.modelCH)?{modelCH:round(p.modelCH)}:{})}));
     if(new Set(points.map(p=>p.label)).size!==points.length)return null;
     const boundary=points.filter(p=>head?/^T\d+$/.test(p.label):kind==='Column'?/^\d+$/.test(p.label):/^[A-H]$/.test(p.label));
     if(boundary.length<3)return null;

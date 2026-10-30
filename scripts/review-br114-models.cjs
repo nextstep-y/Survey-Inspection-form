@@ -6,7 +6,7 @@ for(const family of (process.argv[3]?[process.argv[3]]:['bearing','dowel'])){
  if(mode==='select'){
   fs.copyFileSync(file,folder+'before-br114.js');
   const source=JSON.parse(fs.readFileSync(folder+'source.json','utf8'));
-  source.records=Object.fromEntries(Object.entries(source.records).filter(([key])=>ids.includes(key.split('|')[0])));
+  source.records=Object.fromEntries(Object.entries(source.records).filter(([key])=>ids.includes(key.split('|')[0])&&(!process.env.BLENDER_WORK||key.split('|')[1]===process.env.BLENDER_WORK)));
   const keys=new Set(Object.values(source.records).flatMap(r=>[r.template,...r.variants||[]]));
   source.templates=Object.fromEntries(Object.entries(source.templates).filter(([k])=>keys.has(k)));
   fs.writeFileSync(folder+'source.json',JSON.stringify(source,null,2));
