@@ -32,6 +32,7 @@ fs.writeFileSync('/tmp/P-1091_Pier_Head_Design_corrected.csv',csv);
 fs.writeFileSync('/tmp/pier-head-label-audit.json',JSON.stringify(result,null,2));
 console.log('PASS P-1091 low/up T1, high/down T3; coordinates retained; identity audit',result.audit.length,'piers');
 await new Promise(r=>setTimeout(r,1500));
+assert.ok(await w.webContents.executeJavaScript(`document.getElementById('occ-col').getBoundingClientRect().right<=document.getElementById('pile-array-section').getBoundingClientRect().left+1`),'Work selector must not overlap model labels');
 fs.writeFileSync('/tmp/p1091-head-display.png',await w.webContents.capturePage().then(i=>i.toPNG()));
 app.exit(0);
 }catch(e){console.error(e);app.exit(1)}});

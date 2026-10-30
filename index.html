@@ -1035,6 +1035,14 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
   body.blender-column-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
   body.blender-cap-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
   body.live-model-view #pile-array-section { width: 42% !important; max-width: 600px !important; }
+  /* The wide model leaves less than 900px for the form. Do not let the
+     five-column selector's fixed minimums overlap model point annotations. */
+  body.live-model-view .work-select-card .select-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  body.live-model-view .work-select-card .sel-col { min-width: 0; }
+  body.live-model-view #pier-no-col { grid-column: span 2; min-width: 0; }
+  body.live-model-view #occ-col { grid-column: span 1; }
   /* Bearing Plinth and Elastomeric use the compact upper-right screen panel. Print dimensions
      and the high-resolution model/preview remain unchanged. */
   body.bearing-plinth-work #pile-array-section,
