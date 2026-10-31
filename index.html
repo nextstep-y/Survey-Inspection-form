@@ -5363,7 +5363,7 @@ function updateTolerance() {
   const workDesc = document.getElementById('work-desc')?.value || '';
   const tolEl = document.getElementById('tol-bar-text');
   if (!tolEl) return;
-  if(work==='Pot Bearing'){tolEl.textContent='Tolerance: pending approved criteria';return;}
+  if(work==='Pot Bearing'){tolEl.textContent='Horizontal position: ±0.003 m (±3 mm) | TS216.1.7, Vol.3, TS200-301 (PDF 306)';return;}
   // As-Built override: ±0.025 m for all works except Bored Pile, Blinding Concrete, Pile Deviate
   const _asBuiltExclude = ['Bored Pile', 'Blinding Concrete', 'Pile Deviate'];
   if (workDesc === 'As-Built' && !_asBuiltExclude.includes(work)) {
@@ -9185,8 +9185,15 @@ function _xlsxBuildRows() {
   merge(r, 1, r, 15);
   _xlsxTableMatrix(document.getElementById('occ-table')).forEach(row => add(row, 3, 16));
 
-  r = add([document.getElementById('table-title')?.textContent || 'Point Measurement', '', '', '', '', '', '', '', '', '', '', '', '', 'Tolerance', document.getElementById('tol-bar-text')?.textContent || ''], 4);
-  merge(r, 1, r, 13);
+  if (work === 'Pot Bearing') {
+    r = add([document.getElementById('table-title')?.textContent || 'Point Measurement'], 4);
+    merge(r, 1, r, 15);
+    r = add([document.getElementById('tol-bar-text')?.textContent || ''], 4);
+    merge(r, 1, r, 15);
+  } else {
+    r = add([document.getElementById('table-title')?.textContent || 'Point Measurement', '', '', '', '', '', '', '', '', '', '', '', '', 'Tolerance', document.getElementById('tol-bar-text')?.textContent || ''], 4);
+    merge(r, 1, r, 13);
+  }
   _xlsxTableMatrix(document.getElementById('survey-table')).forEach((row, i) => add(row, i < 2 ? 6 : 3, 16));
 
   const elevVisible = document.getElementById('elev-section')?.style.display !== 'none' && document.getElementById('elev-body')?.children?.length;
