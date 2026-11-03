@@ -1775,6 +1775,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/structural-blender-manifest.js?v=20261030-head-labels"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261030-point-identities"></script>
 <script src="assets/pot-blender-manifest.js?v=20261027-pot-detail-axes"></script>
+<script src="assets/pilecap-drawing-register.js?v=20261103"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261103"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -4708,6 +4710,10 @@ function normalizeWorkDrawingNumber(value){
   return /^NSCR-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{6}$/i.test(s)?s.toUpperCase():'';
 }
 function getWorkDrawingReferences(pier,work){
+  if(pier&&['Pile cap','Bored Pile'].includes(work)&&!isClarkStationElement(pier)&&!isSubstationPier(pier)){
+    const refs=(window.PilecapDrawingPrint?.recordsFor(pier.id)||[]).map(r=>({...r,roles:['Pile / Pile Cap concrete and setting out'],source:'Pile Cap Drawing list.csv, row '+r.sourceRow}));
+    return {work,refs,status:refs.length?'REFERENCE FOUND':'NOT VERIFIED',text:refs.length?refs.map(r=>r.dwg+' / Rev.'+r.rev).join('; '):'Drawing not verified in Pile Cap register'};
+  }
   if(!pier||!['Pier Head','Bearing Plinths','Pot Bearing'].includes(work))return null;
   const refs=[],id=String(pier.id||'').trim(),base=id.replace(/[LR]$/,'');
   const add=(number,rev,role,source='Embedded drawing control')=>{
@@ -9290,7 +9296,17 @@ function exportFormExcel() {
   showToast(`Excel exported: ${a.download}`);
 }
 
-function printDoc() {
+async function printDoc() {
+  if(!window.PilecapDrawingPrint)return _printFormDoc();
+  const pier=currentPier?.id,work=document.getElementById('element').value;
+  try{
+    const attachment=await window.PilecapDrawingPrint.prepare(pier,work);
+    if(currentPier?.id!==pier||document.getElementById('element').value!==work)throw Error('Pier/work changed while loading drawings. Please print again.');
+    _printFormDoc();
+    if(attachment)document.body.appendChild(attachment);
+  }catch(error){alert('Cannot print complete drawing package: '+error.message+'\nNo print was started.');}
+}
+function _printFormDoc() {
   const pier = currentPier?.id || 'NSCR';
   const work = document.getElementById('element').value;
   document.body.classList.toggle('compact-pilecap-print',work==='Pile cap' && currentPier && !isSubstationPier(currentPier) && !isClarkStationElement(currentPier));

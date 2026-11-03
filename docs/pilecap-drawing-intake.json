@@ -1,0 +1,5482 @@
+{
+  "sourceFolder": "1Dp0ACQLktfVogMTmOjQc6lUy0jSvIsqT",
+  "sourceList": "Pile Cap Drawing list.csv",
+  "checked": "2026-11-03",
+  "records": {
+    "P-826": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020001",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P.826 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 1,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020001 - RevB.pdf",
+        "driveId": "1YgmIn2vrqGpjIQzUnPRqq75LfdjveHeg",
+        "pages": [
+          "assets/pilecap-drawings/020001-B-1.jpg"
+        ]
+      }
+    ],
+    "P-827": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020008",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P.827 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 2,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020008-B.pdf",
+        "driveId": "1iF3RiIEPULt1UvemmNELLq7Zy76bncoU",
+        "pages": [
+          "assets/pilecap-drawings/020008-B-1.jpg"
+        ]
+      }
+    ],
+    "P-828": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020015",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.828 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 3,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020015.pdf",
+        "driveId": "1LaKONQAUKExPToJtU3p1dUe0eZuVBwo_",
+        "pages": [
+          "assets/pilecap-drawings/020015-0-1.jpg"
+        ]
+      }
+    ],
+    "P-829": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020022",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.829 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 4,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020022.pdf",
+        "driveId": "1MWfoUjvLBr8Iws12FC16JRYBYk_fek9A",
+        "pages": [
+          "assets/pilecap-drawings/020022-0-1.jpg"
+        ]
+      }
+    ],
+    "P-830": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020029",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P.830 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 5,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020029-B.pdf",
+        "driveId": "1y72STMrzxCMcogVNV-_HVfiE2IHbQJ3a",
+        "pages": [
+          "assets/pilecap-drawings/020029-B-1.jpg"
+        ]
+      }
+    ],
+    "P-831": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020036",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.831 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 6,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020036.pdf",
+        "driveId": "1Ccio49l_80XCkGzUdKLZi5dtpE1P05gT",
+        "pages": [
+          "assets/pilecap-drawings/020036-0-1.jpg"
+        ]
+      }
+    ],
+    "P-832": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020043",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.832 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 7,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020043.pdf",
+        "driveId": "17TZUh6EOhXVyXADT4nIOt3NI7j6iUkUD",
+        "pages": [
+          "assets/pilecap-drawings/020043-0-1.jpg"
+        ]
+      }
+    ],
+    "P-833": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020050",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.833 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 8,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020050.pdf",
+        "driveId": "1eTP0_tSQlkDqOmzLTjk0rdve_C9N9v_s",
+        "pages": [
+          "assets/pilecap-drawings/020050-0-1.jpg"
+        ]
+      }
+    ],
+    "P-834": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020057",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.834 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 9,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020057.pdf",
+        "driveId": "1fGJ2v_TL-rWLlXQlAuh1GmZ4fH_JS6kP",
+        "pages": [
+          "assets/pilecap-drawings/020057-0-1.jpg"
+        ]
+      }
+    ],
+    "P-835": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020064",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.835 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 10,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020064-C.pdf",
+        "driveId": "19aiEaZL9UwOFuuprhEGUX2lqupjvv8Hk",
+        "pages": [
+          "assets/pilecap-drawings/020064-C-1.jpg"
+        ]
+      }
+    ],
+    "P-836": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020071",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.836 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 11,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020071-C.pdf",
+        "driveId": "10qvI1mrNkRJSPAdlKjNLmV1tyE2a-eaP",
+        "pages": [
+          "assets/pilecap-drawings/020071-C-1.jpg"
+        ]
+      }
+    ],
+    "P-837": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020078",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.837 PILE AND PILE CAP CONCRETE DETAILS & SETNING OUT",
+        "sourceRow": 12,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020078-C.pdf",
+        "driveId": "1bl0C5zdHRBJPzWUVJsvF4G4ENvDOeQ7y",
+        "pages": [
+          "assets/pilecap-drawings/020078-C-1.jpg"
+        ]
+      }
+    ],
+    "P-838": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020085",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.838 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 13,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020085-C.pdf",
+        "driveId": "1ZbHeAXaevSkJGeImIZDnCJXpqJkKz5DG",
+        "pages": [
+          "assets/pilecap-drawings/020085-C-1.jpg"
+        ]
+      }
+    ],
+    "P-839": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020092",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.839 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 14,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020092-C.pdf",
+        "driveId": "1jf91PxrWRwEVUtcUgwoJUCQD8I_4QXnY",
+        "pages": [
+          "assets/pilecap-drawings/020092-C-1.jpg"
+        ]
+      }
+    ],
+    "P-840": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020099",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.840 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 15,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020099-C.pdf",
+        "driveId": "1TEh1Wmwn7dCIl8ZuXA5Wein33Zc-InWM",
+        "pages": [
+          "assets/pilecap-drawings/020099-C-1.jpg"
+        ]
+      }
+    ],
+    "P-841": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020106",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.841 PILE AND PILE CAP CONCRETE DETAILS & SETMING OUT",
+        "sourceRow": 16,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020106-C.pdf",
+        "driveId": "1-Gh4N-L35V49EG2KPFoR0JfgniDKz5et",
+        "pages": [
+          "assets/pilecap-drawings/020106-C-1.jpg"
+        ]
+      }
+    ],
+    "P-842": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020113",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.842 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 17,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020113-C.pdf",
+        "driveId": "1k_vVxAa2Hvt86zxdBGdcubmPZ-sDepll",
+        "pages": [
+          "assets/pilecap-drawings/020113-C-1.jpg"
+        ]
+      }
+    ],
+    "P-843": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020120",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P.843 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 18,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020120-D.pdf",
+        "driveId": "1hkGrwwQ9lg2UfekJmCsXA7-5AsIW8dgq",
+        "pages": [
+          "assets/pilecap-drawings/020120-D-1.jpg"
+        ]
+      }
+    ],
+    "P-844": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020127",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P.844 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 19,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020127-D.pdf",
+        "driveId": "1lMJvkrr2cXnd38OR-qGCW6vh0oSfCZfh",
+        "pages": [
+          "assets/pilecap-drawings/020127-D-1.jpg"
+        ]
+      }
+    ],
+    "P-845": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020134",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P.845 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 20,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020134-B.pdf",
+        "driveId": "1s8CI_IIfVZwJVOCqp9Rbau0uFZ3yDPG7",
+        "pages": [
+          "assets/pilecap-drawings/020134-B-1.jpg"
+        ]
+      }
+    ],
+    "P-846": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020141",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P.846 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 21,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020141 - RevB.pdf",
+        "driveId": "1vxFc9X2wrgZ_sj2p0rYgLXccKQncNwZt",
+        "pages": [
+          "assets/pilecap-drawings/020141-B-1.jpg"
+        ]
+      }
+    ],
+    "P-847": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020148",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.847 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 22,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020148.pdf",
+        "driveId": "1XjSQVsMaVMdowcM8sYLobKhBTQi_6Ojy",
+        "pages": [
+          "assets/pilecap-drawings/020148-0-1.jpg"
+        ]
+      }
+    ],
+    "P-848": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020155",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P.848 PILE AND PILE CAP CONCRETE DETAILS & SETMING OUT",
+        "sourceRow": 23,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020155.pdf",
+        "driveId": "1Aq6ZnguqO3k1OPwOQEdxeQLn_FH1BoYh",
+        "pages": [
+          "assets/pilecap-drawings/020155-1-1.jpg"
+        ]
+      }
+    ],
+    "P-849": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020162",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P.849 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 24,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020162.pdf",
+        "driveId": "1YFo6l6UeO6G_s-OtC7j5yXfkxtAj4JQo",
+        "pages": [
+          "assets/pilecap-drawings/020162-1-1.jpg"
+        ]
+      }
+    ],
+    "P-850": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020169",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P.850 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 25,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020169.pdf",
+        "driveId": "1vKCnJmo_GixiQvi3NkXRt4MgGtIJ-D_g",
+        "pages": [
+          "assets/pilecap-drawings/020169-1-1.jpg"
+        ]
+      }
+    ],
+    "P-851": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020176",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.851 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 26,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020176-C.pdf",
+        "driveId": "1qBQRaUnI6Lk6zTylzcY69LA40tR4YbM5",
+        "pages": [
+          "assets/pilecap-drawings/020176-C-1.jpg"
+        ]
+      }
+    ],
+    "P-852": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020183",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.852 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 27,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020183-C.pdf",
+        "driveId": "1v6cwvF2o214xN4gTDhoq7HQ_p9_YukSd",
+        "pages": [
+          "assets/pilecap-drawings/020183-C-1.jpg"
+        ]
+      }
+    ],
+    "P-853": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020190",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.853 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 28,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020190-C.pdf",
+        "driveId": "1W-UtlLnus1cke08XyffHm34aaJR3vZ3N",
+        "pages": [
+          "assets/pilecap-drawings/020190-C-1.jpg"
+        ]
+      }
+    ],
+    "P-854": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020197",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P.854 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 29,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020197-C.pdf",
+        "driveId": "1UqkO0zYbgzVoXojMZOSsa9ne5o6ULRMw",
+        "pages": [
+          "assets/pilecap-drawings/020197-C-1.jpg"
+        ]
+      }
+    ],
+    "P-855": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020204",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.855 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 30,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020204.pdf",
+        "driveId": "10NF5OByjvfNo7vWjmyxMpIP3k86E5kKv",
+        "pages": [
+          "assets/pilecap-drawings/020204-0-1.jpg"
+        ]
+      }
+    ],
+    "P-856": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020211",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P.856 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 31,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020211.pdf",
+        "driveId": "1kVmrXwJXEsOu3l_K390oORkW6V6fER6E",
+        "pages": [
+          "assets/pilecap-drawings/020211-0-1.jpg"
+        ]
+      }
+    ],
+    "P-857": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020218",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P.857 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 32,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020218-B.pdf",
+        "driveId": "1ytTQO75stVSuXhVamrYC25RiQ9rNdB1e",
+        "pages": [
+          "assets/pilecap-drawings/020218-B-1.jpg"
+        ]
+      }
+    ],
+    "P-858": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020225",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P.858 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 33,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020225-B.pdf",
+        "driveId": "1nBt7ggIneGRXtMtd7yY83bUk0pslYskA",
+        "pages": [
+          "assets/pilecap-drawings/020225-B-1.jpg"
+        ]
+      }
+    ],
+    "P-859": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020232",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-859 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 34,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020232-B.pdf",
+        "driveId": "1BZG8JG8de4WwU3WzDkEMvS6TJVPfG5C2",
+        "pages": [
+          "assets/pilecap-drawings/020232-B-1.jpg"
+        ]
+      }
+    ],
+    "P-860": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020239",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-860 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 35,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020239-C.pdf",
+        "driveId": "1mAqiq0Z9gLD5VUAZ2cGJ-VJSN4X-KzaI",
+        "pages": [
+          "assets/pilecap-drawings/020239-C-1.jpg"
+        ]
+      }
+    ],
+    "P-861": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020246",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-861 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 36,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020246-C.pdf",
+        "driveId": "1SbQgOToa8GmiAPi_5xco9Y7XTmelYPsm",
+        "pages": [
+          "assets/pilecap-drawings/020246-C-1.jpg"
+        ]
+      }
+    ],
+    "P-862": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020253",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-862 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 37,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020253-C.pdf",
+        "driveId": "1-L53z3ZQ0uKTr3bkcbtL3uW-NdJPNkGk",
+        "pages": [
+          "assets/pilecap-drawings/020253-C-1.jpg"
+        ]
+      }
+    ],
+    "P-863": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020260",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-863 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 38,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020260.pdf",
+        "driveId": "1PyLccT4lDkQqlFF8StDXRILHnW2TMBoW",
+        "pages": [
+          "assets/pilecap-drawings/020260-1-1.jpg"
+        ]
+      }
+    ],
+    "P-864": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020267",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-864 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 39,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020267-C.pdf",
+        "driveId": "1kyyT76JCYzv0U3u6MWgRpAwFYoZyL6DX",
+        "pages": [
+          "assets/pilecap-drawings/020267-C-1.jpg"
+        ]
+      }
+    ],
+    "P-865": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020274",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-865 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 40,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020274.pdf",
+        "driveId": "1BvfPByncDXX8w0kVFUVyX5MX5HtKh3SG",
+        "pages": [
+          "assets/pilecap-drawings/020274-0-1.jpg"
+        ]
+      }
+    ],
+    "P-866": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020281",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-866 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 41,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020281.pdf",
+        "driveId": "1mZ8tQh759Rf9rdgEW09mOJ2aSKqP_41d",
+        "pages": [
+          "assets/pilecap-drawings/020281-0-1.jpg"
+        ]
+      }
+    ],
+    "P-867": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020288",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-867 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 42,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020288-B.pdf",
+        "driveId": "1f_M-OhozbC5UVyInZmtNRKZSOwJtShhQ",
+        "pages": [
+          "assets/pilecap-drawings/020288-B-1.jpg"
+        ]
+      }
+    ],
+    "P-868": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020295",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-868 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 43,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020295-B.pdf",
+        "driveId": "1Zzn8AhpdoPcdjpKzAB9b1nXg0iBWRk9k",
+        "pages": [
+          "assets/pilecap-drawings/020295-B-1.jpg"
+        ]
+      }
+    ],
+    "P-869": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020302",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-869 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 44,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020302.pdf",
+        "driveId": "17V1hF3XmrPaZ_BHMPl0wt5_wvL2k3cx1",
+        "pages": [
+          "assets/pilecap-drawings/020302-0-1.jpg"
+        ]
+      }
+    ],
+    "P-870": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020309",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-870 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 45,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020309-B.pdf",
+        "driveId": "1orVGVM9Ncb3n4i7x8TQHvdg6gbWChBRS",
+        "pages": [
+          "assets/pilecap-drawings/020309-B-1.jpg"
+        ]
+      }
+    ],
+    "P-871": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020316",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-871 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 46,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020316.pdf",
+        "driveId": "1VBUTyXPU-eYNhN2g7eNeiPaGZLzID6VH",
+        "pages": [
+          "assets/pilecap-drawings/020316-0-1.jpg"
+        ]
+      }
+    ],
+    "P-872": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020323",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-872 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 47,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020323-B.pdf",
+        "driveId": "1XW2fd8oIQHHyQDMRdrhejw8WGbU0K0m1",
+        "pages": [
+          "assets/pilecap-drawings/020323-B-1.jpg"
+        ]
+      }
+    ],
+    "P-873": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020330",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-873 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 48,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020330-B.pdf",
+        "driveId": "1_tHXvqfjFDbeKbdLipHlI9Dou--VITWz",
+        "pages": [
+          "assets/pilecap-drawings/020330-B-1.jpg"
+        ]
+      }
+    ],
+    "P-874": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020337",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-874 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 49,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020337-B.pdf",
+        "driveId": "1oAV7mmHy33D8YFYlqcYKfdSMZIbH5lcD",
+        "pages": [
+          "assets/pilecap-drawings/020337-B-1.jpg"
+        ]
+      }
+    ],
+    "P-875": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020344",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-875 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 50,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020344-B.pdf",
+        "driveId": "1i4TT8QJoEFmzaAP1l6FCXt6vMJcW6ZOV",
+        "pages": [
+          "assets/pilecap-drawings/020344-B-1.jpg"
+        ]
+      }
+    ],
+    "P-876": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020351",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-876 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 51,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020351.pdf",
+        "driveId": "1l4O3zmE1MVvciKjKhffsM5CGTqPYsCq_",
+        "pages": [
+          "assets/pilecap-drawings/020351-0-1.jpg"
+        ]
+      }
+    ],
+    "P-877": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020358",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-877 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 52,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020358-B.pdf",
+        "driveId": "13Hj_DkDuJvnz02tw6zefdt1VBc9jMvPI",
+        "pages": [
+          "assets/pilecap-drawings/020358-B-1.jpg"
+        ]
+      }
+    ],
+    "P-878": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020365",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-878 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 53,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020365-B.pdf",
+        "driveId": "11ZCEdQpajwvqYRS881D05Kt_gvGIHWeb",
+        "pages": [
+          "assets/pilecap-drawings/020365-B-1.jpg"
+        ]
+      }
+    ],
+    "P-879": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020372",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-879 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 54,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020372-B.pdf",
+        "driveId": "149t98p7plreLizmIn06dbzph9YpaTaWD",
+        "pages": [
+          "assets/pilecap-drawings/020372-B-1.jpg"
+        ]
+      }
+    ],
+    "P-880": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020379",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-880 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 55,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020379-B.pdf",
+        "driveId": "1pCUZkbK43nx6_MBT6aaf0u-2RbvWK_ue",
+        "pages": [
+          "assets/pilecap-drawings/020379-B-1.jpg"
+        ]
+      }
+    ],
+    "P-881": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020386",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-881 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 56,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020386-B.pdf",
+        "driveId": "1i3o09dCsUA9ekPueoMRcD9FVkzuCWTmZ",
+        "pages": [
+          "assets/pilecap-drawings/020386-B-1.jpg"
+        ]
+      }
+    ],
+    "P-882": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020393",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-882 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 57,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020393-B.pdf",
+        "driveId": "1VtQxsBWV-cCrSBps5nu2sB3-1UaoHcfK",
+        "pages": [
+          "assets/pilecap-drawings/020393-B-1.jpg"
+        ]
+      }
+    ],
+    "P-883": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020400",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-883 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 58,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020400-C.pdf",
+        "driveId": "1G8aMO9dYcZeuA5JTdxR5gU0UQBuRauUR",
+        "pages": [
+          "assets/pilecap-drawings/020400-C-1.jpg"
+        ]
+      }
+    ],
+    "P-884": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020407",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-884 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 59,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020407-B.pdf",
+        "driveId": "13chxSwE8kRX7Orw2Toq7ktCRXO06pgPe",
+        "pages": [
+          "assets/pilecap-drawings/020407-B-1.jpg"
+        ]
+      }
+    ],
+    "P-885": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020414",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-885 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 60,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020414-B.pdf",
+        "driveId": "1pbWje_qnp57fvqwIzKwd_DTBpbpRtJpy",
+        "pages": [
+          "assets/pilecap-drawings/020414-B-1.jpg"
+        ]
+      }
+    ],
+    "P-886": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020421",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-886 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 61,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020421-B.pdf",
+        "driveId": "1fNN5P3oiVfP59T-RcQiMldR282kIEKuB",
+        "pages": [
+          "assets/pilecap-drawings/020421-B-1.jpg"
+        ]
+      }
+    ],
+    "P-887": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020428",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-887 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 62,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020428.pdf",
+        "driveId": "1BHZe2J-zLudXwo0Fr2vdQI3r2oJLV0uR",
+        "pages": [
+          "assets/pilecap-drawings/020428-B-1.jpg"
+        ]
+      }
+    ],
+    "P-888": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020435",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-888 (BR114 TRANSITION PIER) PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 63,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020435.pdf",
+        "driveId": "12F8rTTXlkyHXT8D3gGDz2cpkgsycGYCG",
+        "pages": [
+          "assets/pilecap-drawings/020435-1-1.jpg"
+        ]
+      }
+    ],
+    "P-889": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020442",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-889 BR114 (MAIN PIER) PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 64,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020442.pdf",
+        "driveId": "1Ls55KYZi4E7fB_NJOym2LkmNXKimNUsE",
+        "pages": [
+          "assets/pilecap-drawings/020442-0-1.jpg"
+        ]
+      }
+    ],
+    "P-890": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020449",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-890 BR114 (MAIN PIER) PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 65,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020449-A.pdf",
+        "driveId": "16MOGESvc-Rqmtsy-9TGOUvoEAeduIG9q",
+        "pages": [
+          "assets/pilecap-drawings/020449-A-1.jpg"
+        ]
+      }
+    ],
+    "P-891": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020456",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-891 (BR114 TRANSITION PIER) PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 66,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020456-01.pdf",
+        "driveId": "1546hW8MkT5SbLuX9CY_4ZA47npZANTNQ",
+        "pages": [
+          "assets/pilecap-drawings/020456-1-1.jpg"
+        ]
+      }
+    ],
+    "P-893": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020470",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-893 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 67,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020470.pdf",
+        "driveId": "1CGBxh0-NE3vSH47AoFCoa7pT2x5_W7t2",
+        "pages": [
+          "assets/pilecap-drawings/020470-0-1.jpg"
+        ]
+      }
+    ],
+    "P-894": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020477",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-894 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 68,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020477-B.pdf",
+        "driveId": "1vrC-rXp3nlijhJR2FVZ-xsDug2VdqS2U",
+        "pages": [
+          "assets/pilecap-drawings/020477-B-1.jpg"
+        ]
+      }
+    ],
+    "P-895": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020484",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-895 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 69,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020484.pdf",
+        "driveId": "1eiiVdf1LmYWw5z5ZYDiBrszL-eN6x8rI",
+        "pages": [
+          "assets/pilecap-drawings/020484-0-1.jpg"
+        ]
+      }
+    ],
+    "P-896": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020491",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-896 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 70,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020491.pdf",
+        "driveId": "1WZ4guyXq7vD7ac9HhsIt5V74F1ttOPzZ",
+        "pages": [
+          "assets/pilecap-drawings/020491-0-1.jpg"
+        ]
+      }
+    ],
+    "P-897": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020498",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-897 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 71,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020498-C.pdf",
+        "driveId": "19cBVm9s05ewfrWrjjKoYoKQ74qlzNb5A",
+        "pages": [
+          "assets/pilecap-drawings/020498-C-1.jpg"
+        ]
+      }
+    ],
+    "P-898": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020505",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-898 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 72,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020505.pdf",
+        "driveId": "1bwuIXQWU3FpDMGXNyy7-FMs6LgbTmzP-",
+        "pages": [
+          "assets/pilecap-drawings/020505-1-1.jpg"
+        ]
+      }
+    ],
+    "P-899": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020512",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-899 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 73,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020512.pdf",
+        "driveId": "1YJ0v1ov6Kbw-W_yL7G8zCYF0ZV7xklWC",
+        "pages": [
+          "assets/pilecap-drawings/020512-1-1.jpg"
+        ]
+      }
+    ],
+    "P-900": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020519",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-900 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 74,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020519.pdf",
+        "driveId": "1oEP9jxSnpLdqzXUkPsq-NkDcv5XbfVaY",
+        "pages": [
+          "assets/pilecap-drawings/020519-1-1.jpg"
+        ]
+      }
+    ],
+    "P-901": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020526",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-901 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 75,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020526.pdf",
+        "driveId": "1w5jbI29xU15aasDFNwV6q9GQPY9zYbb-",
+        "pages": [
+          "assets/pilecap-drawings/020526-0-1.jpg"
+        ]
+      }
+    ],
+    "P-902": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020533",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-902 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 76,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020533-B.pdf",
+        "driveId": "1g4FUBYcDsDIIW-167Wa0KBzMgTQ733oS",
+        "pages": [
+          "assets/pilecap-drawings/020533-B-1.jpg"
+        ]
+      }
+    ],
+    "P-903": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020540",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-903 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 77,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020540.pdf",
+        "driveId": "1RMLihzmuOQ3GCOunYZL8e7YqaQksta5I",
+        "pages": [
+          "assets/pilecap-drawings/020540-0-1.jpg"
+        ]
+      }
+    ],
+    "P-904": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020547",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-904 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 78,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020547-C.pdf",
+        "driveId": "1-l6U59bpn2pxsVG4ZV_Fu7NyDZeSg98j",
+        "pages": [
+          "assets/pilecap-drawings/020547-C-1.jpg"
+        ]
+      }
+    ],
+    "P-905": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020554",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-905 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 79,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020554-C.pdf",
+        "driveId": "1dmpeoY17Gfm_ZkAEpTNqRzUWJ8f9HABS",
+        "pages": [
+          "assets/pilecap-drawings/020554-C-1.jpg"
+        ]
+      }
+    ],
+    "P-906": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020561",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-906 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 80,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020561-C.pdf",
+        "driveId": "1hELYBssQi_pHiP0PLlsOFU_eVVvB0-e2",
+        "pages": [
+          "assets/pilecap-drawings/020561-C-1.jpg"
+        ]
+      }
+    ],
+    "P-907": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020568",
+        "rev": "E",
+        "listedRevision": "E",
+        "revisionSource": "CSV register",
+        "title": "P-907 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 81,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020568-E.pdf",
+        "driveId": "1h0JKPDqK0B2jSugZjd1d7w1RqJJuAIqP",
+        "pages": [
+          "assets/pilecap-drawings/020568-E-1.jpg"
+        ]
+      }
+    ],
+    "P-908": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020575",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-908 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 82,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020575-C.pdf",
+        "driveId": "1K5MTnFlxQtInrRLotSW0nrP483Mk8aNd",
+        "pages": [
+          "assets/pilecap-drawings/020575-C-1.jpg"
+        ]
+      }
+    ],
+    "P-909": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020582",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-909 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 83,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020582-C.pdf",
+        "driveId": "1pAg0OYoUHPM8ex6jFotY7zQrzFaHib97",
+        "pages": [
+          "assets/pilecap-drawings/020582-C-1.jpg"
+        ]
+      }
+    ],
+    "P-910": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020589",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-910 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 84,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020589-D.pdf",
+        "driveId": "1jrmNcLoKsuhWo_CBC1sVQ3qGPc1soir7",
+        "pages": [
+          "assets/pilecap-drawings/020589-D-1.jpg"
+        ]
+      }
+    ],
+    "P-911": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020596",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-911 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 85,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020596-B.pdf",
+        "driveId": "1R1ScfE7Fo80cQ2UtIRyKstkhEx2BgqdB",
+        "pages": [
+          "assets/pilecap-drawings/020596-B-1.jpg"
+        ]
+      }
+    ],
+    "P-912": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020603",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-912 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 86,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020603-B.pdf",
+        "driveId": "1x0oAW8Yy4XYpV9e7lWIIUtbmbaJx9ati",
+        "pages": [
+          "assets/pilecap-drawings/020603-B-1.jpg"
+        ]
+      }
+    ],
+    "P-913": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020610",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-913 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 87,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020610.pdf",
+        "driveId": "1neBmPEXmcQOzHBDZQDBJyHTm5Zl9yj6f",
+        "pages": [
+          "assets/pilecap-drawings/020610-0-1.jpg"
+        ]
+      }
+    ],
+    "P-914": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020617",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-914 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 88,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020617.pdf",
+        "driveId": "1kDjK7Li21Ub5IW5q7McGLMNT3Hiq0f3K",
+        "pages": [
+          "assets/pilecap-drawings/020617-0-1.jpg"
+        ]
+      }
+    ],
+    "P-915": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020624",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-915 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 89,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020624.pdf",
+        "driveId": "1pMmubX05NM_3E6MZ2qCNt7lNKxR1ZHdY",
+        "pages": [
+          "assets/pilecap-drawings/020624-0-1.jpg"
+        ]
+      }
+    ],
+    "P-916": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020631",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-916 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 90,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020631.pdf",
+        "driveId": "1ZbPu6UE_DA6_3aWyDSZ8UKtVKgDO4uRm",
+        "pages": [
+          "assets/pilecap-drawings/020631-0-1.jpg"
+        ]
+      }
+    ],
+    "P-917": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020638",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-917 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 91,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020638.pdf",
+        "driveId": "1VXPuDKnTnTl-Ks-HBoz_M-jRBXEGqiod",
+        "pages": [
+          "assets/pilecap-drawings/020638-0-1.jpg"
+        ]
+      }
+    ],
+    "P-918": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020645",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-918 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 92,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020645.pdf",
+        "driveId": "1KmIbLwfmeLZqdZPYe2lyQJTcc271bucP",
+        "pages": [
+          "assets/pilecap-drawings/020645-0-1.jpg"
+        ]
+      }
+    ],
+    "P-919": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020652",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-919 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 93,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020652-B.pdf",
+        "driveId": "1S2uqKHQZFrPxZbHX9wZzbeWCuKsJ9Ts_",
+        "pages": [
+          "assets/pilecap-drawings/020652-B-1.jpg"
+        ]
+      }
+    ],
+    "P-920": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020659",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-920 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 94,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020659.pdf",
+        "driveId": "1VuCUJH_hQ_a-ebUOwZqSKp7uTAsCcMez",
+        "pages": [
+          "assets/pilecap-drawings/020659-0-1.jpg"
+        ]
+      }
+    ],
+    "P-921": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020666",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-921 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 95,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020666.pdf",
+        "driveId": "17vQCQE82mXnmA0G6e5u037fdlTmkxzEE",
+        "pages": [
+          "assets/pilecap-drawings/020666-B-1.jpg"
+        ]
+      }
+    ],
+    "P-922": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020673",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-922 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 96,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020673.pdf",
+        "driveId": "1OoE9KZ-CcJtswHBhtkoxKQOZQ_dYoYoD",
+        "pages": [
+          "assets/pilecap-drawings/020673-0-1.jpg"
+        ]
+      }
+    ],
+    "P-923": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020680",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-923 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 97,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020680-B.pdf",
+        "driveId": "1GW0XFzkl8ZZBZ6UEDA426qQU9N4dMsKO",
+        "pages": [
+          "assets/pilecap-drawings/020680-B-1.jpg"
+        ]
+      }
+    ],
+    "P-924": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020687",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-924 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 98,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020687.pdf",
+        "driveId": "1HA9snsu8jLNj3gcWoK21Dx6sZuziuyCz",
+        "pages": [
+          "assets/pilecap-drawings/020687-0-1.jpg"
+        ]
+      }
+    ],
+    "P-925": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020694",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-925 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 99,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020694-C.pdf",
+        "driveId": "117-HhzQ1fdxlp77r3nCMhtJRRCjCVF0N",
+        "pages": [
+          "assets/pilecap-drawings/020694-C-1.jpg"
+        ]
+      }
+    ],
+    "P-926": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020701",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-926 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 100,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020701-C.pdf",
+        "driveId": "1JP0X8Pq4a7fadi4HN6abkEWmqopUDKsG",
+        "pages": [
+          "assets/pilecap-drawings/020701-C-1.jpg"
+        ]
+      }
+    ],
+    "P-927": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020708",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-927 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 101,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020708-B.pdf",
+        "driveId": "1j1yWwWmu8RUAz6NgG8u8hOJaXDoC9o43",
+        "pages": [
+          "assets/pilecap-drawings/020708-B-1.jpg"
+        ]
+      }
+    ],
+    "P-928": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020715",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-928 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 102,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020715.pdf",
+        "driveId": "1l3TmxUJiH5KJeo90guB27CiHQLC1VRnd",
+        "pages": [
+          "assets/pilecap-drawings/020715-0-1.jpg"
+        ]
+      }
+    ],
+    "P-929": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020722",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-929 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 103,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020722.pdf",
+        "driveId": "1HSgmmz8bqwHAWIats4yOgRu0P4TVEI-y",
+        "pages": [
+          "assets/pilecap-drawings/020722-0-1.jpg"
+        ]
+      }
+    ],
+    "P-930": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020729",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-930 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 104,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020729.pdf",
+        "driveId": "1VIyJ781zPXN3MkOCgoyCpMVEp9v3wdMI",
+        "pages": [
+          "assets/pilecap-drawings/020729-0-1.jpg"
+        ]
+      }
+    ],
+    "P-931": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020736",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-931 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 105,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020736-B.pdf",
+        "driveId": "1luPRyH_sXg21yzmF41CzF7wceYT8qJWq",
+        "pages": [
+          "assets/pilecap-drawings/020736-B-1.jpg"
+        ]
+      }
+    ],
+    "P-932": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020743",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-932 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 106,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020743.pdf",
+        "driveId": "1rDxpd7S4MeXTQuFlJyIN83Btxv2A2eus",
+        "pages": [
+          "assets/pilecap-drawings/020743-A-1.jpg"
+        ]
+      }
+    ],
+    "P-933": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020750",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-933 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 107,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020750.pdf",
+        "driveId": "1LvR1MLOpxTDjgWlHFAPQymsyx_W-euwC",
+        "pages": [
+          "assets/pilecap-drawings/020750-A-1.jpg"
+        ]
+      }
+    ],
+    "P-934": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020757",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-934 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 108,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020757.pdf",
+        "driveId": "16_JhW_R5uaUgl4xh9icYZHWn3yp1Sd0u",
+        "pages": [
+          "assets/pilecap-drawings/020757-A-1.jpg"
+        ]
+      }
+    ],
+    "P-935": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020764",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-935 PILE AND PILE CAP CONCRETE DETAILS AND SETTINGS OUT",
+        "sourceRow": 109,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020764-B.pdf",
+        "driveId": "15wd2wVRsHTz1W2VYGENw70iIxTEbrTfS",
+        "pages": [
+          "assets/pilecap-drawings/020764-B-1.jpg"
+        ]
+      }
+    ],
+    "P-936": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020771",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-936 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 110,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020771-B.pdf",
+        "driveId": "1kTpqdsMt_yNpTZdacTYv15k32rib1pRF",
+        "pages": [
+          "assets/pilecap-drawings/020771-B-1.jpg"
+        ]
+      }
+    ],
+    "P-937": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020778",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-937 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 111,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020778-B.pdf",
+        "driveId": "1FyZ_LkxkLEkGRGuoYBSR8fCkEn3yPolk",
+        "pages": [
+          "assets/pilecap-drawings/020778-B-1.jpg"
+        ]
+      }
+    ],
+    "P-938": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020785",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-938 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 112,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020785-B.pdf",
+        "driveId": "1vGtSiCDZjlkxtBXLVitB5fHQ1I87Wmpi",
+        "pages": [
+          "assets/pilecap-drawings/020785-B-1.jpg"
+        ]
+      }
+    ],
+    "P-939": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020792",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-939 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 113,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020792-B.pdf",
+        "driveId": "185pXl2SPQWmRljo6-UsBDFxlo17WfBN0",
+        "pages": [
+          "assets/pilecap-drawings/020792-B-1.jpg"
+        ]
+      }
+    ],
+    "P-940": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020799",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-940 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 114,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020799-A.pdf",
+        "driveId": "1ujB6sZGL2a8WayEsI3FinNGaEGB9Rf2K",
+        "pages": [
+          "assets/pilecap-drawings/020799-A-1.jpg"
+        ]
+      }
+    ],
+    "P-941": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020806",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-941 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 115,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020806.pdf",
+        "driveId": "1EQS5j5vgFZb_h0zpqd3InYBidkozvyPc",
+        "pages": [
+          "assets/pilecap-drawings/020806-A-1.jpg"
+        ]
+      }
+    ],
+    "P-942": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020813",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-942 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 116,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020813-B.pdf",
+        "driveId": "1Bl2Eb-qh7VINWYHmdZIGyN4T6kY6AnI9",
+        "pages": [
+          "assets/pilecap-drawings/020813-B-1.jpg"
+        ]
+      }
+    ],
+    "P-943": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020820",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-943 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 117,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020820.pdf",
+        "driveId": "1B8ehB8j-_6roNxNB66X6t4Lmh4z0jR7E",
+        "pages": [
+          "assets/pilecap-drawings/020820-A-1.jpg"
+        ]
+      }
+    ],
+    "P-944": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020827",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-944 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 118,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020827-C.pdf",
+        "driveId": "18LnsiR3_ORKjz9k8PIadK3MKk0HIiKMm",
+        "pages": [
+          "assets/pilecap-drawings/020827-C-1.jpg"
+        ]
+      }
+    ],
+    "P-945": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020834",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-945 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 119,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020834.pdf",
+        "driveId": "10j8ECVkOeHFaFDqBrpDHVVHWJ1XDVFXg",
+        "pages": [
+          "assets/pilecap-drawings/020834-A-1.jpg"
+        ]
+      }
+    ],
+    "P-946": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020841",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-946 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 120,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020841-A.pdf",
+        "driveId": "1BByS5K1qg6ZmufAdoGEWPMI7K3JEvVgj",
+        "pages": [
+          "assets/pilecap-drawings/020841-A-1.jpg"
+        ]
+      }
+    ],
+    "P-947": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020848",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-947 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 121,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020848-B.pdf",
+        "driveId": "1frqIy1f7t5aAICPmqi1jewWFvIJFyt5S",
+        "pages": [
+          "assets/pilecap-drawings/020848-B-1.jpg"
+        ]
+      }
+    ],
+    "P-948": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020855",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-948 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 122,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020855-A.pdf",
+        "driveId": "1atgv2LX7N2rMbEfhiJUGhQE-vQ0fFg81",
+        "pages": [
+          "assets/pilecap-drawings/020855-A-1.jpg"
+        ]
+      }
+    ],
+    "P-949": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020862",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-949 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 123,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020862-C.pdf",
+        "driveId": "1LRayIgQxb6WOcbAdag3qtMNoEQAk68cq",
+        "pages": [
+          "assets/pilecap-drawings/020862-C-1.jpg"
+        ]
+      }
+    ],
+    "P-950": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020869",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-950 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 124,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020869-B.pdf",
+        "driveId": "1Q4LJ91JAZjXLLBpemuSqP8-qrCejEGyK",
+        "pages": [
+          "assets/pilecap-drawings/020869-B-1.jpg"
+        ]
+      }
+    ],
+    "P-951": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020876",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-951 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 125,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020876-A.pdf",
+        "driveId": "1MLjYRMabNDhkUvknHynbIhaGz39Vbu73",
+        "pages": [
+          "assets/pilecap-drawings/020876-A-1.jpg"
+        ]
+      }
+    ],
+    "P-952": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020883",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-952 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 126,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020883-A.pdf",
+        "driveId": "14uGOZ2XGvxZkoKobgy_hkg2RPsAPudXF",
+        "pages": [
+          "assets/pilecap-drawings/020883-A-1.jpg"
+        ]
+      }
+    ],
+    "P-953": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020890",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-953 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 127,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020890-B.pdf",
+        "driveId": "14-AVmw7rnpFDYDnGEJkmFszjx4DAM71a",
+        "pages": [
+          "assets/pilecap-drawings/020890-B-1.jpg"
+        ]
+      }
+    ],
+    "P-954": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020897",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-954 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 128,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020897-C.pdf",
+        "driveId": "1RzE9mjd7MQvCUERSLb4ILkh9ccwcJTM2",
+        "pages": [
+          "assets/pilecap-drawings/020897-C-1.jpg"
+        ]
+      }
+    ],
+    "P-955": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020904",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-955 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 129,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020904-C.pdf",
+        "driveId": "1EdjeTMsIdegjgtQdP1pxFX5KFYEc5tkL",
+        "pages": [
+          "assets/pilecap-drawings/020904-C-1.jpg"
+        ]
+      }
+    ],
+    "P-956": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020911",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-956 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 130,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020911-A.pdf",
+        "driveId": "1GEtA_1-Rk437vWkvIv3pBQOm_-m8ZCWC",
+        "pages": [
+          "assets/pilecap-drawings/020911-A-1.jpg"
+        ]
+      }
+    ],
+    "P-957": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020918",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-957 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 131,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020918-A.pdf",
+        "driveId": "1onNezq9QrWI2PV7mmXfQ4RcizFLHDlR1",
+        "pages": [
+          "assets/pilecap-drawings/020918-A-1.jpg"
+        ]
+      }
+    ],
+    "P-958": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020925",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-958 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 132,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020925-B.pdf",
+        "driveId": "1MFJgw8IL4e_QsTBvKM0Scl3n2Qubzi0y",
+        "pages": [
+          "assets/pilecap-drawings/020925-B-1.jpg"
+        ]
+      }
+    ],
+    "P-959": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020932",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-959 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 133,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020932-B.pdf",
+        "driveId": "12fel3auXPQbSyg8ixj_tlLDggolvHJio",
+        "pages": [
+          "assets/pilecap-drawings/020932-B-1.jpg"
+        ]
+      }
+    ],
+    "P-960": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020939",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-960 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 134,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020939.pdf",
+        "driveId": "1Poj8upTS7feCDpiqo1m5s_ijvHKpTv3u",
+        "pages": [
+          "assets/pilecap-drawings/020939-A-1.jpg"
+        ]
+      }
+    ],
+    "P-961": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020946",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-961 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 135,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020946-C.pdf",
+        "driveId": "1di-S9nf2ynSdprDHPQrKX8PSjhW72w2t",
+        "pages": [
+          "assets/pilecap-drawings/020946-C-1.jpg"
+        ]
+      }
+    ],
+    "P-962": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020953",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-962 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 136,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020953-A.pdf",
+        "driveId": "1VjjrBLScNw094FT8eTw6xRMEC8KKFLCK",
+        "pages": [
+          "assets/pilecap-drawings/020953-A-1.jpg"
+        ]
+      }
+    ],
+    "P-963": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020960",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-963 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 137,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020960-C.pdf",
+        "driveId": "1ed8T_IGqlzdBZ8YzziikwvPGT0X1sLkX",
+        "pages": [
+          "assets/pilecap-drawings/020960-C-1.jpg"
+        ]
+      }
+    ],
+    "P-964": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020967",
+        "rev": "F",
+        "listedRevision": "F",
+        "revisionSource": "CSV register",
+        "title": "P-964 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 138,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020967-F.pdf",
+        "driveId": "1gjH1OdfQ8Ns2WFEPjbU9sSrTuKsuRAdw",
+        "pages": [
+          "assets/pilecap-drawings/020967-F-1.jpg"
+        ]
+      }
+    ],
+    "P-965": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020974",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-965 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 139,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020974-C.pdf",
+        "driveId": "1Z5-_8ArClMpnN4PoRRXLxcdi7XrlgVA6",
+        "pages": [
+          "assets/pilecap-drawings/020974-C-1.jpg"
+        ]
+      }
+    ],
+    "P-966": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020981",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-966 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 140,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020981-C.pdf",
+        "driveId": "1gfK0D_79QDAyowpyDQmxEEyF5nlvqTOx",
+        "pages": [
+          "assets/pilecap-drawings/020981-C-1.jpg"
+        ]
+      }
+    ],
+    "P-967": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020988",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-967 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 141,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020988-D.pdf",
+        "driveId": "1dEe-ODkQm8mkcg9IUuePqWpmwVkHNZny",
+        "pages": [
+          "assets/pilecap-drawings/020988-D-1.jpg"
+        ]
+      }
+    ],
+    "P-967A": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-020995",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-967a PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 142,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-020995-C.pdf",
+        "driveId": "1aPlfkXVAsuBF-r-hLfYw8VeUpGGAy3NX",
+        "pages": [
+          "assets/pilecap-drawings/020995-C-1.jpg"
+        ]
+      }
+    ],
+    "P-968": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021002",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-968 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 143,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021002-C.pdf",
+        "driveId": "1deplwxO2LgKz1OHY6-oswLrMEij0huJ4",
+        "pages": [
+          "assets/pilecap-drawings/021002-C-1.jpg"
+        ]
+      }
+    ],
+    "P-969": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021009",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-969 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 144,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021009-C.pdf",
+        "driveId": "1eG5JRMRvRPl7vNLWdgk_1s_YNfNx9DtP",
+        "pages": [
+          "assets/pilecap-drawings/021009-C-1.jpg"
+        ]
+      }
+    ],
+    "P-970": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021016",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-970 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 145,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021016-C.pdf",
+        "driveId": "12r0rrIaPQwHLfUL3AE2pqsQJrBaXH7qS",
+        "pages": [
+          "assets/pilecap-drawings/021016-C-1.jpg"
+        ]
+      }
+    ],
+    "P-971": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021023",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-971 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 146,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021023-C.pdf",
+        "driveId": "1ZR972GRajm2L25-1lVqv_0rbhYo6zFSw",
+        "pages": [
+          "assets/pilecap-drawings/021023-C-1.jpg"
+        ]
+      }
+    ],
+    "P-972": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021030",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-972 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 147,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021030-B.pdf",
+        "driveId": "1Zj23Z_lJiNZkOq3UZR46IDmUqF8LbfwS",
+        "pages": [
+          "assets/pilecap-drawings/021030-B-1.jpg"
+        ]
+      }
+    ],
+    "P-973": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021037",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-973 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 148,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021037.pdf",
+        "driveId": "1pFkBQEcp6VFyE_oE7ZOoNCU9Qxp7LJz1",
+        "pages": [
+          "assets/pilecap-drawings/021037-1-1.jpg"
+        ]
+      }
+    ],
+    "P-974": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021044",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-974 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 149,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021044-01.pdf",
+        "driveId": "1OCTmhlZfu01A8f58iVCIEH7ksUr76MQt",
+        "pages": [
+          "assets/pilecap-drawings/021044-1-1.jpg"
+        ]
+      }
+    ],
+    "P-975": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021051",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-975 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 150,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021051-01.pdf",
+        "driveId": "1a4Q4P0DFexJJHHzbsHcS2onf1AVR3APk",
+        "pages": [
+          "assets/pilecap-drawings/021051-1-1.jpg"
+        ]
+      }
+    ],
+    "P-976": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021058",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-976 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 151,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021058-01.pdf",
+        "driveId": "1atEULd8eJKNtnmtzb5Kv2WcSSxjLqF7r",
+        "pages": [
+          "assets/pilecap-drawings/021058-1-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021059",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-976 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 152,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021059-01.pdf",
+        "driveId": "1ShFPJaYsTvBDo0KhXRcC5xcpBX66ivCO",
+        "pages": [
+          "assets/pilecap-drawings/021059-1-1.jpg"
+        ]
+      }
+    ],
+    "P-977": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021065",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-977 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 153,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021065-01.pdf",
+        "driveId": "1Uni6Xzxpr3Uh6ib9N10PHYu9H0bd0JEv",
+        "pages": [
+          "assets/pilecap-drawings/021065-1-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021066",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-977 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 154,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021066-01.pdf",
+        "driveId": "1qTrLSbQQ2jWE0BVL7fx8mg6qzd0hv5-T",
+        "pages": [
+          "assets/pilecap-drawings/021066-1-1.jpg"
+        ]
+      }
+    ],
+    "P-978": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021072",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-978 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 155,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021072.pdf",
+        "driveId": "1BjGntYsDQiVI73pPhPp94oVM3r7LLuIK",
+        "pages": [
+          "assets/pilecap-drawings/021072-1-1.jpg"
+        ]
+      }
+    ],
+    "P-978NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021079",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-978NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 156,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021079.pdf",
+        "driveId": "1lV9DtBjX_fj2rAexSoiJVQo9Z0BdKeq3",
+        "pages": [
+          "assets/pilecap-drawings/021079-1-1.jpg"
+        ]
+      }
+    ],
+    "P-978SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021086",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-978SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 157,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021086.pdf",
+        "driveId": "1IUoni8WNjhhSHQGWR9gAjKNazCmLARG4",
+        "pages": [
+          "assets/pilecap-drawings/021086-1-1.jpg"
+        ]
+      }
+    ],
+    "P-979": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021093",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-979 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 158,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021093-01.pdf",
+        "driveId": "1_nxrrWuWzbwshkdF3N9-lR45zpLBe4bA",
+        "pages": [
+          "assets/pilecap-drawings/021093-1-1.jpg"
+        ]
+      }
+    ],
+    "P-979NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021100",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-979NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 159,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021100-01.pdf",
+        "driveId": "1OBPI91d_nj2RZNvf2vqqyJHvZfb540B7",
+        "pages": [
+          "assets/pilecap-drawings/021100-1-1.jpg"
+        ]
+      }
+    ],
+    "P-979SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021106",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-979SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 160,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021106.pdf",
+        "driveId": "1lM-kanIvhnqh68VhlO3Pf83y3OTMLSMA",
+        "pages": [
+          "assets/pilecap-drawings/021106-0-1.jpg"
+        ]
+      }
+    ],
+    "P-980": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021113",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-980 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 161,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021113.pdf",
+        "driveId": "1mVfGxuha1mtpsuINsdm_MD-Fj0CnYlEK",
+        "pages": [
+          "assets/pilecap-drawings/021113-1-1.jpg"
+        ]
+      }
+    ],
+    "P-980NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021120",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-980NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 162,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021120.pdf",
+        "driveId": "1LmgKZwdlJ5fKouY4Raun1DmXaroas1uk",
+        "pages": [
+          "assets/pilecap-drawings/021120-1-1.jpg"
+        ]
+      }
+    ],
+    "P-980SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021127",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-980SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 163,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021127.pdf",
+        "driveId": "16tHUE96iaYQWrf5td0Gfxd8qcCQgOBqj",
+        "pages": [
+          "assets/pilecap-drawings/021127-C-1.jpg"
+        ]
+      }
+    ],
+    "P-981": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021134",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-981 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 164,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021134-00.pdf",
+        "driveId": "1up5L9QURSoiblpIja2EG-zl_7zghkiLl",
+        "pages": [
+          "assets/pilecap-drawings/021134-0-1.jpg"
+        ]
+      }
+    ],
+    "P-981NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021141",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-981NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 165,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021141-01.pdf",
+        "driveId": "1NHe-_8UZ3w19AfLqV6kGaoNIjtpgo7mk",
+        "pages": [
+          "assets/pilecap-drawings/021141-1-1.jpg"
+        ]
+      }
+    ],
+    "P-981SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021148",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-981SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 166,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021148.pdf",
+        "driveId": "1AQLu-bru503kywCUdUZkW6Ser_oadrQz",
+        "pages": [
+          "assets/pilecap-drawings/021148-0-1.jpg"
+        ]
+      }
+    ],
+    "P-982": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021155",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-982 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 167,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021155.pdf",
+        "driveId": "1NfztcRXSMtrl3itqWX1qsu6vyGoFf9pg",
+        "pages": [
+          "assets/pilecap-drawings/021155-D-1.jpg"
+        ]
+      }
+    ],
+    "P-982NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021162",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-982NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 168,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021162.pdf",
+        "driveId": "1IS-V0-WteqWs-X5gkvcd5RQx2RfnuQoK",
+        "pages": [
+          "assets/pilecap-drawings/021162-1-1.jpg"
+        ]
+      }
+    ],
+    "P-982SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021169",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-982SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 169,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021169.pdf",
+        "driveId": "1qxhU0D5snDRockC178wxmu1XjLMpGH7O",
+        "pages": [
+          "assets/pilecap-drawings/021169-1-1.jpg",
+          "assets/pilecap-drawings/021169-1-2.jpg"
+        ]
+      }
+    ],
+    "P-983": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021176",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-983 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 170,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021176.pdf",
+        "driveId": "1x-gnPStRJw8OREofHJpgKJxwQfUQ3DbS",
+        "pages": [
+          "assets/pilecap-drawings/021176-1-1.jpg"
+        ]
+      }
+    ],
+    "P-983NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021183",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-983NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 171,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021183.pdf",
+        "driveId": "1mTujz_DUQUkpzCOni8LdxVK_YuhZPp6_",
+        "pages": [
+          "assets/pilecap-drawings/021183-1-1.jpg"
+        ]
+      }
+    ],
+    "P-983SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021190",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-983SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 172,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021190.pdf",
+        "driveId": "1VNdVkSItshf7hGX3lv-OIWr-vuA74JZr",
+        "pages": [
+          "assets/pilecap-drawings/021190-1-1.jpg"
+        ]
+      }
+    ],
+    "P-984": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021197",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-984 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 173,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021197.pdf",
+        "driveId": "1AqvoW78k6NqsDqi23M5sbOqFJ3CnAxBH",
+        "pages": [
+          "assets/pilecap-drawings/021197-1-1.jpg"
+        ]
+      }
+    ],
+    "P-984NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021204",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-984NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 174,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021204.pdf",
+        "driveId": "1v9-wghREOsc69xl9j3HXenk_RGJkwJoj",
+        "pages": [
+          "assets/pilecap-drawings/021204-1-1.jpg"
+        ]
+      }
+    ],
+    "P-984SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021211",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-984SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 175,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021211.pdf",
+        "driveId": "1E2TWmRqd56cWFnT6LWi0RrRooBVXaFXn",
+        "pages": [
+          "assets/pilecap-drawings/021211-0-1.jpg"
+        ]
+      }
+    ],
+    "P-985": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021218",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-985 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 176,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021218.pdf",
+        "driveId": "16cUwGoDgG0-9EUT3Ilx0s02WqNYTEG5-",
+        "pages": [
+          "assets/pilecap-drawings/021218-0-1.jpg"
+        ]
+      }
+    ],
+    "P-985NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021225",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-985NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 177,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021225.pdf",
+        "driveId": "1FMqVWPhZA_wmVwjeY1_PapJhrdDe0gjY",
+        "pages": [
+          "assets/pilecap-drawings/021225-1-1.jpg"
+        ]
+      }
+    ],
+    "P-985SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021232",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-985SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 178,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021232.pdf",
+        "driveId": "1XnaeC-uA41An0WfYUDJSNIV5_4EVTm4B",
+        "pages": [
+          "assets/pilecap-drawings/021232-1-1.jpg"
+        ]
+      }
+    ],
+    "P-986": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021239",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-986 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 179,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021239.pdf",
+        "driveId": "1v1gnPDdhJzVQ1Auov5-jiUfLKS5aWlhO",
+        "pages": [
+          "assets/pilecap-drawings/021239-1-1.jpg",
+          "assets/pilecap-drawings/021239-1-2.jpg"
+        ]
+      }
+    ],
+    "P-986NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021246",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-986NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 180,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021246.pdf",
+        "driveId": "1onuC0-lthgDxB02jMyQslfH-zz9HZeW0",
+        "pages": [
+          "assets/pilecap-drawings/021246-1-1.jpg"
+        ]
+      }
+    ],
+    "P-986SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021253",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-986SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 181,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021253.pdf",
+        "driveId": "1CeHhKgf88Q2oM2ujgrwKkY0TuBYHgm37",
+        "pages": [
+          "assets/pilecap-drawings/021253-1-1.jpg"
+        ]
+      }
+    ],
+    "P-987": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021260",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-987 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 182,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021260.pdf",
+        "driveId": "1cMRPRJhNnfiujO-gLzXCeHsFaB-yr3nx",
+        "pages": [
+          "assets/pilecap-drawings/021260-1-1.jpg"
+        ]
+      }
+    ],
+    "P-987NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021267",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-987NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 183,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021267.pdf",
+        "driveId": "17YaZMq-8XOPfHfz6tFNxK-Jv-10LXmTk",
+        "pages": [
+          "assets/pilecap-drawings/021267-1-1.jpg"
+        ]
+      }
+    ],
+    "P-987SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021274",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-987SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 184,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021274.pdf",
+        "driveId": "1MWjQDxBMt6MVuq-3Jo0sCfLsw4Bd2k8c",
+        "pages": [
+          "assets/pilecap-drawings/021274-1-1.jpg"
+        ]
+      }
+    ],
+    "P-988": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021281",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-988 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 185,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021281.pdf",
+        "driveId": "12F3UQhp035LKPg8VP1yV5h21HJJlHh_n",
+        "pages": [
+          "assets/pilecap-drawings/021281-0-1.jpg"
+        ]
+      }
+    ],
+    "P-988NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021288",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-988NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 186,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021288.pdf",
+        "driveId": "1eGmVJuIDfnaxcWdMYyqcEuLE0Ej_wAZD",
+        "pages": [
+          "assets/pilecap-drawings/021288-1-1.jpg"
+        ]
+      }
+    ],
+    "P-988SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021295",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-988SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 187,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021295.pdf",
+        "driveId": "1zqDywOJDFcYMgltp-12tjm8e5gOnEAhF",
+        "pages": [
+          "assets/pilecap-drawings/021295-1-1.jpg"
+        ]
+      }
+    ],
+    "P-989": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021302",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-989 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 188,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021302.pdf",
+        "driveId": "1ZA9Jqf5zqXNWTZwhq_b3o6FNhLY3MCCo",
+        "pages": [
+          "assets/pilecap-drawings/021302-0-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021303",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-989 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 189,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021303.pdf",
+        "driveId": "16EvKiBYLrsw2S1BarvJ4m9qXwmciqB7R",
+        "pages": [
+          "assets/pilecap-drawings/021303-1-1.jpg"
+        ]
+      }
+    ],
+    "P-990": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021309",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-990 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 190,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021309-B.pdf",
+        "driveId": "1VkMkUttMCbZq52Z5m_Xi5BqdEZ-Yx34b",
+        "pages": [
+          "assets/pilecap-drawings/021309-B-1.jpg"
+        ]
+      }
+    ],
+    "P-991": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021316",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-991 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 191,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021316-B.pdf",
+        "driveId": "18YbobTmwvyuO_IWnPlfpjktVTVW1aolC",
+        "pages": [
+          "assets/pilecap-drawings/021316-B-1.jpg"
+        ]
+      }
+    ],
+    "P-991A": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021323",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-991A PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 192,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021323-C.pdf",
+        "driveId": "1_3t1GGLkDBPviSHoqagSEyp95iQIMKx9",
+        "pages": [
+          "assets/pilecap-drawings/021323-C-1.jpg"
+        ]
+      }
+    ],
+    "P-992": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021330",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-992 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 193,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021330-D.pdf",
+        "driveId": "1O5L70jKWQEo1SLaA4FgAsyyI2BU9diAZ",
+        "pages": [
+          "assets/pilecap-drawings/021330-D-1.jpg"
+        ]
+      }
+    ],
+    "P-993": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021337",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-993 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 194,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021337.pdf",
+        "driveId": "1vfCA6infe_LgGRbF9Uw_p3zWBes4T4Ds",
+        "pages": [
+          "assets/pilecap-drawings/021337-A-1.jpg"
+        ]
+      }
+    ],
+    "P-994": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021344",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-994 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 195,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021344-B.pdf",
+        "driveId": "165hTIszNZfzpK4x4TDinuIDvxdArn96m",
+        "pages": [
+          "assets/pilecap-drawings/021344-B-1.jpg"
+        ]
+      }
+    ],
+    "P-995": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021351",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-995 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 196,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021351-C.pdf",
+        "driveId": "1sc7pX9nQCj7ofDoB9TDhxl475nRDLtFw",
+        "pages": [
+          "assets/pilecap-drawings/021351-C-1.jpg"
+        ]
+      }
+    ],
+    "P-996": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021358",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-996 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 197,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021358-B.pdf",
+        "driveId": "1puE30aTbzEASZh7dFQf-c8DDwlwEJ2Ag",
+        "pages": [
+          "assets/pilecap-drawings/021358-B-1.jpg"
+        ]
+      }
+    ],
+    "P-997": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021365",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-997 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 198,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021365.pdf",
+        "driveId": "16jNggjELzP2IBKbzuuPFcwRr3Rsv74oj",
+        "pages": [
+          "assets/pilecap-drawings/021365-A-1.jpg"
+        ]
+      }
+    ],
+    "P-998": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021372",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-998 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 199,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021372.pdf",
+        "driveId": "1cAMvez87BjbiDJO7iivpkBY7V2uxIFdy",
+        "pages": [
+          "assets/pilecap-drawings/021372-A-1.jpg"
+        ]
+      }
+    ],
+    "P-999": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021379",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-999 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 200,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021379-C.pdf",
+        "driveId": "18RoZvES3SnVDsRqMb12dG3OkKmgmbvvz",
+        "pages": [
+          "assets/pilecap-drawings/021379-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1000": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021386",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1000 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 201,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021386-B.pdf",
+        "driveId": "1UsPStyRwNuLkdw4vtE5Rjrl5h_2y9wp4",
+        "pages": [
+          "assets/pilecap-drawings/021386-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1001": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021393",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1001 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 202,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021393-B.pdf",
+        "driveId": "1VsI6j0Jw34eYCJSfJITl9lR9-e4WM-_o",
+        "pages": [
+          "assets/pilecap-drawings/021393-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1002": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021400",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1002 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 203,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021400-C.pdf",
+        "driveId": "1tlOHkpHwcLxGT9kFX52OoVTRfy85JTzl",
+        "pages": [
+          "assets/pilecap-drawings/021400-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1003": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021407",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1003 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 204,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021407.pdf",
+        "driveId": "1CoYLuIl5VLPgNJSdua6fkJhY4-LaLGia",
+        "pages": [
+          "assets/pilecap-drawings/021407-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1004": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021414",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1004 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 205,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021414-C.pdf",
+        "driveId": "1TTL6__31aqTTxi1TpyILEjLWztvuKlLR",
+        "pages": [
+          "assets/pilecap-drawings/021414-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1005": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021421",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1005 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 206,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021421-B.pdf",
+        "driveId": "1Tiyjcp_MZVWTEU_49SFgclB8ntoQ5aUq",
+        "pages": [
+          "assets/pilecap-drawings/021421-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1006": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021428",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1006 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 207,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021428-B.pdf",
+        "driveId": "12lBRVbxd5gqldbyaFt2c-JRi_yFuYGRb",
+        "pages": [
+          "assets/pilecap-drawings/021428-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1007": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021435",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1007 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 208,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021435.pdf",
+        "driveId": "1OUVH77vPGqIuCBdMF55rgqDrChGKdhpV",
+        "pages": [
+          "assets/pilecap-drawings/021435-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1008": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021442",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1008 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 209,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021442.pdf",
+        "driveId": "13JJa5pjXyjYd6y7OG8Ne0TYRSw9GzIc2",
+        "pages": [
+          "assets/pilecap-drawings/021442-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1009": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021449",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1009 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 210,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021449-01.pdf",
+        "driveId": "10tjMzuuHTyPOmZw5gb05E38QLZ55W1PC",
+        "pages": [
+          "assets/pilecap-drawings/021449-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1010": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021456",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1010 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 211,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021456-01.pdf",
+        "driveId": "1ULIa9nstdNi8jKyoi2IweabAzxy_MsnZ",
+        "pages": [
+          "assets/pilecap-drawings/021456-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1011": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021463",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1011 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 212,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021463-C.pdf",
+        "driveId": "1KCvoUGENjcRxwEL0BY8u2ORBWOqy1w0T",
+        "pages": [
+          "assets/pilecap-drawings/021463-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1012": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021470",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1012 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 213,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021470 - RevC.pdf",
+        "driveId": "1PTyPTtxvHKtwatQn7t_hjTN5cJGewerv",
+        "pages": [
+          "assets/pilecap-drawings/021470-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1013": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021477",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1013 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 214,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021477-01.pdf",
+        "driveId": "1ECCvCqDriuZ5YuzFfq_vd0QJEtjdKJV6",
+        "pages": [
+          "assets/pilecap-drawings/021477-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1014": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021484",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1014 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 215,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021484.pdf",
+        "driveId": "1fyMe9RAKyLLR9kCPu6tKx8Ifz65nKfp_",
+        "pages": [
+          "assets/pilecap-drawings/021484-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1015": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021491",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1015 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 216,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021491.pdf",
+        "driveId": "10YURCZUrG_UBCwuorBcAXHI0hfSUBV8E",
+        "pages": [
+          "assets/pilecap-drawings/021491-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1016": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021498",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1016 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 217,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021498-B.pdf",
+        "driveId": "1azO3IWKdebnl2NmvLziIdA4BgLEIVOpk",
+        "pages": [
+          "assets/pilecap-drawings/021498-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1017": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021505",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1017 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 218,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021505-C.pdf",
+        "driveId": "102wrTYXSJLCZShtyegrAzGtMftwWm6yZ",
+        "pages": [
+          "assets/pilecap-drawings/021505-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1018": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021512",
+        "rev": "F",
+        "listedRevision": "F",
+        "revisionSource": "CSV register",
+        "title": "P-1018 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 219,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021512 - RevF.pdf",
+        "driveId": "1EOKAbp40Q2Ft4WbBuzq5yje4UgayF-Dl",
+        "pages": [
+          "assets/pilecap-drawings/021512-F-1.jpg"
+        ]
+      }
+    ],
+    "P-1019": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021519",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-1019 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 220,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021519.pdf",
+        "driveId": "1uXZvA_UKC4Rp7wSRhFc5co4QFPX3Xaf4",
+        "pages": [
+          "assets/pilecap-drawings/021519-D-1.jpg"
+        ]
+      }
+    ],
+    "P-1020": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021526",
+        "rev": "G",
+        "listedRevision": "G",
+        "revisionSource": "CSV register",
+        "title": "P-1020 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 221,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021526-G.pdf",
+        "driveId": "1248Jgh_sKK3fppH8vkiFaE0h5u1-9C2T",
+        "pages": [
+          "assets/pilecap-drawings/021526-G-1.jpg"
+        ]
+      }
+    ],
+    "P-1021": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021533",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1021 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 222,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021533.pdf",
+        "driveId": "1E6lKiYdcVv8s8DQsyD2wtLsaKNeQi3Jf",
+        "pages": [
+          "assets/pilecap-drawings/021533-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1022": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021540",
+        "rev": "E",
+        "listedRevision": "E",
+        "revisionSource": "CSV register",
+        "title": "P-1022 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 223,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021540-E.pdf",
+        "driveId": "19-dQGfBnAkCxpi5-f3z6D6K_kRvo3pGR",
+        "pages": [
+          "assets/pilecap-drawings/021540-E-1.jpg"
+        ]
+      }
+    ],
+    "P-1023": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021547",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1023 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 224,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021547-01.pdf",
+        "driveId": "1ly76zGcU1Kr6XdzkUutelW2s13QuAGL-",
+        "pages": [
+          "assets/pilecap-drawings/021547-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1024": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021554",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1024 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 225,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021554.pdf",
+        "driveId": "1lPNzFyGA8szMM7OtrDbUhjRCYlc84HJd",
+        "pages": [
+          "assets/pilecap-drawings/021554-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1025": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021561",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1025 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 226,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021561.pdf",
+        "driveId": "1AOeBE98D5OKSLjWTQ5vUgkh9rHpmBZSj",
+        "pages": [
+          "assets/pilecap-drawings/021561-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1026": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021568",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1026 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 227,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021568-01.pdf",
+        "driveId": "1-PFXur2K8tqTjYsohR6v956UL91wsJ9Q",
+        "pages": [
+          "assets/pilecap-drawings/021568-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1027": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021575",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1027 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 228,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021575.pdf",
+        "driveId": "1Bmqw_91LacGEYU8EE196EssOAK5NCNJX",
+        "pages": [
+          "assets/pilecap-drawings/021575-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1028": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021582",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1028 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 229,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021582.pdf",
+        "driveId": "1jaloTc6n0frDc5prbrtaVh5K3nbwih-u",
+        "pages": [
+          "assets/pilecap-drawings/021582-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1029": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021589",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1029 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 230,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021589.pdf",
+        "driveId": "1PUyVHBNA1JSquc9gYGojeX1GQSxlo5gk",
+        "pages": [
+          "assets/pilecap-drawings/021589-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1030": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021596",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1030 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 231,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021596.pdf",
+        "driveId": "1dEui8951zjgxEVDvPuVNDm6AZzHVujAH",
+        "pages": [
+          "assets/pilecap-drawings/021596-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1031": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021603",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1031 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 232,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021603.pdf",
+        "driveId": "1lmoXNCJqCmiG8YYhA_OKx62o5mF4IBID",
+        "pages": [
+          "assets/pilecap-drawings/021603-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1032": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021610",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1032 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 233,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021610.pdf",
+        "driveId": "177FNkymFFl3qUZTtoD-bvogZUt6VXiXu",
+        "pages": [
+          "assets/pilecap-drawings/021610-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1033": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021617",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1033 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 238,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021617.pdf",
+        "driveId": "1JTBtRsBxYNlYtcjNyl6WU67Hp-CnXXps",
+        "pages": [
+          "assets/pilecap-drawings/021617-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1034": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021624",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1034 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 239,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021624-B.pdf",
+        "driveId": "1FDnQH2aLtzOUu2boLyZ45FxkEumuwHO-",
+        "pages": [
+          "assets/pilecap-drawings/021624-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1035": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021631",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1035 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 240,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021631.pdf",
+        "driveId": "1uCeg3kR7R7NGE39qjbAZ5QpzG903Ab26",
+        "pages": [
+          "assets/pilecap-drawings/021631-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1036": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021638",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1036 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 241,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021638-B.pdf",
+        "driveId": "12npcmjtD5rgxLJ5hfmXqQQC1rCTp1vKH",
+        "pages": [
+          "assets/pilecap-drawings/021638-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1037": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021645",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1037 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 242,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021645.pdf",
+        "driveId": "1gn5cC-IrFTtztNtPQXBzXkttnpwq6Dti",
+        "pages": [
+          "assets/pilecap-drawings/021645-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1038": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021652",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1038 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 243,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021652.pdf",
+        "driveId": "1MvsddjQD6qHqu__349TS9uCqALZ-1Xiv",
+        "pages": [
+          "assets/pilecap-drawings/021652-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1039": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021659",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1039 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 244,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021659.pdf",
+        "driveId": "12gwegrKrG4hdVtMLA9geebOVWkfEBX7g",
+        "pages": [
+          "assets/pilecap-drawings/021659-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1040": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021666",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1040 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 245,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021666.pdf",
+        "driveId": "1QPrza-g_2V8mEZsDNDruA5Qy50owbigD",
+        "pages": [
+          "assets/pilecap-drawings/021666-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1041": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021673",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1041 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 246,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021673.pdf",
+        "driveId": "1WUNjvJtkb6gqrNtJQfmpiqpuooSsPaG9",
+        "pages": [
+          "assets/pilecap-drawings/021673-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1042": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021680",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1042 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 247,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021680.pdf",
+        "driveId": "17NWw8xw_MDYjzjrt_UV0JGO9AJmOhUJv",
+        "pages": [
+          "assets/pilecap-drawings/021680-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1044": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021694",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1044 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 248,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021694-B.pdf",
+        "driveId": "1cElPHqHqhFIRT-eXndbdvL7FmU-B8pZI",
+        "pages": [
+          "assets/pilecap-drawings/021694-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1045": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021701",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1045 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 249,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021701.pdf",
+        "driveId": "1WkJPQmEx3G98_rMmGyGf_wlDsi2-aVVn",
+        "pages": [
+          "assets/pilecap-drawings/021701-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1046": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021708",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1046 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 250,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021708.pdf",
+        "driveId": "1_67zfnBxbUKKfuxeqqjdGYHd7eugt5u6",
+        "pages": [
+          "assets/pilecap-drawings/021708-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1047": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021715",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1047 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 251,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021715.pdf",
+        "driveId": "1MUrdUa3_eHJirUfkehRpgdkt3KcfzHIz",
+        "pages": [
+          "assets/pilecap-drawings/021715-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1048": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021722",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1048 (BR112 TRANSITION PIER) PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 252,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021722-A.pdf",
+        "driveId": "1jcDf6HVCAUYULQKRmpZ2b-09HvoVg8uS",
+        "pages": [
+          "assets/pilecap-drawings/021722-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1049": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021729",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1049 (BR112 MAIN PIER) PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 253,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021729-A.pdf",
+        "driveId": "1xf2C9FF9qbiGeiZhl-33KIbV1bbcc9AQ",
+        "pages": [
+          "assets/pilecap-drawings/021729-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1050": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021736",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1050 (BR112 MAIN PIER) PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 254,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021736-A.pdf",
+        "driveId": "1KIS1fvOy6Rbfu9PrFXWcv34rKJIvs58X",
+        "pages": [
+          "assets/pilecap-drawings/021736-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1051": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021743",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1051 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 255,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021743-B.pdf",
+        "driveId": "13Y8g6Kf3TFKefo-nfuUkkhKVI1qHhrkj",
+        "pages": [
+          "assets/pilecap-drawings/021743-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1052": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021750",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1052 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 256,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021750.pdf",
+        "driveId": "1XjgK-_Gun_zJ3Z2dd13X1q_c4AZ6QqH9",
+        "pages": [
+          "assets/pilecap-drawings/021750-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1053": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021757",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1053 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 257,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021757.pdf",
+        "driveId": "1tBX0y774gx5sXmko7KQ4SQW8t2adisIv",
+        "pages": [
+          "assets/pilecap-drawings/021757-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1054": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021764",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1054 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 258,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021764.pdf",
+        "driveId": "1q-JAkgHd7em_ySCEaHZ3_IhmfINslgUo",
+        "pages": [
+          "assets/pilecap-drawings/021764-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1055": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021771",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1055 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 259,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021771.pdf",
+        "driveId": "1ehpVNcLA764Giy1Sa07DHVUk7Dymdk7M",
+        "pages": [
+          "assets/pilecap-drawings/021771-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1057": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021778",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1057 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 260,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021778.pdf",
+        "driveId": "1-dGBeeUR_oPm0pI543nke0K2nMMu7TRY",
+        "pages": [
+          "assets/pilecap-drawings/021778-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1058": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021792",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1058 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 261,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021792.pdf",
+        "driveId": "1I3M5FJMrlaNu79Avyrc-4ojN5N4P7skY",
+        "pages": [
+          "assets/pilecap-drawings/021792-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1059": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021799",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1059 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 262,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021799.pdf",
+        "driveId": "1rsQVk2PmpDxeSZbGyvHAgxCTHEjZZOC2",
+        "pages": [
+          "assets/pilecap-drawings/021799-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1060": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021806",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1060 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 263,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021806.pdf",
+        "driveId": "1crkQCjqn23Lri54oknAoYE-QuWmSzGgN",
+        "pages": [
+          "assets/pilecap-drawings/021806-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1061": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021813",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1061 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 264,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021813.pdf",
+        "driveId": "1v7lEFx-zAltsuO985NpDFJORYN_KZZ80",
+        "pages": [
+          "assets/pilecap-drawings/021813-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1062": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021820",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1062 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 265,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021820-C.pdf",
+        "driveId": "1lFJEmjiEZbq4JoWmQUQpp5MUX8ZnoOWD",
+        "pages": [
+          "assets/pilecap-drawings/021820-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1063": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021827",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1063 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 266,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021827-B.pdf",
+        "driveId": "1JGT9Ff7FWTLS6ywsjuPsMwXQcNlh032V",
+        "pages": [
+          "assets/pilecap-drawings/021827-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1064": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021834",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1064 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 267,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021834-B.pdf",
+        "driveId": "1aLjyG8ZdcgOYeDwOMiVr0xIYdLxWJH37",
+        "pages": [
+          "assets/pilecap-drawings/021834-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1065": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021841",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1065 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 268,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021841.pdf",
+        "driveId": "13mG8WKaYpo6Ex3moYkTmHy9to_JOZ2In",
+        "pages": [
+          "assets/pilecap-drawings/021841-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1066": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021848",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1066 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 269,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021848.pdf",
+        "driveId": "1EUArTlvh4Mj38C-q0hKKE3CTtQRYephS",
+        "pages": [
+          "assets/pilecap-drawings/021848-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1067": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021855",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1067 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 270,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021855.pdf",
+        "driveId": "1HVxMP5-7ocpdLQoFqmH3GvA2sC8Sg95v",
+        "pages": [
+          "assets/pilecap-drawings/021855-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1068": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021862",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1068 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 271,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021862.pdf",
+        "driveId": "167YtfmKVIPjfFGu1sxbCZ-I4Nx8X05yq",
+        "pages": [
+          "assets/pilecap-drawings/021862-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1069": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021869",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1069 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 272,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021869-B.pdf",
+        "driveId": "1HoPrTK5SgAZuaW-9IYvCmC1fVWsuc6om",
+        "pages": [
+          "assets/pilecap-drawings/021869-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1070": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021876",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1070 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 273,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021876-B.pdf",
+        "driveId": "1hNei4s27geVEc58KPY7fyiUI4eTA-hFo",
+        "pages": [
+          "assets/pilecap-drawings/021876-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1071": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021883",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1071 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 274,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021883.pdf",
+        "driveId": "1vBScNPgil_Mmjlwjiy2fOjLdk-aMgntY",
+        "pages": [
+          "assets/pilecap-drawings/021883-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1072": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021890",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1072 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 275,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021890.pdf",
+        "driveId": "1jDDX_AfZh7q-91ejAvw7o2ZraQcU9xSu",
+        "pages": [
+          "assets/pilecap-drawings/021890-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1073": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021897",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1073 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 276,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021897.pdf",
+        "driveId": "18ZQ5zKDjBBGw2VSleuHXEw-uh-wCd728",
+        "pages": [
+          "assets/pilecap-drawings/021897-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1074": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021904",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1074 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 277,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021904-B.pdf",
+        "driveId": "1yJxcxxYheaZZLsOxWG1gCO-vuPXPrDu-",
+        "pages": [
+          "assets/pilecap-drawings/021904-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1075": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021911",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1075 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 278,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021911-B.pdf",
+        "driveId": "14gAahxHjXwGcMsefWGNqOie1G1P1XoUP",
+        "pages": [
+          "assets/pilecap-drawings/021911-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1076": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021918",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1076 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 279,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021918-B.pdf",
+        "driveId": "17-zi9RfVJ1d9sMLGj10L9r0D4hxBRP5G",
+        "pages": [
+          "assets/pilecap-drawings/021918-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1077": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021925",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1077 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 280,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021925.pdf",
+        "driveId": "1VwWErcmfQRy7C_y7zs0WYv0efG14UJVK",
+        "pages": [
+          "assets/pilecap-drawings/021925-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1078": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021932",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1078 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 281,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021932-C.pdf",
+        "driveId": "1z3-Xceegs1nP1WIr3lQEmM3ArHDyorSO",
+        "pages": [
+          "assets/pilecap-drawings/021932-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1079": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021939",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1079 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 282,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021939-B.pdf",
+        "driveId": "1AitgO1iaQN6ejiM9mPWoT21gU2VNzNUc",
+        "pages": [
+          "assets/pilecap-drawings/021939-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1080": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021946",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1080 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 283,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021946.pdf",
+        "driveId": "1HDts_O0tz4foqm-TwIGnS18EDELwS6d2",
+        "pages": [
+          "assets/pilecap-drawings/021946-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1081": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021953",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1081 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 284,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021953-B.pdf",
+        "driveId": "1tZfyeM86iAirwc6CP503JKKQShjiBm-n",
+        "pages": [
+          "assets/pilecap-drawings/021953-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1082": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021960",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1082 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 285,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021960.pdf",
+        "driveId": "1z0eGST0vBmBE6N6uD-gVlNXf7-ZILhgr",
+        "pages": [
+          "assets/pilecap-drawings/021960-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1083": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021967",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1083 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 286,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021967.pdf",
+        "driveId": "1I7HviT0ijtwbbnPkPcKG_MaddsFpiW4p",
+        "pages": [
+          "assets/pilecap-drawings/021967-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1084": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021974",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1084 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 287,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021974-C.pdf",
+        "driveId": "1UrheXHeK10Mrg-t13EjYRpPfGJZqdxS8",
+        "pages": [
+          "assets/pilecap-drawings/021974-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1085": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021981",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1085 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 288,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021981-B.pdf",
+        "driveId": "1Lx9qIztAV6O0dlyBesk4bRsTkGY7EImY",
+        "pages": [
+          "assets/pilecap-drawings/021981-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1086": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021988",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1086 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 289,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021988.pdf",
+        "driveId": "12-FRA01qQl2CGr1518_TbkR5cRlRDjHd",
+        "pages": [
+          "assets/pilecap-drawings/021988-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1087": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-021995",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1087 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 290,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-021995.pdf",
+        "driveId": "17sbvaUXriww6pQCnWQvwHNj4kQhGL86z",
+        "pages": [
+          "assets/pilecap-drawings/021995-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1089": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022009",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1089 PILE AND PILE CAP CONCRETE DETAILS AND SETTING OUT",
+        "sourceRow": 291,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022009-A.pdf",
+        "driveId": "1czWc7Svn8e-e24a0mSNky6qA2y3n_Tai",
+        "pages": [
+          "assets/pilecap-drawings/022009-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1090": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022016",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1090 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 292,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022016-C.pdf",
+        "driveId": "1vCrDAZJD9RvSGYXsgwmbwrSAtJNa1GT3",
+        "pages": [
+          "assets/pilecap-drawings/022016-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1091": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022023",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1091 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 293,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022023-B.pdf",
+        "driveId": "1301deSaG9fWixcGE_JsIPrdXnqS46dlB",
+        "pages": [
+          "assets/pilecap-drawings/022023-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1092": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022030",
+        "rev": "A",
+        "listedRevision": "A",
+        "revisionSource": "CSV register",
+        "title": "P-1092 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 294,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022030-A.pdf",
+        "driveId": "1Q5gnJDLgGf38qgo4VPDNwGc0bzHkgLCy",
+        "pages": [
+          "assets/pilecap-drawings/022030-A-1.jpg"
+        ]
+      }
+    ],
+    "P-1093": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022037",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1093 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 295,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022037-B.pdf",
+        "driveId": "1CeQj6896wviFDhDRmN1tDnmPw-e1miJP",
+        "pages": [
+          "assets/pilecap-drawings/022037-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1094": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022044",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1094 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 296,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022044.pdf",
+        "driveId": "1D62ThTw615OX2zbxHNgf9wJeMv17AFU3",
+        "pages": [
+          "assets/pilecap-drawings/022044-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1095": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022051",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1095 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 297,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022051-B.pdf",
+        "driveId": "16lYKqdbYHon7w8Ls7CXlBSkaJJnPKVHj",
+        "pages": [
+          "assets/pilecap-drawings/022051-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1096": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022058",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1096 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 298,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022058.pdf",
+        "driveId": "1ImqwWIl0wfr0QPtDTa_qcRg1XQu5Y9o4",
+        "pages": [
+          "assets/pilecap-drawings/022058-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1097": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022065",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1097 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 299,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022065-B.pdf",
+        "driveId": "1oMJgLYy9XPJRahv-2ftcyelaMgwWrJgE",
+        "pages": [
+          "assets/pilecap-drawings/022065-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1100": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022086",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-1100 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 300,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022086-D.pdf",
+        "driveId": "1b4pfze14FZqS9Jt64zU7ABHpCdhi-K23",
+        "pages": [
+          "assets/pilecap-drawings/022086-D-1.jpg"
+        ]
+      }
+    ],
+    "P-1101": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022093",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1101 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 301,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022093-B.pdf",
+        "driveId": "1UF30tK2kFtwzX0v8DGXlKiAezOuxSrDP",
+        "pages": [
+          "assets/pilecap-drawings/022093-B-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022094",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-1101 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 302,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022094-D.pdf",
+        "driveId": "1O3-xjkQF1jxWUK1_V9dQ76riVkcID3iY",
+        "pages": [
+          "assets/pilecap-drawings/022094-D-1.jpg"
+        ]
+      }
+    ],
+    "P-1102": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022100",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1102 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 303,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022100-B.pdf",
+        "driveId": "1QbyR-mublwZ6zrkz4hQkAdsXtzQmH1_b",
+        "pages": [
+          "assets/pilecap-drawings/022100-B-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022101",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-1102 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 304,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022101-D.pdf",
+        "driveId": "1vZjeFGQOcFhEfGhROLRV7NsMIu2wzKBj",
+        "pages": [
+          "assets/pilecap-drawings/022101-D-1.jpg"
+        ]
+      }
+    ],
+    "P-1103": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022107",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1103 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 305,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022107-B.pdf",
+        "driveId": "1uo4PWwqjnEHj3eNIWMbpKQI4eJKzHtAk",
+        "pages": [
+          "assets/pilecap-drawings/022107-B-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022108",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-1103 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 306,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022108-D.pdf",
+        "driveId": "1py1wz8wwNbSF5FCTQRRYCOx9w_TZPd4u",
+        "pages": [
+          "assets/pilecap-drawings/022108-D-1.jpg"
+        ]
+      }
+    ],
+    "P-1104": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022114",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1104 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 307,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022114-C.pdf",
+        "driveId": "1FPefe476DjXbGus5wZ1tsH3TrzqowLk-",
+        "pages": [
+          "assets/pilecap-drawings/022114-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1105": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022121",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1105 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 308,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022121-C.pdf",
+        "driveId": "1pzC2xSYk43n6Ka3RZnLkYSZXbLhmVz6a",
+        "pages": [
+          "assets/pilecap-drawings/022121-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1106": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022128",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1106 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 309,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022128-B.pdf",
+        "driveId": "12LkpuCfhDdCzXmEbKhHwln_uPqN5wjoE",
+        "pages": [
+          "assets/pilecap-drawings/022128-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1107": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022135",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-1107 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 310,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022135-D.pdf",
+        "driveId": "1UGlq54a3U1wW3tb6JUF84mP-D0ZRK65j",
+        "pages": [
+          "assets/pilecap-drawings/022135-D-1.jpg"
+        ]
+      }
+    ],
+    "P-1108": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022142",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1108 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 311,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022142-B.pdf",
+        "driveId": "1V2f68T2YLVi-D6PDV4rj_AEv7BTvpBXl",
+        "pages": [
+          "assets/pilecap-drawings/022142-B-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022143",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1108 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 312,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022143-B.pdf",
+        "driveId": "1aIlIAAd3G2zHdvNzTkRzwPtpzSnNZnGt",
+        "pages": [
+          "assets/pilecap-drawings/022143-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1109": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022149",
+        "rev": "D",
+        "listedRevision": "D",
+        "revisionSource": "CSV register",
+        "title": "P-1109 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 313,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022149-D.pdf",
+        "driveId": "1ZYUvg1ooMXacQKkV6qqXqYogXOZd71Qx",
+        "pages": [
+          "assets/pilecap-drawings/022149-D-1.jpg"
+        ]
+      }
+    ],
+    "P-1109SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022156",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1109SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 314,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022156-C.pdf",
+        "driveId": "1wEcKORaT3zOZYKZHtsn5Fk-nYCHvZ3Fq",
+        "pages": [
+          "assets/pilecap-drawings/022156-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1109NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022163",
+        "rev": "H",
+        "listedRevision": "H",
+        "revisionSource": "CSV register",
+        "title": "P-1109NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 315,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022163-H.pdf",
+        "driveId": "1MzMSqEqhqeIe0s1xF73DZr75SlKGaAYP",
+        "pages": [
+          "assets/pilecap-drawings/022163-H-1.jpg"
+        ]
+      }
+    ],
+    "P-1110": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022170",
+        "rev": "2",
+        "listedRevision": "2",
+        "revisionSource": "CSV register",
+        "title": "P-1110 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 316,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022170.pdf",
+        "driveId": "1kQbf8LkXXwGmbG-_wO5GQHUKuk3Ej9Zi",
+        "pages": [
+          "assets/pilecap-drawings/022170-2-1.jpg"
+        ]
+      }
+    ],
+    "P-1110SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022177",
+        "rev": "C",
+        "listedRevision": "C",
+        "revisionSource": "CSV register",
+        "title": "P-1110SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 317,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022177.pdf",
+        "driveId": "1eixsQbLYvzfFptUqm7qEUapo1NliwEgD",
+        "pages": [
+          "assets/pilecap-drawings/022177-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1110NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022184",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1110NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 318,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022184.pdf",
+        "driveId": "1zxukZIlpDVazBMEIXuvnDVATyOQlJu3l",
+        "pages": [
+          "assets/pilecap-drawings/022184-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1111": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022191",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1111 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 319,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022191.pdf",
+        "driveId": "1lKixBaa7xRXQOugex1bkwNner2Qq7ezc",
+        "pages": [
+          "assets/pilecap-drawings/022191-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1111SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022198",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1111SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 320,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022198.pdf",
+        "driveId": "1AfmhP6vQf1FclpwRtFw4X02ivMMh-kr8",
+        "pages": [
+          "assets/pilecap-drawings/022198-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1111NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022205",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1111NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 321,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022205.pdf",
+        "driveId": "1lTxGKTb4kcFhzHpJoR-p2bthumTKeD2q",
+        "pages": [
+          "assets/pilecap-drawings/022205-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1112": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022212",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1112 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 322,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022212.pdf",
+        "driveId": "1KLXWfx3JS3yh5BZKOkwkdtMShr9Eqn0y",
+        "pages": [
+          "assets/pilecap-drawings/022212-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1112SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022219",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1112SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 323,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022219.pdf",
+        "driveId": "1hqRWTY5F9ubbVpGJJBCPpuD2XzYQ-Niy",
+        "pages": [
+          "assets/pilecap-drawings/022219-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1112NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022226",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1112NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 324,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022226.pdf",
+        "driveId": "11V7tuMMNJGEZK3YEKV3EPmCqPDLmQx1-",
+        "pages": [
+          "assets/pilecap-drawings/022226-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1113": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022233",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1113 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 325,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022233.pdf",
+        "driveId": "1tc0t4pDoSPiMAVSsd8qSgjcqTB-25z0J",
+        "pages": [
+          "assets/pilecap-drawings/022233-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1113SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022240",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1113SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 326,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022240.pdf",
+        "driveId": "1TMy2Yrt6H8leBYwq_yFHFRG2f7Dh-Lcb",
+        "pages": [
+          "assets/pilecap-drawings/022240-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1113NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022247",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1113NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 327,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022247-B.pdf",
+        "driveId": "11AkEPGjKbDtp-GcdRFUZLFGzuBcoKCUv",
+        "pages": [
+          "assets/pilecap-drawings/022247-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1114": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022254",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1114 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 328,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022254.pdf",
+        "driveId": "12WjPKLk64UCbfDlZiIK9T6BPor6NGgyr",
+        "pages": [
+          "assets/pilecap-drawings/022254-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1114SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022261",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1114SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 329,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022261.pdf",
+        "driveId": "1WUZeRCuQ9BH_XK6MjUT75hkiioHJ_2pj",
+        "pages": [
+          "assets/pilecap-drawings/022261-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1114NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022268",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1114NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 330,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022268.pdf",
+        "driveId": "1zKiOGxKI5CExtcEUl0rGFl9vGoi7CXVi",
+        "pages": [
+          "assets/pilecap-drawings/022268-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1115": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022275",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1115 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 331,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022275.pdf",
+        "driveId": "1VtICqnI7uyqNstPdTz2UwxV1V1HHPumq",
+        "pages": [
+          "assets/pilecap-drawings/022275-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1115SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022282",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1115SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 332,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022282.pdf",
+        "driveId": "1sOcR6edjSGxO3oMbR5WiUMCNJVVqrZdg",
+        "pages": [
+          "assets/pilecap-drawings/022282-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1115NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022289",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1115NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 333,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022289.pdf",
+        "driveId": "1lAmAmde-IFFskACsF_u1QzIIozsfNnVg",
+        "pages": [
+          "assets/pilecap-drawings/022289-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1116": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022296",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1116 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 334,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022296.pdf",
+        "driveId": "1m-MXM9GY_H10tOEDJQjEOvRZK6NTcpo4",
+        "pages": [
+          "assets/pilecap-drawings/022296-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1116SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022303",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1116SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 335,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022303.pdf",
+        "driveId": "1QaC4kkCwi0-SefEcvHTf2HZXYUdjSicl",
+        "pages": [
+          "assets/pilecap-drawings/022303-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1116NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022310",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1116NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 336,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022310.pdf",
+        "driveId": "1fUxO2yaafu_zttvvYWurOha2vFFAtN79",
+        "pages": [
+          "assets/pilecap-drawings/022310-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1117": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022317",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1117 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 337,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022317.pdf",
+        "driveId": "1ypIDDv75YKLXVQgoJpdAsyQ8J_gNhVE8",
+        "pages": [
+          "assets/pilecap-drawings/022317-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1117SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022324",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1117SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 338,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022324.pdf",
+        "driveId": "1YoaPEfIy7OUBvZH-48GG2321bjz0mpgK",
+        "pages": [
+          "assets/pilecap-drawings/022324-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1117NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022331",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1117NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 339,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022331.pdf",
+        "driveId": "1Ky4pSzqp4SMy0I9a5_5SSvu8k_kyaxQ9",
+        "pages": [
+          "assets/pilecap-drawings/022331-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1118": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022338",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1118 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 340,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022338.pdf",
+        "driveId": "1RcUiMZER4pGALOctOKSgXsGvwRF7ny2T",
+        "pages": [
+          "assets/pilecap-drawings/022338-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1118SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022345",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1118SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 341,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022345.pdf",
+        "driveId": "1MvDMRtT4dPwuZLRonk8_EZVW6SkNHnuD",
+        "pages": [
+          "assets/pilecap-drawings/022345-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1118NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022352",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1118NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 342,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022352.pdf",
+        "driveId": "1VTnW76x5sCxtBYv28CY2LteFRzOUvLjW",
+        "pages": [
+          "assets/pilecap-drawings/022352-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1119": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022359",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1119 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 343,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022359.pdf",
+        "driveId": "1MS5i5dbVSkIFjryxLlZn8P6uTerdW3kA",
+        "pages": [
+          "assets/pilecap-drawings/022359-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1119SB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022366",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1119SB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 344,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022366.pdf",
+        "driveId": "1HL4doQ-0WOoUDd9tXJcXkzKmXLY2XpG8",
+        "pages": [
+          "assets/pilecap-drawings/022366-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1119NB": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022373",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1119NB PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 345,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022373.pdf",
+        "driveId": "1dyvlMMtKbEX-rlKqB0z4uyVL3INqUiyk",
+        "pages": [
+          "assets/pilecap-drawings/022373-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1120": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022380",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1120 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 346,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022380.pdf",
+        "driveId": "1h3GAq--_ZtyCSyxtEAxllo6l3VmdPsMj",
+        "pages": [
+          "assets/pilecap-drawings/022380-1-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022381",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1120 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 347,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022381.pdf",
+        "driveId": "1VnnL29beA5YLfr1nBicWVKubjBbS2Q5N",
+        "pages": [
+          "assets/pilecap-drawings/022381-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1121": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022387",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1121 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 1/2",
+        "sourceRow": 348,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022387.pdf",
+        "driveId": "14hPsxMXeBXo0aWgHKka-r2Bjnoamq9Xh",
+        "pages": [
+          "assets/pilecap-drawings/022387-1-1.jpg"
+        ]
+      },
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022388",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1121 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT SHEET 2/2",
+        "sourceRow": 349,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022388.pdf",
+        "driveId": "1U-Snto3dOxjuyioWlQXbA1JInm8Ppit_",
+        "pages": [
+          "assets/pilecap-drawings/022388-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1122": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022394",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1122 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 350,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022394.pdf",
+        "driveId": "1JyZzsvcwYvC6hXOSwi9tetDlvSAiop3k",
+        "pages": [
+          "assets/pilecap-drawings/022394-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1123": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022401",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1123 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 351,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022401.pdf",
+        "driveId": "1euZj8KjZR-XT7GaRG2OjVZbAY3B1Devv",
+        "pages": [
+          "assets/pilecap-drawings/022401-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1124": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022408",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1124 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 352,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022408.pdf",
+        "driveId": "1k-1DNJZKmntv6WSS8HAZbBJxaCwkcPab",
+        "pages": [
+          "assets/pilecap-drawings/022408-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1125": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022415",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1125 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 353,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022415.pdf",
+        "driveId": "1IZQwzeNe6g12Q2CEYM8kNDK_q-xS_A9V",
+        "pages": [
+          "assets/pilecap-drawings/022415-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1126": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022422",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1126 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 354,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022422.pdf",
+        "driveId": "1RzvXIFasP5f8QXPIWSLL8UHR0inltvr4",
+        "pages": [
+          "assets/pilecap-drawings/022422-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1127": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022429",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1127 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 355,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022429.pdf",
+        "driveId": "1TS5iO9OIxbUzK2vNXWs3aAw-ByEQC2gd",
+        "pages": [
+          "assets/pilecap-drawings/022429-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1128": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022436",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1128 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 356,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022436.pdf",
+        "driveId": "1ZAi3hKIvl0QhHAMTrwJaGqwKHXgWwEuQ",
+        "pages": [
+          "assets/pilecap-drawings/022436-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1129": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022443",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1129 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 357,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022443.pdf",
+        "driveId": "1sAS825Ec5tBFugnLqKZkNjSE8LxkIyX2",
+        "pages": [
+          "assets/pilecap-drawings/022443-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1130": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022450",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1130 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 358,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022450.pdf",
+        "driveId": "1WTjgmX1zmzPfSlPotRrx-dvru1lfThDb",
+        "pages": [
+          "assets/pilecap-drawings/022450-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1131": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022457",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1131 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 359,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022457-B.pdf",
+        "driveId": "1RsSjZQlHfgWN-LP4X1GCUYnSOVbBMHHy",
+        "pages": [
+          "assets/pilecap-drawings/022457-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1132": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022464",
+        "rev": "C",
+        "listedRevision": "B",
+        "revisionSource": "User confirmed PDF Rev.C, 2026-11-03",
+        "title": "P-1132 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 360,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022464-C.pdf",
+        "driveId": "1GckfqPQFulJxenyPxajM6SfxlFQb3E-D",
+        "pages": [
+          "assets/pilecap-drawings/022464-C-1.jpg"
+        ]
+      }
+    ],
+    "P-1133": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022471",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1133 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 361,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022471.pdf",
+        "driveId": "1zo-1b7XpALPvatANs5izoo6JqGq3-n6B",
+        "pages": [
+          "assets/pilecap-drawings/022471-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1134": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022478",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1134 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 362,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022478.pdf",
+        "driveId": "1sWEU4kte8S35xCtztsaX9EZEI0iYS4mC",
+        "pages": [
+          "assets/pilecap-drawings/022478-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1135": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022485",
+        "rev": "0",
+        "listedRevision": "0",
+        "revisionSource": "CSV register",
+        "title": "P-1135 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 363,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022485.pdf",
+        "driveId": "1w3CITM4MEVrlZYSMcYsGqkkRPROLQFO6",
+        "pages": [
+          "assets/pilecap-drawings/022485-0-1.jpg"
+        ]
+      }
+    ],
+    "P-1136": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022492",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1136 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 364,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022492-B.pdf",
+        "driveId": "1QJawUCvwMzqR_qbbrJ2dUEYDDo-NL63o",
+        "pages": [
+          "assets/pilecap-drawings/022492-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1137": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022499",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1137 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 365,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022499-B.pdf",
+        "driveId": "1kd2RAunYGBf-m3ihF-6rtpUXGFASxkgb",
+        "pages": [
+          "assets/pilecap-drawings/022499-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1138": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022506",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1138 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 366,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022506-B.pdf",
+        "driveId": "1bOlnscpV9nULVayrytAZBhfQxT4Vmawd",
+        "pages": [
+          "assets/pilecap-drawings/022506-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1139": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022513",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1139 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 367,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022513-B.pdf",
+        "driveId": "1ozKnxyUzrGIShns3ujaGVt6hxHy_4pwM",
+        "pages": [
+          "assets/pilecap-drawings/022513-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1140": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022520",
+        "rev": "B",
+        "listedRevision": "B",
+        "revisionSource": "CSV register",
+        "title": "P-1140 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 368,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022520-B.pdf",
+        "driveId": "1bIqlIO4fbir8mzrWUvp7WLWmGv2YQdMf",
+        "pages": [
+          "assets/pilecap-drawings/022520-B-1.jpg"
+        ]
+      }
+    ],
+    "P-1141": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022527",
+        "rev": "1",
+        "listedRevision": "1",
+        "revisionSource": "CSV register",
+        "title": "P-1141 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 369,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022527.pdf",
+        "driveId": "1D72nEMFfgRZ0sL2oOYlI_Jm634toq0M2",
+        "pages": [
+          "assets/pilecap-drawings/022527-1-1.jpg"
+        ]
+      }
+    ],
+    "P-1142": [
+      {
+        "dwg": "NSCR-ITD-N03-ZWD-DWG-ST-022534",
+        "rev": "H",
+        "listedRevision": "H",
+        "revisionSource": "CSV register",
+        "title": "P-1142 PILE AND PILE CAP CONCRETE DETAILS & SETTING OUT",
+        "sourceRow": 370,
+        "sourceFile": "NSCR-ITD-N03-ZWD-DWG-ST-022534-H.pdf",
+        "driveId": "1Q5aF8iFlPR1q2sqNt_-D8NZcpONOprYi",
+        "pages": [
+          "assets/pilecap-drawings/022534-H-1.jpg"
+        ]
+      }
+    ]
+  },
+  "issues": []
+}
