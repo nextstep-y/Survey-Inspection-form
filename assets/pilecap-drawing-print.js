@@ -25,10 +25,22 @@ window.PilecapDrawingPrint=(()=>{
   if(missing.length)throw Error('Exact PDF revision required: '+missing.map(r=>r.dwg+' Rev.'+r.rev).join('; '));
   return refs.map(r=>all[r.dwg+'|'+r.rev]);
  }
+ function columnRecordsFor(pier,refs){
+  if(!refs?.length)throw Error('No confirmed Column drawing reference for '+pier);
+  const all=window.COLUMN_DRAWING_PAGES?.drawings||{};
+  const allowed=window.COLUMN_DRAWING_PAGES?.records?.[String(pier).trim()]||[];
+  return refs.map(r=>{
+   const found=all[r.dwg+'|'+r.rev];
+   if(!found)throw Error('Exact Column PDF revision required: '+r.dwg+' Rev.'+r.rev);
+   if(!allowed.some(a=>a.dwg===r.dwg&&a.rev===r.rev))throw Error('Column drawing is not mapped to '+pier+': '+r.dwg);
+   return found;
+  });
+ }
  async function prepare(pier,work,refs){
   clear();
-  if(!['Pile cap','Bored Pile','Pier Head','Bearing Plinths'].includes(work)||!/^P-\d/.test(pier||''))return null;
-  const records=['Pier Head','Bearing Plinths'].includes(work)?headRecordsFor(pier,refs):recordsFor(pier);
+  const column=['Pier Column (1st-Lift)','Pier Column (2nd Lift)'].includes(work);
+  if((!['Pile cap','Bored Pile','Pier Head','Bearing Plinths'].includes(work)&&!column)||!/^P-\d/.test(pier||''))return null;
+  const records=column?columnRecordsFor(pier,refs):['Pier Head','Bearing Plinths'].includes(work)?headRecordsFor(pier,refs):recordsFor(pier);
   if(!records?.length)throw Error('No confirmed drawing registered for '+pier+'. Register the correct drawing before printing.');
   const container=document.createElement('section');container.className='drawing-print-attachments';
   for(const r of records)for(const [i,path]of r.pages.entries()){
@@ -41,5 +53,5 @@ window.PilecapDrawingPrint=(()=>{
   }
   return container;
  }
- return {prepare,clear,recordsFor,headRecordsFor};
+ return {prepare,clear,recordsFor,headRecordsFor,columnRecordsFor};
 })();
