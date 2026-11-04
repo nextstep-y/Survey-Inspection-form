@@ -1,0 +1,58 @@
+/* Screen-only: leave survey geometry, precision and print pagination untouched. */
+@media (max-width: 900px) {
+  .container { padding: 10px 10px 24px; }
+  .topnav { height: auto; min-height: 48px; padding: 8px 10px; flex-wrap: wrap; gap: 8px; position: relative; }
+  .topnav-brand, .topnav-brand > div { min-width: 0; }
+  .topnav-title { font-size: 12px; overflow-wrap: anywhere; }
+  .topnav-sub { font-size: 9px; }
+  .topnav-actions { width: 100%; justify-content: flex-start; gap: 6px; }
+  .topnav-actions .pill { max-width: 100%; overflow-wrap: anywhere; }
+  .btn, .canvas-view-btn { min-height: 44px; padding: 9px 12px; }
+  body #main-content-wrapper,
+  body.bearing-plinth-work #main-content-wrapper,
+  body.pot-bearing-work #main-content-wrapper,
+  body.elastomeric-work #main-content-wrapper { flex-direction: column !important; }
+  #main-content-wrapper > div:first-child { width: 100%; border-right: 0 !important; }
+  body #pile-array-section,
+  body.live-model-view #pile-array-section,
+  body.blender-detail-view #pile-array-section,
+  body.blender-column-view #pile-array-section,
+  body.blender-cap-view #pile-array-section,
+  body.bearing-plinth-work #pile-array-section,
+  body.pot-bearing-work #pile-array-section,
+  body.elastomeric-work #pile-array-section {
+    width: 100% !important; min-width: 0 !important; max-width: none !important;
+    border-left: 0 !important; border-top: 1px solid var(--border) !important;
+    padding: 10px; order: 2;
+  }
+  body #pile-canvas, body.elastomeric-work #pile-canvas { width: 100% !important; max-width: 720px !important; height: auto !important; }
+  body .work-select-card .select-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  body .work-select-card #pier-no-col, body .work-select-card #occ-col { grid-column: 1 / -1; min-width: 0; }
+  .work-select-card .sel-col { min-width: 0; min-height: 0; padding: 10px; border-bottom: 1px solid var(--border); }
+  .work-select-card .sel-label { min-height: 0; margin-bottom: 6px; }
+  select, input[type="text"], input[type="search"], input[type="number"], input[type="date"] { font-size: 16px !important; min-height: 44px; }
+  #pier-input { height: 44px; }
+  .pier-combo-btn { width: 44px; }
+  .pier-suggest-item { min-height: 44px; align-items: center; }
+  .occ-opt { min-height: 40px; font-size: 13px; }
+  .occ-box { width: 18px; height: 18px; }
+  .pier-info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .info-cell { min-width: 0; padding: 10px; }
+  .info-value { overflow-wrap: anywhere; }
+  #procedure-section > div:last-child { grid-template-columns: 1fr 1fr !important; row-gap: 8px !important; font-size: 11px !important; padding: 8px 0; }
+  .table-scroll { width: 100%; max-width: 100%; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .table-scroll table { min-width: 960px; }
+  .table-scroll thead th { position: static; }
+  .table-scroll input { min-width: 88px; }
+  .card-header { flex-wrap: wrap; overflow-wrap: anywhere; }
+  .sig-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-bar, .footer-actions { flex-wrap: wrap; gap: 8px; }
+  .history-panel, .dwg-panel { top: 0; bottom: 0; width: min(390px, 100vw); max-width: 100%; z-index: 200; }
+  .dwg-current { overflow-wrap: anywhere; }
+  .ss19-grid-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) {
+  body .work-select-card .select-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .topnav-logo { flex-shrink: 0; }
+  .sig-grid { grid-template-columns: minmax(0, 1fr); }
+}
