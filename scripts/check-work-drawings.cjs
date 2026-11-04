@@ -10,7 +10,7 @@ const result=await w.webContents.executeJavaScript(`(()=>{
  check(refs('Bearing Plinths').refs[0].dwg.endsWith('038136')&&refs('Bearing Plinths').refs[0].rev==='C','Plinth detail takes priority');
  check(refs('Pot Bearing').refs.length===2&&refs('Pot Bearing').refs.every(r=>r.rev==='B'),'two Pot details with own revisions');
  check(refs('Pot Bearing').refs.some(r=>r.dwg.endsWith('066056')),'S5 detail');
- check(getWorkDrawingReferences(PIERS_RAW['P-992'],'Pier Head').refs.map(r=>r.rev).join(',')==='E,D,E','mixed revisions retained');
+ check(getWorkDrawingReferences(PIERS_RAW['P-992'],'Pier Head').refs.map(r=>r.rev).join(',')==='E,D,D','Aconex-verified mixed revisions retained');
  check(getWorkDrawingReferences(PIERS_RAW['P-1049'],'Pier Head').status==='NOT VERIFIED','unconfirmed head not guessed');
  check(getWorkDrawingReferences(PIERS_RAW['P-826'],'Pot Bearing').status==='NOT VERIFIED','unsupported Pot no generic fallback');
  dwgOverrides[p.id]={dwg:'WRONG-COLUMN',rev:'99'};localDwgOverrides[p.id]={dwg:'WRONG-LOCAL',rev:'99'};

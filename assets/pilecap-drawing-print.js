@@ -19,10 +19,16 @@ window.PilecapDrawingPrint=(()=>{
  `;document.head.appendChild(style);
  const clear=()=>document.querySelectorAll('.drawing-print-attachments').forEach(e=>e.remove());
  window.addEventListener('afterprint',clear);
- async function prepare(pier,work){
+ function headRecordsFor(pier,refs){
+  if(!refs?.length)throw Error('No confirmed work-specific drawing reference for '+pier);
+  const all=window.HEAD_DRAWING_PAGES?.drawings||{},missing=refs.filter(r=>!all[r.dwg+'|'+r.rev]);
+  if(missing.length)throw Error('Exact PDF revision required: '+missing.map(r=>r.dwg+' Rev.'+r.rev).join('; '));
+  return refs.map(r=>all[r.dwg+'|'+r.rev]);
+ }
+ async function prepare(pier,work,refs){
   clear();
-  if(!['Pile cap','Bored Pile'].includes(work)||!/^P-\d/.test(pier||''))return null;
-  const records=recordsFor(pier);
+  if(!['Pile cap','Bored Pile','Pier Head','Bearing Plinths'].includes(work)||!/^P-\d/.test(pier||''))return null;
+  const records=['Pier Head','Bearing Plinths'].includes(work)?headRecordsFor(pier,refs):recordsFor(pier);
   if(!records?.length)throw Error('No confirmed drawing registered for '+pier+'. Register the correct drawing before printing.');
   const container=document.createElement('section');container.className='drawing-print-attachments';
   for(const r of records)for(const [i,path]of r.pages.entries()){
@@ -35,5 +41,5 @@ window.PilecapDrawingPrint=(()=>{
   }
   return container;
  }
- return {prepare,clear,recordsFor};
+ return {prepare,clear,recordsFor,headRecordsFor};
 })();

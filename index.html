@@ -1776,7 +1776,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/dowel-blender-manifest.js?v=20261030-point-identities"></script>
 <script src="assets/pot-blender-manifest.js?v=20261027-pot-detail-axes"></script>
 <script src="assets/pilecap-drawing-register.js?v=20261103"></script>
-<script src="assets/pilecap-drawing-print.js?v=20261103"></script>
+<script src="assets/head-drawing-pages.js?v=20261104"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261104-head-plinth"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -4735,7 +4736,7 @@ function getWorkDrawingReferences(pier,work){
   }else{
     // Dimensioned detail supersedes the general plan for P-1092 Plinth.
     if(work==='Bearing Plinths'&&base==='P-1092')add('038136','C','Plinth reinforcement / height');
-    if(work==='Bearing Plinths'&&base==='P-1142')add('038582','C','Plinth detail / RL A datum');
+    if(work==='Bearing Plinths'&&base==='P-1142')add('038582','B','Plinth detail / RL A datum','Aconex register and rendered title block, 2026-11-04');
     const special={
       'P-1091':[['023165','C']], 'P-1092':[['023167','B'],['023168','B']],
       'P-1093':[['023162','B'],['023163','B']], 'P-1094':[['023170','B']]
@@ -4744,12 +4745,16 @@ function getWorkDrawingReferences(pier,work){
     else if(P6_CONFIRMED_PIERS.includes(id)){
       add('023241','E','Pier Head plan / elevation');
       add('023240','D','Pier-specific side / level schedule');
-      if(work==='Pier Head')add('039531','E','Island sections');
+      add('039531','D',work==='Pier Head'?'Island sections':'Plinth / island sections','Aconex register and rendered title block, 2026-11-04');
     }else if(BR114_DRAWING_CONTROLS[id]){
       const c=BR114_DRAWING_CONTROLS[id];add(c.plan,c.rev,'Pier Head plan / elevation');
     }else{
       const c=getDrawingPlinthControl(pier);
-      if(c)add(c.plan,c.rev,work==='Pier Head'?'Pier Head plan reference':'Plinth plan / footprint reference');
+      // Aconex titles explicitly identify the Pier. Reference-only correction;
+      // do not mutate the geometry family's dimensions, coordinates or levels.
+      const verified={'P-989':['023217','B'],'P-1100':['023181','B'],'P-1106':['023085','B'],'P-1107':['023081','B'],'P-1122':['023073','A']}[base];
+      if(verified)add(verified[0],verified[1],work==='Pier Head'?'Pier Head plan reference':'Plinth plan / footprint reference','Aconex register, 2026-11-04');
+      else if(c&&!['P-1101','P-1102','P-1103'].includes(base))add(c.plan,c.rev,work==='Pier Head'?'Pier Head plan reference':'Plinth plan / footprint reference');
     }
     // Typed detail rows are additive, never a generic schedule masquerading as
     // a Plinth reinforcement drawing. Unreviewed Sheet rows are filtered earlier.
@@ -4843,7 +4848,15 @@ function renderDwgPanel() {
     current.textContent = `Current: ${summary} (${source})`+(workSpecific?' | เพิ่ม/แก้ทะเบียนด้วยประเภทงานใน DRAWING REGISTER':'');
     if(merged?.drawingReferences?.length){
       const list=document.createElement('div');list.style.cssText='white-space:normal;margin-top:6px;font-size:11px';
-      for(const r of merged.drawingReferences){const item=document.createElement('div');item.textContent=r.dwg+' / Rev.'+(r.rev||'UNCONFIRMED')+' — '+r.roles.join(', ')+' ['+r.source+']';list.append(item);}
+      for(const r of merged.drawingReferences){
+        const item=document.createElement('div');item.textContent=r.dwg+' / Rev.'+(r.rev||'UNCONFIRMED')+' — '+r.roles.join(', ')+' ['+r.source+']';
+        if(['Pier Head','Bearing Plinths'].includes(document.getElementById('element').value)){
+          const pages=window.HEAD_DRAWING_PAGES?.drawings[r.dwg+'|'+r.rev]?.pages;
+          if(pages?.length)for(const [i,url]of pages.entries()){const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener';link.textContent=' | ดู Drawing หน้า '+(i+1);item.append(link);}
+          else item.append(document.createTextNode(' | ยังไม่มี PDF ตรง Revision สำหรับพิมพ์'));
+        }
+        list.append(item);
+      }
       current.append(list);
     }
   }
@@ -9300,7 +9313,8 @@ async function printDoc() {
   if(!window.PilecapDrawingPrint)return _printFormDoc();
   const pier=currentPier?.id,work=document.getElementById('element').value;
   try{
-    const attachment=await window.PilecapDrawingPrint.prepare(pier,work);
+    const references=['Pier Head','Bearing Plinths'].includes(work)?getWorkDrawingReferences(currentPier,work)?.refs:null;
+    const attachment=await window.PilecapDrawingPrint.prepare(pier,work,references);
     if(currentPier?.id!==pier||document.getElementById('element').value!==work)throw Error('Pier/work changed while loading drawings. Please print again.');
     _printFormDoc();
     if(attachment)document.body.appendChild(attachment);
