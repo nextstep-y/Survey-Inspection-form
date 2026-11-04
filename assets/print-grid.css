@@ -1,0 +1,23 @@
+/* Physical units keep rules visible after iOS Safari scales an A4 form.
+   Set every cell edge explicitly, including grouped and row-spanning headers. */
+@media print {
+  #survey-table, #occ-table, .print-split-tbl, .print-split-table table {
+    border-collapse: collapse !important;
+    border: 0.5pt solid #555 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #survey-table th, #survey-table td,
+  #occ-table th, #occ-table td,
+  .print-split-tbl th, .print-split-tbl td,
+  .print-split-table th, .print-split-table td {
+    border: 0.5pt solid #555 !important;
+  }
+  #survey-table th, #occ-table th {
+    position: static !important;
+    color: #000 !important;
+    background: #fff !important;
+  }
+  .pier-info-grid .info-cell { border: 0.5pt solid #666 !important; }
+  .sig-grid .sig-col { border-right: 0.5pt solid #666 !important; }
+}
