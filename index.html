@@ -1780,7 +1780,8 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/pilecap-drawing-register.js?v=20261103"></script>
 <script src="assets/head-drawing-pages.js?v=20261104"></script>
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
-<script src="assets/pilecap-drawing-print.js?v=20261104-column"></script>
+<script src="assets/pot-drawing-pages.js?v=20261112"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261112-pot"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -4859,8 +4860,9 @@ function renderDwgPanel() {
       const list=document.createElement('div');list.style.cssText='white-space:normal;margin-top:6px;font-size:11px';
       for(const r of merged.drawingReferences){
         const item=document.createElement('div');item.textContent=r.dwg+' / Rev.'+(r.rev||'UNCONFIRMED')+' — '+r.roles.join(', ')+' ['+r.source+']';
-        if(['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)'].includes(document.getElementById('element').value)){
-          const catalog=document.getElementById('element').value.startsWith('Pier Column')?window.COLUMN_DRAWING_PAGES:window.HEAD_DRAWING_PAGES;
+        if(['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pot Bearing'].includes(document.getElementById('element').value)){
+          const work=document.getElementById('element').value;
+          const catalog=work==='Pot Bearing'?window.POT_DRAWING_PAGES:work.startsWith('Pier Column')?window.COLUMN_DRAWING_PAGES:window.HEAD_DRAWING_PAGES;
           const pages=catalog?.drawings[r.dwg+'|'+r.rev]?.pages;
           if(pages?.length)for(const [i,url]of pages.entries()){const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener';link.textContent=' | ดู Drawing หน้า '+(i+1);item.append(link);}
           else item.append(document.createTextNode(' | ยังไม่มี PDF ตรง Revision สำหรับพิมพ์'));
@@ -9323,7 +9325,7 @@ async function printDoc() {
   if(!window.PilecapDrawingPrint)return _printFormDoc();
   const pier=currentPier?.id,work=document.getElementById('element').value;
   try{
-    const references=['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)'].includes(work)?getWorkDrawingReferences(currentPier,work)?.refs:null;
+    const references=['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pot Bearing'].includes(work)?getWorkDrawingReferences(currentPier,work)?.refs:null;
     const attachment=await window.PilecapDrawingPrint.prepare(pier,work,references);
     if(currentPier?.id!==pier||document.getElementById('element').value!==work)throw Error('Pier/work changed while loading drawings. Please print again.');
     _printFormDoc();

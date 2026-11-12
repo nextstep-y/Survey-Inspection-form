@@ -36,11 +36,23 @@ window.PilecapDrawingPrint=(()=>{
    return found;
   });
  }
+ function potRecordsFor(pier,refs){
+  if(!refs?.length)throw Error('No confirmed Pot Bearing drawing reference for '+pier);
+  const catalog=window.POT_DRAWING_PAGES;
+  const allowed=catalog?.coverage?.find(r=>String(r.pier).trim()===String(pier).trim())?.references||[];
+  const unique=[...new Map(refs.map(r=>[r.dwg+'|'+r.rev,r])).values()];
+  return unique.map(r=>{
+   const key=r.dwg+'|'+r.rev,found=catalog?.drawings?.[key];
+   if(!found)throw Error('Exact Pot Bearing PDF revision required: '+r.dwg+' Rev.'+r.rev);
+   if(!allowed.includes(key))throw Error('Pot Bearing drawing is not mapped to '+pier+': '+r.dwg);
+   return found;
+  });
+ }
  async function prepare(pier,work,refs){
   clear();
   const column=['Pier Column (1st-Lift)','Pier Column (2nd Lift)'].includes(work);
-  if((!['Pile cap','Bored Pile','Pier Head','Bearing Plinths'].includes(work)&&!column)||!/^P-\d/.test(pier||''))return null;
-  const records=column?columnRecordsFor(pier,refs):['Pier Head','Bearing Plinths'].includes(work)?headRecordsFor(pier,refs):recordsFor(pier);
+  if((!['Pile cap','Bored Pile','Pier Head','Bearing Plinths','Pot Bearing'].includes(work)&&!column)||!/^P-\d/.test(pier||''))return null;
+  const records=work==='Pot Bearing'?potRecordsFor(pier,refs):column?columnRecordsFor(pier,refs):['Pier Head','Bearing Plinths'].includes(work)?headRecordsFor(pier,refs):recordsFor(pier);
   if(!records?.length)throw Error('No confirmed drawing registered for '+pier+'. Register the correct drawing before printing.');
   const container=document.createElement('section');container.className='drawing-print-attachments';
   for(const r of records)for(const [i,path]of r.pages.entries()){
@@ -53,5 +65,5 @@ window.PilecapDrawingPrint=(()=>{
   }
   return container;
  }
- return {prepare,clear,recordsFor,headRecordsFor,columnRecordsFor};
+ return {prepare,clear,recordsFor,headRecordsFor,columnRecordsFor,potRecordsFor};
 })();
