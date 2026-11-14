@@ -1781,7 +1781,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/head-drawing-pages.js?v=20261104"></script>
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
 <script src="assets/pot-drawing-pages.js?v=20261112"></script>
-<script src="assets/pilecap-drawing-print.js?v=20261112-pot"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261114-matching-references"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -4715,6 +4715,15 @@ function normalizeWorkDrawingNumber(value){
   return /^NSCR-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{6}$/i.test(s)?s.toUpperCase():'';
 }
 function getWorkDrawingReferences(pier,work){
+  const selection=window.PilecapDrawingPrint?.selectionFor(pier?.id,work);
+  if(selection&&!isClarkStationElement(pier)&&!isSubstationPier(pier)){
+    const design=_getDesignWorkDrawingReferences(pier,work);
+    const refs=selection.records.map(r=>({...r,roles:design?.refs?.find(d=>d.dwg===r.dwg&&d.rev===r.rev)?.roles||['Drawing attached to printed form'],source:'Packaged print drawing / '+r.sourceFile}));
+    return {work,refs,text:selection.text,status:refs.length?'REFERENCE FOUND':'NOT VERIFIED'};
+  }
+  return _getDesignWorkDrawingReferences(pier,work);
+}
+function _getDesignWorkDrawingReferences(pier,work){
   if(pier&&['Pier Column (1st-Lift)','Pier Column (2nd Lift)'].includes(work)&&!isClarkStationElement(pier)&&!isSubstationPier(pier)){
     const live=liveDrawingRegister[pier.id]?.column;
     const records=live?(live.references||[live]):(window.COLUMN_DRAWING_PAGES?.records?.[String(pier.id).trim()]||[]);
@@ -9328,6 +9337,11 @@ async function printDoc() {
     const references=['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pot Bearing'].includes(work)?getWorkDrawingReferences(currentPier,work)?.refs:null;
     const attachment=await window.PilecapDrawingPrint.prepare(pier,work,references);
     if(currentPier?.id!==pier||document.getElementById('element').value!==work)throw Error('Pier/work changed while loading drawings. Please print again.');
+    if(attachment){
+      const displayed=getWorkDrawingReferences(currentPier,work)?.text;
+      if(displayed!==attachment.dataset.drawingReferences)throw Error('Drawing references changed while loading. Please print again.');
+      refreshDwgDisplay();
+    }
     _printFormDoc();
     if(attachment)document.body.appendChild(attachment);
   }catch(error){alert('Cannot print complete drawing package: '+error.message+'\nNo print was started.');}

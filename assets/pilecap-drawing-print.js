@@ -48,13 +48,32 @@ window.PilecapDrawingPrint=(()=>{
    return found;
   });
  }
+ const supportedWorks=['Pile cap','Bored Pile','Pier Head','Bearing Plinths','Pot Bearing','Pier Column (1st-Lift)','Pier Column (2nd Lift)'];
+ function selectionFor(pier,work){
+  if(!supportedWorks.includes(work)||!/^P-\d/.test(pier||''))return null;
+  const id=String(pier).trim();let records=[],missing=[];
+  if(['Pile cap','Bored Pile'].includes(work))records=recordsFor(id);
+  else if(work.startsWith('Pier Column'))records=window.COLUMN_DRAWING_PAGES?.records?.[id]||[];
+  else {
+   const catalog=work==='Pot Bearing'?window.POT_DRAWING_PAGES:window.HEAD_DRAWING_PAGES;
+   const row=catalog?.coverage?.find(r=>String(r.pier).trim()===id&&(work==='Pot Bearing'||r.work===work));
+   const keys=row?.references||[];
+   missing=keys.filter(k=>!catalog?.drawings?.[k]);
+   if(!missing.length)records=keys.map(k=>catalog.drawings[k]);
+  }
+  records=[...new Map(records.map(r=>[r.dwg+'|'+r.rev,r])).values()];
+  const text=records.length?records.map(r=>r.dwg+' / Rev.'+r.rev).join('; '):'DRAWING NOT VERIFIED - '+work;
+  return {records,missing,text};
+ }
  async function prepare(pier,work,refs){
   clear();
-  const column=['Pier Column (1st-Lift)','Pier Column (2nd Lift)'].includes(work);
-  if((!['Pile cap','Bored Pile','Pier Head','Bearing Plinths','Pot Bearing'].includes(work)&&!column)||!/^P-\d/.test(pier||''))return null;
-  const records=work==='Pot Bearing'?potRecordsFor(pier,refs):column?columnRecordsFor(pier,refs):['Pier Head','Bearing Plinths'].includes(work)?headRecordsFor(pier,refs):recordsFor(pier);
+  const selection=selectionFor(pier,work);if(!selection)return null;
+  const {records}=selection;
+  if(selection.missing.length)throw Error('Exact PDF revision required: '+selection.missing.join('; '));
+  if(refs&&JSON.stringify(refs.map(r=>r.dwg+'|'+r.rev))!==JSON.stringify(records.map(r=>r.dwg+'|'+r.rev)))throw Error('Form drawing references differ from attached drawings. Refresh before printing.');
   if(!records?.length)throw Error('No confirmed drawing registered for '+pier+'. Register the correct drawing before printing.');
   const container=document.createElement('section');container.className='drawing-print-attachments';
+  container.dataset.drawingReferences=selection.text;
   for(const r of records)for(const [i,path]of r.pages.entries()){
    const image=new Image();image.alt=r.dwg+' Rev.'+r.rev+' page '+(i+1);
    await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(Error('Drawing unavailable: '+image.alt));image.src=path;});
@@ -65,5 +84,5 @@ window.PilecapDrawingPrint=(()=>{
   }
   return container;
  }
- return {prepare,clear,recordsFor,headRecordsFor,columnRecordsFor,potRecordsFor};
+ return {prepare,clear,recordsFor,headRecordsFor,columnRecordsFor,potRecordsFor,selectionFor};
 })();

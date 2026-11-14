@@ -20,9 +20,10 @@ const result=await w.webContents.executeJavaScript(`(()=>{
  {type:'Bearing Plinth',piers:'P-826',drawingNo:'039998',revision:'D',status:'VISUALLY REVIEWED'},
  {type:'Bearing Plinth',piers:'P-826',drawingNo:'000001',revision:'Z',status:'PENDING'},
  {type:'Pot Bearing',piers:'P-826',drawingNo:'not a number',revision:'A',status:'VISUALLY REVIEWED'}]);
- const imported=getWorkDrawingReferences(PIERS_RAW['P-826'],'Bearing Plinths');
+ const imported=_getDesignWorkDrawingReferences(PIERS_RAW['P-826'],'Bearing Plinths');
  check(imported.refs.filter(r=>r.source==='Reviewed Drawing Register').length===2,'multiple typed detail rows retained');
  check(!imported.text.includes('000001')&&!imported.text.includes('NSCR-ITD-N03-ZWD-DWG-ST-NSCR'),'pending/duplicate prefix rejected');
+ check(!getWorkDrawingReferences(PIERS_RAW['P-826'],'Bearing Plinths').text.includes('039999'),'unpackaged Sheet detail cannot change printed form reference');
  let records=0;for(const pier of Object.values(PIERS_RAW))for(const work of ['Pier Head','Bearing Plinths','Pot Bearing']){
  const r=getWorkDrawingReferences(pier,work);check(r&&r.text.length>0,pier.id+' '+work);
  for(const item of r.refs)if(!/^NSCR-[A-Z0-9-]+-\\d{6}$/.test(item.dwg))throw Error('Invalid drawing '+item.dwg);
