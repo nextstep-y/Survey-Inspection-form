@@ -1782,6 +1782,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
 <script src="assets/pot-drawing-pages.js?v=20261112"></script>
 <script src="assets/pilecap-drawing-print.js?v=20261114-matching-references"></script>
+<script src="assets/blinding-elevation-print.js?v=20261116-vector"></script>
 <script id="data-script">
 // MS/ITP Number = Method Statement & Inspection Test Plan (from Element_1.xlsx Sheet2)
 const WORK_ITP = {
@@ -9336,6 +9337,8 @@ async function printDoc() {
   try{
     const references=['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pot Bearing'].includes(work)?getWorkDrawingReferences(currentPier,work)?.refs:null;
     const attachment=await window.PilecapDrawingPrint.prepare(pier,work,references);
+    if(work==='Blinding Concrete'&&!window.BlindingElevationPrint)throw Error('Elevation Check attachment module is unavailable. Please reload.');
+    const supplement=await window.BlindingElevationPrint?.prepare(work);
     if(currentPier?.id!==pier||document.getElementById('element').value!==work)throw Error('Pier/work changed while loading drawings. Please print again.');
     if(attachment){
       const displayed=getWorkDrawingReferences(currentPier,work)?.text;
@@ -9344,6 +9347,7 @@ async function printDoc() {
     }
     _printFormDoc();
     if(attachment)document.body.appendChild(attachment);
+    if(supplement)document.body.appendChild(supplement);
   }catch(error){alert('Cannot print complete drawing package: '+error.message+'\nNo print was started.');}
 }
 function _printFormDoc() {
