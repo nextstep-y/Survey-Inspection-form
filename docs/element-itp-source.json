@@ -1,0 +1,20 @@
+{
+  "source": "Element - Excel Program.xlsx",
+  "sha256": "f12fdcffcb19caed7155d7268079fa81019edef87c1bfc32ac0395b908e10b69",
+  "sheet": "Sheet2",
+  "range": "A2:D13",
+  "records": [
+    ["Bored Pile", "NSCR-ITD-N03-ZWD-MST-ST-000001", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Blinding Concrete", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Pile Deviate", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Pile cap", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Pier Column (1st-Lift)", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Pier Column (2nd Lift)", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Pier Head", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Bearing Plinths", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Pot Bearing", "NSCR-ITD-N03-ZWD-MST-ST-000038", "NSCR-ITD-N03-PRO-QA-0001/10", "5.1"],
+    ["Elastomeric", "NSCR-ITD-N03-ZWD-MST-ST-000055", "NSCR-ITD-N03-ZWD-ITP-M-000001", "2.2.5"],
+    ["Final Alignment", "NSCR-ITD-N03-ZWD-MST-ST-000046", "NSCR-ITD-N03-ZWD-ITP-M-000001", "3.2"],
+    ["Other", null, null, "-"]
+  ]
+}
