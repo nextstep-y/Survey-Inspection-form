@@ -23,7 +23,7 @@ window.BR115Bottom = (() => {
     document.body.classList.toggle('br115-work',enabled);
     document.getElementById('pier-no-col').style.display=enabled?'none':'';
     if(!enabled)document.getElementById('pier-card').style.display='none';
-    const drawings=document.getElementById('br115-drawing-reference');if(drawings)drawings.hidden=!enabled;
+    const drawings=document.getElementById('br115-drawing-reference');if(drawings)drawings.hidden=!enabled;const criteria=document.getElementById('br115-contract-criteria');if(criteria)criteria.hidden=!enabled;
     const picker=document.getElementById('br115-work-group');if(picker)picker.hidden=!enabled;
     const panel=document.getElementById('br115-panel');if(panel)panel.hidden=!enabled;
   }
@@ -78,7 +78,7 @@ window.BR115Bottom = (() => {
     if(measured.length)document.getElementById('sum-dev').textContent=(Math.max(...measured)*1000).toFixed(1)+' mm';
     document.getElementById('sum-count').textContent=measured.length;
     const status=document.getElementById('sum-status');status.textContent='NOT ASSESSED';status.className='sum-value';
-    document.getElementById('sum-fail-count').textContent='Tolerance not verified';
+    document.getElementById('sum-fail-count').textContent='Absolute position / RL criteria pending';
   }
   function draw(pier){
     const canvas=document.getElementById('pile-canvas'),ctx=canvas.getContext('2d');

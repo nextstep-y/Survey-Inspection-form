@@ -1176,6 +1176,14 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 @media print { .clark-qa-panel,.clark-qa-launch { display:none !important; } }
 
 #br115-panel { display:none !important; }
+#br115-contract-criteria { padding:7px 10px; border:1px solid #a6b8c5; background:#f3f7fa; font:11px/1.45 Arial; }
+#br115-contract-criteria[hidden] { display:none !important; }
+#br115-contract-criteria .br115-contract-source { color:#52677a; font-size:10px; }
+@media print {
+  body.br115-work #survey-table tbody td { line-height:1.35 !important; }
+  body.br115-work #br115-contract-criteria { padding:1pt 4pt !important; font-size:5.5pt !important; line-height:1.12 !important; break-inside:avoid; }
+  body.br115-work #br115-contract-criteria .br115-contract-source { font-size:5pt !important; }
+}
 body.br115-work #wi-work-desc, body.br115-work #wi-element { flex-shrink:0; }
 body.br115-work #wi-drawing { min-width:0; overflow-wrap:anywhere; }
 body.br115-work #survey-table td.label-cell { font-size:9px !important; line-height:1.1 !important; padding:1px 3px !important; white-space:nowrap; }
@@ -1788,12 +1796,13 @@ body.br115-work .pier-combo { min-width:0 !important; }
 // DATA — PILE SCHEDULE (384 piers embedded)
 // ═══════════════════════════════════════════
 </script>
-<script src="assets/br115-section-data.js?v=20261119-chainage-1"></script>
-<script src="assets/br115-3d.js?v=20261119-chainage-1"></script>
-<script src="assets/br115-drawing-pages.js?v=20261119-chainage-1"></script>
-<script src="assets/br115-drawing-reference.js?v=20261119-chainage-1"></script>
-<script src="assets/br115-bottom-data.js?v=20261119-chainage-1"></script>
-<script src="assets/br115-bottom.js?v=20261119-chainage-1"></script>
+<script src="assets/br115-contract.js?v=20261119-contract-1"></script>
+<script src="assets/br115-section-data.js?v=20261119-contract-1"></script>
+<script src="assets/br115-3d.js?v=20261119-contract-1"></script>
+<script src="assets/br115-drawing-pages.js?v=20261119-contract-1"></script>
+<script src="assets/br115-drawing-reference.js?v=20261119-contract-1"></script>
+<script src="assets/br115-bottom-data.js?v=20261119-contract-1"></script>
+<script src="assets/br115-bottom.js?v=20261119-contract-1"></script>
 <script src="assets/pilecap_ch_os_overrides.js"></script>
 <script src="assets/clark-station-data.js"></script>
 <script src="assets/clark-station-beam-data.js"></script>
@@ -1817,7 +1826,7 @@ body.br115-work .pier-combo { min-width:0 !important; }
 <script src="assets/head-drawing-pages.js?v=20261104"></script>
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
 <script src="assets/pot-drawing-pages.js?v=20261112"></script>
-<script src="assets/pilecap-drawing-print.js?v=20261119-chainage-1"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261119-contract-1"></script>
 <script src="assets/blinding-elevation-print.js?v=20261116-vector"></script>
 <script id="data-script">
 // MS/ITP Number: Element - Excel Program.xlsx, Sheet2 B2:C13, 2026-11-18.
@@ -5465,7 +5474,7 @@ function updateTolerance() {
   const workDesc = document.getElementById('work-desc')?.value || '';
   const tolEl = document.getElementById('tol-bar-text');
   if (!tolEl) return;
-  if(BR115Bottom.isWork(work)){tolEl.textContent='Tolerance: not verified — deviations only; '+(BR115Bottom.isTop()?'Top':'Bottom')+' RL excludes camber';return;}
+  if(BR115Bottom.isWork(work)){tolEl.textContent=BR115Contract.barText();return;}
   if(work==='Pot Bearing'){tolEl.textContent='Horizontal position: ±0.003 m (±3 mm) | TS216.1.7, Vol.3, TS200-301 (PDF 306)';return;}
   // As-Built override: ±0.025 m for all works except Bored Pile, Blinding Concrete, Pile Deviate
   const _asBuiltExclude = ['Bored Pile', 'Blinding Concrete', 'Pile Deviate'];
@@ -8570,6 +8579,7 @@ function renderSurveyTable(pier) {
   document.body.classList.toggle('br115-work', BR115Bottom.isWork(document.getElementById('element').value));
   BR115Bottom.prepare(pier);
   BR115Drawings.render();
+  BR115Contract.render();
   const work = document.getElementById('element').value;
 
   // ── Set table-layout based on work type ──────────────────────────────────
@@ -9313,6 +9323,7 @@ function _xlsxBuildRows() {
   if(BR115Bottom.isWork(work)){
     r=add(['Joint: '+(BR115Bottom.selected(pier)?.name || 'Unavailable')+' | '+(document.getElementById('br115-details')?.textContent || 'Chainage pending; Bottom RL excludes camber')],3,32);merge(r,1,r,15);
   }
+  if(BR115Bottom.isWork(work)) BR115Contract.lines().forEach(text=>{r=add([text],3,30);merge(r,1,r,15);});
   _xlsxTableMatrix(document.getElementById('survey-table')).forEach((row, i) => add(row, i < 2 ? 6 : 3, 16));
 
   const elevVisible = document.getElementById('elev-section')?.style.display !== 'none' && document.getElementById('elev-body')?.children?.length;
