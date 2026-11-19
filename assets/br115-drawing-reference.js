@@ -17,6 +17,7 @@ window.BR115Drawings=(()=>{
   box.replaceChildren();const heading=document.createElement('b');heading.textContent='Drawing Reference';box.append(heading);
   const label=document.createElement('label');label.style.cssText='display:block;margin:5px 0';
   const check=document.createElement('input');check.type='checkbox';check.checked=attach;check.id='br115-attach-drawings';check.onchange=()=>attach=check.checked;label.append(check,' Include referenced drawings when printing PDF');box.append(label);
+  const method=document.createElement('div');method.textContent='Method reference: '+BR115Surfaces.methodInfo(BR115Bottom.selected({})?.sections||[]).scope;box.append(method);
   const rows=records();if(!rows.length)box.append('Select at least one Joint to show references.');
   rows.forEach(r=>{const line=document.createElement('div'),a=document.createElement('a');a.href=r.pages[0];a.target='_blank';a.rel='noopener';a.textContent=r.dwg+' / Rev.'+r.rev+' — '+r.title;a.title=r.sourceFile+' / PDF page '+r.sourcePage;line.append(a);box.append(line);});
   const selected=BR115Bottom.selected({})?.sections||[];

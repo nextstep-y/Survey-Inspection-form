@@ -1181,6 +1181,7 @@ input.remark-input { font-family: var(--font); font-size: 11px; }
 #br115-contract-criteria .br115-contract-source { color:#52677a; font-size:10px; }
 @media print {
   body.br115-work #survey-table tbody td { line-height:1.35 !important; }
+  body.br115-work #br115-surface-notes { padding:1pt 4pt !important; font-size:5.5pt !important; line-height:1.1 !important; break-inside:avoid; }
   body.br115-work #br115-contract-criteria { padding:1pt 4pt !important; font-size:5.5pt !important; line-height:1.12 !important; break-inside:avoid; }
   body.br115-work #br115-contract-criteria .br115-contract-source { font-size:5pt !important; }
 }
@@ -1796,13 +1797,14 @@ body.br115-work .pier-combo { min-width:0 !important; }
 // DATA — PILE SCHEDULE (384 piers embedded)
 // ═══════════════════════════════════════════
 </script>
-<script src="assets/br115-contract.js?v=20261119-contract-1"></script>
-<script src="assets/br115-section-data.js?v=20261119-contract-1"></script>
-<script src="assets/br115-3d.js?v=20261119-contract-1"></script>
-<script src="assets/br115-drawing-pages.js?v=20261119-contract-1"></script>
-<script src="assets/br115-drawing-reference.js?v=20261119-contract-1"></script>
-<script src="assets/br115-bottom-data.js?v=20261119-contract-1"></script>
-<script src="assets/br115-bottom.js?v=20261119-contract-1"></script>
+<script src="assets/br115-surfaces.js?v=20261119-five-surfaces-1"></script>
+<script src="assets/br115-contract.js?v=20261119-five-surfaces-1"></script>
+<script src="assets/br115-section-data.js?v=20261119-five-surfaces-1"></script>
+<script src="assets/br115-3d.js?v=20261119-five-surfaces-1"></script>
+<script src="assets/br115-drawing-pages.js?v=20261119-five-surfaces-1"></script>
+<script src="assets/br115-drawing-reference.js?v=20261119-five-surfaces-1"></script>
+<script src="assets/br115-bottom-data.js?v=20261119-five-surfaces-1"></script>
+<script src="assets/br115-bottom.js?v=20261119-five-surfaces-1"></script>
 <script src="assets/pilecap_ch_os_overrides.js"></script>
 <script src="assets/clark-station-data.js"></script>
 <script src="assets/clark-station-beam-data.js"></script>
@@ -1826,7 +1828,7 @@ body.br115-work .pier-combo { min-width:0 !important; }
 <script src="assets/head-drawing-pages.js?v=20261104"></script>
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
 <script src="assets/pot-drawing-pages.js?v=20261112"></script>
-<script src="assets/pilecap-drawing-print.js?v=20261119-contract-1"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261119-five-surfaces-1"></script>
 <script src="assets/blinding-elevation-print.js?v=20261116-vector"></script>
 <script id="data-script">
 // MS/ITP Number: Element - Excel Program.xlsx, Sheet2 B2:C13, 2026-11-18.
@@ -5039,7 +5041,7 @@ function updatePrintVals() {
   // Generate print checkboxes for element
   const elChecks = document.getElementById('element-print-checks');
   if (elChecks && el) {
-    const opts = [...el.options];
+    const opts = [...el.options].filter(o=>!BR115Bottom.isWork(el.value)||o.value===el.value);
     elChecks.innerHTML = opts.map(o =>
       `<label class="occ-opt"><span class="occ-box-print">${o.value === el.value ? '✓' : ''}</span>${o.text}</label>`
     ).join('');
@@ -5337,7 +5339,7 @@ function onStructureTypeChange() {
   if (clarkQaLaunch) clarkQaLaunch.style.display = isClarkStationMode() ? '' : 'none';
   document.getElementById('element').style.display='';
   if (currentStructureType()==='br115') {
-    setElementOptions(['BR115 Bottom Slab','BR115 Top of Slab'],'BR115 Bottom Slab');
+    setElementOptions(BR115Surfaces.definitions.map(d=>d.work),BR115Surfaces.definitions[0].work);
     if(elementLabel) elementLabel.textContent='Work Group — Joints';
     if(label) label.textContent='Pier No.';
     if(combo) combo.style.display='';
@@ -5596,6 +5598,12 @@ function onWorkChange() {
 
 function updateITP() {
   const work = document.getElementById('element').value;
+  if(BR115Bottom.isWork(work)){
+    const info=BR115Surfaces.methodInfo(BR115Bottom.selected(currentPier)?.sections||[]);
+    for(const id of ['itp-no','itp-no-hdr']){const el=document.getElementById(id);if(el)el.textContent=info.reference;}
+    const item=document.getElementById('itp-item-hdr');if(item)item.textContent=info.item;
+    return;
+  }
   const _itpEl = document.getElementById('itp-no'); if (_itpEl) _itpEl.textContent = WORK_ITP[work] || '—';
   const _itpHdr = document.getElementById('itp-no-hdr'); if (_itpHdr) _itpHdr.textContent = WORK_ITP[work] || '—';
   const _itpItemHdr = document.getElementById('itp-item-hdr'); if (_itpItemHdr) _itpItemHdr.textContent = WORK_ITP_ITEM[work] || '—';
@@ -8754,7 +8762,7 @@ function renderSurveyTable(pier) {
     tr.dataset.de = dE.toFixed(4);
     tr.dataset.ez = ptElev != null ? ptElev.toFixed(3) : '';
     tr.dataset.idx = i;
-    if(BR115Bottom.isWork(work))tr.title='Joint: '+p.joint+' | '+p.label;
+    if(BR115Bottom.isWork(work))tr.title='Joint: '+p.joint+' | '+p.label+' | '+(p.levelStatus||'Nominal geometry')+' | '+(p.source||'');
     if(p.kind==='dowel')tr.title='Dowel center axis | '+p.source+' | N/E only; design Z unverified';
 
     if (work === 'Pile Deviate') {
@@ -9323,6 +9331,7 @@ function _xlsxBuildRows() {
   if(BR115Bottom.isWork(work)){
     r=add(['Joint: '+(BR115Bottom.selected(pier)?.name || 'Unavailable')+' | '+(document.getElementById('br115-details')?.textContent || 'Chainage pending; Bottom RL excludes camber')],3,32);merge(r,1,r,15);
   }
+  if(BR115Bottom.isWork(work)){const info=BR115Surfaces.methodInfo(BR115Bottom.selected(pier)?.sections||[]);r=add([info.reference+' | '+info.item+' | '+info.scope],3,30);merge(r,1,r,15);}
   if(BR115Bottom.isWork(work)) BR115Contract.lines().forEach(text=>{r=add([text],3,30);merge(r,1,r,15);});
   _xlsxTableMatrix(document.getElementById('survey-table')).forEach((row, i) => add(row, i < 2 ? 6 : 3, 16));
 
@@ -9425,7 +9434,7 @@ async function printDoc() {
   const pier=currentPier?.id,work=document.getElementById('element').value;
   const jointSnapshot=BR115Bottom.isWork(work)?BR115Bottom.selected(currentPier)?.name:null;
   try{
-    const references=['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pot Bearing','BR115 Bottom Slab','BR115 Top of Slab'].includes(work)?getWorkDrawingReferences(currentPier,work)?.refs:null;
+    const references=['Pier Head','Bearing Plinths','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pot Bearing',...BR115Surfaces.definitions.map(d=>d.work)].includes(work)?getWorkDrawingReferences(currentPier,work)?.refs:null;
     const attachment=await window.PilecapDrawingPrint.prepare(pier,work,references);
     if(work==='Blinding Concrete'&&!window.BlindingElevationPrint)throw Error('Elevation Check attachment module is unavailable. Please reload.');
     const supplement=await window.BlindingElevationPrint?.prepare(work);
@@ -9468,7 +9477,7 @@ function _printFormDoc() {
   }
   // Hide elev-section for Pile cap and Pile Deviate in print
   const elevSec = document.getElementById('elev-section');
-  const noElevPrint = ['Pile cap','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pier Head','Bearing Plinths','Elastomeric','BR115 Top of Slab','BR115 Bottom Slab'];
+  const noElevPrint = ['Pile cap','Pier Column (1st-Lift)','Pier Column (2nd Lift)','Pier Head','Bearing Plinths','Elastomeric',...BR115Surfaces.definitions.map(d=>d.work)];
   if (noElevPrint.includes(work)) {
     if (elevSec) elevSec.setAttribute('style', 'display:none!important');
   } else {

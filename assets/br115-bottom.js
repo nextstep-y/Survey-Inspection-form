@@ -1,21 +1,16 @@
 /* BR115 lower box slab: absolute alignment coordinates, not pier-axis rotation. */
 window.BR115Bottom = (() => {
   const choices={}, observations={};
-  const isWork=value=>['BR115 Bottom Slab','BR115 Top of Slab'].includes(value);
-  const isTop=()=>document.getElementById('element').value==='BR115 Top of Slab';
+  const isWork=value=>Boolean(BR115Surfaces.definition(value));
+  const mode=()=>BR115Surfaces.current();
+  const isTop=()=>mode().key==='tts';
   let active=null;
   const list=()=>window.BR115_BOTTOM_DATA;
   function selected(pier){
     const sections=list(pier);if(!sections.length)return null;
     if(!choices.BR115)choices.BR115=[sections.find(s=>s.name==='PS70N'||s.name==='PS71N')?.name||sections[0].name];
     const chosen=sections.filter(s=>choices.BR115.includes(s.name)).sort((a,b)=>(a.ch??Infinity)-(b.ch??Infinity));
-    const surfaces=chosen.map(section=>{
-      if(!isTop()||!section.points.length)return section;
-      const c=section.points.find(p=>p.os===0),r=section.points.find(p=>p.os===3);
-      // 120001-C: flat top surface, 10300 mm wide, CL to edge 5150 mm.
-      const points=section.points.map(p=>{const os=p.os/3*5.15;return {...p,label:p.label.replace(/^B/,'T'),os,n:c.n+(r.n-c.n)*os/3,e:c.e+(r.e-c.e)*os/3,z:section.tor-0.650};});
-      return {...section,points,warning:''};
-    });
+    const surfaces=chosen.map(section=>BR115Surfaces.build(section,mode()));
     return {name:surfaces.map(s=>s.name).join(', '),sections:surfaces,points:surfaces.flatMap(s=>s.points.map(p=>({...p,joint:s.name,ch:s.ch})))};
   }
   function structureChanged(){
@@ -37,26 +32,37 @@ window.BR115Bottom = (() => {
     let panel=document.getElementById('br115-panel');
     if(!panel){panel=document.createElement('div');panel.id='br115-panel';panel.style.cssText='padding:10px;border:1px solid #93aebf;background:#f1f7fa;font:12px Arial;line-height:1.6';document.getElementById('survey-table').before(panel);}
     panel.hidden=true;
-    if(!enabled){const reset=document.getElementById('br115-3d-reset');if(reset)reset.hidden=true;const focus=document.getElementById('br115-point-focus');if(focus)focus.hidden=true;const canvas=document.getElementById('pile-canvas');canvas.onpointerdown=canvas.onpointermove=canvas.onpointerup=canvas.onpointercancel=canvas.onwheel=null;canvas.style.touchAction='auto';active=null;const picker=document.getElementById('br115-work-group');if(picker)picker.hidden=true;return;}
+    if(!enabled){const notes=document.getElementById('br115-surface-notes');if(notes)notes.hidden=true;const reset=document.getElementById('br115-3d-reset');if(reset)reset.hidden=true;const focus=document.getElementById('br115-point-focus');if(focus)focus.hidden=true;const canvas=document.getElementById('pile-canvas');canvas.onpointerdown=canvas.onpointermove=canvas.onpointerup=canvas.onpointercancel=canvas.onwheel=null;canvas.style.touchAction='auto';active=null;const picker=document.getElementById('br115-work-group');if(picker)picker.hidden=true;return;}
     active=selected(pier);
     const sections=list(pier);
     let picker=document.getElementById('br115-work-group');
     if(!picker){picker=document.createElement('div');picker.id='br115-work-group';picker.className='no-print';document.getElementById('element-col').append(picker);}
     picker.hidden=false;
     picker.innerHTML=sections.length?`<div style="max-height:190px;overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px">${sections.map(s=>`<label style="font-size:12px;display:flex;gap:5px;align-items:center"><input type="checkbox" data-joint="${esc(s.name)}" ${choices.BR115.includes(s.name)?'checked':''}>${esc(s.name)}${s.ch===null?' (CH pending)':''}${s.warning&&!isTop()?' ⚠':''}</label>`).join('')}</div><div style="display:flex;gap:4px;margin-top:6px"><button type="button" data-action="all">Select all</button><button type="button" data-action="clear">Clear</button></div><div style="font-size:11px;margin-top:6px">Range (increasing CH)</div><select aria-label="From joint" id="br115-from">${sections.filter(s=>s.ch!==null).sort((a,b)=>a.ch-b.ch).map(s=>`<option>${esc(s.name)}</option>`).join('')}</select><select aria-label="To joint" id="br115-to">${sections.filter(s=>s.ch!==null).sort((a,b)=>a.ch-b.ch).map(s=>`<option>${esc(s.name)}</option>`).join('')}</select><button type="button" data-action="range">Add range</button>`:'Select P-1091 to P-1094.';
-    const change=names=>{remember();choices.BR115=names;renderSurveyTable(pier);updatePrintVals();refreshDwgDisplay();};
+    const change=names=>{remember();choices.BR115=names;renderSurveyTable(pier);updatePrintVals();refreshDwgDisplay();updateITP();};
     picker.querySelectorAll('[data-joint]').forEach(el=>el.onchange=()=>change([...picker.querySelectorAll('[data-joint]:checked')].map(e=>e.dataset.joint)));
     picker.querySelectorAll('[data-action]').forEach(el=>el.onclick=()=>{
       if(el.dataset.action==='all')change(sections.map(s=>s.name));
       else if(el.dataset.action==='clear')change([]);
       else {const a=sections.find(s=>s.name===document.getElementById('br115-from').value).ch,b=sections.find(s=>s.name===document.getElementById('br115-to').value).ch;change([...new Set([...choices.BR115,...sections.filter(s=>s.ch!==null&&s.ch>=Math.min(a,b)&&s.ch<=Math.max(a,b)).map(s=>s.name)])]);}
     });
-    panel.innerHTML='<b>BR115 — '+(isTop()?'Top of Slab':'Bottom of lower box slab')+'</b><div id="br115-details"></div>';
+    panel.innerHTML='<b>BR115 — '+mode().label+'</b><div id="br115-details"></div>';
     const details=document.getElementById('br115-details');
     const rows=active?.sections||[];
-    details.innerHTML=`<b>Selected joints: ${esc(active?.name||'None')} (${active?.points.length||0} points)</b><br>L / C / R: ${isTop()?'left −5.150 m / CL / right +5.150 m':'left −3.000 m / CL / right +3.000 m'}, facing increasing chainage.<br><b>${isTop()?'Top = TOR − 0.650':'Bottom = TOR − 0.650 − H'}. Camber pending: these are NOT formwork setting levels.</b><br>${rows.map(s=>s.ch===null?esc(s.name)+': CH pending — no coordinates or levels':esc(s.name)+': CH '+Math.floor(s.ch/1000)+'+'+(s.ch%1000).toFixed(3)+' · TOR '+s.tor.toFixed(3)+' · H '+s.h.toFixed(3)+(isTop()?' · Top ':' · Bottom ')+s.points[0].z.toFixed(3)+(s.warning?' <b style="color:#9a5d00">'+esc(s.warning)+'</b>':'')).join('<br>')}`;
+    details.textContent='Selected joints: '+(active?.name||'None')+' | '+mode().label+' | '+mode().description+' | '+mode().formula+' | Camber pending. '+rows.map(s=>s.name+': '+(s.pending||'nominal design geometry')).join('; ');
+    renderSurfaceNotes(pier,rows);
+
   }
 
+  function renderSurfaceNotes(pier,rows){
+    let panel=document.getElementById('br115-surface-notes');
+    if(!panel){panel=document.createElement('section');panel.id='br115-surface-notes';panel.style.cssText='padding:7px 10px;border:1px solid #bacbd5;font:11px/1.4 Arial';document.getElementById('survey-table').before(panel);}
+    panel.hidden=['bbs','tts'].includes(mode().key)&&!rows.some(s=>s.pending);panel.replaceChildren();const brief=document.createElement('div');brief.textContent=mode().description;panel.append(brief);
+    const pending=rows.filter(s=>s.pending);if(pending.length){const note=document.createElement('div');note.style.color='#8b5400';note.textContent=pending.map(s=>s.name+': '+s.pending).join(' ');panel.append(note);}
+    if(mode().key!=='web')return;
+    const editor=document.createElement('details');editor.className='no-print';const title=document.createElement('summary');title.textContent='Enter Step 2 construction-joint dimension from drawing';editor.append(title);
+    rows.filter(s=>s.ch!==null).forEach(section=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:5px;align-items:center;margin:5px 0;flex-wrap:wrap';const saved=BR115Surfaces.wallTarget(section.name);const label=document.createElement('span');label.textContent=section.name;const offset=document.createElement('input');offset.type='number';offset.min='0';offset.step='.001';offset.placeholder='Offset below top deck (m)';offset.value=saved?.offset??'';offset.setAttribute('aria-label',section.name+' Step 2 offset');const ref=document.createElement('input');ref.type='text';ref.placeholder='Drawing / revision / section';ref.value=saved?.ref||'';ref.setAttribute('aria-label',section.name+' Step 2 source');const apply=document.createElement('button');apply.type='button';apply.textContent='Apply';apply.onclick=()=>{try{remember();BR115Surfaces.setWallTarget(section.name,offset.value,ref.value);renderSurveyTable(pier);updatePrintVals();}catch(error){showToast(error.message);}};row.append(label,offset,ref,apply);editor.append(row);});panel.append(editor);
+  }
   function restore(){
     if(!isWork(document.getElementById('element').value))return;
     active?.points.forEach((p,i)=>(observations[p.label]||[]).forEach((v,j)=>{const input=document.getElementById(`in-${['n','e','z'][j]}-${i}`);if(input)input.value=v;}));
@@ -66,7 +72,7 @@ window.BR115Bottom = (() => {
   function calcDev(i){
     const tr=document.querySelector(`tr[data-idx="${i}"]`);if(!tr)return;
     const values=['n','e','z'].map(k=>{const el=document.getElementById(`in-${k}-${i}`);return el?.value.trim()?getPrefixVal(el.id):NaN;});
-    const dif=values.map((v,j)=>v-Number(tr.dataset[['dn','de','ez'][j]]));
+    const dif=values.map((v,j)=>{const value=tr.dataset[['dn','de','ez'][j]];return value!==''?v-Number(value):NaN;});
     dif.push(Number.isFinite(dif[0])&&Number.isFinite(dif[1])?Math.hypot(dif[0],dif[1]):NaN);
     ['dn','de','dz','d'].forEach((k,j)=>{const el=document.getElementById(`dev-${k}-${i}`);el.textContent=Number.isFinite(dif[j])?dif[j].toFixed(3):'—';el.className='dev-cell';});
     if(active?.points[i])observations[active.points[i].label]=['n','e','z'].map(k=>document.getElementById(`in-${k}-${i}`).value);
@@ -92,7 +98,7 @@ window.BR115Bottom = (() => {
     canvas.style.touchAction='auto';
 
     document.body.classList.remove('bearing-plinth-work','elastomeric-work','pot-bearing-work','compact-pilecap-print');
-    ctx.fillStyle='#fff';ctx.fillRect(0,0,1100,360);ctx.fillStyle='#24485f';ctx.font='bold 27px Arial';ctx.fillText(`BR115 ${isTop()?'Top of Slab':'Bottom slab'} | ${active?.sections.length||0} joints`,30,30);
+    ctx.fillStyle='#fff';ctx.fillRect(0,0,1100,360);ctx.fillStyle='#24485f';ctx.font='bold 27px Arial';ctx.fillText(`BR115 ${mode().label} | ${active?.sections.length||0} joints`,30,30);
     if(!active?.points.length){ctx.font='16px Arial';ctx.fillText('Coordinates / chainage pending — no layout available',30,80);return;}
     const secs=(active?.sections||[]).filter(s=>s.ch!==null).sort((a,b)=>a.ch-b.ch),pts=secs.flatMap(s=>s.points);
     const rad=((pier.deg||0)+(pier.min||0)/60+(pier.sec||0)/3600)*Math.PI/180;
@@ -108,10 +114,13 @@ window.BR115Bottom = (() => {
     ctx.beginPath();[[-a+cut,-b],[-a,-b+cut],[-a,b-cut],[-a+cut,b],[a-cut,b],[a,b-cut],[a,-b+cut],[a-cut,-b]].forEach(([ch,os],i)=>{const [x,y]=xy({n:head.n+ch*Math.sin(angle)+os*Math.cos(angle),e:head.e-ch*Math.cos(angle)+os*Math.sin(angle)});i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.closePath();ctx.fillStyle='#edf0f2';ctx.fill();ctx.strokeStyle='#c5ccd0';ctx.stroke();
     ctx.font='20px Arial';ctx.fillStyle='#6f7c83';const [hx]=xy(head);ctx.fillText(`${head.id} ${(a*2).toFixed(2)} × ${(b*2).toFixed(2)} m`,Math.min(830,Math.max(30,hx)),320);
     });
-    ['#c4554e','#24485f','#3678b0'].forEach((color,j)=>{ctx.beginPath();secs.forEach((s,i)=>{const [x,y]=xy(s.points[j]);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.strokeStyle=color;ctx.lineWidth=1;ctx.stroke();});
-    secs.forEach(s=>s.points.forEach((p,j)=>{const[x,y]=xy(p);ctx.beginPath();ctx.arc(x,y,active.sections.includes(s)?5:2,0,Math.PI*2);ctx.fillStyle=['#c4554e','#24485f','#3678b0'][j];ctx.fill();if(active.sections.includes(s)){ctx.save();ctx.translate(x,y+(j===0?-15:22));ctx.rotate(-.65);ctx.font='bold 24px Arial';ctx.fillText(p.label,0,0);ctx.restore();}}));
-    ctx.fillStyle='#24485f';ctx.font='22px Arial';ctx.fillText('Increasing chainage →    L = left / C = CL / R = right | '+(isTop()?'top slab width 10.300 m':'lower slab width 6.000 m'),30,65);ctx.fillText('Selected points highlighted. Gray: actual pier head footprint. '+(isTop()?'Top':'Bottom')+' RL excludes camber.',30,345);
+    const color=p=>p.os<0?'#c4554e':p.os>0?'#3678b0':'#24485f';
+    const roles=[...new Set(pts.map(p=>p.role||p.label.split('-').at(-1)))];
+    roles.forEach(role=>{const points=secs.map(s=>s.points.find(p=>(p.role||p.label.split('-').at(-1))===role)).filter(Boolean);ctx.beginPath();points.forEach((p,i)=>{const[x,y]=xy(p);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.strokeStyle=color(points[0]);ctx.lineWidth=1;ctx.stroke();});
+    pts.forEach(p=>{const[x,y]=xy(p);ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fillStyle=color(p);ctx.fill();ctx.save();ctx.translate(x,y+(p.os<0?-15:22));ctx.rotate(-.65);ctx.font='bold 18px Arial';ctx.fillText(p.label,0,0);ctx.restore();});
+    ctx.fillStyle='#24485f';ctx.font='20px Arial';ctx.fillText('Increasing chainage →  L = left / C = CL / R = right · '+mode().label,30,65);ctx.fillText('Nominal design geometry; RL excludes camber. Pending levels are withheld.',30,345);
   }
+
   function formatChainage(value){
     if(value===null||value===undefined||value==='')return '—';
     const metres=Number(String(value).replace('+',''));
@@ -121,8 +130,9 @@ window.BR115Bottom = (() => {
   }
   function fileTitle(){
     const names=(selected({})?.sections||[]).map(s=>s.name.replace(/[^a-zA-Z0-9.+-]+/g,'_'));
-    return ['BR115',...(isTop()?['Top_of_Slab']:[]),...names].join('_');
+    return ['BR115',mode().file,...names].join('_');
   }
-  function references(){const refs=[{dwg:'NSCR-ITD-N03-ZWD-DWG-ST-120002',rev:'C',roles:['Joint heights / Bottom levels'],source:'Reviewed BR115 workbook'}];return{work,refs,status:'REFERENCE FOUND',text:'120001-C / 120002-C / 120003-C; CP N-01 ALT03 profile PL0018-B; review DRC-002342/002345/002346/002349. H conflicts: 71N1, 71S5.'};}
-  return{isWork,isTop,prepare,restore,structureChanged,selected,fileTitle,formatChainage,points:p=>selected(p)?.points||[],draw,calcDev,summary,references};
+  function references(){return BR115Drawings.references();}
+
+  return{isWork,isTop,mode,prepare,restore,structureChanged,selected,fileTitle,formatChainage,points:p=>selected(p)?.points||[],draw,calcDev,summary,references};
 })();

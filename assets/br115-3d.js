@@ -23,7 +23,7 @@ window.BR115ThreeD=(()=>{
   canvas.onpointerup=canvas.onpointercancel=()=>drag=null;
   canvas.onwheel=e=>{if(canvasViewMode!=='3d'||!BR115Bottom.isWork(document.getElementById('element').value))return;e.preventDefault();zoom=Math.max(.6,Math.min(3,zoom*Math.exp(-e.deltaY*.001)));drawPileArray(currentPier);};
   hits=[];
-  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.fillStyle='#24485f';ctx.font='bold 25px Arial';ctx.fillText(`BR115 | ${BR115Bottom.isTop()?'Top of Slab':'Bottom Slab'} | 3D`,26,29);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.fillStyle='#24485f';ctx.font='bold 25px Arial';ctx.fillText(`BR115 | ${BR115Bottom.mode().label} | 3D`,26,29);
   ctx.font='18px Arial';ctx.fillText('L = left / C = CL / R = right, facing increasing chainage · RL excludes camber',26,54);
   if(!selected?.points.length){ctx.font='20px Arial';ctx.fillText('Select joints with confirmed chainages to show 3D.',26,110);return {joints:[],points:[]};}
   const all=BR115_BOTTOM_DATA.filter(s=>s.ch!==null).sort((a,b)=>a.ch-b.ch);
@@ -56,7 +56,7 @@ window.BR115ThreeD=(()=>{
   // is retained so same-side leaders cannot cross one another.
   const labels=[],labelBoxes=[],leaders=[];
   const labelledJoint=selected.points.length>30?(selected.points.find(p=>p.label===focused)?.joint||selected.points[0]?.joint):null;
-  const mapped=selected.points.map(p=>({p,q:project(rotate(local(p))),color:p.os<0?'#c4554e':p.os>0?'#3678b0':'#183e57'}));
+  const mapped=selected.points.filter(p=>Number.isFinite(p.z)).map(p=>({p,q:project(rotate(local(p))),color:p.os<0?'#c4554e':p.os>0?'#3678b0':'#183e57'}));
   [{side:'L',y:92,color:'#c4554e',match:p=>p.os<0},{side:'CL',y:286,color:'#183e57',match:p=>p.os===0},{side:'R',y:311,color:'#3678b0',match:p=>p.os>0}].forEach(rail=>{
     const row=mapped.filter(item=>rail.match(item.p)&&(!labelledJoint||item.p.joint===labelledJoint)).sort((a,b)=>a.q.x-b.q.x||a.p.ch-b.p.ch);
     const font=Math.min(21,Math.max(9,850/Math.max(1,row.length)/4.8));
@@ -81,7 +81,7 @@ window.BR115ThreeD=(()=>{
   });
   ctx.fillStyle='#526b7c';ctx.font='16px Arial';ctx.fillText('Calculated loft between joints; reinforcement, ducts, diaphragms and fillets omitted.',26,331);
   const point=selected.points.find(p=>p.label===focused);
-  ctx.fillText(point?`${point.label} / ${point.joint} | N ${point.n.toFixed(3)}  E ${point.e.toFixed(3)}  RL ${point.z.toFixed(3)}`:`Selected: ${selected.sections.length} joints / ${selected.points.length} points · ${labelledJoint?'Labels: '+labelledJoint+' (choose point above)':'Click an ID to highlight its leader and point'}`,26,351);
+  ctx.fillText(point?`${point.label} / ${point.joint} | N ${point.n.toFixed(3)}  E ${point.e.toFixed(3)}  RL ${Number.isFinite(point.z)?point.z.toFixed(3):'PENDING'}`:`Selected: ${selected.sections.length} joints / ${selected.points.length} points (${mapped.length} with target RL) · ${labelledJoint?'Labels: '+labelledJoint+' (choose point above)':'Click an ID to highlight its leader and point'}`,26,351);
   const result={joints:sections.map(s=>s.name),points:selected.points.map(p=>({id:p.label,n:p.n,e:p.e,z:p.z})),labels,labelBoxes:labelBoxes.map(({x,y,w,h,id})=>({x,y,w,h,id})),leaders,focused};canvas.dataset.br115Model=JSON.stringify(result);return result;
  }
  return{draw};

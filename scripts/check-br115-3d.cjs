@@ -10,7 +10,7 @@ const out=await w.webContents.executeJavaScript(`(async()=>{
  const rotated=canvas.toDataURL()!==before;
  setCanvasViewMode('2d');const plan=!canvas.dataset.br115Model&&canvas.onpointermove===null;
  setCanvasViewMode('3d');document.getElementById('br115-3d-reset').click();const reset=canvas.toDataURL()===before;
- document.getElementById('element').value='BR115 Top of Slab';onWorkChange();updatePrintVals();const top=JSON.parse(canvas.dataset.br115Model);
+ document.getElementById('element').value='BR115 Top of Top Slab';onWorkChange();updatePrintVals();const top=JSON.parse(canvas.dataset.br115Model);
  const focus=document.getElementById('br115-point-focus');focus.value=top.points[1].id;focus.dispatchEvent(new Event('change'));const highlighted=JSON.parse(canvas.dataset.br115Model).focused;
  const box=JSON.parse(canvas.dataset.br115Model).labelBoxes.find(b=>b.id===highlighted),rect=canvas.getBoundingClientRect();canvas.onpointerdown({clientX:rect.left+(box.x+box.w/2)*rect.width/1100,clientY:rect.top+(box.y+box.h/2)*rect.height/360});const cleared=JSON.parse(canvas.dataset.br115Model).focused===null;
  openCanvasPreview();const enlarged=document.getElementById('canvas-preview').open;document.getElementById('canvas-preview').close();

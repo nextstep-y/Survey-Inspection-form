@@ -1,5 +1,6 @@
 /* 120002-C, PDF page 10 of DRC-002342. Dimensions in metres. */
 window.BR115_SECTION_DATA={
+  "71S8":{"a":1.4,"b":0.25,"d":0.25,"h":3,"w":0.35},
   "ESA1": {
     "a": 1.4,
     "b": 0.25,
