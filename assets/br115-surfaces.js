@@ -5,7 +5,7 @@ window.BR115Surfaces=(()=>{
  const definitions=[
   {key:'bbs',work:'BR115 Bottom of Bottom Slab',label:'Bottom of Bottom Slab',prefix:'B',file:'Bottom_of_Bottom_Slab',step:1,item:'6.2',page:23,formula:'TOR - 0.650 - H',description:'Soffit of bottom slab: CL and outer edges at ±3.000 m.'},
   {key:'tbs',work:'BR115 Top of Bottom Slab',label:'Top of Bottom Slab',prefix:'U',file:'Top_of_Bottom_Slab',step:1,item:'6.2',page:23,formula:'TOR - 0.650 - H + D',description:'Finished flat floor: CL and flat-slab ends before the 150 mm bottom haunch/chamfer. Not the top of a wall starter.'},
-  {key:'web',work:'BR115 Top of Web (Wall)',label:'Top of Web (Wall)',prefix:'W',file:'Top_of_Web_Wall',step:2,item:'7.4',page:25,formula:'TOR - 0.650 - approved Step 2 construction-joint offset',description:'End of Concrete Step 2: left/right web centre lines only; no CL point over the box void. Construction-joint RL is withheld until its dimension and source are entered.'},
+  {key:'web',work:'BR115 Top of Web (Wall)',label:'Top of Web (Wall)',prefix:'W',file:'Top_of_Web_Wall',step:2,item:'7.4',page:25,formula:'TOR - 0.650 - Step 2 offset (PS70/PS71: 0.525 m, user-confirmed provisionally)',description:'End of Concrete Step 2: left/right web centre lines only; no CL point over the box void. PS70/PS71 use the user-confirmed provisional offset of 525 mm below top deck, excluding camber. Other segments require their own construction-joint reference.'},
   {key:'bts',work:'BR115 Bottom of Top Slab',label:'Bottom of Top Slab',prefix:'S',file:'Bottom_of_Top_Slab',step:3,item:'8.2',page:26,formula:'CL: TOR - 0.650 - B; outer wing tips: TOR - 0.650 - 0.250',description:'Soffit of top slab: CL and outer wing tips at ±5.150 m. CL and wing-tip levels differ where B is not 250 mm.'},
   {key:'tts',work:'BR115 Top of Top Slab',label:'Top of Top Slab',prefix:'T',file:'Top_of_Top_Slab',step:3,item:'8.2',page:26,formula:'TOR - 0.650',description:'Finished deck surface: CL and outer edges at ±5.150 m.'}
  ];
@@ -18,7 +18,11 @@ window.BR115Surfaces=(()=>{
   const mode=current(),names=(sections||[]).map(s=>s.name),table=names.some(isPierTable),outside=names.some(n=>!isPierTable(n));
   return {reference:table?'NSCR-ITD-N03-ZWD-MST-ST-000099 Rev.A / Appendix 2 (ITP)':'MST-ST-000099 Rev.A: pier-table scope only',item:table?'Item '+mode.item+(outside?' (pier-table joints only)':''):'— (outside supplied pier-table method scope)',scope:'Concrete Step '+mode.step+'; MST-ST-000099 Rev.A, PDF '+mode.page+' (ITP). Applies to PS70 / PS71 pier tables only.'};
  }
- function wallTarget(name){const d=wallTargets[name];return d&&Number.isFinite(d.offset)&&d.offset>=0&&typeof d.ref==='string'&&d.ref.trim()?d:null;}
+ function wallTarget(name){
+  const d=wallTargets[name];
+  if(d&&Number.isFinite(d.offset)&&d.offset>=0&&typeof d.ref==='string'&&d.ref.trim())return d;
+  return isPierTable(name)?{offset:.525,ref:'User-confirmed provisionally 2026-11-19: 120006-C / 120007-C and formwork web/haunch interface (250+275 mm); excludes camber',provisional:true}:null;
+ }
  function setWallTarget(name,offset,ref){if(offset===''&&!ref.trim())delete wallTargets[name];else{const n=Number(offset);if(offset===''||!Number.isFinite(n)||n<0||!ref.trim())throw Error('Enter a non-negative offset and drawing / revision reference.');const section=BR115_BOTTOM_DATA.find(s=>s.name===name);if(!section||n>=section.h)throw Error('The Step 2 interface must be above the bottom of the box girder.');wallTargets[name]={offset:n,ref:ref.trim()};}localStorage.setItem('br115-step2-targets',JSON.stringify(wallTargets));}
  function build(section,mode=current()){
   if(!section.points.length)return {...section,points:[],pending:'Joint chainage is not confirmed.'};
@@ -38,7 +42,7 @@ window.BR115Surfaces=(()=>{
   }
   if(mode.key==='web'){
    const target=wallTarget(section.name);
-   if(dims){const os=3-dims.w/2,z=target?top-target.offset:null;points=[at('L',-os,z,target?'':'Step 2 construction-joint RL pending'),at('R',os,z,target?'':'Step 2 construction-joint RL pending')];}
+   if(dims){const os=3-dims.w/2,z=target?top-target.offset:null;points=[at('L',-os,z,target?(target.provisional?'User-confirmed provisional Step 2 interface; excludes camber':'User-entered Step 2 interface; excludes camber'):'Step 2 construction-joint RL pending'),at('R',os,z,target?(target.provisional?'User-confirmed provisional Step 2 interface; excludes camber':'User-entered Step 2 interface; excludes camber'):'Step 2 construction-joint RL pending')];}
    else pending='Web thickness / centre-line offset is not verified at this extra offset section.';
    if(!target)pending+=(pending?' ':'')+'The 525 mm web/haunch dimension is geometry, not a verified Step 2 construction-joint elevation.';
   }
