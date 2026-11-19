@@ -1788,12 +1788,12 @@ body.br115-work .pier-combo { min-width:0 !important; }
 // DATA — PILE SCHEDULE (384 piers embedded)
 // ═══════════════════════════════════════════
 </script>
-<script src="assets/br115-section-data.js?v=20261119-3d-labels-2"></script>
-<script src="assets/br115-3d.js?v=20261119-3d-labels-2"></script>
-<script src="assets/br115-drawing-pages.js?v=20261119-3d-labels-2"></script>
-<script src="assets/br115-drawing-reference.js?v=20261119-3d-labels-2"></script>
-<script src="assets/br115-bottom-data.js?v=20261119-3d-labels-2"></script>
-<script src="assets/br115-bottom.js?v=20261119-3d-labels-2"></script>
+<script src="assets/br115-section-data.js?v=20261119-chainage-1"></script>
+<script src="assets/br115-3d.js?v=20261119-chainage-1"></script>
+<script src="assets/br115-drawing-pages.js?v=20261119-chainage-1"></script>
+<script src="assets/br115-drawing-reference.js?v=20261119-chainage-1"></script>
+<script src="assets/br115-bottom-data.js?v=20261119-chainage-1"></script>
+<script src="assets/br115-bottom.js?v=20261119-chainage-1"></script>
 <script src="assets/pilecap_ch_os_overrides.js"></script>
 <script src="assets/clark-station-data.js"></script>
 <script src="assets/clark-station-beam-data.js"></script>
@@ -1817,7 +1817,7 @@ body.br115-work .pier-combo { min-width:0 !important; }
 <script src="assets/head-drawing-pages.js?v=20261104"></script>
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
 <script src="assets/pot-drawing-pages.js?v=20261112"></script>
-<script src="assets/pilecap-drawing-print.js?v=20261119-3d-labels-2"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261119-chainage-1"></script>
 <script src="assets/blinding-elevation-print.js?v=20261116-vector"></script>
 <script id="data-script">
 // MS/ITP Number: Element - Excel Program.xlsx, Sheet2 B2:C13, 2026-11-18.
@@ -8752,7 +8752,7 @@ function renderSurveyTable(pier) {
       // PD: set widths inline via DOM after innerHTML for guaranteed override
       tr.innerHTML = `
         <td class="label-cell">${p.label || (i+1)}</td>
-        <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.ch : p.ch)}</td>
+        <td class="auto-cell">${BR115Bottom.isWork(work) ? BR115Bottom.formatChainage(p.ch) : formatSurveyOffset(headDesign ? headDesign.ch : p.ch)}</td>
         <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.os : p.os)}</td>
         <td class="auto-cell">${dN.toFixed(3)}</td>
         <td class="auto-cell">${dE.toFixed(3)}</td>
@@ -8772,7 +8772,7 @@ function renderSurveyTable(pier) {
       // ── Standard row (Bored Pile etc) ────────────────────────────────────
       tr.innerHTML = `
         <td class="label-cell">${p.label || (i+1)}${BR115Bottom.isWork(work)?' <small class="br115-joint-label">('+p.joint+')</small>':''}</td>
-        <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.ch : p.ch)}</td>
+        <td class="auto-cell">${BR115Bottom.isWork(work) ? BR115Bottom.formatChainage(p.ch) : formatSurveyOffset(headDesign ? headDesign.ch : p.ch)}</td>
         <td class="auto-cell">${formatSurveyOffset(headDesign ? headDesign.os : p.os)}</td>
         <td class="auto-cell">${dN.toFixed(3)}</td>
         <td class="auto-cell">${dE.toFixed(3)}</td>

@@ -112,10 +112,17 @@ window.BR115Bottom = (() => {
     secs.forEach(s=>s.points.forEach((p,j)=>{const[x,y]=xy(p);ctx.beginPath();ctx.arc(x,y,active.sections.includes(s)?5:2,0,Math.PI*2);ctx.fillStyle=['#c4554e','#24485f','#3678b0'][j];ctx.fill();if(active.sections.includes(s)){ctx.save();ctx.translate(x,y+(j===0?-15:22));ctx.rotate(-.65);ctx.font='bold 24px Arial';ctx.fillText(p.label,0,0);ctx.restore();}}));
     ctx.fillStyle='#24485f';ctx.font='22px Arial';ctx.fillText('Increasing chainage →    L = left / C = CL / R = right | '+(isTop()?'top slab width 10.300 m':'lower slab width 6.000 m'),30,65);ctx.fillText('Selected points highlighted. Gray: actual pier head footprint. '+(isTop()?'Top':'Bottom')+' RL excludes camber.',30,345);
   }
+  function formatChainage(value){
+    if(value===null||value===undefined||value==='')return '—';
+    const metres=Number(String(value).replace('+',''));
+    if(!Number.isFinite(metres)||metres<0)return '—';
+    const mm=Math.round(metres*1000),km=Math.floor(mm/1000000);
+    return km+'+'+((mm%1000000)/1000).toFixed(3).padStart(7,'0');
+  }
   function fileTitle(){
     const names=(selected({})?.sections||[]).map(s=>s.name.replace(/[^a-zA-Z0-9.+-]+/g,'_'));
     return ['BR115',...(isTop()?['Top_of_Slab']:[]),...names].join('_');
   }
   function references(){const refs=[{dwg:'NSCR-ITD-N03-ZWD-DWG-ST-120002',rev:'C',roles:['Joint heights / Bottom levels'],source:'Reviewed BR115 workbook'}];return{work,refs,status:'REFERENCE FOUND',text:'120001-C / 120002-C / 120003-C; CP N-01 ALT03 profile PL0018-B; review DRC-002342/002345/002346/002349. H conflicts: 71N1, 71S5.'};}
-  return{isWork,isTop,prepare,restore,structureChanged,selected,fileTitle,points:p=>selected(p)?.points||[],draw,calcDev,summary,references};
+  return{isWork,isTop,prepare,restore,structureChanged,selected,fileTitle,formatChainage,points:p=>selected(p)?.points||[],draw,calcDev,summary,references};
 })();
