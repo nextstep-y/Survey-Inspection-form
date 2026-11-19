@@ -1,0 +1,17 @@
+const{app,BrowserWindow}=require('electron'),assert=require('assert/strict'),fs=require('fs'),path=require('path');
+app.whenReady().then(async()=>{try{
+const w=new BrowserWindow({show:false,width:1500,height:1100});w.webContents.session.webRequest.onBeforeRequest({urls:['https://*/*','http://*/*']},(_,cb)=>cb({cancel:true}));await w.loadFile(process.env.BR115_TEST_ENTRY||path.resolve(__dirname,'../index.html'));
+const r=await w.webContents.executeJavaScript(`(async()=>{
+ document.getElementById('structure-type').value='br115';onStructureTypeChange();document.querySelector('[data-action="clear"]').click();
+ const add=name=>{const e=[...document.querySelectorAll('[data-joint]')].find(e=>e.dataset.joint===name);e.checked=true;e.dispatchEvent(new Event('change'));};
+ add('70S8');document.getElementById('element').value='BR115 Top of Web (Wall)';onWorkChange();updatePrintVals();setCanvasViewMode('3d');
+ const out={unconfirmed:currentArray.map(p=>({...p})),referenceModel:JSON.parse(document.getElementById('pile-canvas').dataset.br115Model),list:document.getElementById('br115-surface-notes').textContent};
+ document.getElementById('in-z-0').value='115.000';calcDev(0);out.pendingDZ=document.getElementById('dev-dz-0').textContent;
+ document.querySelector('[data-action="clear"]').click();add('PS70N');add('PS71N');out.confirmed=currentArray.map(p=>({...p}));out.confirmedModel=JSON.parse(document.getElementById('pile-canvas').dataset.br115Model);
+ for(const description of ['Check Formwork','Setting out','As-Built']){document.getElementById('work-desc').value=description;onWorkChange();updatePrintVals();out[description]={limit:BR115Contract.projectLimit(),bar:document.getElementById('tol-bar-text').textContent,excel:JSON.stringify(_xlsxBuildRows())};}
+ out.accuracy=BR115Contract.clauses.survey.accuracyMm;out.status=document.getElementById('sum-status').textContent;
+ const include=document.getElementById('br115-attach-drawings');include.checked=false;include.dispatchEvent(new Event('change'));window.print=()=>{};await printDoc();await new Promise(r=>setTimeout(r,100));return out;
+})()`);
+assert.equal(r.unconfirmed.length,2);assert.ok(r.unconfirmed.every(p=>p.z===null));assert.deepEqual(r.referenceModel.labels,['W003-L','W003-R']);assert.ok(r.referenceModel.leaders.every(l=>l.referenceOnly));assert.ok(r.list.includes('W003-L'));assert.equal(r.pendingDZ,'—');assert.equal(r.confirmed.length,4);assert.equal(r.confirmedModel.labels.length,4);assert.ok(r.confirmedModel.leaders.every(l=>!l.referenceOnly));assert.ok(r.confirmed.some(p=>p.label==='W013-L'&&Math.abs(p.z-118.207)<1e-8));assert.ok(r.confirmed.some(p=>p.label==='W033-R'&&Math.abs(p.z-118.927)<1e-8));assert.equal(r['Check Formwork'].limit.metres,.005);assert.equal(r['Setting out'].limit.metres,.005);assert.equal(r['As-Built'].limit.metres,.025);assert.ok(r['As-Built'].bar.includes('±25 mm'));assert.ok(r['Check Formwork'].bar.includes('±5 mm'));assert.ok(r['As-Built'].excel.includes('User-confirmed'));assert.equal(r.accuracy,3);assert.equal(r.status,'NOT ASSESSED');
+fs.writeFileSync('/tmp/br115-web-survey-check.pdf',await w.webContents.printToPDF({landscape:true,preferCSSPageSize:true,printBackground:true}));await new Promise(r=>setTimeout(r,100));fs.writeFileSync('/tmp/br115-web-survey-check.png',(await w.webContents.capturePage()).toPNG());console.log('PASS Web IDs/confirmed targets/reference-only unknown targets, Formwork 5 mm, As-Built 25 mm, distinct contract accuracy 3 mm, Excel/PDF');app.exit(0);
+}catch(e){console.error(e);app.exit(1);}});

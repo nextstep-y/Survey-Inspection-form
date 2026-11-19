@@ -56,32 +56,33 @@ window.BR115ThreeD=(()=>{
   // is retained so same-side leaders cannot cross one another.
   const labels=[],labelBoxes=[],leaders=[];
   const labelledJoint=selected.points.length>30?(selected.points.find(p=>p.label===focused)?.joint||selected.points[0]?.joint):null;
-  const mapped=selected.points.filter(p=>Number.isFinite(p.z)).map(p=>({p,q:project(rotate(local(p))),color:p.os<0?'#c4554e':p.os>0?'#3678b0':'#183e57'}));
+  const mapped=selected.points.filter(p=>Number.isFinite(p.z)||Number.isFinite(p.visualZ)).map(p=>({p,q:project(rotate(local({...p,z:Number.isFinite(p.z)?p.z:p.visualZ}))),referenceOnly:!Number.isFinite(p.z),color:p.os<0?'#c4554e':p.os>0?'#3678b0':'#183e57'}));
   [{side:'L',y:92,color:'#c4554e',match:p=>p.os<0},{side:'CL',y:286,color:'#183e57',match:p=>p.os===0},{side:'R',y:311,color:'#3678b0',match:p=>p.os>0}].forEach(rail=>{
     const row=mapped.filter(item=>rail.match(item.p)&&(!labelledJoint||item.p.joint===labelledJoint)).sort((a,b)=>a.q.x-b.q.x||a.p.ch-b.p.ch);
+    if(!row.length)return;
     const font=Math.min(21,Math.max(9,850/Math.max(1,row.length)/4.8));
     ctx.font='bold '+font+'px Arial';
     row.forEach((item,i)=>{
       const x=row.length===1?Math.min(980,Math.max(150,item.q.x)):120+i*880/(row.length-1);
-      const width=ctx.measureText(item.p.label).width+14;
-      const box={x:x-width/2,y:rail.y-17,w:width,h:23,id:item.p.label,title:item.p.label+' / '+item.p.joint+' | N '+item.p.n.toFixed(3)+' E '+item.p.e.toFixed(3)+' RL '+item.p.z.toFixed(3)};
-      labelBoxes.push({...box,color:item.color,font,text:item.p.label,emphasized:!focused||focused===item.p.label});
-      leaders.push({id:item.p.label,color:item.color,from:item.q,to:{x,y:rail.side==='L'?rail.y+6:rail.y-19},rail:rail.side});labels.push(item.p.label);hits.push(box);
+      const text=item.p.label+(item.referenceOnly?' *':'');const width=ctx.measureText(text).width+14;
+      const box={x:x-width/2,y:rail.y-17,w:width,h:23,id:item.p.label,title:item.p.label+' / '+item.p.joint+' | N '+item.p.n.toFixed(3)+' E '+item.p.e.toFixed(3)+' RL '+(Number.isFinite(item.p.z)?item.p.z.toFixed(3):'PENDING (geometric reference only)')};
+      labelBoxes.push({...box,color:item.color,font,text,emphasized:!focused||focused===item.p.label});
+      leaders.push({id:item.p.label,color:item.color,from:item.q,to:{x,y:rail.side==='L'?rail.y+6:rail.y-19},rail:rail.side,referenceOnly:item.referenceOnly});labels.push(item.p.label);hits.push(box);
     });
     ctx.fillStyle=rail.color;ctx.font='bold 17px Arial';ctx.fillText(rail.side,24,rail.y);
   });
   leaders.sort((a,b)=>Number(a.id===focused)-Number(b.id===focused)).forEach(line=>{
     ctx.save();ctx.globalAlpha=focused && line.id!==focused ? 0.18 : 0.85;
-    ctx.strokeStyle=line.color;ctx.lineWidth=line.id===focused?3:1.2;ctx.beginPath();ctx.moveTo(line.from.x,line.from.y);ctx.lineTo(line.to.x,line.to.y);ctx.stroke();ctx.restore();
+    ctx.strokeStyle=line.color;ctx.lineWidth=line.id===focused?3:1.2;if(line.referenceOnly)ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(line.from.x,line.from.y);ctx.lineTo(line.to.x,line.to.y);ctx.stroke();ctx.restore();
   });
   labelBoxes.forEach(box=>{ctx.save();ctx.globalAlpha=box.emphasized?1:.25;ctx.fillStyle='#fff';ctx.fillRect(box.x,box.y,box.w,box.h);ctx.strokeStyle=box.color;ctx.lineWidth=box.id===focused?2:1;ctx.strokeRect(box.x,box.y,box.w,box.h);ctx.font='bold '+box.font+'px Arial';ctx.fillStyle=box.color;ctx.textAlign='center';ctx.fillText(box.text,box.x+box.w/2,box.y+17);ctx.restore();});
-  mapped.sort((a,b)=>Number(a.p.label===focused)-Number(b.p.label===focused)).forEach(({p,q,color})=>{
-    ctx.save();ctx.globalAlpha=focused && p.label!==focused ? 0.3 : 1;ctx.beginPath();ctx.arc(q.x,q.y,p.label===focused?7:5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.restore();
-    hits.push({x:q.x-8,y:q.y-8,w:16,h:16,id:p.label,title:p.label+' / '+p.joint+' | RL '+p.z.toFixed(3)});
+  mapped.sort((a,b)=>Number(a.p.label===focused)-Number(b.p.label===focused)).forEach(({p,q,color,referenceOnly})=>{
+    ctx.save();ctx.globalAlpha=focused && p.label!==focused ? 0.3 : 1;ctx.beginPath();ctx.arc(q.x,q.y,p.label===focused?7:5,0,Math.PI*2);ctx.fillStyle=referenceOnly?'#fff':color;ctx.fill();ctx.strokeStyle=referenceOnly?color:'#fff';ctx.lineWidth=2;ctx.stroke();ctx.restore();
+    hits.push({x:q.x-8,y:q.y-8,w:16,h:16,id:p.label,title:p.label+' / '+p.joint+' | RL '+(Number.isFinite(p.z)?p.z.toFixed(3):'PENDING - geometric reference only')});
   });
-  ctx.fillStyle='#526b7c';ctx.font='16px Arial';ctx.fillText('Calculated loft between joints; reinforcement, ducts, diaphragms and fillets omitted.',26,331);
+  ctx.fillStyle='#526b7c';ctx.font='16px Arial';ctx.fillText(mapped.some(p=>p.referenceOnly)?'* Hollow markers: geometric web/haunch reference only; Step 2 target RL is pending.':'Calculated loft between joints; reinforcement, ducts, diaphragms and fillets omitted.',26,331);
   const point=selected.points.find(p=>p.label===focused);
-  ctx.fillText(point?`${point.label} / ${point.joint} | N ${point.n.toFixed(3)}  E ${point.e.toFixed(3)}  RL ${Number.isFinite(point.z)?point.z.toFixed(3):'PENDING'}`:`Selected: ${selected.sections.length} joints / ${selected.points.length} points (${mapped.length} with target RL) · ${labelledJoint?'Labels: '+labelledJoint+' (choose point above)':'Click an ID to highlight its leader and point'}`,26,351);
+  ctx.fillText(point?`${point.label} / ${point.joint} | N ${point.n.toFixed(3)}  E ${point.e.toFixed(3)}  RL ${Number.isFinite(point.z)?point.z.toFixed(3):'PENDING'}`:`Selected: ${selected.sections.length} joints / ${selected.points.length} points (${selected.points.filter(p=>Number.isFinite(p.z)).length} with target RL) · ${labelledJoint?'Labels: '+labelledJoint+' (choose point above)':'Click an ID to highlight its leader and point'}`,26,351);
   const result={joints:sections.map(s=>s.name),points:selected.points.map(p=>({id:p.label,n:p.n,e:p.e,z:p.z})),labels,labelBoxes:labelBoxes.map(({x,y,w,h,id})=>({x,y,w,h,id})),leaders,focused};canvas.dataset.br115Model=JSON.stringify(result);return result;
  }
  return{draw};

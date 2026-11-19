@@ -28,7 +28,7 @@ window.BR115Surfaces=(()=>{
   if(!section.points.length)return {...section,points:[],pending:'Joint chainage is not confirmed.'};
   const c=section.points.find(p=>p.os===0),r=section.points.find(p=>p.os===3),top=section.tor-.650,bottom=top-section.h;
   const dims=window.BR115_SECTION_DATA?.[section.name];const base=c.label.replace(/-C$/,'').replace(/^B/,mode.prefix);
-  const at=(side,os,z,reason='')=>({label:base+'-'+side,role:side,os,ch:section.ch,n:c.n+(r.n-c.n)*os/3,e:c.e+(r.e-c.e)*os/3,z,levelStatus:reason||'Nominal design; excludes camber',source:mode.key==='web'?wallTarget(section.name)?.ref||'Step 2 construction-joint dimension pending':'120001-C / 120002-C; '+section.name});
+  const at=(side,os,z,reason='')=>({label:base+'-'+side,role:side,os,ch:section.ch,n:c.n+(r.n-c.n)*os/3,e:c.e+(r.e-c.e)*os/3,z,visualZ:mode.key==='web'?top-.525:z,levelStatus:reason||'Nominal design; excludes camber',source:mode.key==='web'?wallTarget(section.name)?.ref||'Step 2 construction-joint dimension pending':'120001-C / 120002-C; '+section.name});
   let points=[],pending='';
   if(mode.key==='bbs')points=section.points.map(p=>({...p,role:p.os<0?'L':p.os>0?'R':'C',ch:section.ch}));
   if(mode.key==='tts')points=[at('L',-5.15,top),at('C',0,top),at('R',5.15,top)];

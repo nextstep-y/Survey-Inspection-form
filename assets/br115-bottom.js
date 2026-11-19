@@ -61,6 +61,7 @@ window.BR115Bottom = (() => {
     const pending=rows.filter(s=>s.pending);if(pending.length){const note=document.createElement('div');note.style.color='#8b5400';note.textContent=pending.map(s=>s.name+': '+s.pending).join(' ');panel.append(note);}
     const warnings=rows.filter(s=>s.warning);if(warnings.length){const warning=document.createElement('div');warning.style.color='#8b5400';warning.textContent=warnings.map(s=>s.name+': '+s.warning).join(' ');panel.append(warning);panel.hidden=false;}
     if(mode().key!=='web')return;
+    const ids=document.createElement('div');ids.className='no-print';ids.style.fontWeight='bold';ids.textContent='Point IDs: '+rows.flatMap(s=>s.points.map(p=>p.label+' / '+s.name+(Number.isFinite(p.z)?'':' (RL pending)'))).join(' · ');panel.append(ids);
     const editor=document.createElement('details');editor.className='no-print';const title=document.createElement('summary');title.textContent='Enter Step 2 construction-joint dimension from drawing';editor.append(title);
     rows.filter(s=>s.ch!==null).forEach(section=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:5px;align-items:center;margin:5px 0;flex-wrap:wrap';const saved=BR115Surfaces.wallTarget(section.name);const label=document.createElement('span');label.textContent=section.name;const offset=document.createElement('input');offset.type='number';offset.min='0';offset.step='.001';offset.placeholder='Offset below top deck (m)';offset.value=saved?.offset??'';offset.setAttribute('aria-label',section.name+' Step 2 offset');const ref=document.createElement('input');ref.type='text';ref.placeholder='Drawing / revision / section';ref.value=saved?.ref||'';ref.setAttribute('aria-label',section.name+' Step 2 source');const apply=document.createElement('button');apply.type='button';apply.textContent='Apply';apply.onclick=()=>{try{remember();BR115Surfaces.setWallTarget(section.name,offset.value,ref.value);renderSurveyTable(pier);updatePrintVals();}catch(error){showToast(error.message);}};row.append(label,offset,ref,apply);editor.append(row);});panel.append(editor);
   }
@@ -85,7 +86,7 @@ window.BR115Bottom = (() => {
     if(measured.length)document.getElementById('sum-dev').textContent=(Math.max(...measured)*1000).toFixed(1)+' mm';
     document.getElementById('sum-count').textContent=measured.length;
     const status=document.getElementById('sum-status');status.textContent='NOT ASSESSED';status.className='sum-value';
-    document.getElementById('sum-fail-count').textContent='Absolute position / RL criteria pending';
+    document.getElementById('sum-fail-count').textContent='Approved stage target / camber pending';
   }
   function draw(pier){
     const canvas=document.getElementById('pile-canvas'),ctx=canvas.getContext('2d');
