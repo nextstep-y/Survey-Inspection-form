@@ -1,0 +1,17 @@
+const{app,BrowserWindow}=require('electron'),fs=require('fs'),assert=require('assert/strict'),path=require('path');
+app.whenReady().then(async()=>{try{
+ const w=new BrowserWindow({show:false,width:1500,height:1100});w.webContents.session.webRequest.onBeforeRequest({urls:['https://*/*','http://*/*']},(details,cb)=>cb({cancel:!details.url.startsWith('http://127.0.0.1:8765/')}));if(process.env.BR115_TEST_HTTP)await w.loadURL('http://127.0.0.1:8765/');else await w.loadFile(process.env.BR115_TEST_ENTRY||path.resolve(__dirname,'../index.html'));
+ const r=await w.webContents.executeJavaScript(`(async()=>{
+ document.getElementById('structure-type').value='br115';onStructureTypeChange();document.querySelector('[data-action="clear"]').click();
+ for(const name of ['PS70S','PS70N','71N1']){const el=[...document.querySelectorAll('[data-joint]')].find(e=>e.dataset.joint===name);el.checked=true;el.dispatchEvent(new Event('change'));}
+ const refs=getWorkDrawingReferences(currentPier,'BR115 Bottom Slab');
+ const out={description:document.getElementById('wi-work-desc').textContent,element:document.getElementById('wi-element').textContent,catalog:BR115_DRAWING_PAGES.length,refs:refs.refs.map(r=>r.dwg+'|'+r.rev),display:document.getElementById('dwg-display').textContent};
+ const selection=BR115Drawings.selection();const attachment=await PilecapDrawingPrint.prepare('BR115','BR115 Bottom Slab',refs.refs);out.pages=attachment.children.length;out.loaded=[...attachment.querySelectorAll('img')].every(i=>i.naturalWidth>=4000);out.same=attachment.dataset.drawingReferences===refs.text;
+ document.body.append(attachment);PilecapDrawingPrint.clear();out.cleared=!document.querySelector('.drawing-print-attachments');
+ const check=document.getElementById('br115-attach-drawings');check.checked=false;check.dispatchEvent(new Event('change'));out.disabled=await PilecapDrawingPrint.prepare('BR115','BR115 Bottom Slab',refs.refs)===null;check.checked=true;check.dispatchEvent(new Event('change'));
+ let printed=false;window.print=()=>{printed=true};await printDoc();await new Promise(r=>setTimeout(r,100));out.printed=printed;out.attached=document.querySelectorAll('.drawing-print-page').length;out.title=document.title;
+ return out;
+ })()`);
+ assert.equal(r.description,'Setting out');assert.equal(r.element,'BR115 Bottom Slab');assert.equal(r.catalog,43);assert.equal(r.refs.length,6);assert.equal(new Set(r.refs).size,r.refs.length);assert.ok(r.refs.includes('NSCR-ITD-N03-ZWD-DWG-ST-120006|C'));assert.ok(r.refs.includes('NSCR-ITD-N03-ZWD-DWG-ST-120051|B'));assert.equal(r.pages,6);assert.equal(r.loaded,true);assert.equal(r.same,true);assert.equal(r.cleared,true);assert.equal(r.disabled,true);assert.equal(r.printed,true);assert.equal(r.attached,6);assert.equal(r.title,'BR115_PS70S_PS70N_71N1');
+ fs.writeFileSync('/tmp/br115-drawings-test.pdf',await w.webContents.printToPDF({landscape:true,printBackground:true,preferCSSPageSize:true}));const failed=await w.webContents.executeJavaScript(`(async()=>{PilecapDrawingPrint.clear();let printed=false,warning='';window.print=()=>printed=true;window.alert=s=>warning=s;const record=BR115Drawings.records()[0],old=record.pages;record.pages=['assets/br115-drawings/missing-test.jpg'];await printDoc();await new Promise(r=>setTimeout(r,100));record.pages=old;return{printed,warning};})()`);assert.equal(failed.printed,false);assert.ok(failed.warning.includes('No print was started'));console.log('PASS',r);app.exit(0);
+ }catch(e){console.error(e);app.exit(1);}});

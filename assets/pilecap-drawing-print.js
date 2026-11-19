@@ -50,6 +50,7 @@ window.PilecapDrawingPrint=(()=>{
  }
  const supportedWorks=['Pile cap','Bored Pile','Pier Head','Bearing Plinths','Pot Bearing','Pier Column (1st-Lift)','Pier Column (2nd Lift)'];
  function selectionFor(pier,work){
+  if(BR115Bottom.isWork(work))return window.BR115Drawings.selection();
   if(!supportedWorks.includes(work)||!/^P-\d/.test(pier||''))return null;
   const id=String(pier).trim();let records=[],missing=[];
   if(['Pile cap','Bored Pile'].includes(work))records=recordsFor(id);
@@ -68,6 +69,7 @@ window.PilecapDrawingPrint=(()=>{
  async function prepare(pier,work,refs){
   clear();
   const selection=selectionFor(pier,work);if(!selection)return null;
+  if(BR115Bottom.isWork(work)&&!window.BR115Drawings.include())return null;
   const {records}=selection;
   if(selection.missing.length)throw Error('Exact PDF revision required: '+selection.missing.join('; '));
   if(refs&&JSON.stringify(refs.map(r=>r.dwg+'|'+r.rev))!==JSON.stringify(records.map(r=>r.dwg+'|'+r.rev)))throw Error('Form drawing references differ from attached drawings. Refresh before printing.');
