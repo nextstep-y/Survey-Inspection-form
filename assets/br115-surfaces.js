@@ -42,7 +42,9 @@ window.BR115Surfaces=(()=>{
    else pending='Web thickness / centre-line offset is not verified at this extra offset section.';
    if(!target)pending+=(pending?' ':'')+'The 525 mm web/haunch dimension is geometry, not a verified Step 2 construction-joint elevation.';
   }
-  return {...section,points,pending,warning:['bbs','tbs'].includes(mode.key)?section.warning:''};
+  let warning=['bbs','tbs'].includes(mode.key)?section.warning:'';
+  if(mode.key==='tbs'&&/^P2[SN]$/.test(section.name))warning+=(warning?' ':'')+'D: 120002-C schedule = 911 mm; 120006-C Half Section B shows 912 mm. Retain the schedule pending clarification.';
+  return {...section,points,pending,warning};
  }
  return{definitions,definition,current,isPierTable,methodInfo,build,wallTarget,setWallTarget};
 })();
