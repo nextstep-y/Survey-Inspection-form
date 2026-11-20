@@ -1823,7 +1823,7 @@ body.br115-work .pier-combo { min-width:0 !important; }
 <script src="assets/elastomeric-blender-manifest.js?v=20261027-special-levels"></script>
 <script src="assets/structural-blender-manifest.js?v=20261030-head-labels"></script>
 <script src="assets/dowel-blender-manifest.js?v=20261030-point-identities"></script>
-<script src="assets/pot-blender-manifest.js?v=20261027-pot-detail-axes"></script>
+<script src="assets/pot-blender-manifest.js?v=20261120-pot-s5-corners"></script>
 <script src="assets/pilecap-drawing-register.js?v=20261103"></script>
 <script src="assets/head-drawing-pages.js?v=20261104"></script>
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
@@ -2696,11 +2696,16 @@ function getPotBearingPoints(pier) {
   const layout=layouts[pier?.id];if(!layout)return [];
   const br114=Boolean(BR114_POT_STACK[pier.id]);
   const bearings=layout.types.map((type,i)=>({...((br114?BR114_POT_DETAILS:details)[type]),stack:(br114?BR114_POT_STACK:BR115_POT_STACK)[pier.id][type],type,prefix:i?'PBR':'PBL',os:(i?1:-1)*layout.offset}));
-  return bearings.flatMap(b=>[[b.length/2,0],[0,-b.width/2],[-b.length/2,0],[0,b.width/2]].map(([ch,delta],i)=>({
+  return bearings.flatMap(b=>{
+    const corners=pier.id==='P-1092'&&b.type==='S5';
+    const offsets=corners?[[b.length/2,-b.width/2],[-b.length/2,-b.width/2],[-b.length/2,b.width/2],[b.length/2,b.width/2]]:[[b.length/2,0],[0,-b.width/2],[-b.length/2,0],[0,b.width/2]];
+    return offsets.map(([ch,delta],i)=>({
+    ...(corners?{pointPosition:'corner'}:{}),
     label:b.prefix+(i+1),ch:layout.ch+ch,os:b.os+delta,z:getTopOfColumnElevation(pier)+(b.stack.plinth+b.stack.bottomGrout+b.stack.bearing)/1000,
     bearing:b.type,source:b.source,width:b.width,length:b.length,centerOS:b.os,centerCH:layout.ch,
     plinthRise:b.stack.plinth/1000,bottomGrout:b.stack.bottomGrout/1000,assemblyHeight:b.stack.bearing/1000,topGrout:b.stack.topGrout/1000,stackSource:'RL A BC!G'+b.stack.row+':K'+b.stack.row
-  })));
+  }));
+  });
 }
 
 function getPotBearingContext(pier,headPoints=null){
@@ -2716,7 +2721,7 @@ function drawPotBearingBlender(ctx,W,H,pier,points){
   const record=Object.entries(window.POT_BLENDER_MANIFEST||{}).find(([key,r])=>(key===pier.id||key.startsWith(pier.id+'-'))&&JSON.stringify(r.points)===JSON.stringify(points)&&JSON.stringify(r.context)===context)?.[1];
   if(!record)return false;
   let img=potBlenderImages[record.image];
-  if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image+'?v=20261027-pot-detail-axes';}
+  if(!img){img=new Image();potBlenderImages[record.image]=img;img.onload=()=>{if(currentPier)drawPileArray(currentPier)};img.src=record.image+'?v=20261120-pot-s5-corners';}
   if(!img.complete||!img.naturalWidth)return false;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   const height=W*img.naturalHeight/img.naturalWidth;
@@ -2753,11 +2758,13 @@ function drawPotBearingPlan(ctx,W,H,pier,points){
     for(const p of group){const x=W/2+p.os*scale,y=centerY-(p.ch-b.centerCH)*scale;
       ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fillStyle='#b33122';ctx.fill();
       const i=Number(p.label.slice(-1));ctx.textAlign=i===2?'right':i===4?'left':'center';
-      ctx.font='bold 18px Arial';ctx.fillStyle='#111';ctx.fillText(p.label,x+(i===2?-12:i===4?12:0),y+(i===1?-14:i===3?25:6));
+      const corner=p.pointPosition==='corner';
+      ctx.textAlign=corner?(p.os<b.centerOS?'right':'left'):ctx.textAlign;
+      ctx.font='bold 18px Arial';ctx.fillStyle='#111';ctx.fillText(p.label,x+(corner?(p.os<b.centerOS?-10:10):(i===2?-12:i===4?12:0)),y+(corner?(p.ch>b.centerCH?-12:23):(i===1?-14:i===3?25:6)));
     }
     ctx.textAlign='center';ctx.font='16px Arial';ctx.fillText('Top Pot '+b.z.toFixed(3)+' m',cx,H-36);
   }
-  ctx.font='14px Arial';ctx.fillText('Bearing center CH '+points[0].centerCH.toFixed(3)+' m | 1 top → 2 left → 3 bottom → 4 right (CCW)',W/2,H-10);
+  ctx.font='14px Arial';ctx.fillText('Bearing center CH '+points[0].centerCH.toFixed(3)+' m | '+(points.some(p=>p.pointPosition==='corner')?'S5: 1 upper-left → 2 lower-left → 3 lower-right → 4 upper-right; S4: side midpoints':'1 top → 2 left → 3 bottom → 4 right (CCW)'),W/2,H-10);
 }
 
 function getPierHeadPointDesign(pier, point) {

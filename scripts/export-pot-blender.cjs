@@ -1,5 +1,5 @@
 const fs=require('fs'),vm=require('vm');
-const h=fs.readFileSync('index.html','utf8'),c=vm.createContext({window:{},document:{getElementById:()=>({value:'TYPE1'})}});
+const h=fs.readFileSync('index.html','utf8'),c=vm.createContext({BR115Bottom:{isWork:()=>false},window:{},document:{getElementById:()=>({value:'TYPE1'})}});
 vm.runInContext(fs.readFileSync('assets/pilecap_ch_os_overrides.js','utf8'),c);
 vm.runInContext(h.match(/<script id="data-script">([\s\S]*?)<\/script>/)[1],c);
 const start=h.indexOf('const PIERS_RAW = ');vm.runInContext(h.slice(start,h.indexOf('// STATE',start)),c);

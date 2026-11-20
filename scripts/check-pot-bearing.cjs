@@ -20,6 +20,10 @@ app.whenReady().then(async()=>{const w=new BrowserWindow({show:false,width:1500,
    assert.equal(p[0].bearing,types[j]);assert.ok(Math.abs(p.reduce((s,x)=>s+x.ch,0)/4-ch)<1e-10);
    assert.ok(Math.abs(p.reduce((s,x)=>s+x.os,0)/4-center)<1e-10);
    assert.ok(Math.abs(p[0].ch-p[2].ch-dims[j][1])<1e-10);assert.ok(Math.abs(p[3].os-p[1].os-dims[j][0])<1e-10);
+   if(id==='P-1092'&&j===0){
+    assert.deepEqual(p.map(q=>[Number(q.ch.toFixed(6)),Number(q.os.toFixed(6))]),[[.625,-2.7825],[-.625,-2.7825],[-.625,-1.2175],[.625,-1.2175]]);
+    assert.ok(p.every(q=>q.pointPosition==='corner'));
+   }else{assert.ok(p.every(q=>q.pointPosition!=='corner'));}
    const plinth=rise+(id==='P-1092'&&j===1?.004:0)+(id==='P-1093'&&j===0?-.001:0);
    assert.ok(Math.abs(p[0].z-data.top-plinth-.050-heights[j])<1e-10);
    assert.equal(p[0].bottomGrout,.050);assert.equal(p[0].plinthRise,plinth);
@@ -76,5 +80,5 @@ app.whenReady().then(async()=>{const w=new BrowserWindow({show:false,width:1500,
  await w.webContents.executeJavaScript(`document.getElementById('element').value='Pot Bearing';onPierSelect('P-1049');void 0;`);
  assert.equal(await w.webContents.executeJavaScript('currentArray.length'),0);
  assert.equal(errors.filter(x=>!x.includes('fetch')&&!x.includes('net::')).length,0,errors.join('\n'));
- console.log('PASS: 8 side midpoints, CCW, source dimensions, elevations, UI and unsupported-pier guard');app.exit(0);
+ console.log('PASS: P1092 S5 corners, other side midpoints, CCW, source dimensions, elevations, CSV, 2D/3D and unsupported-pier guard');app.exit(0);
  }catch(e){console.error(e);app.exit(1)}});
