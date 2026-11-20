@@ -13,7 +13,8 @@ CSV; the source drawing title blocks were rendered and visually checked.
 Other punctuation in drawing identifiers is normalized only when the six
 digits match exactly one file from the supplied folder inventory.
 
-Scope: Pile cap and Bored Pile only. No coordinates, levels, dimensions or
+Scope: Pile cap, Bored Pile and Pile Deviate (added 2026-11-21). All three
+works use the same registered drawing/revision and printed source pages. No coordinates, levels, dimensions or
 other work-specific references are changed. Exact NB/SB/A identifiers are
 retained. L/R aliases are limited to the eight previously user-confirmed
 combined-head families, not a general suffix fallback.

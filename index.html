@@ -1828,7 +1828,7 @@ body.br115-work .pier-combo { min-width:0 !important; }
 <script src="assets/head-drawing-pages.js?v=20261104"></script>
 <script src="assets/column-drawing-pages.js?v=20261104"></script>
 <script src="assets/pot-drawing-pages.js?v=20261112"></script>
-<script src="assets/pilecap-drawing-print.js?v=20261119-survey-check-1"></script>
+<script src="assets/pilecap-drawing-print.js?v=20261121-pile-deviate-1"></script>
 <script src="assets/blinding-elevation-print.js?v=20261116-vector"></script>
 <script id="data-script">
 // MS/ITP Number: Element - Excel Program.xlsx, Sheet2 B2:C13, 2026-11-18.
@@ -4792,7 +4792,7 @@ function _getDesignWorkDrawingReferences(pier,work){
     const refs=records.map(r=>({...r,roles:['Column concrete details / section (shared drawing set for both lifts)'],source:live?'VISUALLY REVIEWED DRAWING REGISTER':'PDF title block, Pier Column folder, 2026-11-04'}));
     return {work,refs,status:refs.length?'REFERENCE FOUND':'NOT VERIFIED',text:refs.length?refs.map(r=>r.dwg+' / Rev.'+(r.rev||'UNCONFIRMED')).join('; '):'DRAWING NOT VERIFIED - '+work};
   }
-  if(pier&&['Pile cap','Bored Pile'].includes(work)&&!isClarkStationElement(pier)&&!isSubstationPier(pier)){
+  if(pier&&['Pile cap','Bored Pile','Pile Deviate'].includes(work)&&!isClarkStationElement(pier)&&!isSubstationPier(pier)){
     const refs=(window.PilecapDrawingPrint?.recordsFor(pier.id)||[]).map(r=>({...r,roles:['Pile / Pile Cap concrete and setting out'],source:'Pile Cap Drawing list.csv, row '+r.sourceRow}));
     return {work,refs,status:refs.length?'REFERENCE FOUND':'NOT VERIFIED',text:refs.length?refs.map(r=>r.dwg+' / Rev.'+r.rev).join('; '):'Drawing not verified in Pile Cap register'};
   }

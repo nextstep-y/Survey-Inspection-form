@@ -48,12 +48,12 @@ window.PilecapDrawingPrint=(()=>{
    return found;
   });
  }
- const supportedWorks=['Pile cap','Bored Pile','Pier Head','Bearing Plinths','Pot Bearing','Pier Column (1st-Lift)','Pier Column (2nd Lift)'];
+ const supportedWorks=['Pile cap','Bored Pile','Pile Deviate','Pier Head','Bearing Plinths','Pot Bearing','Pier Column (1st-Lift)','Pier Column (2nd Lift)'];
  function selectionFor(pier,work){
   if(BR115Bottom.isWork(work))return window.BR115Drawings.selection();
   if(!supportedWorks.includes(work)||!/^P-\d/.test(pier||''))return null;
   const id=String(pier).trim();let records=[],missing=[];
-  if(['Pile cap','Bored Pile'].includes(work))records=recordsFor(id);
+  if(['Pile cap','Bored Pile','Pile Deviate'].includes(work))records=recordsFor(id);
   else if(work.startsWith('Pier Column'))records=window.COLUMN_DRAWING_PAGES?.records?.[id]||[];
   else {
    const catalog=work==='Pot Bearing'?window.POT_DRAWING_PAGES:window.HEAD_DRAWING_PAGES;
